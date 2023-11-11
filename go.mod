@@ -4,6 +4,7 @@ go 1.21
 
 require (
 	github.com/alecthomas/jsonschema v0.0.0-20220216202328-9eeeec9d044b
+	github.com/logrusorgru/aurora v2.0.3+incompatible
 	github.com/projectdiscovery/goflags v0.1.26
 	github.com/projectdiscovery/gologger v1.1.11
 	github.com/stretchr/testify v1.8.4
@@ -24,7 +25,6 @@ require (
 	github.com/iancoleman/orderedmap v0.0.0-20190318233801-ac98e3ecb4b0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
-	github.com/logrusorgru/aurora v2.0.3+incompatible // indirect
 	github.com/mholt/archiver v3.1.1+incompatible // indirect
 	github.com/microcosm-cc/bluemonday v1.0.25 // indirect
 	github.com/miekg/dns v1.1.55 // indirect
