@@ -24,6 +24,9 @@ const Banner = `  ______                       ________  __
 func main() {
 	gologger.DefaultLogger.SetMaxLevel(levels.LevelWarning)
 	options := runner.ParseOptions()
+	if options.Debug {
+		gologger.DefaultLogger.SetMaxLevel(levels.LevelDebug)
+	}
 	appRunner, err := runner.NewRunner(options)
 	if err != nil {
 		panic(err)

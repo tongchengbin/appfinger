@@ -19,6 +19,7 @@ type Options struct {
 	OutputFile string
 	Stdin      bool
 	FingerHome string
+	Debug      bool
 }
 
 func ParseOptions() *Options {
@@ -33,6 +34,9 @@ func ParseOptions() *Options {
 		flagSet.StringVarP(&options.Proxy, "proxy", "x", "", "HTTP proxy to use for requests (e.g. http://127.0.0.1:7890)"),
 		flagSet.BoolVarP(&options.Stdin, "stdin", "s", false, "Read urls from stdin"),
 		flagSet.StringVarP(&options.FingerHome, "finger-home", "d", "", "finger yaml directory home default is built-in"),
+	)
+	flagSet.CreateGroup("Help", "Help",
+		flagSet.BoolVar(&options.Debug, "debug", false, "debug"),
 	)
 	flagSet.CreateGroup("output", "Output",
 		flagSet.StringVarP(&options.OutputFile, "output", "o", "", "file to write output to"))

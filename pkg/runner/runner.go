@@ -18,11 +18,11 @@ type Runner struct {
 func formatExtract(extract map[string]map[string]string) string {
 	var s []string
 	for key, value := range extract {
-		var s2 string
+		var s2 []string
 		for v, vv := range value {
-			s2 += aurora.Blue(fmt.Sprintf("%s=%s", v, vv)).String()
+			s2 = append(s2, aurora.Blue(fmt.Sprintf("%s=%s", v, vv)).String())
 		}
-		s = append(s, fmt.Sprintf("%s:{%s}", aurora.Cyan(key).String(), s2))
+		s = append(s, fmt.Sprintf("%s:{%s}", aurora.Cyan(key).String(), strings.Join(s2, ",")))
 	}
 	return strings.Join(s, ",")
 }

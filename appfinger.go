@@ -168,7 +168,7 @@ func (f *AppFinger) Match(banner *Banner) map[string]map[string]string {
 func (f *AppFinger) MatchURI(uri string) (*Banner, map[string]map[string]string) {
 	banner, err := Request(uri, f.timeout, f.Proxy)
 	if err != nil {
-		gologger.Warning().Msg(err.Error())
+		gologger.Debug().Msg(err.Error())
 		return nil, nil
 	}
 	fingerprints := f.Match(banner)

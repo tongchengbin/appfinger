@@ -141,7 +141,7 @@ func Request(uri string, timeout time.Duration, proxy string) (*Banner, error) {
 	}
 	RawData := ResponseDecoding(rawResp.Bytes(), charset)
 	separator := []byte("\r\n\r\n")
-	//gologger.Debug().Msg("Dump HTTP Response For " + uri + "\r\n" + RawData)
+	gologger.Debug().Msg("Dump HTTP Response For " + uri + "\r\n" + RawData)
 	index := strings.Index(RawData, "\r\n\r\n")
 	if index == -1 {
 		gologger.Warning().Msg("无法找到响应头和响应体的分割点:" + uri + "\r\n\r\n" + RawData)
