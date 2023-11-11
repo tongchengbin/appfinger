@@ -2459,43 +2459,7 @@
     - <frame marginwidth="5" marginheight="5" src="menu_empty.html" name="menu" noresize
       scrolling="auto" frameborder="0">
   name: ap_router
-- matchers:
-  - part: body
-    type: word
-    words:
-    - Default
-  - part: body
-    type: word
-    words:
-    - Default
-  - part: body
-    type: word
-    words:
-    - Default
-  - part: body
-    type: word
-    words:
-    - Default
-  - name: This IP is being shared among many domains.
-    part: body
-    type: word
-    words:
-    - Default
-  - part: body
-    type: word
-    words:
-    - Default
-  - name: HTTP Server Header
-    part: headers.server
-    regex:
-    - (^Apache)
-    type: regex
-  - name: version
-    part: headers.server
-    regex:
-    - (^Apache\/([\d\.]+))
-    type: regex
-  name: apache
+
 - matchers:
   - part: body
     type: word
@@ -9446,7 +9410,7 @@
 - matchers:
   - part: body
     regex:
-    - (<i?frame\s+)
+    - <i?frame\(s+)
     type: regex
   name: frame
 - matchers:
@@ -12282,30 +12246,7 @@
     - joomla! ([\d.]+)
     type: regex
   name: joomla
-- matchers:
-  - part: body
-    regex:
-    - (<script [^>]*jquery)
-    type: regex
-  - group: 1
-    name: version
-    part: body
-    regex:
-    - (jquery(\.min)?\.js\?ver=([0-9\.]+)['"])
-    type: regex
-  - group: 0
-    name: version
-    part: body
-    regex:
-    - (jquery\/([0-9\.]+)\/jquery(\.min)?\.js)
-    type: regex
-  - group: 0
-    name: version
-    part: body
-    regex:
-    - (jquery-([0-9\.]+)(\.min)?\.js)
-    type: regex
-  name: jquery
+
 - matchers:
   - name: html body
     part: body
@@ -14188,17 +14129,7 @@
     - (micro_httpd)
     type: regex
   name: micro_httpd
-- matchers:
-  - part: headers.server
-    regex:
-    - (Microsoft-HTTPAPI)
-    type: regex
-  - name: version
-    part: headers.server
-    regex:
-    - (Microsoft-HTTPAPI\/(.+)$)
-    type: regex
-  name: microsoft_httpapi
+
 - matchers:
   - name: module:Site Not Found
     part: body
@@ -16011,18 +15942,7 @@
     words:
     - (<\/a> (20[\d]{2})-20[\d]{2} Powered by <a href="aboutnexus\.php">NexusPHP<\/a>)
   name: nexusphp
-- matchers:
-  - part: headers.server
-    regex:
-    - (^nginx$)
-    type: regex
-  - name: version
-    part: headers.server
-    group: 1
-    regex:
-    - ^nginx\/(([^\s]+).*$)
-    type: regex
-  name: nginx
+
 - matchers:
   - part: headers.server
     regex:
@@ -19969,9 +19889,7 @@
     regex:
     - (<b>PHP Version:<\/b> [^;]+;&nbsp;&nbsp;<b>Zend Engine Version:<\/b> [^;]+;&nbsp;&nbsp;<b>Qcodo
       Version:<\/b> ([^\(]+) \([^\(]+\)<br \/>)
-    type: word
-    words:
-    - Error
+    type: regex
   name: qcodo_development_framework
 - matchers:
   - name: version
@@ -27954,14 +27872,7 @@
     words:
     - h2
   name: http/2
-- matchers:
-  - group: 1
-    name: version
-    part: headers.server
-    regex:
-    - (?:apache(?:$|/([\d.]+)|[^/-])|(?:^|\b)httpd)
-    type: regex
-  name: apache_http_server
+
 - matchers:
   - part: headers.Set-Cookie
     type: word

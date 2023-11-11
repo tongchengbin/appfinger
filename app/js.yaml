@@ -1,0 +1,9 @@
+#各种前端组件
+- matchers:
+    - group: 0
+      name: version
+      part: body
+      regex:
+        - (jquery-([0-9\.]+)(\.min)?\.js)
+      type: regex
+  name: JQuery

@@ -1,0 +1,39 @@
+#各种web 服务器
+- matchers:
+    - part: headers.server
+      regex:
+        - (Microsoft-HTTPAPI)
+      type: regex
+    - name: version
+      part: headers.server
+      regex:
+        - Microsoft-HTTPAPI\/(.+)$
+      type: regex
+  name: Microsoft HTTPAPI
+
+
+- matchers:
+    - part: headers.server
+      regex:
+        - (^nginx$)
+      type: regex
+    - name: version
+      part: headers.server
+      group: 1
+      regex:
+        - ^nginx\/(([^\s]+).*$)
+      type: regex
+  name: Nginx
+
+- matchers:
+    - name: version
+      part: headers.server
+      regex:
+        - Apache\/([0-9.]+)
+      type: regex
+    - name: os
+      part: headers.server
+      regex:
+        - Apache\/[0-9.]+ \(([^\)]+)\)
+      type: regex
+  name: Apache HTTP Server
