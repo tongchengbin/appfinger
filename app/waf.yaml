@@ -1,0 +1,6 @@
+- matchers:
+    - part: header
+      words:
+        - X-Iinfo
+      type: word
+  name: imperva

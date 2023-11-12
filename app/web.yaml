@@ -10277,12 +10277,7 @@
       ([^\s]+) \([\d]{4}-[\d]{2}-[\d]{2}\))
     type: regex
   name: hiki
-- matchers:
-  - part: headers.server
-    regex:
-    - (^Hikvision-Webs$)
-    type: regex
-  name: hikvision
+
 - matchers:
   - part: headers.server
     regex:
@@ -14359,17 +14354,7 @@
     - (    <meta name="version" content="Mihalism Multi Host v([\d\.]+)" \/>)
     type: regex
   name: mihalism_multi_host
-- matchers:
-  - part: body
-    type: word
-    words:
-    - <title>mikrotik routeros > administration</title>
-  - name: version
-    part: body
-    regex:
-    - (<div class="top">mikrotik routeros ([^ ]+) configuration page<)
-    type: regex
-  name: mikrotik
+
 - matchers:
   - name: os:MineOS (Linux)
     part: body
@@ -15936,7 +15921,7 @@
     type: word
     words:
     - <tr><td class="rowhead">SSL (HTTPS):</td><td class="rowfollow" align="left"><input
-      class="checkbox" type="checkbox" name="ssl" value="yes"
+      class="checkbox" type="checkbox" name="ssl.yaml" value="yes"
   - part: body
     type: word
     words:
@@ -16876,17 +16861,7 @@
     - (^openresty\/(.*))
     type: regex
   name: openresty
-- matchers:
-  - part: headers.server
-    regex:
-    - (OpenSSL)
-    type: regex
-  - name: version
-    part: headers.server
-    regex:
-    - ([^\r^\n]*OpenSSL\/([^\s^\r^\n]+))
-    type: regex
-  name: openssl
+
 - matchers:
   - part: body
     type: word
@@ -26491,7 +26466,7 @@
 - matchers:
   - part: body
     regex:
-    - (<script src="https?:\/\/(ssl-)?stats\.wordpress\.com\/[^"]+" type="text\/javascript"><\/script>)
+    - (<script src="https?:\/\/(ssl.yaml-)?stats\.wordpress\.com\/[^"]+" type="text\/javascript"><\/script>)
     type: regex
   - part: body
     regex:
@@ -27647,7 +27622,7 @@
   - part: headers.vary
     type: word
     words:
-    - fastly-ssl
+    - fastly-ssl.yaml
   name: fastly
 - matchers:
   - group: 1
@@ -29756,12 +29731,7 @@
     - ^ikas$
     type: regex
   name: ikas
-- matchers:
-  - part: headers.x-cdn
-    regex:
-    - ^imperva
-    type: regex
-  name: imperva
+
 - matchers:
   - part: headers.Set-Cookie
     type: word

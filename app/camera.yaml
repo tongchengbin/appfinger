@@ -1,0 +1,8 @@
+#摄像头相关
+
+- matchers:
+    - part: headers.server
+      words:
+        - DNVRS-Webs
+      type: word
+  name: Hikvision
