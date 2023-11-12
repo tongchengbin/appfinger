@@ -1,0 +1,7 @@
+- name: TornadoServer
+  matchers:
+  - part: headers.server
+    type: regex
+    name: version
+    regex:
+        - TornadoServer\/([\d.]+)

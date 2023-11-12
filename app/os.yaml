@@ -1,0 +1,13 @@
+# 单独匹配系统信息
+
+- name: Linux
+  matchers:
+    - part: headers.server
+      type: regex
+      name: version
+      regex:
+        - Linux\/([\d.x]+)
+    - part: headers.server
+      type: word
+      regex:
+        - linux

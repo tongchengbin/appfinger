@@ -83,7 +83,12 @@ func (r *Rule) Match(banner *Banner) (bool, map[string]string) {
 	var ok bool
 	var matchedString []string
 	matchedMapString := make(map[string]string)
+	// 为了保证数据都被提取到 所以需要匹配所有的规则
+	var matched bool
 	for _, matcher := range r.Matchers {
+		if matched && !matcher.HasExtra {
+			continue
+		}
 		switch matcher.GetType() {
 		case matchers.StatusMatcher:
 			ok = matcher.MatchStatusCode(banner.StatusCode)
@@ -97,8 +102,9 @@ func (r *Rule) Match(banner *Banner) (bool, map[string]string) {
 		if matcher.Name != "" && len(matchedString) > 0 {
 			matchedMapString[matcher.Name] = matchedString[0]
 		}
-		if r.MatchersCondition == "or" && ok {
-			return true, matchedMapString
+		if (r.MatchersCondition == "" || r.MatchersCondition == "or") && ok {
+			matched = true
+			continue
 		}
 		if r.MatchersCondition == "and" && !ok {
 			return false, nil
@@ -165,12 +171,31 @@ func (f *AppFinger) Match(banner *Banner) map[string]map[string]string {
 	return result
 }
 
+func mergeMaps(map1, map2 map[string]map[string]string) map[string]map[string]string {
+	result := make(map[string]map[string]string)
+	// 遍历第一个 map
+	for key, value := range map1 {
+		result[key] = value
+	}
+	// 遍历第二个 map
+	for key, value := range map2 {
+		// 如果键已存在，则根据需求选择合并或覆盖值
+		// 这里选择覆盖
+		result[key] = value
+	}
+
+	return result
+}
 func (f *AppFinger) MatchURI(uri string) (*Banner, map[string]map[string]string) {
-	banner, err := Request(uri, f.timeout, f.Proxy)
+	banners, err := Request(uri, f.timeout, f.Proxy)
+	var fingerprints map[string]map[string]string
 	if err != nil {
 		gologger.Debug().Msg(err.Error())
 		return nil, nil
 	}
-	fingerprints := f.Match(banner)
-	return banner, fingerprints
+	for _, banner := range banners {
+		fingerprints = mergeMaps(fingerprints, f.Match(banner))
+	}
+
+	return banners[len(banners)-1], fingerprints
 }

@@ -31,6 +31,7 @@ type Matcher struct {
 	regexCompiled []*regexp.Regexp `json:"regex_compiled,omitempty"`
 	condition     ConditionType    `json:"condition,omitempty"`
 	matcherType   MatcherType      `json:"matcher_type,omitempty"`
+	HasExtra      bool
 }
 
 var ConditionTypes = map[string]ConditionType{

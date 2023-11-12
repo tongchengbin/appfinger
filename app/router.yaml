@@ -1,0 +1,11 @@
+- name: TP-Link
+  matchers:
+  - part: headers.server
+    type: word
+    words:
+    - TP-LINK
+  - part: headers.server
+    type: regex
+    name: version
+    regex:
+        - TP-LINK\/([\d.]+)

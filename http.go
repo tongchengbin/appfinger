@@ -11,6 +11,7 @@ import (
 	"golang.org/x/text/transform"
 	"net/http"
 	"net/url"
+	"regexp"
 	"strings"
 	"time"
 )
@@ -86,7 +87,7 @@ func ResponseDecoding(body []byte, charset string) string {
 	return str
 }
 
-func Request(uri string, timeout time.Duration, proxy string) (*Banner, error) {
+func Request(uri string, timeout time.Duration, proxy string) ([]*Banner, error) {
 	var proxyURl *url.URL
 	var err error
 	if proxy != "" {
@@ -119,41 +120,65 @@ func Request(uri string, timeout time.Duration, proxy string) (*Banner, error) {
 		}
 		client.Transport = tr
 	}
-	var rawResp bytes.Buffer
-	// 开始请求数据
-	req, err := http.NewRequest("GET", uri, nil)
-	if err != nil {
-		return nil, err
+	var banners []*Banner
+	var nextURI = uri
+	for ret := 0; ret < 3; ret++ {
+
+		var rawResp bytes.Buffer
+		// 开始请求数据
+		req, err := http.NewRequest("GET", nextURI, nil)
+		if err != nil {
+			return banners, err
+		}
+		req.Header.Set("Accept", "*/*")
+		req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.58")
+		resp, err := client.Do(req)
+		if err != nil && err.Error() != http.ErrUseLastResponse.Error() {
+			return banners, err
+		}
+		//rawResp.
+		_ = resp.Write(&rawResp)
+		var charset = "UTF-8"
+		contentType := resp.Header.Get("Content-Type")
+		if strings.Contains(contentType, "charset=") {
+			charsetIndex := strings.Index(contentType, "charset=")
+			charset = strings.Trim(contentType[charsetIndex+len("charset="):], " ")
+		}
+		RawData := ResponseDecoding(rawResp.Bytes(), charset)
+		separator := []byte("\r\n\r\n")
+		gologger.Debug().Msg("Dump HTTP Response For " + uri + "\r\n" + RawData)
+		index := strings.Index(RawData, "\r\n\r\n")
+		if index == -1 {
+			gologger.Warning().Msg("无法找到响应头和响应体的分割点:" + uri + "\r\n\r\n" + RawData)
+			return banners, errors.New("不是标准HTTP响应")
+		}
+		// 分割响应头和响应体
+		headerBytes := RawData[:index]
+		bodyBytes := RawData[index+len(separator):]
+		banner := &Banner{Body: RawData, Header: headerBytes, StatusCode: resp.StatusCode, Response: RawData, Headers: map[string]string{}}
+		banner.Title = getTitle([]byte(bodyBytes))
+		for k, v := range resp.Header {
+			banner.Headers[strings.ToLower(k)] = strings.Join(v, ",")
+		}
+		banners = append(banners, banner)
+		jsRedirectUri := parseJavaScript(bodyBytes)
+		if jsRedirectUri == "" {
+			break
+		} else {
+			nextURI, _ = url.JoinPath(uri, jsRedirectUri)
+		}
+
 	}
-	req.Header.Set("Accept", "*/*")
-	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.58")
-	resp, err := client.Do(req)
-	if err != nil && err.Error() != http.ErrUseLastResponse.Error() {
-		return nil, err
+	return banners, nil
+}
+
+func parseJavaScript(scriptContent string) string {
+	// 在这里解析JavaScript，提取跳转信息
+	re := regexp.MustCompile(`location\.replace\(["'](.+?)["']\)`)
+	matches := re.FindStringSubmatch(scriptContent)
+
+	if len(matches) >= 2 {
+		return matches[1]
 	}
-	//rawResp.
-	_ = resp.Write(&rawResp)
-	var charset = "UTF-8"
-	contentType := resp.Header.Get("Content-Type")
-	if strings.Contains(contentType, "charset=") {
-		charsetIndex := strings.Index(contentType, "charset=")
-		charset = strings.Trim(contentType[charsetIndex+len("charset="):], " ")
-	}
-	RawData := ResponseDecoding(rawResp.Bytes(), charset)
-	separator := []byte("\r\n\r\n")
-	gologger.Debug().Msg("Dump HTTP Response For " + uri + "\r\n" + RawData)
-	index := strings.Index(RawData, "\r\n\r\n")
-	if index == -1 {
-		gologger.Warning().Msg("无法找到响应头和响应体的分割点:" + uri + "\r\n\r\n" + RawData)
-		return nil, errors.New("不是标准HTTP响应")
-	}
-	// 分割响应头和响应体
-	headerBytes := RawData[:index]
-	bodyBytes := RawData[index+len(separator):]
-	banner := &Banner{Body: RawData, Header: headerBytes, StatusCode: resp.StatusCode, Response: RawData, Headers: map[string]string{}}
-	banner.Title = getTitle([]byte(bodyBytes))
-	for k, v := range resp.Header {
-		banner.Headers[strings.ToLower(k)] = strings.Join(v, ",")
-	}
-	return banner, nil
+	return ""
 }

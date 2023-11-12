@@ -151,3 +151,22 @@ func TestRegex(t *testing.T) {
 		gologger.Info().Msgf("Matched:%v Extract:%v", matched, extract)
 	}
 }
+
+func TestRedirect(t *testing.T) {
+	uri := parseJavaScript(`<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html lang="ja" oncontextmenu="return false">
+<head>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>BB-SW172 Network Camera</title>
+</head>
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<script type="text/javascript">
+<!--
+location.replace("./live/index2.html?Language=1")
+//-->
+</script>
+</body>`)
+	println(uri)
+}

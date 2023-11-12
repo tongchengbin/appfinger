@@ -50,5 +50,9 @@ func (matcher *Matcher) CompileMatchers() error {
 	} else {
 		matcher.condition = ORCondition
 	}
+	if matcher.Name != "" {
+		matcher.HasExtra = true
+
+	}
 	return nil
 }
