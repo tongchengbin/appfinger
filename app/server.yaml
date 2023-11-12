@@ -50,3 +50,15 @@
         - mxhttpd\/(.+)$
       type: regex
 
+- name: UPnP
+  matchers:
+    - part: headers.server
+      name: version
+      regex:
+        - UPnP\/([0-9.]+)
+      type: regex
+    - name: version
+      part: headers.server
+      regex:
+        - UPnP\/([0-9.]+)
+      type: regex

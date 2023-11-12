@@ -3341,28 +3341,7 @@
     - <form name="loginForm" method="post" action="/dsview/protected/login.do" class="form-block"><span
       id='propertiesForm'></span>
   name: avocent_dsview
-- matchers:
-  - part: body
-    type: word
-    words:
-    - <title>--- VIDEO WEB SERVER ---</title>
-  - name: version
-    part: body
-    regex:
-    - AVC732E
-    type: regex
-    words:
-    - <input type="button" name="Download" value="Download AP" class="button" onClick="MM_goToURL('parent','ftp://211.22.74.18/AV732E/setup.exe');return
-      document.MM_returnValue" title="Download AP">
-  - name: version
-    part: body
-    regex:
-    - AVC733
-    type: regex
-    words:
-    - <input type="submit" name="Download" value="Download AP" class="button" onClick="MM_goToURL('parent','ftp://211.22.74.18/AV733/setup.exe');return
-      document.MM_returnValue" title="Download AP">
-  name: avtech_video_web_server
+
 - matchers:
   - part: body
     type: word
@@ -6354,19 +6333,13 @@
     type: word
     words:
     - <h2 align=center>ConfTool Conference Administration</h2>
-  - part: body
-    type: word
-    words:
-    - Standard
   - group: 2
     name: version
     part: body
     regex:
     - (<td align="right" nowrap><a href="http:\/\/www\.conftool\.net\/"><span class="[^"]+">Conference
       Software - <\/span><span class="[^"]+">[\s]+(VSIS )?ConfTool( Pro)? ([^<^\s]+)<\/span><\/a><BR>)
-    type: word
-    words:
-    - Pro
+    type: regex
   - group: 3
     name: version
     part: body
@@ -6374,9 +6347,7 @@
     - (<td align="right" nowrap><span class="normal8"><a href='http:\/\/www\.conftool\.net'>(Conference
       |Web-based |Event |Abstract )?(Management|Conference) (Software|System) - VSIS
       <b>ConfTool<\/b><\/a> Standard ([^<^\s]+)<\/span><BR>)
-    type: word
-    words:
-    - Standard
+    type: regex
   name: conftool
 - matchers:
   - part: headers.server
@@ -12741,72 +12712,6 @@
   name: kontaktformular
 - matchers:
   - part: body
-    regex:
-    - (Powered by <a title="Koobi ist ein komfortables und leistungsf&auml;higes Content-Management-System
-      \(CMS\) f&uuml;r Privatpersonen, Vereine, kleine und mittelst&auml;ndische Unternehmen,
-      die einen professionellen Internetauftritt realisieren m&ouml;chten."[^>]+>Koobi)
-    type: regex
-  - part: body
-    type: word
-    words:
-    - <!-- powered by koobi - do not remove this info! -->
-  - name: version
-    part: body
-    regex:
-    - (powered by <a class="foot" href="http:\/\/www.dream4.de\/[^>]+>Koobi Pro ([\d\.]+)<\/a>)
-    type: word
-    words:
-    - Pro
-  - name: version
-    part: body
-    regex:
-    - (<meta name="generator" content="\(c\) Koobi ([\d\.]+), http:\/\/www.dream4.de"
-      \/>)
-    type: regex
-  - group: 1
-    name: version
-    part: body
-    regex:
-    - (Powered by <a title="Koobi ist ein komfortables und leistungsf&auml;higes Content-Management-System
-      \(CMS\) f&uuml;r Privatpersonen, Vereine, kleine und mittelst&auml;ndische Unternehmen,
-      die einen professionellen Internetauftritt realisieren m&ouml;chten."[^>]*>Koobi[\
-      :]*(SHOP|PRO|CMS)<\/a> ([\d\.]+))
-    type: regex
-  - group: 1
-    name: version
-    part: body
-    regex:
-    - (Powered by <a[^>]+href="http:\/\/www.dream4.de\/cms\/content\/6\/koobi\/1\/">Koobi<\/a>
-      (PRO|SHOP|CMS)[\s]*([\d\.\ a-z]+))
-    type: regex
-  - name: version
-    part: body
-    regex:
-    - (powered by <a[^>]+href="http:\/\/www.dream4.de\/[^>]+>koobi-cms<\/a> ([\d\.]+))
-    type: regex
-  - name: version
-    part: body
-    regex:
-    - (<div class="copyright">powered by Koobi CMS ([\d\.]+))
-    type: regex
-  - group: 1
-    name: version
-    part: body
-    regex:
-    - (    Diese Webseite wurde mit Koobi[\ :]*(SHOP|PRO|CMS)[\ \-]*([\d\.\ a-z]+)
-      erstellt.)
-    type: regex
-  - name: version
-    part: body
-    regex:
-    - (powered by <a class="foot" href="http:\/\/www.antichat.ru" target="_blank">Koobi
-      Pro ([\d\.]+) \[nulled by censored! from antichat.ru\]<\/a>)
-    type: word
-    words:
-    - Nulled
-  name: koobi
-- matchers:
-  - part: body
     type: word
     words:
     - stm_aix("p6i3","p1i0",[0," Kordil EDMS\' website","","",-1,-1,0,"http://www.kordil.net"],150,20);
@@ -17577,48 +17482,9 @@
   - name: rss link type
     part: body
     regex:
-    - (<input [^>]*?type=["']password["'][^>]*>)
+    - <input [^>]*?type=["']password["'][^>]*>
     type: regex
   name: passwordfield
-- matchers:
-  - name: version
-    part: body
-    regex:
-    - 10.x
-    type: regex
-    words:
-    - eval("page" + id + " = window.open(URL, '" + id + "', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=650,height=400,left
-      = 199.5,top = 196.5');");
-  - name: version
-    part: body
-    regex:
-    - (Pc4Uploader <font color="#000080"> <b>v([\d\.]+)<\/b><\/font>)
-    type: regex
-  - name: version
-    part: body
-    regex:
-    - (Pc4Uploader <font color="#000080"> <b>v([\d\.]+) Pro<\/b><\/font>)
-    type: word
-    words:
-    - Pro
-  - name: version
-    part: body
-    regex:
-    - '(<p id="legal" style="text-align: center">Powered by Pc4Uploader v<span lang="en-us">([\d\.]+)<\/span><\/p>)'
-    type: regex
-  - name: version
-    part: body
-    regex:
-    - (Powered by Pc4Uploader <b>v([\d\.]+)<\/b>&nbsp; Copyright <b>)
-    type: regex
-  - name: version
-    part: body
-    regex:
-    - (Powered by Pc4Uploader <b>v([\d\.]+) Pro<\/b>&nbsp; Copyright <b>)
-    type: word
-    words:
-    - Pro
-  name: pc4uploader
 - matchers:
   - part: body
     type: word

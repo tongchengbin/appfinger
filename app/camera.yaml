@@ -14,3 +14,26 @@
         - "MOBOTIX AG, Germany"
       type: word
   name: MOBOTIX
+
+
+- matchers:
+    - part: headers.server
+      type: regex
+      name: version
+      regex:
+        - Avtech\/([\d.]+)
+  name: avtech
+
+- name: Panasonic
+  matchers:
+    - part: headers.www-authenticate
+      type: word
+      words:
+        - Panasonic
+
+- name: UNIView
+  matchers:
+    - part: body
+      type: word
+      words:
+        - tip-UNVWeChat

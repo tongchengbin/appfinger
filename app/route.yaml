@@ -6,3 +6,16 @@
       words:
         - RouterOS
   name: mikrotik RouterOS
+
+
+- name: NETGEAR
+  matchers:
+  - part: headers.Www-Authenticate
+    type: word
+    words:
+        - NETGEAR
+  - part: headers.Www-Authenticate
+    type: regex
+    name: mode
+    regex:
+        - NETGEAR ([\w\d.]+)
