@@ -22485,27 +22485,10 @@
   name: spiceworks
 - matchers:
   - name: model:HMP100
-    part: body
+    part: regex
     regex:
     - '(<title>HMP100 #[0-9a-z]*: Status<\/title>)'
     type: word
-    words:
-    - Admin
-  - name: model:HMP100
-    part: body
-    type: word
-    words:
-    - Admin
-  - name: model:HMP100
-    part: body
-    type: word
-    words:
-    - Admin
-  - name: model:HMP100
-    part: body
-    type: word
-    words:
-    - Admin
   name: spinetix_hyper_media_player
 - matchers:
   - part: headers.server

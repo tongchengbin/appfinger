@@ -37,3 +37,16 @@
         - Apache\/[0-9.]+ \(([^\)]+)\)
       type: regex
   name: Apache HTTP Server
+
+- name: mxhttpd
+  matchers:
+    - part: headers.server
+      regex:
+        - (mxhttpd)
+      type: regex
+    - name: version
+      part: headers.server
+      regex:
+        - mxhttpd\/(.+)$
+      type: regex
+

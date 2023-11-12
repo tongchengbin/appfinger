@@ -6,3 +6,11 @@
         - DNVRS-Webs
       type: word
   name: Hikvision
+
+
+- matchers:
+    - part: body
+      words:
+        - "MOBOTIX AG, Germany"
+      type: word
+  name: MOBOTIX
