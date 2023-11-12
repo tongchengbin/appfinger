@@ -108,7 +108,7 @@ func Request(uri string, timeout time.Duration, proxy string) (*Banner, error) {
 			// 在这里可以自定义重定向策略
 			// 例如，你可以修改请求头，记录重定向次数等
 			// 默认行为是跟随重定向
-			return http.ErrUseLastResponse
+			return nil
 		},
 		Timeout: timeout,
 	}
