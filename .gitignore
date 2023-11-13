@@ -2,3 +2,5 @@
 dist
 dist/
 .goreleaser.yaml
+output.json
+productrelation.txt
