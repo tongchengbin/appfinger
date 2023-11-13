@@ -44,9 +44,6 @@ func ParseOptions() *Options {
 		fmt.Println(err.Error())
 		os.Exit(1)
 	}
-
-	// Default output is stdout
-	options.Output = os.Stdout
 	return options
 }
 

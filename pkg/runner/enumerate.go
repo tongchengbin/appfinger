@@ -3,6 +3,7 @@ package runner
 import (
 	"bufio"
 	"context"
+	"github.com/projectdiscovery/gologger"
 	"io"
 	"os"
 	"strings"
@@ -22,7 +23,7 @@ func (r *Runner) EnumerateMultipleDomainsWithCtx(ctx context.Context, reader io.
 				if banner == nil {
 					continue
 				}
-				r.callback(url, banner, extract)
+				r.callback(r, url, banner, extract)
 			}
 		}()
 	}
@@ -39,8 +40,21 @@ func (r *Runner) EnumerateMultipleDomainsWithCtx(ctx context.Context, reader io.
 }
 
 func (r *Runner) Enumerate() error {
+	var outputs []io.Writer
 	ctx := context.Background()
-	outputs := []io.Writer{r.options.Output}
+	if r.options.OutputFile != "" {
+		outputWriter := NewOutputWriter(true)
+		file, err := outputWriter.createFile(r.options.OutputFile, true)
+		if err != nil {
+			gologger.Error().Msgf("Could not create file for %s: %s\n", r.options.OutputFile, err)
+			return err
+		}
+		err = file.Close()
+		if err != nil {
+			return err
+		}
+	}
+
 	// If we have multiple domains as input,
 	if len(r.options.URL) > 0 {
 		reader := strings.NewReader(strings.Join(r.options.URL, "\n"))

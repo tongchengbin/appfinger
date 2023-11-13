@@ -1,10 +1,12 @@
 package runner
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/logrusorgru/aurora"
 	"github.com/projectdiscovery/gologger"
 	"github.com/tongchengbin/appfinger"
+	"io"
 	"strings"
 	"time"
 )
@@ -12,7 +14,8 @@ import (
 type Runner struct {
 	options  *Options
 	finger   *appfinger.AppFinger
-	callback func(url string, banner *appfinger.Banner, extract map[string]map[string]string)
+	callback func(runner *Runner, url string, banner *appfinger.Banner, extract map[string]map[string]string)
+	outputs  []io.Writer
 }
 
 func formatExtract(extract map[string]map[string]string) string {
@@ -31,10 +34,26 @@ func NewRunner(options *Options) (*Runner, error) {
 	runner := &Runner{
 		options: options,
 		finger:  appfinger.New(&appfinger.Options{Timeout: time.Second * time.Duration(options.Timeout), Proxy: options.Proxy, Home: options.FingerHome}),
-		callback: func(url string, banner *appfinger.Banner, extract map[string]map[string]string) {
+		callback: func(r *Runner, url string, banner *appfinger.Banner, extract map[string]map[string]string) {
+			for _, output := range r.outputs {
+				out := &OutputFields{URL: url, Extract: extract}
+				s, _ := json.Marshal(out)
+				_, _ = output.Write(append(s, "\n"...))
+			}
 			gologger.Info().Msgf("[%s] %v", aurora.Green(url).String(), formatExtract(extract))
 		},
 	}
+	var outputs []io.Writer
+	if options.OutputFile != "" {
+		outputWriter := NewOutputWriter(true)
+		file, err := outputWriter.createFile(options.OutputFile, true)
+		if err != nil {
+			gologger.Error().Msgf("Could not create file for %s: %s\n", options.OutputFile, err)
+			return nil, err
+		}
+		outputs = append(outputs, file)
+	}
+	runner.outputs = outputs
 	return runner, nil
 
 }
