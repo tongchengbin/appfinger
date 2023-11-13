@@ -37,3 +37,68 @@
       type: word
       words:
         - tip-UNVWeChat
+- name: DaHua
+  matchers:
+  - part: body
+    type: word
+    words:
+        - "Dahua Technology Co., Ltd."
+- name: Netwave
+  matchers:
+  - part: body
+    type: word
+    words:
+        - "Netwave IP Camera"
+- name: foscam
+  matchers:
+  - part: body
+    type: word
+    words:
+        - "FOSCAM"
+
+- name: DVR httpd
+  matchers:
+  - part: body
+    type: word
+    words:
+        - "DVRDVS-Webs"
+
+- name: D-Link DCS webcam httpd
+  matchers:
+  - part: body
+    type: word
+    words:
+        - "DCS-"
+- name: Mobotix Camera http config
+  matchers:
+  - part: body
+    type: word
+    words:
+        - "MOBOTIX AG, Germany"
+
+- name: panasonic Network Camera httpd
+  matchers:
+  - part: body
+    type: word
+    words:
+        - "Panasonic Network Camera"
+
+- name: GeoVision GeoHttpServer
+  matchers:
+  - part: body
+    type: word
+    words:
+        - "GeoHttpServer"
+
+- name: Avtech AVN801 network camera
+  matchers:
+  - part: body
+    type: word
+    words:
+        - "AVN801"
+- name: D-Link DCS-5222LB1 webcam httpd
+  matchers:
+  - part: body
+    type: word
+    words:
+        - "DCS-5222LB1"
