@@ -9381,12 +9381,6 @@
 - matchers:
   - part: body
     regex:
-    - <i?frame\(s+)
-    type: regex
-  name: frame
-- matchers:
-  - part: body
-    regex:
     - (<title>FreakAuth &raquo; [^<]+<\/title>)
     type: regex
   - part: body
