@@ -102,3 +102,10 @@
     type: word
     words:
         - "DCS-5222LB1"
+
+- name: TVT DVR
+  matchers:
+  - part: body
+    type: word
+    words:
+        - "VideoPluginNotify"

@@ -1439,7 +1439,7 @@
     regex:
     - (^4D_v[\d]{1,2}(_SQL)?\/([\d\.]+)$)
     type: regex
-  name: 4d
+  name: "4d"
 - matchers:
   - part: body
     regex:
