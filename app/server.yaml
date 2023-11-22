@@ -62,3 +62,9 @@
       regex:
         - UPnP\/([0-9.]+)
       type: regex
+
+- name: App-webs
+  matchers:
+    - path: header.server
+      words: App-webs
+      type: word

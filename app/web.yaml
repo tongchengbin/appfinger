@@ -10489,18 +10489,6 @@
     - (<!--[\s]+\(C\) Copyright (20[\d]{2}) Hewlett-Packard Development Company, L\.P\.[\s]+-->)
   name: hp_virtual_connect_manager
 - matchers:
-  - part: body
-    regex:
-    - (<!DOCTYPE html>)
-    type: regex
-  - part: body
-    regex:
-    - (<html[^>]* manifest=)
-    type: word
-    words:
-    - applicationCache
-  name: html5
-- matchers:
   - name: version
     part: headers.server
     regex:
@@ -20816,17 +20804,6 @@
       Wiki" target="_blank">ScrewTurn Wiki<\/a> version ([\d\.]+))
     type: regex
   name: screwturn_wiki
-- matchers:
-  - part: body
-    regex:
-    - (<script(\s|>))
-    type: regex
-  - group: 1
-    part: body
-    type: word
-    words:
-    - (<script[^>]+(language|type)\s*=\s*['"]?([^'"\s]+)['"]?)
-  name: script
 - matchers:
   - part: body
     regex:

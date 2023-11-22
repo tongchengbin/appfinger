@@ -165,7 +165,8 @@ func Request(uri string, timeout time.Duration, proxy string) ([]*Banner, error)
 		if jsRedirectUri == "" {
 			break
 		} else {
-			nextURI, _ = url.JoinPath(uri, jsRedirectUri)
+			nextURI = uri + "/" + jsRedirectUri
+			gologger.Debug().Msgf("redirect URL:%s", nextURI)
 		}
 
 	}
@@ -180,5 +181,13 @@ func parseJavaScript(scriptContent string) string {
 	if len(matches) >= 2 {
 		return matches[1]
 	}
+
+	re = regexp.MustCompile(`location\.href[ ]=[ ]["'](.+?)["']`)
+	matches = re.FindStringSubmatch(scriptContent)
+
+	if len(matches) >= 2 {
+		return matches[1]
+	}
+
 	return ""
 }

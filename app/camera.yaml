@@ -1,11 +1,18 @@
 #摄像头相关
-
 - matchers:
-    - part: headers.server
+    - part: body
       words:
-        - DNVRS-Webs
+        - "/doc/page/login.asp?_"
       type: word
   name: Hikvision
+
+#
+#- matchers:
+#    - part: headers.server
+#      words:
+#        - DNVRS-Webs
+#      type: word
+#  name: Hikvision
 
 
 - matchers:
@@ -109,3 +116,20 @@
     type: word
     words:
         - "VideoPluginNotify"
+
+# https://zdiiin.com.tw/
+- name: ZD-HVR
+  matchers:
+    - path: body
+      type: word
+      words:
+        - "doc/page/login.html"
+
+- name: Canon Camera
+  matchers:
+    - path: body
+      type: word
+      condition: and
+      words:
+        - canon
+        - "<title>Network Camera</title>"

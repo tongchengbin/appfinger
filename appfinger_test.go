@@ -170,3 +170,23 @@ location.replace("./live/index2.html?Language=1")
 </body>`)
 	println(uri)
 }
+
+func TestRedirect2(t *testing.T) {
+	uri := parseJavaScript(`<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" >
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+	<meta http-equiv="Expires" content="0" />
+</head>
+<body>
+</body>
+<script>
+	window.location.href = "./doc/page/login.asp?_" + (new Date()).getTime();
+</script>
+</html>`)
+	println(uri)
+}
