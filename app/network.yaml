@@ -1,4 +1,4 @@
-- name: Cisco IOS
+- name: IOS-XE
   matchers:
     - part: body
       words:
