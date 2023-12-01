@@ -28,6 +28,13 @@ func parseJavaScript(scriptContent string) string {
 			return m2[1]
 		}
 	}
-
 	return ""
+}
+
+func urlJoin(base, path string) string {
+	if base[len(base)-1] != '/' && path[0] != '/' {
+		base += "/"
+	}
+
+	return base + path
 }

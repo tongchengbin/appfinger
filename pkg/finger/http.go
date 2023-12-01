@@ -95,14 +95,14 @@ func Request(uri string, timeout time.Duration, proxy string) ([]*Banner, error)
 			return nil, err
 		}
 	}
-
+	// fix http redirect https
 	client := &http.Client{
-		Transport: &http.Transport{Proxy: http.ProxyURL(proxyURl)},
+		Transport: &http.Transport{Proxy: http.ProxyURL(proxyURl), TLSClientConfig: &tls.Config{InsecureSkipVerify: true}},
 		CheckRedirect: func(req *http.Request, via []*http.Request) error {
 			if len(via) >= 10 {
 				return http.ErrUseLastResponse
 			}
-			if via[0].URL.Host != req.URL.Host {
+			if via[0].URL.Hostname() != req.URL.Hostname() {
 				return http.ErrUseLastResponse
 			}
 			// 在这里可以自定义重定向策略
@@ -111,13 +111,6 @@ func Request(uri string, timeout time.Duration, proxy string) ([]*Banner, error)
 			return nil
 		},
 		Timeout: timeout,
-	}
-	if strings.HasPrefix(uri, "https://") {
-		tr := &http.Transport{
-			Proxy:           http.ProxyURL(proxyURl),
-			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-		}
-		client.Transport = tr
 	}
 	var banners []*Banner
 	var nextURI = uri
@@ -165,7 +158,7 @@ func Request(uri string, timeout time.Duration, proxy string) ([]*Banner, error)
 		if jsRedirectUri == "" {
 			break
 		} else {
-			nextURI = uri + "/" + jsRedirectUri
+			nextURI = urlJoin(uri, jsRedirectUri)
 			gologger.Debug().Msgf("redirect URL:%s", nextURI)
 		}
 
