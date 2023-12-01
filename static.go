@@ -8,7 +8,7 @@ import (
 )
 
 //go:embed app/*
-var rulesFiles embed.FS
+var RulesFiles embed.FS
 
 func LoadDirectoryRule(dir string) []string {
 	var contents []string

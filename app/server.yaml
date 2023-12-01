@@ -65,6 +65,14 @@
 
 - name: App-webs
   matchers:
-    - path: header.server
-      words: App-webs
+    - part: header.server
+      words:
+        - App-webs
+      type: word
+
+- name: openresty
+  matchers:
+    - part: headers.server
+      words:
+        - openresty
       type: word

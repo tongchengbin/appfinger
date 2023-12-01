@@ -16732,22 +16732,6 @@
       ask for my password for two weeks<\/p>)
     type: regex
   name: opennms
-- matchers:
-  - part: body
-    type: word
-    words:
-    - If you see this page, the OpenResty web platform is successfully installed and
-      working
-  - part: body
-    regex:
-    - (<hr><center>openresty<\/center>\s*<\/body>\s*<\/html>)
-    type: regex
-  - name: version
-    part: headers.server
-    regex:
-    - (^openresty\/(.*))
-    type: regex
-  name: openresty
 
 - matchers:
   - part: body

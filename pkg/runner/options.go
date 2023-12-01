@@ -6,8 +6,14 @@ import (
 	"github.com/projectdiscovery/goflags"
 	"io"
 	"os"
+	"path"
 	"strings"
 )
+
+func GetDefaultDirectory() string {
+	d, _ := os.UserHomeDir()
+	return path.Join(d, "finger")
+}
 
 type Options struct {
 	UrlFile    string
@@ -20,6 +26,7 @@ type Options struct {
 	Stdin      bool
 	FingerHome string
 	Debug      bool
+	UpdateRule bool
 }
 
 func ParseOptions() *Options {
@@ -33,7 +40,8 @@ func ParseOptions() *Options {
 		flagSet.IntVar(&options.Timeout, "timeout", 10, "Timeout in seconds (default 10)"),
 		flagSet.StringVarP(&options.Proxy, "proxy", "x", "", "HTTP proxy to use for requests (e.g. http://127.0.0.1:7890)"),
 		flagSet.BoolVarP(&options.Stdin, "stdin", "s", false, "Read urls from stdin"),
-		flagSet.StringVarP(&options.FingerHome, "finger-home", "d", "", "finger yaml directory home default is built-in"),
+		flagSet.StringVarP(&options.FingerHome, "finger-home", "d", GetDefaultDirectory(), "finger yaml directory home default is built-in"),
+		flagSet.BoolVarP(&options.UpdateRule, "update-rule", "ur", false, "update rule from github.com/tongchengbin/appfinger"),
 	)
 	flagSet.CreateGroup("Help", "Help",
 		flagSet.BoolVar(&options.Debug, "debug", false, "debug"),

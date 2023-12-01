@@ -1,9 +1,11 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"github.com/projectdiscovery/gologger"
 	"github.com/projectdiscovery/gologger/levels"
+	"github.com/tongchengbin/appfinger/pkg/external/customrules"
 	"github.com/tongchengbin/appfinger/pkg/runner"
 )
 
@@ -26,6 +28,10 @@ func main() {
 	options := runner.ParseOptions()
 	if options.Debug {
 		gologger.DefaultLogger.SetMaxLevel(levels.LevelDebug)
+	}
+	if options.UpdateRule {
+		customrules.DefaultProvider.Update(context.Background(), options.FingerHome)
+		return
 	}
 	appRunner, err := runner.NewRunner(options)
 	if err != nil {

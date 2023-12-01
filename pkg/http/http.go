@@ -1,4 +1,4 @@
-package appfinger
+package http
 
 import (
 	"bytes"
@@ -11,7 +11,6 @@ import (
 	"golang.org/x/text/transform"
 	"net/http"
 	"net/url"
-	"regexp"
 	"strings"
 	"time"
 )
@@ -123,7 +122,6 @@ func Request(uri string, timeout time.Duration, proxy string) ([]*Banner, error)
 	var banners []*Banner
 	var nextURI = uri
 	for ret := 0; ret < 3; ret++ {
-
 		var rawResp bytes.Buffer
 		// 开始请求数据
 		req, err := http.NewRequest("GET", nextURI, nil)
@@ -161,6 +159,8 @@ func Request(uri string, timeout time.Duration, proxy string) ([]*Banner, error)
 			banner.Headers[strings.ToLower(k)] = strings.Join(v, ",")
 		}
 		banners = append(banners, banner)
+		// 解析JavaScript跳转
+
 		jsRedirectUri := parseJavaScript(bodyBytes)
 		if jsRedirectUri == "" {
 			break
@@ -171,23 +171,4 @@ func Request(uri string, timeout time.Duration, proxy string) ([]*Banner, error)
 
 	}
 	return banners, nil
-}
-
-func parseJavaScript(scriptContent string) string {
-	// 在这里解析JavaScript，提取跳转信息
-	re := regexp.MustCompile(`location\.replace\(["'](.+?)["']\)`)
-	matches := re.FindStringSubmatch(scriptContent)
-
-	if len(matches) >= 2 {
-		return matches[1]
-	}
-
-	re = regexp.MustCompile(`location\.href[ ]=[ ]["'](.+?)["']`)
-	matches = re.FindStringSubmatch(scriptContent)
-
-	if len(matches) >= 2 {
-		return matches[1]
-	}
-
-	return ""
 }

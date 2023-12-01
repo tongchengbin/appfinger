@@ -1,7 +1,8 @@
-package appfinger
+package http
 
 import (
 	"github.com/projectdiscovery/gologger"
+	"github.com/tongchengbin/appfinger"
 	"github.com/tongchengbin/appfinger/pkg/matchers"
 	"gopkg.in/yaml.v3"
 	"os"
@@ -54,17 +55,17 @@ func (f *AppFinger) LoadAppFinger(directory string) {
 		//	 判断文件夹是否存在
 		_, err := os.Stat(directory)
 		if err == nil {
-			contents = append(contents, LoadDirectoryRule(directory)...)
+			contents = append(contents, appfinger.LoadDirectoryRule(directory)...)
 		}
 	}
 	if len(contents) == 0 {
 		gologger.Info().Msgf("Load AppFinger From Built-in")
-		files, err := rulesFiles.ReadDir("app")
+		files, err := appfinger.RulesFiles.ReadDir("app")
 		if err != nil {
 			panic(err)
 		}
 		for _, file := range files {
-			content, err := rulesFiles.ReadFile("app/" + file.Name())
+			content, err := appfinger.RulesFiles.ReadFile("app/" + file.Name())
 			if err != nil {
 				gologger.Warning().Msgf("ReadFile Error:%v", err.Error())
 				continue
@@ -127,8 +128,10 @@ func (f *AppFinger) AddFinger(content string) {
 				gologger.Info().Msgf("Compile matcher:%s", err.Error())
 			}
 		}
+		f.Rules = append(f.Rules, rule)
+
 	}
-	f.Rules = append(f.Rules, rules...)
+
 }
 
 func getMatchPart(part string, banner *Banner) string {
@@ -157,6 +160,7 @@ func (f *AppFinger) Match(banner *Banner) map[string]map[string]string {
 	result := make(map[string]map[string]string)
 	for _, rule := range f.Rules {
 		ok, extract := rule.Match(banner)
+
 		if ok {
 			if result[rule.Name] == nil {
 				result[rule.Name] = extract
