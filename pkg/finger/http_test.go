@@ -1,4 +1,4 @@
-package http
+package finger
 
 import (
 	"fmt"
@@ -156,9 +156,9 @@ func TestRedirect(t *testing.T) {
 	uri := parseJavaScript(`<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html lang="ja" oncontextmenu="return false">
 <head>
-<meta http-equiv="pragma" content="no-cache">
-<meta http-equiv="cache-control" content="no-cache">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta finger-equiv="pragma" content="no-cache">
+<meta finger-equiv="cache-control" content="no-cache">
+<meta finger-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>BB-SW172 Network Camera</title>
 </head>
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
@@ -176,11 +176,11 @@ func TestRedirect2(t *testing.T) {
 <html>
 <head>
 	<title></title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" >
-	<meta http-equiv="Pragma" content="no-cache" />
-	<meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
-	<meta http-equiv="Expires" content="0" />
+	<meta finger-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta finger-equiv="X-UA-Compatible" content="IE=edge" >
+	<meta finger-equiv="Pragma" content="no-cache" />
+	<meta finger-equiv="Cache-Control" content="no-cache, must-revalidate" />
+	<meta finger-equiv="Expires" content="0" />
 </head>
 <body>
 </body>

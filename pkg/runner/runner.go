@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/logrusorgru/aurora"
 	"github.com/projectdiscovery/gologger"
-	"github.com/tongchengbin/appfinger/pkg/http"
+	"github.com/tongchengbin/appfinger/pkg/finger"
 	"io"
 	"strings"
 	"time"
@@ -13,8 +13,8 @@ import (
 
 type Runner struct {
 	options  *Options
-	finger   *http.AppFinger
-	callback func(runner *Runner, url string, banner *http.Banner, extract map[string]map[string]string)
+	finger   *finger.AppFinger
+	callback func(runner *Runner, url string, banner *finger.Banner, extract map[string]map[string]string)
 	outputs  []io.Writer
 }
 
@@ -33,8 +33,8 @@ func formatExtract(extract map[string]map[string]string) string {
 func NewRunner(options *Options) (*Runner, error) {
 	runner := &Runner{
 		options: options,
-		finger:  http.New(&http.Options{Timeout: time.Second * time.Duration(options.Timeout), Proxy: options.Proxy, Home: options.FingerHome}),
-		callback: func(r *Runner, url string, banner *http.Banner, extract map[string]map[string]string) {
+		finger:  finger.New(&finger.Options{Timeout: time.Second * time.Duration(options.Timeout), Proxy: options.Proxy, Home: options.FingerHome}),
+		callback: func(r *Runner, url string, banner *finger.Banner, extract map[string]map[string]string) {
 			for _, output := range r.outputs {
 				out := &OutputFields{URL: url, Extract: extract}
 				s, _ := json.Marshal(out)

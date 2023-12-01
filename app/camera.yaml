@@ -76,7 +76,7 @@
     type: word
     words:
         - "DCS-"
-- name: Mobotix Camera http config
+- name: Mobotix Camera finger config
   matchers:
   - part: body
     type: word
