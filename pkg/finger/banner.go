@@ -23,14 +23,15 @@ type Rule struct {
 }
 
 type Banner struct {
-	Body       string
-	Header     string
-	Headers    map[string]string
-	Title      string
-	Icon       string
-	StatusCode int
-	Response   string
-	SSL        bool
+	Body        string
+	Header      string
+	Headers     map[string]string
+	Title       string
+	Icon        string
+	StatusCode  int
+	Response    string
+	SSL         bool
+	Certificate string
 }
 
 type AppFinger struct {
@@ -146,7 +147,8 @@ func getMatchPart(part string, banner *Banner) string {
 		return banner.Body
 	case "header":
 		return banner.Header
-
+	case "cert":
+		return banner.Certificate
 	case "title":
 		return banner.Title
 	case "response":

@@ -3,7 +3,9 @@ package finger
 import (
 	"bytes"
 	"crypto/tls"
+	"crypto/x509"
 	"errors"
+	"fmt"
 	"github.com/projectdiscovery/gologger"
 	"golang.org/x/net/html"
 	"golang.org/x/text/encoding/charmap"
@@ -86,6 +88,29 @@ func ResponseDecoding(body []byte, charset string) string {
 	return str
 }
 
+func parseCertificateInfo(cert *x509.Certificate) string {
+	ss := fmt.Sprintf("SSL Certificate\nVersion: TLS 1.%d\nCipherSuit:%s\nCertificate:\n\tSignature Algorithm: %s\n",
+		cert.Version,
+		cert.SignatureAlgorithm.String(), cert.SignatureAlgorithm.String())
+
+	var isUser []string
+	if cert.Issuer.Country != nil {
+		isUser = append(isUser, fmt.Sprintf("C=%s", strings.Join(cert.Issuer.Country, ",")))
+	}
+	if len(cert.Issuer.CommonName) > 0 {
+		isUser = append(isUser, fmt.Sprintf("CN=%s", cert.Issuer.CommonName))
+	}
+	if len(cert.Issuer.Organization) > 0 {
+		isUser = append(isUser, fmt.Sprintf("O=%s", strings.Join(cert.Issuer.Organization, ",")))
+	}
+	ss += fmt.Sprintf("\t\tIssuer: %s", strings.Join(isUser, ","))
+	//Validity
+	ss += fmt.Sprintf("\n\tValidity:\n\t\tNot Before: %s\n\t\tNot After : %s\n", cert.NotBefore.Format("2006-01-02 15:04:05"), cert.NotAfter.Format("2006-01-02 15:04:05"))
+	// Subject
+	ss += fmt.Sprintf("\tSubject: %s\n", cert.Subject.String())
+	return ss
+}
+
 func Request(uri string, timeout time.Duration, proxy string) ([]*Banner, error) {
 	var proxyURl *url.URL
 	var err error
@@ -97,7 +122,12 @@ func Request(uri string, timeout time.Duration, proxy string) ([]*Banner, error)
 	}
 	// fix http redirect https
 	client := &http.Client{
-		Transport: &http.Transport{Proxy: http.ProxyURL(proxyURl), TLSClientConfig: &tls.Config{InsecureSkipVerify: true}},
+
+		Transport: &http.Transport{Proxy: http.ProxyURL(proxyURl),
+			TLSClientConfig: &tls.Config{InsecureSkipVerify: true,
+				GetClientCertificate: func(info *tls.CertificateRequestInfo) (*tls.Certificate, error) {
+					return nil, nil
+				}}},
 		CheckRedirect: func(req *http.Request, via []*http.Request) error {
 			if len(via) >= 10 {
 				return http.ErrUseLastResponse
@@ -151,9 +181,15 @@ func Request(uri string, timeout time.Duration, proxy string) ([]*Banner, error)
 		for k, v := range resp.Header {
 			banner.Headers[strings.ToLower(k)] = strings.Join(v, ",")
 		}
+		// 获取服务器证书信息
+		if resp.TLS != nil {
+			cert := resp.TLS.PeerCertificates[0]
+			banner.Certificate = parseCertificateInfo(cert)
+			println(banner.Certificate)
+
+		}
 		banners = append(banners, banner)
 		// 解析JavaScript跳转
-
 		jsRedirectUri := parseJavaScript(bodyBytes)
 		if jsRedirectUri == "" {
 			break
