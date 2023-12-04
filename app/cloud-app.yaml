@@ -1,0 +1,6 @@
+- name: ownCloud
+  matchers:
+    - part: title
+      type: word
+      words:
+          - "ownCloud"
