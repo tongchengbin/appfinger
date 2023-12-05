@@ -104,6 +104,7 @@ func (r *Rule) Match(banner *Banner) (bool, map[string]string) {
 		if matcher.Name != "" && len(matchedString) > 0 {
 			matchedMapString[matcher.Name] = matchedString[0]
 		}
+
 		if (r.MatchersCondition == "" || r.MatchersCondition == "or") && ok {
 			matched = true
 			continue
@@ -112,7 +113,7 @@ func (r *Rule) Match(banner *Banner) (bool, map[string]string) {
 			return false, nil
 		}
 	}
-	return ok, matchedMapString
+	return matched, matchedMapString
 }
 
 func (f *AppFinger) AddFinger(content string) {
