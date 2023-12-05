@@ -14,16 +14,19 @@
 
 - matchers:
     - part: headers.server
-      regex:
-        - (^nginx$)
-      type: regex
+      words:
+        - nginx
+      type: word
     - name: version
       part: headers.server
       group: 1
       regex:
         - ^nginx\/(([^\s]+).*$)
       type: regex
+  matchers-condition: or
   name: Nginx
+
+
 
 - matchers:
     - name: version
