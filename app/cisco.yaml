@@ -1,4 +1,4 @@
-- name: RV042-VPN-Router
+- name: RV042
   matchers:
     - part: cert
       type: word
