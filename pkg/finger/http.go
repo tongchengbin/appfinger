@@ -185,8 +185,6 @@ func Request(uri string, timeout time.Duration, proxy string) ([]*Banner, error)
 		if resp.TLS != nil {
 			cert := resp.TLS.PeerCertificates[0]
 			banner.Certificate = parseCertificateInfo(cert)
-			println(banner.Certificate)
-
 		}
 		banners = append(banners, banner)
 		// 解析JavaScript跳转
