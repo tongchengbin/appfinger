@@ -125,9 +125,7 @@ func Request(uri string, timeout time.Duration, proxy string) ([]*Banner, error)
 
 		Transport: &http.Transport{Proxy: http.ProxyURL(proxyURl),
 			TLSClientConfig: &tls.Config{InsecureSkipVerify: true,
-				GetClientCertificate: func(info *tls.CertificateRequestInfo) (*tls.Certificate, error) {
-					return nil, nil
-				}}},
+				GetClientCertificate: nil}},
 		CheckRedirect: func(req *http.Request, via []*http.Request) error {
 			if len(via) >= 10 {
 				return http.ErrUseLastResponse

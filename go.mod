@@ -5,7 +5,6 @@ go 1.21
 require (
 	github.com/alecthomas/jsonschema v0.0.0-20220216202328-9eeeec9d044b
 	github.com/go-git/go-git/v5 v5.10.1
-	github.com/google/go-github v17.0.0+incompatible
 	github.com/logrusorgru/aurora v2.0.3+incompatible
 	github.com/pkg/errors v0.9.1
 	github.com/projectdiscovery/goflags v0.1.26
@@ -33,7 +32,6 @@ require (
 	github.com/go-git/go-billy/v5 v5.5.0 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/snappy v0.0.4 // indirect
-	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/gorilla/css v1.0.0 // indirect
 	github.com/iancoleman/orderedmap v0.0.0-20190318233801-ac98e3ecb4b0 // indirect
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
