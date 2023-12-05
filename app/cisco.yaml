@@ -1,0 +1,8 @@
+- name: RV042-VPN-Router
+  matchers:
+    - part: cert
+      type: word
+      condition: and
+      words:
+        - "RV042"
+        - "Cisco Systems"
