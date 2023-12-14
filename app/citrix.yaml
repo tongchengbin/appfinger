@@ -11,3 +11,21 @@
       type: word
       words:
         - "Citrix Gateway"
+- name: NetScaler AAA
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "NetScaler AAA"
+- name: Digital Workplace
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Digital Workplace"
+- name: NetScaler Gateway
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "NetScaler Gateway"
