@@ -82,7 +82,6 @@ func (f *AppFinger) LoadAppFinger(directory string) {
 }
 
 func (r *Rule) Match(banner *Banner) (bool, map[string]string) {
-	var ok bool
 	var matchedString []string
 	matchedMapString := make(map[string]string)
 	// 为了保证数据都被提取到 所以需要匹配所有的规则
@@ -93,23 +92,23 @@ func (r *Rule) Match(banner *Banner) (bool, map[string]string) {
 		}
 		switch matcher.GetType() {
 		case matchers.StatusMatcher:
-			ok = matcher.MatchStatusCode(banner.StatusCode)
+			matched = matcher.MatchStatusCode(banner.StatusCode)
 		case matchers.SizeMatcher:
-			ok = false
+			matched = false
 		case matchers.WordsMatcher:
-			ok, matchedString = matcher.MatchWords(getMatchPart(matcher.Part, banner))
+			matched, matchedString = matcher.MatchWords(getMatchPart(matcher.Part, banner))
 		case matchers.RegexMatcher:
-			ok, matchedString = matcher.MatchRegex(getMatchPart(matcher.Part, banner))
+			matched, matchedString = matcher.MatchRegex(getMatchPart(matcher.Part, banner))
 		}
 		if matcher.Name != "" && len(matchedString) > 0 {
 			matchedMapString[matcher.Name] = matchedString[0]
 		}
 
-		if (r.MatchersCondition == "" || r.MatchersCondition == "or") && ok {
+		if (r.MatchersCondition == "" || r.MatchersCondition == "or") && matched {
 			matched = true
 			continue
 		}
-		if r.MatchersCondition == "and" && !ok {
+		if r.MatchersCondition == "and" && !matched {
 			return false, nil
 		}
 	}
@@ -163,7 +162,6 @@ func (f *AppFinger) Match(banner *Banner) map[string]map[string]string {
 	result := make(map[string]map[string]string)
 	for _, rule := range f.Rules {
 		ok, extract := rule.Match(banner)
-
 		if ok {
 			if result[rule.Name] == nil {
 				result[rule.Name] = extract

@@ -124,7 +124,9 @@ func Request(uri string, timeout time.Duration, proxy string) ([]*Banner, error)
 	client := &http.Client{
 
 		Transport: &http.Transport{Proxy: http.ProxyURL(proxyURl),
-			TLSClientConfig: &tls.Config{InsecureSkipVerify: true,
+			TLSClientConfig: &tls.Config{
+				MinVersion:           tls.VersionTLS10,
+				InsecureSkipVerify:   true,
 				GetClientCertificate: nil}},
 		CheckRedirect: func(req *http.Request, via []*http.Request) error {
 			if len(via) >= 10 {
