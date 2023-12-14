@@ -1,0 +1,13 @@
+- name: netscaler Application Delivery Controller
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "NetScaler AAA"
+
+- name: Citrix Gateway
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Citrix Gateway"

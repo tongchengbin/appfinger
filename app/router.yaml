@@ -9,3 +9,37 @@
     name: version
     regex:
         - TP-LINK\/([\d.]+)
+- matchers:
+    - part: title
+      type: word
+      words:
+        - RouterOS
+  name: mikrotik RouterOS
+
+
+- name: NETGEAR
+  matchers:
+    - part: headers.Www-Authenticate
+      type: word
+      words:
+        - NETGEAR
+    - part: headers.Www-Authenticate
+      type: regex
+      name: mode
+      regex:
+        - NETGEAR ([\w\d.]+)
+
+- name: ToToLink
+  matchers-condition: and
+  matchers:
+    - part: body
+      condition: and
+      words:
+        - "/error.html"
+        - "/phone/login.html"
+        - "/login.html"
+      type: word
+    - part: headers.server
+      type: word
+      words:
+        - lighttpd
