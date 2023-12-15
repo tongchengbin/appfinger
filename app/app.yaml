@@ -1,0 +1,6 @@
+- name: zabbix
+  matchers:
+    - part: headers.set-cookie
+      type: word
+      words:
+        - "zbx_sessionid="

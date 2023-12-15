@@ -1,0 +1,7 @@
+- name: PHP
+  matchers:
+    - part: headers.x-powered-by
+      type: regex
+      name: version
+      regex:
+        - "PHP/(.+)"
