@@ -19,3 +19,11 @@
       type: word
       words:
         - "Login - pyLoad"
+
+- name: SpringBoot
+  matchers:
+    - part: 'body'
+      type: word
+      words:
+        - '"message":"No message available",'
+        - 'Whitelabel Error Page'
