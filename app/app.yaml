@@ -10,3 +10,5 @@
       type: word
       words:
         - "bbsessionhash="
+        - "bblastactivity"
+        - "bblastvisit"
