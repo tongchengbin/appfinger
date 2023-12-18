@@ -10,5 +10,12 @@
       type: word
       words:
         - "bbsessionhash="
-        - "bblastactivity"
-        - "bblastvisit"
+        - "bblastactivity="
+        - "bblastvisit="
+
+- name: pyLoad
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Login - pyLoad"

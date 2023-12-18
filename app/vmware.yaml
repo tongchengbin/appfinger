@@ -1,0 +1,6 @@
+- name: VMware:vRealize Network Insight
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "VMware vRealize Network Insight"
