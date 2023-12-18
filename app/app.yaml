@@ -4,3 +4,9 @@
       type: word
       words:
         - "zbx_sessionid="
+- name: vBulletin
+  matchers:
+    - part: headers.set-cookie
+      type: word
+      words:
+        - "bbsessionhash="

@@ -6,3 +6,10 @@
       words:
         - "RV042"
         - "Cisco Systems"
+
+- matchers:
+    - part: headers.server
+      regex:
+        - (^cisco-IOS)
+      type: regex
+  name: cisco_ios
