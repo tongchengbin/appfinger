@@ -97,13 +97,13 @@
     words:
         - "GeoHttpServer"
 
-- name: Avtech AVN801 network camera
+- name: avtech:avn801_dvr
   matchers:
   - part: body
     type: word
     words:
         - "AVN801"
-- name: D-Link DCS-5222LB1 webcam httpd
+- name: DLink:dcs-5222lb1
   matchers:
   - part: body
     type: word

@@ -1,0 +1,21 @@
+# 致远OA
+- name: seeyon:OA
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "/seeyon"
+
+- name: Seeyon:OA A8
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "致远A8+协同管理软件"
+
+- name: Seeyon:OA A6
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "致远协创A6"

@@ -12,14 +12,12 @@
         - "bbsessionhash="
         - "bblastactivity="
         - "bblastvisit="
-
 - name: pyLoad
   matchers:
     - part: title
       type: word
       words:
         - "Login - pyLoad"
-
 - name: SpringBoot
   matchers:
     - part: 'body'
@@ -27,3 +25,177 @@
       words:
         - '"message":"No message available",'
         - 'Whitelabel Error Page'
+- name: RomPager
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'Object Not Found'
+- name: FRITZ!Box
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'AVM-FRITZ!Box'
+- name: dahua-NVR
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'WEB SERVICE'
+- name: MIKROTIK-Router
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'RouterOS router configuration page'
+- name: Flexnet
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'Flexnet'
+- name: Jamf
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'Jamf Pro'
+- name: FortiPortal
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'FortiPortal'
+- name: Okta
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'Okta'
+- name: logstash
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'logstash'
+- name: cisco:vmanage_network_management
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'vManage'
+- name: OpenShift
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'OpenShift'
+- name: OFBiz
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'Apache OFBiz'
+- name: Papercut
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'Papercut'
+- name: Pega
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'Pega'
+- name: Solr
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'Apache Solr'
+- name: Rundeck
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'Rundeck'
+- name: Cisco BroadWorks
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'Cisco BroadWorks'
+- name: Cisco Unified
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'Cisco Unified'
+
+- name: Cisco WebEx
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'Cisco WebEx'
+
+- name: citrix xenapp
+  matchers:
+    - part: body
+      type: word
+      words:
+        - '/citrix/xenapp'
+
+
+- name: Jitsi Meet
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'Jitsi Meet'
+
+- name: goAnywhere-mft
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "GoAnywhere Managed File Transfer"
+
+- name: OpenNMS
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'OpenNMS Web Console'
+
+- name: Cisco CloudCenter
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'CloudCenter Suite'
+
+- name: F Secure Policy Manager
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "F-Secure Policy Manager"
+
+
+- name: manage engine dc
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'ManageEngine Desktop Central'
+
+
+- name: Apache Druid
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'Apache Druid'
