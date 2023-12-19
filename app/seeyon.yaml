@@ -5,6 +5,7 @@
       type: word
       words:
         - "/seeyon"
+        - "seeyonDownLoadPic"
 
 - name: Seeyon:OA A8
   matchers:
