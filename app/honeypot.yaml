@@ -6,3 +6,9 @@
       words:
         - Panasonic network device
         - MOBOTIX Camera User
+    - part: body
+      type: word
+      condition: and
+      words:
+        - "Server: nginx"
+        - "Server: Apache"
