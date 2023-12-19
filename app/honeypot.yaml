@@ -1,0 +1,8 @@
+- name: honeypot
+  matchers:
+    - part: body
+      type: word
+      condition: and
+      words:
+        - Panasonic network device
+        - MOBOTIX Camera User

@@ -188,7 +188,6 @@ func mergeMaps(map1, map2 map[string]map[string]string) map[string]map[string]st
 		// 这里选择覆盖
 		result[key] = value
 	}
-
 	return result
 }
 func (f *AppFinger) MatchURI(uri string) (*Banner, map[string]map[string]string) {
@@ -199,8 +198,11 @@ func (f *AppFinger) MatchURI(uri string) (*Banner, map[string]map[string]string)
 		return nil, nil
 	}
 	for _, banner := range banners {
+		// is honeypot.yaml
 		fingerprints = mergeMaps(fingerprints, f.Match(banner))
 	}
-
+	if _, ok := fingerprints["honeypot"]; ok {
+		return banners[len(banners)-1], map[string]map[string]string{"honeypot": make(map[string]string)}
+	}
 	return banners[len(banners)-1], fingerprints
 }
