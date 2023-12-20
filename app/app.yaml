@@ -199,3 +199,10 @@
       type: word
       words:
         - 'Apache Druid'
+
+- name: Spring
+  matchers:
+    - part: header
+      type: word
+      words:
+        - 'X-Application-Context'

@@ -4,7 +4,6 @@
       type: word
       words:
         - "/seller.php?s=/Public/login"
-
 - name: simplecrm
   matchers:
     - part: title
@@ -12,5 +11,21 @@
       words:
         - "SimpleCRM"
         - "Simple CRM"
-
-
+- name: sitecore
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "Sitecore"
+- name: smartbi
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "gcfutil = jsloader.resolve('smartbi.gcf.gcfutil')"
+- name: Splash
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Splash"
