@@ -1,0 +1,6 @@
+- name: Amazon:EC2
+  matchers:
+    - part: headers.server
+      type: word
+      words:
+        - "EC2ws"
