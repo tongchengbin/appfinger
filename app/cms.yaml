@@ -1,0 +1,6 @@
+- name: "狮子鱼cms"
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "/seller.php?s=/Public/login"
