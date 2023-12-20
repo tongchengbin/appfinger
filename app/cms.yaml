@@ -4,3 +4,13 @@
       type: word
       words:
         - "/seller.php?s=/Public/login"
+
+- name: simplecrm
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "SimpleCRM"
+        - "Simple CRM"
+
+
