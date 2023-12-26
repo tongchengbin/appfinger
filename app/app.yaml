@@ -79,7 +79,7 @@
       type: word
       words:
         - 'logstash'
-- name: cisco:vmanage_network_management
+- name: vmanage
   matchers:
     - part: title
       type: word
@@ -121,88 +121,640 @@
       type: word
       words:
         - 'Rundeck'
-- name: Cisco BroadWorks
+- name: BroadWorks
   matchers:
     - part: body
       type: word
       words:
         - 'Cisco BroadWorks'
-- name: Cisco Unified
+- name: Unified
   matchers:
     - part: title
       type: word
       words:
         - 'Cisco Unified'
-
 - name: Cisco WebEx
   matchers:
     - part: title
       type: word
       words:
         - 'Cisco WebEx'
-
-- name: citrix xenapp
+- name: xenapp
   matchers:
     - part: body
       type: word
       words:
         - '/citrix/xenapp'
-
-
 - name: Jitsi Meet
   matchers:
     - part: title
       type: word
       words:
         - 'Jitsi Meet'
-
-- name: goAnywhere-mft
+- name: goAnywhere
   matchers:
     - part: body
       type: word
       words:
         - "GoAnywhere Managed File Transfer"
-
 - name: OpenNMS
   matchers:
     - part: title
       type: word
       words:
         - 'OpenNMS Web Console'
-
-- name: Cisco CloudCenter
+- name: Cisco-CloudCenter-Suite
   matchers:
     - part: title
       type: word
       words:
         - 'CloudCenter Suite'
-
 - name: F Secure Policy Manager
   matchers:
     - part: body
       type: word
       words:
         - "F-Secure Policy Manager"
-
-
 - name: manage engine dc
   matchers:
     - part: title
       type: word
       words:
         - 'ManageEngine Desktop Central'
-
-
-- name: Apache Druid
+- name: Druid
   matchers:
     - part: title
       type: word
       words:
         - 'Apache Druid'
-
 - name: Spring
   matchers:
     - part: header
       type: word
       words:
         - 'X-Application-Context'
+- name: squirrelmail
+  matchers:
+    - part: body
+      type: word
+      words:
+        - <title>SquirrelMail - Login</title>
+    - part: body
+      type: word
+      words:
+        - function squirrelmail_loginpage_onload()
+    - part: body
+      type: word
+      words:
+        - /* avoid stupid IE6 bug with frames and scrollbars */
+    - part: body
+      type: word
+      words:
+        - <b>SquirrelMail Login</b>
+    - group: 1
+      name: version
+      part: body
+      regex:
+        - SquirrelMail version ([0-9.]+)
+      type: regex
+
+- name: ThinkCMF
+  matchers:
+    - part: headers.x-powered-by
+      type: word
+      words:
+        - ThinkCMF
+    - part: body
+      type: word
+      words:
+        - content="ThinkCMF
+        - made by <a href="http://www.thinkcmf.com" target="_blank">thinkcmf</a>
+- name: ThinkPHP
+  matchers:
+    - part: headers.x-powered-by
+      type: word
+      words:
+        - ThinkPHP
+    - part: body
+      type: word
+      words:
+        - ef="http://www.thinkphp.cn">thinkphp</a><sup>
+- name: UEditor
+  matchers:
+    - part: body
+      type: word
+      words:
+        - ueditor.all.min.js
+        - ueditor.all.js
+
+- name: WebP Server Go
+  matchers:
+    - part: headers.server
+      type: word
+      words:
+        - "WebP Server Go"
+- name: wework admin
+  matchers:
+    - part: body
+      type: word
+      words:
+        - wework_admin.normal_layout
+- name: zend framework
+  matchers:
+    - type: word
+      part: header
+      words:
+        - "zend framework"
+- name: Rocket Chat
+  matchers:
+    - type: word
+      part: body
+      words:
+        - "Rocket.Chat"
+- name: 瑞友天翼应用虚拟化系统
+  matchers:
+    - type: word
+      part: body
+      condition: and
+      words:
+        - "DownLoad.XGI"
+        - "realor.cn"
+        - "dvLogin"
+- name: RAILS
+  matchers:
+    - type: word
+      part: body
+      condition: and
+      words:
+        - "content=\"ruby on rails "
+        - "alt=\"ruby on rails\" "
+        - "type=\"hidden\" name=\"authenticity_token"
+- name: PrestaShop
+  matchers:
+    - type: word
+      part: headers
+      words:
+        - "PrestaShop"
+- name: 3CX
+  matchers:
+    - type: word
+      part: body
+      words:
+        - "src=\"/public/vendor.26422846c5ea381c.js\""
+        - "src=\"/public/app.807e10d98cfac19e.js\""
+- name: Academy LMS
+  matchers:
+    - type: word
+      part: body
+      words:
+        - "Academy LMS"
+- name: aic-intelligent
+  matchers:
+    - type: word
+      part: title
+      words:
+        - "AIC智能校园系统"
+- name: AnyProxy
+  matchers:
+    - type: word
+      part: body
+      words:
+        - "anyproxy"
+- name: Alumni Management System
+  matchers:
+    - type: word
+      part: body
+      name: "AlumniServer"
+      words:
+        - "AlumniServerProject.php"
+    - type: word
+      part: body
+      name: "AlumniServer"
+      words:
+        - "content=\"Alumni"
+    - type: word
+      part: body
+      words:
+        - "Alumni Management System"
+- name: Applezeed
+  matchers:
+    - type: word
+      part: body
+      words:
+        - "Power BY applezeed.com"
+- name: ASP-Nuke
+  matchers:
+    - type: word
+      part: body
+      name: "ASP-Nuke"
+      words:
+        - "CONTENT=\"ASP-Nuke"
+    - type: word
+      part: body
+      name: "ASP-Nuke"
+      words:
+        - "content=\"ASPNUKE"
+- name: AVCON6
+  redirects: true
+  matchers:
+    - type: word
+      part: body
+      name: "AVCON6"
+      words:
+        - "filename=avcon6setup.exe"
+        - "language_dispose.action"
+      condition: and
+    - type: word
+      part: body
+      name: "AVCON6"
+      words:
+        - "filename=AVCON6Setup.exe"
+      condition: and
+    - type: word
+      part: body
+      name: "AVCON6"
+      words:
+        - "avcon"
+      condition: and
+- name: beward_n100_h.264
+  matchers:
+    - type: word
+      part: header
+      words:
+        - "BEWARD N100 H.264"
+- name: BeyondTrust
+  matchers:
+    - type: word
+      part: header
+      words:
+        - "BeyondTrust"
+- name: BrightSign
+  matchers:
+    - type: word
+      part: title
+      words:
+        - "BrightSign"
+- name: Bullwark
+  matchers:
+    - type: word
+      part: title
+      words:
+        - "Bullwark"
+- name: Clodop Printer
+  matchers:
+    - type: word
+      part: title
+      words:
+        - "Welcome to C-Lodop"
+        - "C-Lodop"
+
+- name: ShopXO
+  matchers:
+    - type: word
+      part: headers
+      name: "ShopXO"
+      words:
+        - "ShopXO"
+- name: H-Sphere
+  matchers:
+    - type: word
+      part: title
+      words:
+        - "Parallels H-Sphere"
+- name: 大华智慧园区综合管理平台
+  matchers:
+    - part: body
+      type: word
+      words:
+        - /WPMS/asset/lib/gridster/
+        - URL='/WPMS
+- name: applyct
+  matchers:
+  - part: body
+    type: word
+    words:
+      - /applyct/
+- name: elfinder
+  matchers:
+  - part: body
+    type: word
+    words:
+      - <!-- Element where elFinder will be created (REQUIRED) -->
+- name: GLPi
+  matchers:
+    - part: title
+      type: word
+      words:
+        - glpi
+- name: FortiNAC
+  matchers:
+    - part: title
+      type: word
+      words:
+        - FortiNAC
+- name: FortiProxy
+  matchers:
+    - part: title
+      type: word
+      words:
+        - FortiProxy
+- name: FortiLogger
+  matchers:
+    - part: title
+      type: word
+      words:
+        - FortiLogger
+- name: R-SeeNet
+  matchers:
+    - part: title
+      type: word
+      words:
+          - R-SeeNet
+- name: MLflow
+  matchers:
+    - part: title
+      type: word
+      words:
+        - MLflow
+- name: Home-Assistant
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Home-Assistant
+- name: Avalanche
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Avalanche
+- name: Gibbon
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Gibbon Certificate Manager
+- name: Zimbra
+  matchers:
+    - part: headers.set-cookie
+      type: word
+      words:
+        - ZM_LOGIN_CSRF
+- name: YAPI
+  matchers:
+      - type: word
+        part: title
+        words:
+          - "YApi"
+- name: XXL-JOB
+  matchers:
+      - type: word
+        part: body
+        words:
+          - "<a><b>XXL</b>JOB</a>"
+- name: OpenSNS
+  matchers:
+    - type: word
+      part: body
+      words:
+        - "powered by opensns"
+        - "content=\"opensns"
+        - "os-icon-home app-icon "
+    - type: word
+      part: body
+      words:
+        - "content=\"OpenSNS"
+- name: Jorani
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Login - Jorani
+- name: modoboa
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Welcome to Modoboa
+- name: Jeecg Boot
+  matchers:
+    - type: word
+      part: title
+      words:
+        - JeecgBoot 企业级低代码平台
+    - type: word
+      part: icon_hash
+      words:
+        - "1380908726"
+        - "-250963920"
+    - type: word
+      part: body
+      words:
+        - "JeecgBoot"
+        - "polyfill_"
+      condition: and
+- name: FlatPress
+  matchers:
+    - type: word
+      part: title
+      words:
+        - FlatPress
+- name: KubePi
+  matchers:
+    - type: word
+      part: title
+      words:
+        - KubePi
+- name: bitbucket
+  matchers:
+    - type: word
+      part: title
+      words:
+        - Bitbucket
+- name: horde
+  matchers:
+    - type: word
+      part: headers
+      words:
+        - "horde3"
+      condition: and
+    - type: word
+      part: headers
+      words:
+        - "Horde3"
+      condition: and
+    - type: word
+      part: headers
+      words:
+        - "Set-Cookie:Horde"
+      condition: and
+- name: zeroShell
+  matchers:
+    - type: word
+      part: title
+      words:
+        - "zeroShell"
+- name: Axis
+  matchers:
+    - type: word
+      part: title
+      words:
+        - "Axis 2 - Home"
+- name: Struts
+  matchers:
+    - type: word
+      part: header
+      name: "Apache-Struts2"
+      words:
+        - "jsessionid"
+      condition: and
+- name: EYou
+  matchers:
+    - type: word
+      part: title
+      words:
+        - "eYouWS"
+      condition: and
+    - type: word
+      part: title
+      words:
+        - "EMPHPSID"
+- name: rconfig
+  matchers:
+    - type: word
+      part: body
+      words:
+        - "rConfigLogo"
+- name: thinvnc
+  matchers:
+    - type: word
+      part: title
+      words:
+        - "ThinVNC"
+- name: openfire
+  matchers:
+    - type: word
+      part: title
+      words:
+        - "openfire"
+- name: influxdb
+  matchers:
+    - type: word
+      part: title
+      words:
+        - "influxdb"
+- name: Nexus
+  matchers:
+    - type: word
+      part: body
+      words:
+        - Nexus Repository Manager
+
+- name: weiphp
+  matchers:
+    - type: word
+      part: title
+      words:
+        - "weiphp"
+- name: rocket.chat
+  matchers:
+    - type: word
+      part: icon_hash
+      words:
+        - "225632504"
+- name: phpDocumentor
+  matchers:
+    - type: word
+      part: title
+      words:
+        - "docBuilder - phpDocumentor web interface"
+- name: isPy
+  matchers:
+    - part: body
+      type: word
+      words:
+        - iSpy is running
+- name: bitrix24
+  matchers:
+    - part: title
+      type: word
+      words:
+        - bitrix24
+- name: zenphoto
+  matchers:
+    - part: title
+      type: word
+      words:
+        - zenphoto
+- name: finereport
+  matchers:
+    - part: body
+      type: word
+      words:
+        - finereport--web reporting tool
+- name: MeterSphere
+  matchers:
+    - part: title
+      type: word
+      words:
+        - MeterSphere
+- name: MobileIron
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - 545827989
+        - 967636089
+        - 362091310
+        - 2086228042
+- name: NetMizer
+  matchers:
+    - part: title
+      type: word
+      words:
+        - NetMizer
+- name: graylog
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Graylog
+- name: H3C IMC
+  matchers:
+    - part: body
+      type: word
+      words:
+        - imc来宾接入自助管理系统
+        - login_logo_h3c.png.jsf
+        - com_h3c_imc_usr_usermgr_alluser_overlaydiv
+        - h3c 智能管理中心"
+- name: natshell
+  matchers:
+    - part: body
+      type: word
+      words:
+        - <h4>欢迎登录natshell</h4
+- name: axis2
+  matchers:
+    - part: body
+      type: word
+      words:
+        - axis2-web/css/axis-style.css
+- name: clusterengine
+  matchers:
+    - part: title
+      type: word
+      words:
+        - clusterengine
+- name: Minio
+  matchers:
+    - part: body
+      type: word
+      words:
+        - MinIO Browser
+- name: 明源云ERP
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 明源云ERP

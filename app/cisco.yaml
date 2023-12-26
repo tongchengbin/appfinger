@@ -13,3 +13,9 @@
         - (^cisco-IOS)
       type: regex
   name: cisco_ios
+- name: Cisco CloudCenter Suite
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "CloudCenter Suite"

@@ -1,4 +1,4 @@
-- name: Amazon:EC2
+- name: Amazon-EC2
   matchers:
     - part: headers.server
       type: word

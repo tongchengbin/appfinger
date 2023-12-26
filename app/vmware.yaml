@@ -1,6 +1,49 @@
-- name: VMware:vRealize Network Insight
+- name: vRealize Network Insight
   matchers:
     - part: title
       type: word
       words:
         - "VMware vRealize Network Insight"
+- name: cloud foundation
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Vmware Cloud"
+
+- name: vmware nsx
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "vmw_nsx_logo-black-triangle-500w.png"
+- name: VMware Appliance Management
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "VMware Appliance Management"
+- name: Vmware HCX
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "VMware HCX"
+- name: Vmware Horizon
+  matchers:
+  - part: title
+    type: word
+    words:
+        - "VMware Horizon"
+- name: Vmware vRealize
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "VMware vRealize Operations"
+- name: Vmware vCenter
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "VMware vCenter"

@@ -31,7 +31,7 @@
         - Avtech\/([\d.]+)
   name: avtech
 
-- name: Panasonic
+- name: Panasonic-Network-Camera
   matchers:
     - part: headers.www-authenticate
       type: word
@@ -50,13 +50,13 @@
     type: word
     words:
         - "Dahua Technology Co., Ltd."
-- name: Netwave
+- name: Netwavecamera
   matchers:
   - part: body
     type: word
     words:
         - "Netwave IP Camera"
-- name: foscam
+- name: Foscam-Camera
   matchers:
   - part: body
     type: word
@@ -70,40 +70,40 @@
     words:
         - "DVRDVS-Webs"
 
-- name: D-Link DCS webcam httpd
+- name: D_Link-DCS-IP-camera
   matchers:
   - part: body
     type: word
     words:
         - "DCS-"
-- name: Mobotix Camera finger config
+- name: Mobotix-Network-Camera
   matchers:
   - part: body
     type: word
     words:
         - "MOBOTIX AG, Germany"
 
-- name: panasonic Network Camera httpd
+- name: panasonic Network Camera
   matchers:
   - part: body
     type: word
     words:
         - "Panasonic Network Camera"
 
-- name: GeoVision GeoHttpServer
+- name: GeoHttpServer
   matchers:
   - part: body
     type: word
     words:
         - "GeoHttpServer"
 
-- name: avtech:avn801_dvr
+- name: avn801_dvr
   matchers:
   - part: body
     type: word
     words:
         - "AVN801"
-- name: DLink:dcs-5222lb1
+- name: dcs-5222lb1
   matchers:
   - part: body
     type: word
@@ -133,3 +133,10 @@
       words:
         - canon
         - "<title>Network Camera</title>"
+- name: ACTi Camera
+  matchers:
+    - path: body
+      type: word
+      condition: and
+      words:
+        - "ACTi 监控摄像机"

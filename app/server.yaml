@@ -39,7 +39,7 @@
       regex:
         - Apache\/[0-9.]+ \(([^\)]+)\)
       type: regex
-  name: apache:HTTP Server
+  name: Apache HTTP Server
 
 - name: mxhttpd
   matchers:
@@ -81,10 +81,126 @@
       type: word
 
 
-- name: Apache:Coyote
+- name: Coyote
   matchers:
     - name: version
       part: headers.server
       regex:
         - Apache-Coyote\/(.+)$
       type: regex
+- name: rocketmq
+  matchers:
+    - part: headers.x-application-context
+      type: word
+      words:
+        - rocketmq-console
+- name: activemq
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Apache ActiveMQ
+- name: nacos
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Nacos
+- name: Mongo-Express
+  matchers:
+    - type: word
+      part: headers.set-cookie
+      words:
+        - "mongo-express"
+- name: MyCloud NAS
+  matchers:
+    - part: body
+      type: word
+      words:
+        - WDMyCloud
+        - nas
+      condition: and
+
+- name: opendreambox
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "OpenDreambox"
+- name: SiteServer
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "SiteServer"
+- name: sharepoint Server
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "sprequestduration"
+        - sharepointerror
+        - x-sharepointhealthscore
+        - microsoftsharepointteamservices
+        - msowebpartpage_postbacksource
+        - sharepoint team
+        - microsoft sharepoint
+    - part: headers
+      type: word
+      words:
+        - sharepointerror
+        - microsoftsharepointteamservices
+        - x-sharepointhealthscore
+- name: Nagios-XI
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "nagios xi"
+    - part: body
+      type: word
+      words:
+        - "/nagiosxi/images/favicon.ico"
+        - "click the link below to get started using nagios xi."
+- name: panabit Gateway
+  matchers:
+    - part: body
+      type: word
+      words:
+          - "background-image: url('/icones/fundo_firebox.png')"
+    - part: body
+      type: word
+      condition: and
+      words:
+        - forum.panabit.com
+        - pa_iptcode
+    - part: body
+      type: word
+      condition: and
+      words:
+        - Maintain
+        - Panalog
+    - part: body
+      type: word
+      condition: and
+      words:
+        - id=\"codeno\"
+        - 日志系统
+- name: Ruckus Wireless
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "-2069844696"
+- name: aura
+  matchers:
+    - part: headers.server
+      type: word
+      words:
+        - aurahttpd
+- name: proftpd
+  matchers:
+    - part: headers
+      type: word
+      words:
+        - proftpd

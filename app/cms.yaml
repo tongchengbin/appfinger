@@ -29,3 +29,272 @@
       type: word
       words:
         - "Splash"
+- name: Zzzcms
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ZzzCMS"
+- name: 74cms
+  matchers:
+    - type: word
+      part: body
+      name: "74cms"
+      words:
+        - "content=\"74cms.com"
+    - type: word
+      part: body
+      name: "74cms"
+      words:
+        - "content=\"骑士CMS"
+    - type: word
+      part: body
+      name: "74cms"
+      words:
+        - "Powered by <a href=\"http://www.74cms.com/\""
+- name: AeroCMS
+  matchers:
+    - part: body
+      type: word
+      regex:
+        - 'content="(.*)AeroCMS(.*)'
+    - part: title
+      type: word
+      words:
+        - AeroCMS
+- name: ASPCMS
+  matchers:
+    - type: word
+      part: body
+      name: "ASPCMS"
+      words:
+        - "content=\"aspcms"
+        - "/inc/aspcms_advjs.asp"
+    - type: word
+      part: body
+      name: "ASPCMS"
+      words:
+        - "content=\"ASPCMS"
+    - type: word
+      part: body
+      name: "ASPCMS"
+      words:
+        - "/inc/AspCms_AdvJs.asp"
+    - type: word
+      part: body
+      name: "ASPCMS"
+      words:
+        - "AspCMS"
+- name: jsh ERP
+  matchers:
+    - type: word
+      part: body
+      words:
+        - "jshERP-boot"
+        - "platformConfig"
+      condition: and
+- name: H5S CONSOLE
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "H5S CONSOLE"
+
+- name: ZenTao
+  matchers:
+    - type: word
+      part: body
+      words:
+        - "<title>Welcome to use zentao"
+        - "<title>Welcome to zentao"
+- name: hjsoft HCM
+  matchers:
+    - type: word
+      part: title
+      words:
+        - "人力资源信息管理系统"
+- name: dedecms
+  matchers:
+    - type: word
+      part: body
+      words:
+        - "DedeCMS"
+        - "/templets/default/style/dedecms.css"
+        - "http://www.dedecms.com/"
+        - "Power by DedeCms"
+        - "Powered by <a target=\"_blank\" href=\"http://www.dedecms.com/\">DedeCMS</a>"
+- name: duomi_cms
+  matchers:
+    - type: word
+      part: body
+      words:
+        - "DuomiCms"
+- name: dotnet_cms
+  matchers:
+    - type: word
+      part: body
+      words:
+        - "dotnetcms"
+- name: fine_cms
+  matchers:
+    - type: word
+      part: body
+      name: "FineCMS"
+      words:
+        - "powered by finecms"
+        - "dayrui@gmail.com"
+        - "copyright\" content=\"finecms"
+        - "/statics/js/dayrui.js"
+      condition: and
+    - type: word
+      part: body
+      name: "FineCMS"
+      words:
+        - "Powered by FineCMS"
+      condition: and
+    - type: word
+      part: body
+      name: "FineCMS"
+      words:
+        - "Copyright\" content=\"FineCMS"
+      condition: and
+- name: showdoc
+  matchers:
+    - part: title
+      type: word
+      words:
+        - showdoc
+- name: atomcms
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "/atom/js/app.js"
+- name: mcms
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "铭飞MCMS"
+        - "铭飞基于"
+- name: cuppaCMS
+  matchers:
+    - part: headers.location
+      type: word
+      words:
+        - "Cuppa"
+- name: catfishCMS
+  matchers:
+    - type: word
+      part: body
+      words:
+        - "Catfish"
+    - type: word
+      part: body
+      words:
+        - "鲶鱼CMS"
+- name: TikiWiki CMS
+  matchers:
+    - type: word
+      part: body
+      words:
+        - "tiki-jsplugin.php"
+
+- name: fuel CMS
+  matchers:
+    - type: word
+      part: title
+      words:
+        - "Fuel"
+- name: wbce CMS
+  matchers:
+    - type: word
+      part: icon_hash
+      words:
+        - "1866451896"
+        - "1746653762"
+- name: SeaCMS
+  matchers:
+    - type: word
+      part: body
+      words:
+        - "Powered by SeaCms"
+    - type: word
+      part: body
+      words:
+        - "content=\"seacms"
+- name: xdCMS
+  matchers:
+    - type: word
+      part: body
+      words:
+        - "XDcms"
+        - "旭东单语言企业网站管理系统"
+- name: wuzhiCMS
+  matchers:
+    - type: word
+      part: body
+      words:
+        - "Powered by wuzhicms"
+        - 'content="wuzhicms"'
+- name: IncomCMS
+  matchers:
+    - type: word
+      part: body
+      words:
+        - IncomCMS
+- name: wdja_cms
+  matchers:
+    - type: word
+      part: body
+      words:
+        - wdjaCMS
+
+- name: masaCMS
+  matchers:
+    - type: word
+      part: body
+      words:
+        - masacms
+- name: pbootCMS
+  matchers:
+    - type: word
+      part: headers
+      words:
+        - "set-cookie: pbootsystem="
+- name: powercreator CMS
+  matchers:
+    - type: word
+      part: headers
+      words:
+        - "PowerCreator CMS"
+- name: webtareas
+  matchers:
+    - type: word
+      part: headers.set-cookie
+      words:
+        - "webTareasSID"
+- name: Discuz
+  matchers:
+    - type: word
+      part: body
+      words:
+        - "Powered by Discuz!"
+- name: EspCMS
+  matchers:
+    - type: word
+      part: body
+      words:
+        - "espcms"
+- name: anchorCMS
+  matchers:
+    - type: word
+      part: title
+      words:
+        - "Anchor CMS"
+- name: zzzphp
+  matchers:
+    - type: word
+      part: title
+      words:
+        - "zzzphp"

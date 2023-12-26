@@ -23,3 +23,9 @@
       type: word
       words:
         - "NetScaler Gateway"
+- name: Citrix SD-WAN
+  matchers:
+    - part: title
+      type: word
+      words:
+          - "Citrix SD-WAN"

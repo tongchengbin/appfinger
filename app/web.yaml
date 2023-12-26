@@ -344,33 +344,6 @@
     type: regex
   name: pmwiki
 - matchers:
-  - name: default title
-    part: body
-    type: word
-    words:
-    - <title>SquirrelMail - Login</title>
-  - name: js function
-    part: body
-    type: word
-    words:
-    - function squirrelmail_loginpage_onload()
-  - name: css comment
-    part: body
-    type: word
-    words:
-    - /* avoid stupid IE6 bug with frames and scrollbars */
-  - part: body
-    type: word
-    words:
-    - <b>SquirrelMail Login</b>
-  - group: 1
-    name: version
-    part: body
-    regex:
-    - (<(small|SMALL)>SquirrelMail version ([^<]+)<)
-    type: regex
-  name: squirrelmail
-- matchers:
   - part: body
     type: word
     words:
@@ -604,7 +577,7 @@
     regex:
     - (CraftSessionId)
     type: regex
-  name: craftcms
+  name: craft-cms
 - matchers:
   - part: headers.server
     regex:
@@ -1985,7 +1958,7 @@
     regex:
     - (^PHPWEBMAILSESSID=[^;]+;)
     type: regex
-  name: afterlogic_webmail_pro
+  name: afterlogic_webmail
 - matchers:
   - part: body
     type: word
@@ -2425,7 +2398,7 @@
     words:
     - <frame marginwidth="5" marginheight="5" src="menu_empty.html" name="menu" noresize
       scrolling="auto" frameborder="0">
-  name: ap_router
+  name: b_link_aprouter
 
 - matchers:
   - part: body
@@ -2468,7 +2441,7 @@
     regex:
     - (<title>Apache Flink Web Dashboard<\/title>)
     type: regex
-  name: apache_flink
+  name: flink
 - matchers:
   - part: body
     type: word
@@ -2502,38 +2475,6 @@
     words:
     - Development Mode
   name: apache_struts
-- matchers:
-  - name: tomcat in title
-    part: body
-    regex:
-    - (<title>Apache Tomcat<\/title>)
-    type: regex
-  - name: catalina home
-    part: body
-    regex:
-    - (CATALINA_HOME\/webapps\/ROOT\/index\.html)
-    type: regex
-  - name: Java Stack Trace Error
-    part: body
-    regex:
-    - (org\.apache\.tomcat\..*java\.lang\.Thread\.run)
-    type: regex
-  - name: version
-    part: body
-    regex:
-    - (Apache Tomcat\/([0-9\.]+)<\/h3><\/body><\/html>)
-    type: regex
-  - part: headers.server
-    regex:
-    - ^apache-coyote
-    type: regex
-  - group: 1
-    name: version
-    part: headers.x-powered-by
-    regex:
-    - \btomcat\b(?:-([\d.]+))?
-    type: regex
-  name: apache_tomcat
 - matchers:
   - group: 1
     name: version
@@ -3029,7 +2970,7 @@
     type: word
     words:
     - <meta name="decorator" content="atl.general">
-  name: atlassian_jira
+  name: jira
 - matchers:
   - part: body
     type: word
@@ -4145,7 +4086,7 @@
     regex:
     - (Powered by[\r\n\s]*<a href="finger:\/\/www.dotnetblogengine.net[\/]?"[^>]*>BlogEngine.NET<\/a>[\r\n\s]*([\d\.]+))
     type: regex
-  name: blogengine_net
+  name: blogengine.net
 - matchers:
   - part: body
     type: word
@@ -5331,7 +5272,7 @@
     type: word
     words:
     - '(FW-1 at ([^\s]+): Unauthorized to access the document\.)'
-  name: check_point_firewall
+  name: checkpoint_firewall
 - matchers:
   - part: headers.server
     regex:
@@ -8758,12 +8699,6 @@
   - part: body
     type: word
     words:
-    - Powered by <a href="finger://www.eptcel.com.br" target="_blank">ez oscommerce</a>
-  name: ez_oscommerce
-- matchers:
-  - part: body
-    type: word
-    words:
     - <title>eZ publish administration</title>
   - part: body
     type: word
@@ -8956,7 +8891,7 @@
     type: word
     words:
     - <b>Open Market, Inc.<br>&nbsp;ContentServer</b><hr>
-  name: fatwire_content_server
+  name: fatwire
 - matchers:
   - part: body
     type: word
@@ -12953,7 +12888,7 @@
     type: word
     words:
     - <meta name="generator" content="LimeSurvey finger://www.limesurvey.org" />
-  name: lime_survey
+  name: limesurvey
 - matchers:
   - part: body
     type: word
@@ -16863,7 +16798,7 @@
     type: word
     words:
     - </form><script language="javascript">var formObj = document.forms["RedirectForHost"];formObj.SWEHo.value=top.location.hostname;formObj.submit();</script></body></html>
-  name: oracle_siebel_crm
+  name: siebel
 - matchers:
   - name: version
     part: headers.server
@@ -21991,7 +21926,7 @@
     regex:
     - (^SonicWALL SSL-VPN Web Server\.?$)
     type: regex
-  name: sonicwall_ssl_vpn
+  name: sonicwall_sslvpn
 - matchers:
   - name: model:['SNC-M']
     part: body
@@ -26793,7 +26728,7 @@
     type: word
     words:
     - <meta name="generator" content="shopping cart program by Zen Cart&trade;, finger://www.zen-cart.com
-  name: zen_cart
+  name: zen-cart
 - matchers:
   - part: headers.www-authenticate
     type: word
@@ -27407,16 +27342,6 @@
     words:
     - _algolia
   name: algolia
-- matchers:
-  - part: headers.alt-svc
-    type: word
-    words:
-    - h2
-  - part: headers.x-firefox-spdy
-    type: word
-    words:
-    - h2
-  name: finger/2
 
 - matchers:
   - part: headers.Set-Cookie
@@ -27479,16 +27404,6 @@
     - <[^>]+\sdata-v(?:ue)?-
     type: regex
   name: vue.js
-- matchers:
-  - part: headers.cookie
-    type: word
-    words:
-    - cftoken=
-  - part: body
-    type: word
-    words:
-    - <!-- start headertags\.cfm
-  name: adobe_coldfusion
 - matchers:
   - part: body
     regex:
@@ -27846,7 +27761,7 @@
     regex:
     - ^apisix(?:/([\d\.]+))?$
     type: regex
-  name: apache_apisix
+  name: apisix
 - matchers:
   - part: body
     regex:
@@ -29116,16 +29031,6 @@
     type: regex
   name: hp_ilo
 - matchers:
-  - part: headers.alt-svc
-    type: word
-    words:
-    - h3
-  - part: headers.x-firefox-http3
-    type: word
-    words:
-    - h3
-  name: finger/3
-- matchers:
   - group: 1
     name: version
     part: body
@@ -29412,7 +29317,7 @@
     regex:
     - jbossweb(?:-([\d.]+))?
     type: regex
-  name: jboss_web
+  name: jboss
 - matchers:
   - part: headers.powered
     type: word
@@ -30648,12 +30553,6 @@
     type: regex
   name: reddit
 - matchers:
-  - part: body
-    type: word
-    words:
-    - <!--\s+performance optimized by redis object cache
-  name: redis_object_cache
-- matchers:
   - part: headers.content-security-policy
     type: word
     words:
@@ -31786,7 +31685,7 @@
     type: word
     words:
     - wordpress\.com
-  name: wordpress.com
+  name: wordpress
 - matchers:
   - part: headers.content-security-policy
     type: word

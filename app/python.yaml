@@ -5,3 +5,9 @@
     name: version
     regex:
         - TornadoServer\/([\d.]+)
+- name: jupyter
+  matchers:
+    - type: word
+      part: title
+      words:
+        - Jupyter Notebook
