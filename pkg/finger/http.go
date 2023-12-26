@@ -2,6 +2,7 @@ package finger
 
 import (
 	"bytes"
+	"context"
 	"crypto/tls"
 	"crypto/x509"
 	"encoding/base64"
@@ -11,10 +12,12 @@ import (
 	"github.com/projectdiscovery/gologger"
 	"github.com/spaolacci/murmur3"
 	"golang.org/x/net/html"
+	"golang.org/x/net/proxy"
 	"golang.org/x/text/encoding/charmap"
 	"golang.org/x/text/encoding/simplifiedchinese"
 	"golang.org/x/text/transform"
 	"io"
+	"net"
 	"net/http"
 	"net/url"
 	"strings"
@@ -160,23 +163,40 @@ func murmurhash(data []byte) int32 {
 	return int32(hasher.Sum32())
 }
 
-func Request(uri string, timeout time.Duration, proxy string) ([]*Banner, error) {
+func Request(uri string, timeout time.Duration, proxyURL string) ([]*Banner, error) {
 	var proxyURl *url.URL
 	var err error
-	if proxy != "" {
-		proxyURl, err = url.Parse(proxy)
+	if proxyURL != "" {
+		proxyURl, err = url.Parse(proxyURL)
 		if err != nil {
 			return nil, err
 		}
 	}
+	// proxy
+	transport := &http.Transport{
+		TLSClientConfig: &tls.Config{
+			MinVersion:           tls.VersionTLS10,
+			InsecureSkipVerify:   true,
+			GetClientCertificate: nil}}
+	if strings.HasPrefix("http://", proxyURL) || strings.HasPrefix("https://", proxyURL) {
+		transport.Proxy = http.ProxyURL(proxyURl)
+	} else {
+		socksURL, proxyErr := url.Parse(proxyURL)
+		if proxyErr != nil {
+			return nil, err
+		}
+		dialer, err := proxy.FromURL(socksURL, proxy.Direct)
+		if err != nil {
+			return nil, err
+		}
+		dc := dialer.(interface {
+			DialContext(ctx context.Context, network, addr string) (net.Conn, error)
+		})
+		transport.DialContext = dc.DialContext
+	}
 	// fix http redirect https
 	client := &http.Client{
-
-		Transport: &http.Transport{Proxy: http.ProxyURL(proxyURl),
-			TLSClientConfig: &tls.Config{
-				MinVersion:           tls.VersionTLS10,
-				InsecureSkipVerify:   true,
-				GetClientCertificate: nil}},
+		Transport: transport,
 		CheckRedirect: func(req *http.Request, via []*http.Request) error {
 			if len(via) >= 10 {
 				return http.ErrUseLastResponse
