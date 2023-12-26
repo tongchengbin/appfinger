@@ -1,6 +1,7 @@
 package finger
 
 import (
+	"fmt"
 	"github.com/projectdiscovery/gologger"
 	"github.com/tongchengbin/appfinger"
 	"github.com/tongchengbin/appfinger/pkg/matchers"
@@ -27,11 +28,11 @@ type Banner struct {
 	Header      string
 	Headers     map[string]string
 	Title       string
-	Icon        string
 	StatusCode  int
 	Response    string
 	SSL         bool
 	Certificate string
+	IconHash    int32
 }
 
 type AppFinger struct {
@@ -76,7 +77,10 @@ func (f *AppFinger) LoadAppFinger(directory string) {
 	}
 
 	for _, content := range contents {
-		f.AddFinger(content)
+		err := f.AddFinger(content)
+		if err != nil {
+			gologger.Error().Msgf("%v:%v", err.Error(), content)
+		}
 	}
 	gologger.Info().Msgf("Load AppFinger rules %v", len(f.Rules))
 }
@@ -115,24 +119,24 @@ func (r *Rule) Match(banner *Banner) (bool, map[string]string) {
 	return matched, matchedMapString
 }
 
-func (f *AppFinger) AddFinger(content string) {
+func (f *AppFinger) AddFinger(content string) error {
 	var rules []*Rule
 	err := yaml.Unmarshal([]byte(content), &rules)
 	if err != nil {
-		gologger.Debug().Msgf(err.Error())
-		return
+		return err
 	}
 	for _, rule := range rules {
 		for _, matcher := range rule.Matchers {
 			err := matcher.CompileMatchers()
 			if err != nil {
-				gologger.Info().Msgf("Compile matcher:%s", err.Error())
+				gologger.Error().Msgf("Compile matcher:%s -> %s", err.Error(), rule.Name)
 			}
 		}
 		f.Rules = append(f.Rules, rule)
 
 	}
 
+	return nil
 }
 
 func getMatchPart(part string, banner *Banner) string {
@@ -153,7 +157,8 @@ func getMatchPart(part string, banner *Banner) string {
 		return banner.Title
 	case "response":
 		return banner.Response
-
+	case "icon_hash":
+		return fmt.Sprintf("%v", banner.IconHash)
 	}
 	return ""
 }
@@ -194,7 +199,7 @@ func (f *AppFinger) MatchURI(uri string) (*Banner, map[string]map[string]string)
 	banners, err := Request(uri, f.timeout, f.Proxy)
 	var fingerprints map[string]map[string]string
 	if err != nil {
-		gologger.Debug().Msg(err.Error())
+		gologger.Warning().Msg(err.Error())
 		return nil, nil
 	}
 	for _, banner := range banners {

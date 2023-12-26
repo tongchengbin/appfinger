@@ -4,13 +4,17 @@ import (
 	"bytes"
 	"crypto/tls"
 	"crypto/x509"
+	"encoding/base64"
 	"errors"
 	"fmt"
+	"github.com/PuerkitoBio/goquery"
 	"github.com/projectdiscovery/gologger"
+	"github.com/spaolacci/murmur3"
 	"golang.org/x/net/html"
 	"golang.org/x/text/encoding/charmap"
 	"golang.org/x/text/encoding/simplifiedchinese"
 	"golang.org/x/text/transform"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
@@ -111,6 +115,51 @@ func parseCertificateInfo(cert *x509.Certificate) string {
 	return ss
 }
 
+func parseIconFile(body string) string {
+	// 解析HTML
+	reader := strings.NewReader(body)
+	doc, err := goquery.NewDocumentFromReader(reader)
+	if err != nil {
+		return ""
+	}
+	iconURL := ""
+	doc.Find("link[rel*='icon']").Each(func(i int, s *goquery.Selection) {
+		href, exists := s.Attr("href")
+		if exists {
+			iconURL = href
+		}
+	})
+	// 如果找不到图标标签，使用默认路径
+	if iconURL == "" {
+		iconURL = "/favicon.ico"
+	}
+	return strings.Replace(iconURL, "./", "/", 1)
+
+}
+func isAbsoluteURL(url string) bool {
+	return len(url) > 1 && (url[0] == '/' || url[1] == ':')
+}
+func InsertInto(s string, interval int, sep rune) string {
+	var buffer bytes.Buffer
+	before := interval - 1
+	last := len(s) - 1
+	for i, char := range s {
+		buffer.WriteRune(char)
+		if i%interval == before && i != last {
+			buffer.WriteRune(sep)
+		}
+	}
+	buffer.WriteRune(sep)
+	return buffer.String()
+}
+func murmurhash(data []byte) int32 {
+	stdBase64 := base64.StdEncoding.EncodeToString(data)
+	stdBase64 = InsertInto(stdBase64, 76, '\n')
+	hasher := murmur3.New32WithSeed(0)
+	hasher.Write([]byte(stdBase64))
+	return int32(hasher.Sum32())
+}
+
 func Request(uri string, timeout time.Duration, proxy string) ([]*Banner, error) {
 	var proxyURl *url.URL
 	var err error
@@ -157,6 +206,8 @@ func Request(uri string, timeout time.Duration, proxy string) ([]*Banner, error)
 		if err != nil && err.Error() != http.ErrUseLastResponse.Error() {
 			return banners, err
 		}
+		// redirect location refresh
+		nextURI = resp.Request.URL.String()
 		//rawResp.
 		_ = resp.Write(&rawResp)
 		var charset = "UTF-8"
@@ -197,5 +248,33 @@ func Request(uri string, timeout time.Duration, proxy string) ([]*Banner, error)
 		}
 
 	}
+	// 解析icon
+	if len(banners) > 0 {
+		iconURL := parseIconFile(banners[len(banners)-1].Body)
+		if iconURL == "" {
+			iconURL = "/favicon.ico"
+		}
+		if isAbsoluteURL(iconURL) {
+			iconURL = urlJoin(nextURI, iconURL)
+		}
+		req, err := http.NewRequest("GET", iconURL, nil)
+		if err != nil {
+			return banners, err
+		}
+		resp, err := client.Do(req)
+		if err != nil {
+			return banners, err
+		}
+		body, err := io.ReadAll(resp.Body)
+		if err != nil {
+			return banners, err
+		}
+		iconHash := murmurhash(body)
+		for _, banner := range banners {
+			banner.IconHash = iconHash
+		}
+
+	}
+
 	return banners, nil
 }

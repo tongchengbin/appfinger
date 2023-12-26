@@ -3,6 +3,7 @@ module github.com/tongchengbin/appfinger
 go 1.21
 
 require (
+	github.com/PuerkitoBio/goquery v1.8.1
 	github.com/alecthomas/jsonschema v0.0.0-20220216202328-9eeeec9d044b
 	github.com/go-git/go-git/v5 v5.10.1
 	github.com/logrusorgru/aurora v2.0.3+incompatible
@@ -10,6 +11,7 @@ require (
 	github.com/projectdiscovery/goflags v0.1.26
 	github.com/projectdiscovery/gologger v1.1.11
 	github.com/projectdiscovery/utils v0.0.60
+	github.com/spaolacci/murmur3 v1.1.0
 	github.com/stretchr/testify v1.8.4
 	golang.org/x/net v0.18.0
 	golang.org/x/text v0.14.0
@@ -20,6 +22,7 @@ require (
 	dario.cat/mergo v1.0.0 // indirect
 	github.com/Microsoft/go-winio v0.6.1 // indirect
 	github.com/ProtonMail/go-crypto v0.0.0-20230828082145-3c4c8a2d2371 // indirect
+	github.com/andybalholm/cascadia v1.3.1 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d // indirect
 	github.com/aymerick/douceur v0.2.0 // indirect
 	github.com/cloudflare/circl v1.3.3 // indirect
@@ -47,6 +50,7 @@ require (
 	github.com/pjbgf/sha1cd v0.3.0 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/projectdiscovery/blackrock v0.0.1 // indirect
+	github.com/robertkrimen/otto v0.3.0 // indirect
 	github.com/saintfish/chardet v0.0.0-20120816061221-3af4cd4741ca // indirect
 	github.com/sergi/go-diff v1.1.0 // indirect
 	github.com/skeema/knownhosts v1.2.1 // indirect
@@ -59,5 +63,6 @@ require (
 	golang.org/x/sys v0.14.0 // indirect
 	golang.org/x/tools v0.13.0 // indirect
 	gopkg.in/djherbis/times.v1 v1.3.0 // indirect
+	gopkg.in/sourcemap.v1 v1.0.5 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 )

@@ -27,7 +27,7 @@ func TestMatch(t *testing.T) {
         - "X-Powered-By: PHP/([0-9.]+)"`
 	a := assert.New(t)
 	appFinger := AppFinger{}
-	appFinger.AddFinger(content)
+	_ = appFinger.AddFinger(content)
 	a.True(len(appFinger.Rules) > 0)
 	banner := &Banner{Header: `HTTP/1.0 301 Moved Permanently
 Date: Mon, 21 Aug 2023 11:51:58 GMT
@@ -62,7 +62,7 @@ func TestRule(t *testing.T) {
 func TestAppFinger2(t *testing.T) {
 	a := assert.New(t)
 	appFinger := AppFinger{}
-	appFinger.AddFinger(`- matchers:
+	_ = appFinger.AddFinger(`- matchers:
   - part: header
     type: regex
     name: version
@@ -110,7 +110,7 @@ func TestAppFinger(t *testing.T) {
 	gologger.DefaultLogger.SetMaxLevel(levels.LevelVerbose)
 	finger := New(&Options{Timeout: time.Second * 3})
 	finger.Rules = nil
-	finger.AddFinger(`- name: Boa
+	_ = finger.AddFinger(`- name: Boa
   matchers:
     - part: header
       type: regex
@@ -138,7 +138,7 @@ func TestRegex(t *testing.T) {
 	gologger.DefaultLogger.SetMaxLevel(levels.LevelVerbose)
 	finger := New(&Options{Timeout: time.Second * 3})
 	finger.Rules = nil
-	finger.AddFinger(`- matchers:
+	_ = finger.AddFinger(`- matchers:
     - part: headers.server
       type: regex
       name: version
