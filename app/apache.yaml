@@ -1,0 +1,28 @@
+- name: Airflow
+  matchers:
+    - part: headers.location
+      type: word
+      words:
+        - admin/airflow/login
+    - part: title
+      type: word
+      words:
+        - Airflow
+- name: Superset
+  matchers:
+    - part: title
+      type: word
+      words:
+        - superset
+- name: unomi
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Apache Unomi
+- name: Tomcat
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Apache Tomcat

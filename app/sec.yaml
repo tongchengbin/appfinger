@@ -1,0 +1,85 @@
+- name: "天融信上网行为管理系统"
+  matchers:
+    - part: body
+      type: word
+      condition: and
+      words:
+        - ActiveXObject
+        - dkey_login
+        - repeat-x
+- name: "天融信topapp_lb负载均衡系统"
+  matchers:
+    - part: title
+      type: word
+      words:
+        - TopApp-LB 负载均衡系统
+# 奇安信
+- name: "secgate_3600"
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "网神SecGate"
+        - "3600防火墙"
+        - "css/lsec/login.css"
+- name: "奇安信VPN"
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "奇安信VPN"
+#sangfor
+- name: SangFor firewall products
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "SANGFOR | NGAF"
+# 应用交付管理系统
+- name: Sangfor Application Delivery
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "default_target=\"/cgi-bin/login.cgi?action=log&fro=self"
+        - "var check_login_key"
+        - "/static/es5_shim/es5-sham.js"
+- name: SANGFOR-EDR
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "datalayer','gtm-tl7g2lw'"
+#  SangFor-行为感知系统/日志中心
+- name: SANGFOR-ba
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "isHighPerformance : !!SFIsHighPerformance,"
+
+- name: 360新天擎
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "360新天擎"
+- name: TopSec Reporter
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "Login @ Reporter"
+
+- name: MpSec ISG1000
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "迈普通信技术股份有限公司"
+- name: 网康下一代防火墙
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "网康下一代防火墙"

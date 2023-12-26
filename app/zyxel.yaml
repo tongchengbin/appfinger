@@ -1,0 +1,6 @@
+- name: USG FLEX
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "USG FLEX"

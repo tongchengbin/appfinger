@@ -1,0 +1,157 @@
+
+- name: weaver_oa
+  matchers:
+    - part: body
+      type: word
+      words:
+        - '"/login/Login.jsp?logintype=1"'
+        - '/wui/common/css/w7ovfont.css'
+        - 'typeof poppedwindow'
+        - 'client/jquery.client_wev8.js'
+        - '/theme/ecology8/jquery/js/zdialog_wev8.js'
+        - 'ecology8/lang/weaver_lang_7_wev8.js'
+#  ecology泛微-协同商务系统
+- name: e-cology
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "index_wev8.js"
+        - "jquery_wev8.js"
+
+- name: e-mobile
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'content="weaver e-mobile"'
+
+- name: e-office
+  matchers:
+    - part: body
+      type: word
+      words:
+        - /general/login/view//images/updateload.gif
+
+- name: e-bridge
+  matchers:
+    - part: body
+      type: word
+      words:
+        - '<meta name="searchtitle" content="泛微云桥e-Bridge"> '
+
+# 致远OA
+- name: SeeYon OA
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "/seeyon"
+        - "seeyonDownLoadPic"
+
+- name: Seeyon OA A8
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "致远A8+协同管理软件"
+
+- name: Seeyon OA A6
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "致远协创A6"
+- name: Tongda OA
+  matchers:
+    - part: body
+      type: word
+      words:
+        - href="/static/images/tongda.ico"
+        - <a href='http://www.tongda2000.com/' target='_black'>通达官网</a>
+        - /images/tongda.ico
+        - Office Anywhere
+        - /static/templates/2013_01/index.css/
+
+- name: whir_ezoffice
+  matchers:
+    - part: body
+      type: word
+      words:
+        - /defaultroot/js/cookie.js
+        - EZOFFICEUSERNAME
+        - Wanhu ezOFFICE
+        - whirRootPath
+        - 万户OA
+
+# yonyou
+
+- name: CHANJET_Remote
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 远程通CHANJET_Remote
+- name: CHANJET_TPlus
+  matchers:
+    - part: body
+      type: word
+      words:
+        - /tplus/
+
+- name: yonyou_nc
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "logo/images/ufida_nc.png"
+        - "用友NC"
+- name: U8
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "getFirstU8Accid"
+- name: yonyou_fe
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "用友 FE协同办公平台"
+- name: yonyou_ufida_nc
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "ufida_nc.png"
+- name: Cloud OA
+  matchers:
+    - part: body
+      type: word
+      condition: and
+      words:
+        - /OA/WebResource.axd
+        - "全程云办公"
+- name: CmsEasy
+  matchers:
+    - type: word
+      part: body
+      words:
+        - "http://www.cmseasy.cn/service_1.html"
+- name: KingDee OA
+  matchers:
+    - type: word
+      part: body
+      words:
+        - "location.href=\"/kingdee/index.jsp\""
+        - "logo-kingdee.png"
+      condition: and
+- name: LanDray OA
+  matchers:
+    - type: word
+      part: body
+      words:
+        - "lui_login_message_td"
+        - "蓝凌软件 版权所有"
+        - "url : Com_Parameter.ResPath+\"jsp/clearSsoCookie.jsp\""
+      condition: and

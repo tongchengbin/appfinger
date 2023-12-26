@@ -1,0 +1,11 @@
+- name: F460
+  matchers-condition: and
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "F460"
+    - part: headers.server
+      type: word
+      words:
+        - "ZTE"

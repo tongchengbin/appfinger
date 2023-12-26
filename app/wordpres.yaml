@@ -1,0 +1,25 @@
+- name: 3dprint-lite
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "3dprint-lite-frontend"
+- name: ad-widget
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "/ad_widget/"
+- name: advanced-access-manager
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "/advanced-access-manager/"
+- name: age-gate
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "/age-gate/"
+

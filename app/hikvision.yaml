@@ -1,0 +1,14 @@
+- name: Hikvision-iSecure-Center
+  matchers:
+    - part: headers.set-cookie
+      type: word
+      words:
+        - "portal_sess"
+- name: Hikvision-iVMS
+  matchers:
+    - part: body
+      type: word
+      condition: and
+      words:
+        - /home/locationIndex.action
+        - /home/index.action

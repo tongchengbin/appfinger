@@ -1,0 +1,7 @@
+- name: SAMSUNG AP
+  matchers:
+    - type: word
+      part: body
+      name: "SAMSUNG-AP"
+      words:
+        - "<span>samsung ap manager</span>"
