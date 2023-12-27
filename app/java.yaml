@@ -1,0 +1,7 @@
+- name: Java
+  matchers:
+    - part: headers.server
+      type: regex
+      name: version
+      regex:
+        - java/([\d\.\w-]+)
