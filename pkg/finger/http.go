@@ -292,6 +292,7 @@ func Request(uri string, timeout time.Duration, proxyURL string) ([]*Banner, err
 		} else {
 			req, err := http.NewRequest("GET", iconURL, nil)
 			if err != nil {
+				// 图片异常不影响
 				return banners, err
 			}
 			resp, err := client.Do(req)
@@ -303,13 +304,10 @@ func Request(uri string, timeout time.Duration, proxyURL string) ([]*Banner, err
 				return banners, err
 			}
 		}
-
 		iconHash := murmurhash(body)
 		for _, banner := range banners {
 			banner.IconHash = iconHash
 		}
-
 	}
-
 	return banners, nil
 }
