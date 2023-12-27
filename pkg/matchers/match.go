@@ -7,10 +7,13 @@ import (
 // MatchWords matches a word check against a corpus.
 func (matcher *Matcher) MatchWords(corpus string) (bool, []string) {
 	var matchedWords []string
+	if matcher.CaseInsensitive {
+		corpus = strings.ToLower(corpus)
+	}
 	// Iterate over all the words accepted as valid
 	for i, word := range matcher.Words {
 		// Continue if the word doesn't match
-		if !strings.Contains(strings.ToLower(corpus), strings.ToLower(word)) {
+		if !strings.Contains(corpus, word) {
 			// If we are in an AND request and a match failed,
 			// return false as the AND condition fails on any single mismatch.
 			switch matcher.condition {

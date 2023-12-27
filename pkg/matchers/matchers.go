@@ -32,6 +32,12 @@ type Matcher struct {
 	condition     ConditionType    `json:"condition,omitempty"`
 	matcherType   MatcherType      `json:"matcher_type,omitempty"`
 	HasExtra      bool
+	// description: |
+	//   CaseInsensitive enables case-insensitive matches. Default is false.
+	// values:
+	//   - false
+	//   - true
+	CaseInsensitive bool `yaml:"case-insensitive,omitempty" json:"case-insensitive,omitempty" jsonschema:"title=use case insensitive match,description=use case insensitive match"`
 }
 
 var ConditionTypes = map[string]ConditionType{
