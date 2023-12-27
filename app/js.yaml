@@ -4,6 +4,18 @@
       name: version
       part: body
       regex:
-        - (jquery-([0-9\.]+)(\.min)?\.js)
+        - jquery-([0-9\.]+)(\.min)?\.js
       type: regex
   name: JQuery
+- matchers:
+    - part: body
+      regex:
+        - bootstrap.(min\.)css
+      type: regex
+    - part: body
+      group: 0
+      name: version
+      regex:
+        - bootstrap.min.js?ver=([\d\.]+)
+      type: regex
+  name: bootstrap

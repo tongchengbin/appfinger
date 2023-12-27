@@ -443,3 +443,15 @@
       type: word
       words:
         - PROMETHEUS
+- matchers:
+    - group: 0
+      name: version
+      part: headers.server
+      regex:
+        - Jetty(?:/([\d\.]+))
+      type: regex
+    - part: body
+      type: word
+      words:
+        - <p><i><small><a href="finger://jetty.mortbay.org">Powered by Jetty://</a></small></i></p>
+  name: jetty

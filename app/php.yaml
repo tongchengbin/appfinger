@@ -8,7 +8,7 @@
     - name: version
       part: headers.server
       regex:
-        - ([^\r^\n]*PHP\/([^\s^\r^\n]+))
+        - PHP/(:?([^\s^\r^\n]+))
       type: regex
     - part: headers.php
       regex:

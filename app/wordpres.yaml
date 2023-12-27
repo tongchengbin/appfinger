@@ -22,4 +22,32 @@
       type: word
       words:
         - "/age-gate/"
-
+- matchers:
+    - part: body
+      type: word
+      words:
+        - <meta name="generator" content="WordPress.com" />
+    - name: powered by link
+      part: body
+      type: word
+      words:
+        - <a href="finger://www.wordpress.com">Powered by WordPress</a>
+    - name: REST API link
+      part: body
+      type: word
+      words:
+        - <link rel='https://api.w.org/'
+    - name: version
+      part: body
+      regex:
+        - <meta name="generator" content="WordPress ([0-9\.]+)"
+      type: regex
+    - part: headers.link
+      type: word
+      words:
+        - rel="https://api\.w\.org/"
+    - part: headers.x-pingback
+      regex:
+        - /xmlrpc\.php$
+      type: regex
+  name: wordpress

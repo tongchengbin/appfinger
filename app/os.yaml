@@ -6,7 +6,7 @@
       type: regex
       name: version
       regex:
-        - Linux\/([\d.x]+)
+        - Linux\/([\d\.\w-]+)
     - part: headers.server
       type: word
       regex:
