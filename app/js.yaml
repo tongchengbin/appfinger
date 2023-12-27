@@ -25,3 +25,9 @@
         - <meta [^>]*name="DC\.title"[^>]*>
       type: regex
   name: dublincore
+- name: iconify-icon
+  matchers:
+    - part: body
+      type: word
+      words:
+        - iconify-icon.min.js

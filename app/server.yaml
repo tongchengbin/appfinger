@@ -29,7 +29,7 @@
     - name: version
       part: headers.server
       regex:
-        - Apache\/([0-9.]+)
+        - Apache(?:/([\d\.]+))?
       type: regex
     - name: os
       part: headers.server
