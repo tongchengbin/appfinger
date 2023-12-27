@@ -12,10 +12,15 @@
       words:
         - "Server: nginx"
         - "Server: Apache"
-
     - part: body
       type: word
       condition: and
       words:
         - "<title>YONYOU NC</title>"
         - "<title>login</title>"
+    - part: body
+      type: word
+      condition: and
+      words:
+        - "couchdb"
+        - "GitLab"

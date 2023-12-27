@@ -306,18 +306,6 @@
       cloud, your data, your way!
   name: owncloud
 - matchers:
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - i_like_gitea
-  - group: 1
-    name: version
-    part: body
-    regex:
-    - "<div class=\"ui left\">\\n\\s+\xA9 gitea version: ([\\d.]+)"
-    type: regex
-  name: gitea
-- matchers:
   - name: generator
     part: body
     type: word
@@ -362,19 +350,10 @@
     type: regex
   name: dspace
 - matchers:
-  - name: open search
-    part: body
-    regex:
-    - (<link[^>]+type=["']?application\/opensearchdescription\+xml['"]?[^>]*>)
-    type: regex
   - part: body
     type: word
     words:
-    - (<link[^>]+href[\s]*=[\s]*["']([^'^"^>]+)["'][^>]+type[\s]*=[\s]*["']?application\/opensearchdescription\+xml['"]?[^>]*>)
-  - part: body
-    type: word
-    words:
-    - (<link[^>]+type[\s]*=[\s]*["']?application\/opensearchdescription\+xml['"]?[^>]+href[\s]*=[\s]*["']([^'^"^>]+)["'][^>]*>)
+    - application/opensearchdescription
   name: opensearch
 - matchers:
   - part: headers.x-powered-by
@@ -475,33 +454,7 @@
     words:
     - ocsessid
   name: opencart
-- matchers:
-  - group: 1
-    name: version
-    part: body
-    regex:
-    - adminer</a> <span class="version">([\d.]+)</span>
-    type: regex
-  name: adminer
-- matchers:
-  - part: body
-    regex:
-    - (<div class="dokuwiki"[\s]?>)
-    type: regex
-  - part: body
-    type: word
-    words:
-    - <meta name="generator" content="DokuWiki" />
-  - name: version
-    part: body
-    regex:
-    - (<meta name="generator" content="DokuWiki Release ([^"]+)" \/>)
-    type: regex
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - dokuwiki
-  name: dokuwiki
+
 - matchers:
   - part: body
     type: word
@@ -624,22 +577,6 @@
     type: regex
   name: wordpress
 - matchers:
-  - part: body
-    type: word
-    words:
-    - alt="Powered by MediaWiki"
-  - name: version
-    part: body
-    regex:
-    - (<meta name="generator" content="MediaWiki ([^\s^"]+)" \/>)
-    type: regex
-  - name: version
-    part: body
-    regex:
-    - (<td><a href="finger:\/\/www\.mediawiki\.org\/" class="external text" rel="nofollow">MediaWiki<\/a><\/td>[\s]+<td>([^<]+)<\/td>)
-    type: regex
-  name: mediawiki
-- matchers:
   - name: meta generator tag
     part: body
     regex:
@@ -748,16 +685,6 @@
     words:
     - _redmine_session
   name: redmine
-- matchers:
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - _gitlab_session
-  - part: body
-    type: word
-    words:
-    - <header class="navbar navbar-fixed-top navbar-gitlab with-horizontal-nav">
-  name: gitlab
 - matchers:
   - part: body
     type: word
@@ -1033,44 +960,6 @@
     - <noscript> to use mattermost, please enable javascript\. </noscript>
   name: mattermost
 - matchers:
-  - part: body
-    type: word
-    words:
-    - <!-- link rel="stylesheet" href="templates/subSilver/subSilver.css
-  - part: body
-    type: word
-    words:
-    - We request you retain the full copyright notice below including the link to
-      www.phpbb.com.
-  - name: Powered by...
-    part: body
-    regex:
-    - (Powered by <a href="finger:\/\/www.phpbb.com\/"( target="_phpbb")?( class="copyright")?>phpBB<\/a>[
-      ]+&copy;[ 0-9,\.]+ phpBB Group)
-    type: regex
-  - name: folder icons
-    part: body
-    regex:
-    - (<td width="20" align="center"><img src="[^"]+images\/folder_new_big.gif" alt="New
-      posts"\/><\/td>)
-    type: regex
-  - name: 'In total there are x users online ::'
-    part: body
-    regex:
-    - '(In total there are <b>[0-9]+<\/b> users online :: [0-9]+ Registered, [0-9]+
-      Hidden and [0-9]+ Guests)'
-    type: regex
-  - name: version
-    part: headers.set-cookie
-    regex:
-    - (phpbb([\d])mysql_(data=a%3A|sid=[a-f\d]{32};))
-    type: regex
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - phpbb
-  name: phpbb
-- matchers:
   - part: headers.Set-Cookie
     type: word
     words:
@@ -1201,38 +1090,7 @@
     - ^nodebb$
     type: regex
   name: nodebb
-- matchers:
-  - part: body
-    type: word
-    words:
-    - "\t\t\t\t<!-- MyBB is free software developed and maintained by a volunteer\
-      \ community. "
-  - part: body
-    type: word
-    words:
-    - "\t\t\t\t<!-- You may NOT remove, modify or hinder the visibility of the MyBB\
-      \ copyright at any time."
-  - part: body
-    type: word
-    words:
-    - <!-- The following piece of code allows MyBB to run scheduled tasks. DO NOT
-      REMOVE --><img
-  - part: body
-    regex:
-    - (Powered By <a href="finger:\/\/(mybb.com\/|www.mybboard.net)" target="_blank">MyBB<\/a>,
-      &copy; 2002-20[\d]{2} <a href="finger:\/\/(mybb.com\/|www.mybboard.net)" target="_blank">MyBB
-      Group<\/a>.)
-    type: regex
-  - part: body
-    type: word
-    words:
-    - Powered By <a href="finger://www.mybboard.com" target="_blank">MyBB</a>
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - mybb[lastactive]
-    - mybb[lastvisit]
-  name: mybb
+
 - matchers:
   - part: headers.Set-Cookie
     type: word
@@ -1260,45 +1118,6 @@
     words:
     - makacsession
   name: indico
-- matchers:
-  - name: PrestaShop-powered meta generator
-    part: body
-    regex:
-    - (<meta name="generator"[^>]*content="PrestaShop)
-    type: regex
-  - name: PrestaShop-Powered meta description
-    part: body
-    regex:
-    - (<meta name="description"[^>]*content="par PrestaShop)
-    type: word
-    words:
-    - FR
-  - name: PrestaShop-Powered meta description
-    part: body
-    regex:
-    - (<meta name="description"[^>]*content="Shop powered by PrestaShop)
-    type: word
-    words:
-    - EN
-  - name: html comment
-    part: body
-    regex:
-    - (<!-- \/Block permanent links module HEADER -->)
-    type: regex
-  - name: PrestaShop cookie
-    part: headers.set-cookie
-    regex:
-    - (PrestaShop)
-    type: regex
-  - part: headers.powered-by
-    regex:
-    - ^prestashop$
-    type: regex
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - prestashop
-  name: prestashop
 - matchers:
   - name: DIY_SB cookie
     part: headers.set-cookie
@@ -5296,18 +5115,6 @@
     - Security Gateway
   name: check_point_ssl_network_extender
 - matchers:
-  - name: version
-    part: headers.server
-    regex:
-    - (^Cherokee\/([^\s]+))
-    type: regex
-  - name: HTTP Server Header
-    part: headers.server
-    regex:
-    - (^Cherokee)
-    type: regex
-  name: cherokee
-- matchers:
   - part: body
     type: word
     words:
@@ -7614,15 +7421,6 @@
     regex:
     - (^Enigma2 WebInterface Server ([\d\.]+)$)
     type: regex
-  - part: headers.server
-    regex:
-    - (^TwistedWeb)
-    type: regex
-  - name: version
-    part: headers.server
-    regex:
-    - (^TwistedWeb\/([\d\.]+))
-    type: regex
   name: dreambox
 - matchers:
   - part: body
@@ -9827,18 +9625,6 @@
     type: regex
   name: gpsgate_server
 - matchers:
-  - name: status:200
-    part: body
-    type: word
-    words:
-    - <title>Grafana</title>
-  - name: version
-    part: body
-    regex:
-    - (window.grafanaBootData = {.*"version":"([^\"]+)")
-    type: regex
-  name: grafana
-- matchers:
   - part: body
     type: word
     words:
@@ -12026,29 +11812,6 @@
       source job board software">jobberBase<\/a>)
     type: regex
   name: jobberbase
-- matchers:
-  - name: version
-    part: body
-    regex:
-    - '1.0'
-    type: regex
-  - name: version
-    part: body
-    regex:
-    - (<meta name="generator" content="Joomla! (\d\.\d) - Open Source Content Management"
-      \/>)
-    type: regex
-  - part: body
-    type: word
-    words:
-    - Powered by <a href="finger://www.joomla.org">Joomla!</a>.
-  - group: 1
-    name: version
-    part: headers.x-content-encoded-by
-    regex:
-    - joomla! ([\d.]+)
-    type: regex
-  name: joomla
 
 - matchers:
   - name: html body
@@ -12865,17 +12628,7 @@
       this, that means <strong>LightNEasy<\/strong> installation worked!<\/p>)
     type: regex
   name: lightneasy
-- matchers:
-  - part: headers.server
-    regex:
-    - (lighttpd)
-    type: regex
-  - name: version
-    part: headers.server
-    regex:
-    - (^[\s]*lighttpd\/([^\s]+))
-    type: regex
-  name: lighttpd
+
 - matchers:
   - name: default text
     part: body
@@ -13860,81 +13613,7 @@
     - Powered by <strong><a href="finger://microcms.kset.org/">Micro CMS</a></strong><br
       />
   name: micro_cms
-- matchers:
-  - part: headers.server
-    regex:
-    - (micro_httpd)
-    type: regex
-  name: micro_httpd
 
-- matchers:
-  - name: module:Site Not Found
-    part: body
-    type: word
-    words:
-    - <html><head><title>Site Not Found</title></head>.<body>No web site is configured
-      at this address.</body></html>
-  - name: module:Under Construction
-    part: body
-    type: word
-    words:
-    - <id id="Comment1"><!--Problem--></id><id id="errorText">Under Construction</id></h1>
-  - name: module:Under Construction
-    part: body
-    type: word
-    words:
-    - <P ID=Comment1><!--Problem--><P ID="errorText">Under Construction</h1>
-  - name: module:Under Construction
-    part: body
-    type: word
-    words:
-    - If you are the Web site administrator and feel you have received this message
-      in error, please see &quot;Enabling and Disabling Dynamic Content&quot; in IIS
-      Help.
-  - name: module:Under Construction
-    part: body
-    type: word
-    words:
-    - <a href="finger://go.microsoft.com/fwlink/?linkid=66138&amp;clcid=0x409"><img
-      src="welcome.png" alt="IIS7" width="571" height="411" /></a>
-  - name: module:Under Construction
-    part: body
-    type: word
-    words:
-    - <a href="finger://go.microsoft.com/fwlink/?linkid=66138&amp;clcid=0x409"><img
-      src="iis-85.png" alt="IIS" width="960" height="600" /></a>
-  - name: status:404
-    part: body
-    type: word
-    words:
-    - '<h1 style="COLOR:000000; FONT: 13pt/15pt verdana"><!--Problem-->The page cannot
-      be found</h1>'
-  - name: status:404
-    part: body
-    regex:
-    - (<a href="finger:\/\/www\.microsoft\.com\/ContentRedirect\.asp\?prd=iis&sbp=&pver=([\d\.]+)&pid=&ID=404&cat=web&os=&over=&hrd=&Opt1=&Opt2=&Opt3="
-      target="_blank">Microsoft Support<\/a>)
-    type: regex
-  - name: status:404
-    part: body
-    type: word
-    words:
-    - <li>Go to <a href="finger://go.microsoft.com/fwlink/?linkid=8180">Microsoft Product
-      Support Services</a> and perform a title search for the words <b>HTTP</b> and
-      <b>404</b>.</li>
-  - name: status:403
-    part: body
-    type: word
-    words:
-    - <li>Go to <a href="finger://go.microsoft.com/fwlink/?linkid=8180">Microsoft Product
-      Support Services</a> and perform a title search for the words <b>HTTP</b> and
-      <b>403</b>.</li>
-  - name: version
-    part: headers.server
-    regex:
-    - (Microsoft-IIS\/([\d\.]+))
-    type: regex
-  name: microsoft_iis
 - matchers:
   - part: body
     type: word
@@ -17455,31 +17134,6 @@
       onLoad="document.login_form.username.focus();">
   name: photostore
 - matchers:
-  - name: version
-    part: headers.server
-    regex:
-    - ([^\r^\n]*PHP\/([^\s^\r^\n]+))
-    type: regex
-  - name: version
-    part: headers.x-powered-by
-    regex:
-    - ([^\r^\n]*PHP\/([^\s^\r^\n]+))
-    type: regex
-  - part: headers.php
-    regex:
-    - (^Error parsing (.+) on line [\d]+$)
-    type: regex
-  - name: PHP Warning Header
-    part: headers.php warning
-    regex:
-    - ()
-    type: regex
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - phpsessid
-  name: php
-- matchers:
   - part: body
     type: word
     words:
@@ -20041,26 +19695,6 @@
     - (RT_SID_[^\s^=]+=[a-f\d]{32};)
     type: regex
   name: request_tracker
-- matchers:
-  - part: headers.server
-    regex:
-    - (^Resin)
-    type: regex
-  - name: version
-    part: headers.server
-    regex:
-    - (^Resin\/([^\s]+))
-    type: word
-    words:
-    - Standalone
-  - name: version
-    part: headers.server
-    regex:
-    - ([\s]+Resin\/([^\s]+))
-    type: word
-    words:
-    - Plugin
-  name: resin
 - matchers:
   - name: version
     part: headers.server
@@ -23167,17 +22801,6 @@
 - matchers:
   - part: headers.server
     regex:
-    - (^Tengine$)
-    type: regex
-  - name: version
-    part: headers.server
-    regex:
-    - (^Tengine\/([^\s]+))
-    type: regex
-  name: tengine_web_server
-- matchers:
-  - part: headers.server
-    regex:
     - (\(iTools)
     type: regex
   - name: version
@@ -23356,13 +22979,6 @@
       Research<\/A><\/FONT><\/I><\/TD><\/TR><\/table><\/body>)
     type: regex
   name: thoughtconduit
-- matchers:
-  - name: version
-    part: headers.server
-    regex:
-    - (^thttpd\/([^\s]+))
-    type: regex
-  name: thttpd
 - matchers:
   - part: body
     type: word
@@ -23973,13 +23589,7 @@
     words:
     - twikisid
   name: twiki
-- matchers:
-  - name: version
-    part: headers.server
-    regex:
-    - (TwistedWeb\/?([^ ]+)?)
-    type: regex
-  name: twistedweb
+
 - matchers:
   - part: headers.server
     regex:
@@ -24350,29 +23960,6 @@
     - (Vanilla=deleted; expires=)
     type: regex
   name: vanilla_forums
-- matchers:
-  - name: x-varnish header
-    part: headers.x-varnish
-    regex:
-    - ()
-    type: regex
-  - name: Varnish Server Header
-    part: headers.server
-    regex:
-    - (^Varnish$)
-    type: regex
-  - name: ENUnique cookie
-    part: headers.set-cookie
-    regex:
-    - (ENUnique)
-    type: regex
-  - group: 1
-    name: version
-    part: headers.via
-    regex:
-    - 'varnish(?: \(varnish/([\d.]+)\))?'
-    type: regex
-  name: varnish
 - matchers:
   - part: body
     type: word
@@ -25639,13 +25226,6 @@
     type: regex
   name: weebly
 - matchers:
-  - name: version
-    part: headers.server
-    regex:
-    - (^Werkzeug\/([\d\.]+))
-    type: regex
-  name: werkzeug
-- matchers:
   - name: HTTP Server Header
     part: headers.server
     regex:
@@ -26427,18 +26007,6 @@
     - (^Xeneo$)
     type: regex
   name: xeneo_web_server
-- matchers:
-  - name: xf_session cookie
-    part: headers.set-cookie
-    regex:
-    - (^xf_session)
-    type: regex
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - xf_csrf
-    - xf_session
-  name: xenforo
 - matchers:
   - name: model:DocuPrint N2125
     part: body
@@ -27305,14 +26873,7 @@
     words:
     - \.paypal\.com
   name: paypal
-- matchers:
-  - group: 1
-    name: version
-    part: headers.server
-    regex:
-    - ^(?:microsoft-)?iis(?:/([\d.]+))?
-    type: regex
-  name: iis
+
 - matchers:
   - part: headers.server
     regex:
@@ -28827,14 +28388,6 @@
     - powered by <a href="https://gerrit\.googlesource\.com/gitiles/">gitiles<
   name: gitiles
 - matchers:
-  - group: 1
-    name: version
-    part: headers.server
-    regex:
-    - 'glassfish(?: server)?(?: open source edition)?(?: ?/?([\d.]+))?'
-    type: regex
-  name: glassfish
-- matchers:
   - part: headers.Set-Cookie
     type: word
     words:
@@ -29434,12 +28987,6 @@
     - ^kerberos
     type: regex
   name: kerberos
-- matchers:
-  - part: headers.server
-    regex:
-    - ^kestrel
-    type: regex
-  name: kestrel
 - matchers:
   - part: headers.server
     regex:
@@ -30426,12 +29973,6 @@
   name: quanta
 - matchers:
   - part: body
-    type: word
-    words:
-    - <!-- powered by question2answer
-  name: question2answer
-- matchers:
-  - part: body
     regex:
     - <a href="[^>]+opensolution\.org/">cms by
     type: regex
@@ -30886,14 +30427,7 @@
     words:
     - simbel
   name: simbel
-- matchers:
-  - group: 1
-    name: version
-    part: headers.server
-    regex:
-    - simplehttp(?:/([\d.]+))?
-    type: regex
-  name: simplehttp
+
 - matchers:
   - part: headers.Set-Cookie
     type: word
@@ -31261,12 +30795,6 @@
     type: regex
   name: teamcity
 - matchers:
-  - part: headers.server
-    type: word
-    words:
-    - tengine
-  name: tengine
-- matchers:
   - part: headers.content-security-policy
     type: word
     words:
@@ -31310,14 +30838,7 @@
     - <link[^>]* href=[^>]+tilda(?:cdn|\.ws|-blocks)
     type: regex
   name: tilda
-- matchers:
-  - group: 1
-    name: version
-    part: headers.server
-    regex:
-    - tornadoserver(?:/([\d.]+))?
-    type: regex
-  name: tornadoserver
+
 - matchers:
   - part: headers.x-powered-by
     regex:
@@ -31519,14 +31040,6 @@
     - <!-- [a-za-z0-9_]+ [\d/]+ [\d:]+ webdev \d\d ([\d.]+) -->
     type: regex
   name: webdev
-- matchers:
-  - group: 1
-    name: version
-    part: headers.server
-    regex:
-    - ^webrick/([\d\.]+)
-    type: regex
-  name: webrick
 - matchers:
   - part: headers.x-powered-by
     type: word
@@ -31876,14 +31389,6 @@
     - <p>powered by <a[^>]+>gitlist ([\d.]+)
     type: regex
   name: gitlist
-- matchers:
-  - group: 1
-    name: version
-    part: headers.server
-    regex:
-    - gunicorn(?:/([\d.]+))?
-    type: regex
-  name: gunicorn
 - matchers:
   - part: headers.content-security-policy
     regex:

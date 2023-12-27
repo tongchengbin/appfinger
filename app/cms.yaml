@@ -298,3 +298,93 @@
       part: title
       words:
         - "zzzphp"
+- matchers:
+    - part: body
+      type: word
+      words:
+        - "\t\t\t\t<!-- MyBB is free software developed and maintained by a volunteer\
+      \ community. "
+    - part: body
+      type: word
+      words:
+        - "\t\t\t\t<!-- You may NOT remove, modify or hinder the visibility of the MyBB\
+      \ copyright at any time."
+    - part: body
+      type: word
+      words:
+        - <!-- The following piece of code allows MyBB to run scheduled tasks. DO NOT
+          REMOVE --><img
+    - part: body
+      regex:
+        - (Powered By <a href="finger:\/\/(mybb.com\/|www.mybboard.net)" target="_blank">MyBB<\/a>,
+          &copy; 2002-20[\d]{2} <a href="finger:\/\/(mybb.com\/|www.mybboard.net)" target="_blank">MyBB
+          Group<\/a>.)
+      type: regex
+    - part: body
+      type: word
+      words:
+        - Powered By <a href="finger://www.mybboard.com" target="_blank">MyBB</a>
+    - part: headers.set-Cookie
+      type: word
+      words:
+        - mybb[lastvisit]
+        - mybb[lastactive]
+  name: mybb
+- matchers:
+    - name: xf_session cookie
+      part: headers.set-cookie
+      regex:
+        - (^xf_session)
+      type: regex
+    - part: headers.Set-Cookie
+      type: word
+      words:
+        - xf_csrf
+        - xf_session
+    - part: body
+      type: word
+      words:
+        - "XenForo"
+  name: xenforo
+- matchers:
+    - part: headers.set-cookie
+      words:
+        - phpbb
+      type: word
+  name: phpbb
+- matchers:
+    - group: 1
+      name: version
+      part: body
+      regex:
+        - adminer</a> <span class="version">([\d.]+)</span>
+      type: regex
+  name: adminer
+- matchers:
+    - part: headers.set-cookie
+      type: word
+      words:
+        - DokuWiki
+    - part: icon_hash
+      type: word
+      words:
+        - "-630493013"
+  name: dokuwiki
+- matchers:
+    - part: body
+      type: word
+      words:
+        - alt="Powered by MediaWiki"
+    - type: word
+      part: body
+      words:
+        - "generator\" content=\"MediaWiki"
+    - type: word
+      part: body
+      words:
+        - "/wiki/images/6/64/Favicon.ico"
+    - type: word
+      part: body
+      words:
+        - "Powered by MediaWiki"
+  name: mediawiki

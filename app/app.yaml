@@ -758,3 +758,76 @@
       type: word
       words:
         - 明源云ERP
+- matchers:
+    - part: body
+      type: word
+      words:
+        - 'Joomla! - Copyright'
+  name: joomla
+- matchers:
+    - name: version
+      part: headers.server
+      regex:
+        - TwistedWeb\/?([^ ]+)?
+      type: regex
+  name: TwistedWeb
+- matchers:
+    - group: 1
+      name: version
+      part: body
+      regex:
+        - "encodeURIComponent\\('([0-9.]*)'\\)"
+      type: regex
+    - part: icon_hash
+      type: word
+      words:
+        - "-754147112"
+  name: gitea
+- name: roundcube
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "-1203843035"
+    - part: headers.set-cookie
+      type: word
+      words:
+        - roundcube_cookies
+- matchers:
+    - part: headers.set-cookie
+      type: word
+      words:
+        - _gitlab_session
+    - part: body
+      type: word
+      words:
+        - <header class="navbar navbar-fixed-top navbar-gitlab with-horizontal-nav">
+    - part: title
+      type: word
+      words:
+        - "GitLab"
+  name: gitlab
+- name: Question2Answer
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "<!-- Powered by Question2Answer"
+- matchers:
+    - part: title
+      type: word
+      words:
+        - Grafana
+  name: Grafana
+- name: cPanel
+  matchers:
+    - type: word
+      part: headers.set-cookie
+      words:
+        - "cprelogin"
+- name: LibreNMS
+  matchers:
+      - type: word
+        part: title
+        words:
+          - "LibreNMS"

@@ -5,3 +5,21 @@
       name: version
       regex:
         - "PHP/(.+)"
+    - name: version
+      part: headers.server
+      regex:
+        - ([^\r^\n]*PHP\/([^\s^\r^\n]+))
+      type: regex
+    - part: headers.php
+      regex:
+        - (^Error parsing (.+) on line [\d]+$)
+      type: regex
+    - name: PHP Warning Header
+      part: headers.php warning
+      regex:
+        - ()
+      type: regex
+    - part: headers.set-cookie
+      type: word
+      words:
+        - phpsessid

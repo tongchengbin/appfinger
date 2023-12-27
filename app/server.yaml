@@ -25,9 +25,6 @@
       type: regex
   matchers-condition: or
   name: Nginx
-
-
-
 - matchers:
     - name: version
       part: headers.server
@@ -39,8 +36,7 @@
       regex:
         - Apache\/[0-9.]+ \(([^\)]+)\)
       type: regex
-  name: Apache HTTP Server
-
+  name: Apache-HTTP-Server
 - name: mxhttpd
   matchers:
     - part: headers.server
@@ -204,3 +200,246 @@
       type: word
       words:
         - proftpd
+- matchers:
+    - part: headers.server
+      regex:
+        - (lighttpd)
+      type: regex
+    - name: version
+      part: headers.server
+      regex:
+        - (^[\s]*lighttpd\/([^\s]+))
+      type: regex
+  name: lighttpd
+- name: Proxygen
+  matchers:
+    - part: headers.server
+      type: word
+      words:
+        - Proxygen
+- name: OpenResty
+  matchers:
+    - part: headers.server
+      type: word
+      words:
+        - openresty
+- name: OpenResty
+  matchers:
+    - part: headers.server
+      type: word
+      words:
+        - openresty
+
+- name: CloudFlare
+  matchers:
+    - type: word
+      part: headers
+      words:
+        - "cloudflare-nginx"
+        - "__cfduid="
+      condition: and
+    - part: headers.server
+      type: word
+      words:
+        - cloudflare
+- name: Caddy
+  matchers:
+    - part: headers.server
+      type: word
+      words:
+          - Caddy
+- matchers:
+    - group: 1
+      name: version
+      part: headers.server
+      regex:
+        - simplehttp(?:/([\d.]+))?
+      type: regex
+    - part: headers.server
+      words:
+        - SimpleHTTP
+      type: word
+  name: SimpleHTTP
+- matchers:
+    - name: version
+      part: headers.server
+      regex:
+        - (^Werkzeug\/([\d\.]+))
+      type: regex
+  name: werkzeug
+- name: Abyss-Web-Server
+  matchers:
+    - part: headers.server
+      type: word
+      words:
+        - Abyss
+    - part: title
+      type: word
+      words:
+        - "Welcome to Abyss Web Server"
+- matchers:
+    - part: headers.server
+      words:
+        - Kestrel
+      type: word
+  name: kestrel
+- matchers:
+    - name: version
+      part: headers.server
+      regex:
+        - ^thttpd\/([^\s]+)
+      type: regex
+  name: thttpd
+- matchers:
+    - name: version
+      part: headers.server
+      regex:
+        - ^Icecast ([^\s]+)
+      type: regex
+    - part: headers.server
+      words:
+        - Icecast
+      type: word
+  name: Icecast
+- name: XAMPP
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "XAMPP"
+- name: Tengine
+  matchers:
+    - part: headers.server
+      words:
+        - Tengine
+      type: word
+- name: LiteSpeed
+  matchers:
+  - part: headers.server
+    type: word
+    words:
+      - LiteSpeed
+- matchers:
+    - group: 1
+      name: version
+      part: headers.server
+      regex:
+        - tornadoserver(?:/([\d.]+))?
+      type: regex
+  name: tornadoserver
+- matchers:
+    - group: 1
+      name: version
+      part: headers.server
+      regex:
+        - gunicorn(?:/([\d.]+))?
+      type: regex
+  name: gunicorn
+- matchers:
+    - group: 1
+      name: version
+      part: headers.server
+      regex:
+        - 'glassfish(?: server)?(?: open source edition)?(?: ?/?([\d.]+))?'
+        - 'Oracle GlassFish Server ([0-9.]+)'
+      type: regex
+    - part: headers.server
+      words:
+        - 'Oracle GlassFish Server'
+      type: word
+  name: glassfish
+- name: Amazon-S3
+  matchers:
+    - part: headers.server
+      words:
+        - AmazonS3
+      type: word
+- name: cherokee
+  matchers:
+    - name: version
+      part: headers.server
+      regex:
+        - ^Cherokee\/([^\s]+)
+      type: regex
+    - part: headers.server
+      regex:
+        - (^Cherokee)
+      type: regex
+- matchers:
+    - part: headers.x-varnish
+      regex:
+        - ()
+      type: regex
+    - part: headers.server
+      regex:
+        - (^Varnish$)
+      type: regex
+    - part: headers.set-cookie
+      regex:
+        - (ENUnique)
+      type: regex
+    - group: 1
+      name: version
+      part: headers.via
+      regex:
+        - 'varnish(?: \(varnish/([\d.]+)\))?'
+      type: regex
+  name: varnish
+- matchers:
+    - name: version
+      part: headers.server
+      regex:
+        - microHttp(?:/([\d.]+))
+      type: regex
+  name: Micro-Httpd
+- matchers:
+    - group: 1
+      name: version
+      part: headers.server
+      regex:
+        - WEBrick(?:/([\d\.]+))
+      type: regex
+  name: webrick
+- matchers:
+    - part: headers.server
+      words:
+        - Resin
+      type: word
+    - name: version
+      part: headers.server
+      regex:
+        - 'Resin/([\s]+)'
+      type: regex
+  name: resin
+
+- matchers:
+    - part: headers.server
+      words:
+        - thin
+      type: word
+    - name: version
+      part: headers.server
+      regex:
+        - thin (?:([\s]+))
+      type: regex
+  name: thin
+- name: WildFly
+  matchers:
+    - part: headers.server
+      name: version
+      type: regex
+      regex:
+        - WildFly(?:/([\d\.]+))?
+- name: MiniServ
+  matchers:
+    - part: headers.server
+      name: version
+      type: regex
+      regex:
+        - MiniServ(?:/([\d\.]+))?
+- name: PROMETHEUS
+  matchers:
+    - part: title
+      type: word
+      words:
+        - PROMETHEUS
