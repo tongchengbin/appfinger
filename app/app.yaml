@@ -280,15 +280,6 @@
         - "DownLoad.XGI"
         - "realor.cn"
         - "dvLogin"
-- name: RAILS
-  matchers:
-    - type: word
-      part: body
-      condition: and
-      words:
-        - "content=\"ruby on rails "
-        - "alt=\"ruby on rails\" "
-        - "type=\"hidden\" name=\"authenticity_token"
 - name: PrestaShop
   matchers:
     - type: word

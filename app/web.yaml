@@ -7350,14 +7350,14 @@
   - name: dublin core
     part: body
     regex:
-    - (<meta [^>]*name="DC\.title"[^>]*>)
+    - <meta [^>]*name="DC\.title"[^>]*>
     type: regex
   name: dublincore
 - matchers:
   - name: default title
     part: body
     regex:
-    - (<title>DUclassified[\s\d\.]*<\/title>)
+    - <title>DUclassified[\s\d\.]*<\/title>
     type: regex
   - name: assets/DUclassified.css
     part: body
@@ -19698,46 +19698,6 @@
     - (^WEBrick\/[\d\.]+ \(Ruby\/([\d\.]+)\/[\d]{4}-[\d]{2}-[\d]{2}\))
     type: regex
   name: ruby
-- matchers:
-  - part: body
-    regex:
-    - (<link[^>]*href="[^"]*\/assets\/application-?\w{32}?\.css")
-    type: regex
-  - part: body
-    regex:
-    - (<script[^>]*\/assets\/application-?\w{32}?\.js")
-    type: regex
-  - part: body
-    regex:
-    - (<meta content="authenticity_token" name="csrf-param"\s?\/>\s?<meta content="[^"]{44}"
-      name="csrf-token"\s?\/>)
-    type: regex
-  - part: body
-    type: word
-    words:
-    - default page
-  - part: body
-    type: word
-    words:
-    - default page
-  - part: body
-    type: word
-    words:
-    - <div id="session_dump" style="display:none"><pre class='debug_dump'>---
-  - name: request_method cookie
-    part: headers.set-cookie
-    regex:
-    - (^request_method)
-    type: regex
-  - part: headers.server
-    regex:
-    - mod_(?:rails|rack)
-    type: regex
-  - part: headers.x-powered-by
-    regex:
-    - mod_(?:rails|rack)
-    type: regex
-  name: ruby_on_rails
 - matchers:
   - part: body
     type: word
