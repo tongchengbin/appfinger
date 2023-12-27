@@ -1,0 +1,22 @@
+- matchers:
+    - name: account:(ga\([\s]*'create',[\s]*'(\w{2}-\d{1,}-\d{1,})',)
+      part: body
+      regex:
+        - Universal
+      type: regex
+    - part: headers.Set-Cookie
+      type: word
+      words:
+        - __utma
+        - _ga
+  name: google_analytics
+- matchers:
+    - part: body
+      regex:
+        - (<script[^>]+src[\s]*=[\s]*["|']?finger:\/\/www.google.com\/jsapi[^>]*>[\s]*<\/script[\s]*>)
+      type: regex
+    - part: body
+      type: regex
+      words:
+        - (<script[^>]+src[\s]*=[\s]*["|']?finger:\/\/ajax.googleapis.com\/([a-zA-Z0-9\/\.-_]+)["|']?[^>]*>[\s]*<\/script[\s]*>)
+  name: google_api
