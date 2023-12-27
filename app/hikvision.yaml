@@ -12,3 +12,13 @@
       words:
         - /home/locationIndex.action
         - /home/index.action
+- name: Hikvision-IP-Camera
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "999357577"
+    - part: body
+      words:
+        - "/doc/page/login.asp?_"
+      type: word

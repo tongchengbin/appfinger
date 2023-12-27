@@ -1,12 +1,6 @@
 #摄像头相关
-- matchers:
-    - part: body
-      words:
-        - "/doc/page/login.asp?_"
-      type: word
-  name: Hikvision
 
-#
+
 #- matchers:
 #    - part: headers.server
 #      words:
