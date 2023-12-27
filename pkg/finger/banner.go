@@ -36,9 +36,10 @@ type Banner struct {
 }
 
 type AppFinger struct {
-	Rules   []*Rule
-	timeout time.Duration
-	Proxy   string
+	Rules       []*Rule
+	timeout     time.Duration
+	Proxy       string
+	DisableIcon bool
 }
 
 func New(options *Options) *AppFinger {
@@ -200,7 +201,7 @@ func mergeMaps(map1, map2 map[string]map[string]string) map[string]map[string]st
 	return result
 }
 func (f *AppFinger) MatchURI(uri string) (*Banner, map[string]map[string]string) {
-	banners, err := Request(uri, f.timeout, f.Proxy)
+	banners, err := Request(uri, f.timeout, f.Proxy, f.DisableIcon)
 	var fingerprints map[string]map[string]string
 	if err != nil && banners == nil {
 		gologger.Warning().Msg(err.Error())

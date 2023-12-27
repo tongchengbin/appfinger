@@ -6,6 +6,10 @@ import (
 	"github.com/projectdiscovery/gologger/levels"
 	"github.com/stretchr/testify/assert"
 	"gopkg.in/yaml.v3"
+	"io"
+	"log"
+	"net"
+	"os"
 	"regexp"
 	"testing"
 	"time"
@@ -189,4 +193,39 @@ func TestRedirect2(t *testing.T) {
 </script>
 </html>`)
 	println(uri)
+}
+
+func TestLocalFile(t *testing.T) {
+	serverAddr := "127.0.0.1:3333"
+	listener, err := net.Listen("tcp", serverAddr)
+	if err != nil {
+		log.Fatal("Unable to listen on ", serverAddr, ": ", err)
+	}
+	defer listener.Close()
+	// 接受客户端连接
+	client, err := listener.Accept()
+	if err != nil {
+		log.Println("Error accepting client connection:", err)
+		return
+	}
+	// 读取文件内容
+	file, err := os.Open("/tmp/1.txt")
+	if err != nil {
+		return
+	}
+	fileContent, err := io.ReadAll(file)
+	if err != nil {
+		return
+	}
+	if err != nil {
+		log.Println("Error reading file:", err)
+		client.Close()
+		return
+	}
+	// 将文件内容发送给客户端
+	_, err = client.Write(fileContent)
+	if err != nil {
+		log.Println("Error sending file content to client:", err)
+		return
+	}
 }

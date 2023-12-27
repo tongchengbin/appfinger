@@ -16,17 +16,18 @@ func GetDefaultDirectory() string {
 }
 
 type Options struct {
-	UrlFile    string
-	URL        goflags.StringSlice
-	Threads    int
-	Timeout    int
-	Proxy      string
-	Output     io.Writer
-	OutputFile string
-	Stdin      bool
-	FingerHome string
-	Debug      bool
-	UpdateRule bool
+	UrlFile     string
+	URL         goflags.StringSlice
+	Threads     int
+	Timeout     int
+	Proxy       string
+	Output      io.Writer
+	OutputFile  string
+	Stdin       bool
+	FingerHome  string
+	Debug       bool
+	UpdateRule  bool
+	DisableIcon bool
 }
 
 func ParseOptions() *Options {
@@ -42,6 +43,7 @@ func ParseOptions() *Options {
 		flagSet.BoolVarP(&options.Stdin, "stdin", "s", false, "Read urls from stdin"),
 		flagSet.StringVarP(&options.FingerHome, "finger-home", "d", GetDefaultDirectory(), "finger yaml directory home default is built-in"),
 		flagSet.BoolVarP(&options.UpdateRule, "update-rule", "ur", false, "update rule from github.com/tongchengbin/appfinger"),
+		flagSet.BoolVarP(&options.DisableIcon, "disable-icon", "di", false, "disabled icon request to matcher"),
 	)
 	flagSet.CreateGroup("Help", "Help",
 		flagSet.BoolVar(&options.Debug, "debug", false, "debug"),

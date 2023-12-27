@@ -163,7 +163,7 @@ func murmurhash(data []byte) int32 {
 	return int32(hasher.Sum32())
 }
 
-func Request(uri string, timeout time.Duration, proxyURL string) ([]*Banner, error) {
+func Request(uri string, timeout time.Duration, proxyURL string, disableIcon bool) ([]*Banner, error) {
 	var proxyURl *url.URL
 	var err error
 	if proxyURL != "" {
@@ -269,7 +269,7 @@ func Request(uri string, timeout time.Duration, proxyURL string) ([]*Banner, err
 
 	}
 	// 解析icon
-	if len(banners) > 0 {
+	if len(banners) > 0 && !disableIcon {
 		iconURL := parseIconFile(banners[len(banners)-1].Body)
 		if iconURL == "" {
 			iconURL = "/favicon.ico"
