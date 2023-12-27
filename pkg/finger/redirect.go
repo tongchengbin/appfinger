@@ -51,7 +51,6 @@ func parseJavaScript(scriptContent string) string {
 	//<meta http-equiv="Refresh"content="0;url=/yyoa/index.jsp">
 	doc, err := html.Parse(strings.NewReader(scriptContent))
 	if err != nil {
-		println(err.Error())
 		return ""
 	}
 	var uri string
@@ -73,17 +72,6 @@ func parseJavaScript(scriptContent string) string {
 	if len(matches) >= 2 {
 		return matches[1]
 	}
-	// window.onload=function(){ url ='/webui';window.location.href=url;}
-	re = regexp.MustCompile(`location\.href\s*=\s*(.+?)`)
-	matches = re.FindStringSubmatch(scriptContent)
-	if len(matches) >= 2 {
-		// 匹配url
-		ure := regexp.MustCompile(`["'](.+?)["']`)
-		m2 := ure.FindStringSubmatch(scriptContent)
-		if len(m2) >= 2 {
-			return m2[1]
-		}
-	}
 	return ""
 }
 
@@ -91,6 +79,8 @@ func urlJoin(base, path string) string {
 	if base[len(base)-1] != '/' && path[0] != '/' {
 		base += "/"
 	}
-
+	if base[len(base)-1] == '/' && path[0] == '/' {
+		path = path[1:]
+	}
 	return base + path
 }

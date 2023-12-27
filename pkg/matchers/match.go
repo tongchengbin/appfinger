@@ -10,7 +10,7 @@ func (matcher *Matcher) MatchWords(corpus string) (bool, []string) {
 	// Iterate over all the words accepted as valid
 	for i, word := range matcher.Words {
 		// Continue if the word doesn't match
-		if !strings.Contains(corpus, word) {
+		if !strings.Contains(strings.ToLower(corpus), strings.ToLower(word)) {
 			// If we are in an AND request and a match failed,
 			// return false as the AND condition fails on any single mismatch.
 			switch matcher.condition {

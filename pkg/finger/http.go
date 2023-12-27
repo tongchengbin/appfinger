@@ -140,7 +140,7 @@ func parseIconFile(body string) string {
 
 }
 func isAbsoluteURL(url string) bool {
-	return len(url) > 1 && (url[0] == '/' || url[1] == ':')
+	return !(strings.HasPrefix(url, "http://") || strings.HasPrefix(url, "https://"))
 }
 func InsertInto(s string, interval int, sep rune) string {
 	var buffer bytes.Buffer
@@ -277,18 +277,33 @@ func Request(uri string, timeout time.Duration, proxyURL string) ([]*Banner, err
 		if isAbsoluteURL(iconURL) {
 			iconURL = urlJoin(nextURI, iconURL)
 		}
-		req, err := http.NewRequest("GET", iconURL, nil)
-		if err != nil {
-			return banners, err
+		var body []byte
+		if strings.HasPrefix(iconURL, "data:") {
+			base64Seps := strings.Split(iconURL, ",")
+			if len(base64Seps) == 2 {
+				body, err = base64.StdEncoding.DecodeString(base64Seps[1])
+				if err != nil {
+					return banners, err
+				}
+			} else {
+				return banners, err
+			}
+
+		} else {
+			req, err := http.NewRequest("GET", iconURL, nil)
+			if err != nil {
+				return banners, err
+			}
+			resp, err := client.Do(req)
+			if err != nil {
+				return banners, err
+			}
+			body, err = io.ReadAll(resp.Body)
+			if err != nil {
+				return banners, err
+			}
 		}
-		resp, err := client.Do(req)
-		if err != nil {
-			return banners, err
-		}
-		body, err := io.ReadAll(resp.Body)
-		if err != nil {
-			return banners, err
-		}
+
 		iconHash := murmurhash(body)
 		for _, banner := range banners {
 			banner.IconHash = iconHash

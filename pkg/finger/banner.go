@@ -90,6 +90,7 @@ func (r *Rule) Match(banner *Banner) (bool, map[string]string) {
 	matchedMapString := make(map[string]string)
 	// 为了保证数据都被提取到 所以需要匹配所有的规则
 	var matched bool
+	var ok bool
 	for _, matcher := range r.Matchers {
 		if matched && !matcher.HasExtra {
 			continue
@@ -109,14 +110,17 @@ func (r *Rule) Match(banner *Banner) (bool, map[string]string) {
 		}
 
 		if (r.MatchersCondition == "" || r.MatchersCondition == "or") && matched {
-			matched = true
+			ok = true
 			continue
 		}
 		if r.MatchersCondition == "and" && !matched {
 			return false, nil
 		}
 	}
-	return matched, matchedMapString
+	if matched && r.MatchersCondition == "and" {
+		return true, matchedMapString
+	}
+	return ok, matchedMapString
 }
 
 func (f *AppFinger) AddFinger(content string) error {
