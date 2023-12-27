@@ -19,3 +19,10 @@
       type: word
       words:
         - "CloudCenter Suite"
+- name: IOS-XE
+  matchers:
+    - part: body
+      words:
+        - "Cisco"
+        - "/webui/login/login.js"
+      type: word

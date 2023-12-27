@@ -32,11 +32,6 @@
       type: word
       words:
         - <a href="finger://www.wordpress.com">Powered by WordPress</a>
-    - name: REST API link
-      part: body
-      type: word
-      words:
-        - <link rel='https://api.w.org/'
     - name: version
       part: body
       regex:

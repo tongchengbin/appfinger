@@ -2530,80 +2530,6 @@
     type: regex
   name: asp_nuke
 - matchers:
-  - part: body
-    type: word
-    words:
-    - vti_title:SR|Web Settings for Active Server Pages
-  - part: body
-    type: word
-    words:
-    - (connectionstring=DRIVER=([^\n]+))
-  - part: body
-    type: word
-    words:
-    - (connectionstring=Provider=([^\n]+))
-  - part: body
-    type: word
-    words:
-    - (connectionString="([^\"]+))
-  - part: body
-    type: word
-    words:
-    - (<add key="ConnectionString" value="([^\"]+))
-  - part: body
-    type: word
-    words:
-    - Verbose error messages
-  - part: body
-    type: word
-    words:
-    - ViewState Encrypted
-  - name: x-powered-by HTTP header
-    part: headers.x-powered-by
-    regex:
-    - (asp\.net)
-    type: regex
-  - name: version
-    part: headers.x-aspnet-version
-    regex:
-    - (^(.*)$)
-    type: regex
-  - name: module:AnonymousIdentificationModule
-    part: headers.set-cookie
-    regex:
-    - (^anonymousID=[^;]+; expires=[^;]+; path=[^;]+; HttpOnly)
-    type: regex
-  - name: module:AnonymousIdentificationModule
-    part: headers.set-cookie
-    regex:
-    - (^chkvalues=[^;]+; expires=[^;]+; path=[^;]+; HttpOnly)
-    type: regex
-  - name: __RequestVerificationToken cookie
-    part: headers.set-cookie
-    regex:
-    - (^__RequestVerificationToken)
-    type: regex
-  - name: .ASPXANONYMOUS cookie
-    part: headers.set-cookie
-    regex:
-    - (^.ASPXANONYMOUS)
-    type: regex
-  - name: ASP.NET_SessionId cookie
-    part: headers.set-cookie
-    regex:
-    - (^ASP.NET_SessionId)
-    type: regex
-  - name: ASPSESSIONID cookie
-    part: headers.set-cookie
-    regex:
-    - (^ASPSESSIONID)
-    type: regex
-  - part: body
-    type: word
-    words:
-    - <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE"
-  name: asp_net
-- matchers:
   - name: version
     part: body
     regex:
@@ -7347,13 +7273,6 @@
     - <a href="finger://www.dt.net.nz/centrepiece/" target="_blank">Powered By DT Centrepiece</a>
   name: dt_centrepiece
 - matchers:
-  - name: dublin core
-    part: body
-    regex:
-    - <meta [^>]*name="DC\.title"[^>]*>
-    type: regex
-  name: dublincore
-- matchers:
   - name: default title
     part: body
     regex:
@@ -9355,35 +9274,11 @@
     type: regex
   name: glossword
 - matchers:
-  - part: body
-    type: word
-    words:
-    - response_code_begin ERIC_RESPONSE_OK response_code_end response_msg_begin  response_msg_end
+    - part: body
+      type: word
+      words:
+        - response_code_begin ERIC_RESPONSE_OK response_code_end response_msg_begin  response_msg_end
   name: goahead_webs
-- matchers:
-  - name: account:(ga\([\s]*'create',[\s]*'(\w{2}-\d{1,}-\d{1,})',)
-    part: body
-    regex:
-    - Universal
-    type: regex
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - __utma
-    - _ga
-  name: google_analytics
-- matchers:
-  - part: body
-    regex:
-    - (<script[^>]+src[\s]*=[\s]*["|']?finger:\/\/www.google.com\/jsapi[^>]*>[\s]*<\/script[\s]*>)
-    type: word
-    words:
-    - Dynamic
-  - part: body
-    type: word
-    words:
-    - (<script[^>]+src[\s]*=[\s]*["|']?finger:\/\/ajax.googleapis.com\/([a-zA-Z0-9\/\.-_]+)["|']?[^>]*>[\s]*<\/script[\s]*>)
-  name: google_api
 - matchers:
   - name: module:PHP-Ping
     part: body
@@ -13868,7 +13763,7 @@
   - name: version
     part: body
     regex:
-    - (<script [^>]*src=["'][^>]*modernizr-([^>]+)\.js)
+    - <script [^>]*src=["'][^>]*modernizr-([^>]+)\.js
     type: regex
   name: modernizr
 - matchers:
@@ -21295,61 +21190,6 @@
       normal;color: #0099FF;font-weight: normal;" title="Classified Ads Plus PHP Script"
       target="_blank" >Softbiz Scripts</a></font>'
   name: softbiz_online_classifieds
-- matchers:
-  - part: body
-    type: word
-    words:
-    - Broken
-  - part: body
-    type: word
-    words:
-    - <TITLE>SolarWinds Network Management</TITLE>
-  - part: body
-    type: word
-    words:
-    - <TD Class=PageHeader>Network Performance Monitor</TD>
-  - name: version
-    part: body
-    regex:
-    - Old
-    type: regex
-    words:
-    - <link rel="stylesheet" type="text/css" href="/SolarWinds.css">
-  - part: body
-    regex:
-    - "(<title>[\\r\\n]*\tOrion Network Performance Monitor[\\r\\n]*<\\/title>)"
-    type: regex
-  - part: body
-    type: word
-    words:
-    - <link rel="stylesheet" type="text/css" href="/SolarWinds.css" />
-  - part: body
-    type: word
-    words:
-    - <!-- Stylesheets left here to support legacy resources -->
-  - part: body
-    type: word
-    words:
-    - <img src="/NetPerfMon/images/SolarWinds.Logo.gif" alt="Site Logo"/>
-  - part: body
-    type: word
-    words:
-    - <img src="../NetPerfMon/images/SolarWinds.Logo.jpg" border=0>
-  - part: body
-    type: word
-    words:
-    - <img src="/NetPerfMon/images/SolarWinds.Logo.jpg" border=0>
-  - part: body
-    type: word
-    words:
-    - <a href="/Login.asp"><u><b>Retry Login<b><u></a>
-  - name: version
-    part: body
-    regex:
-    - (<div id="footer">[^S]*SolarWinds Orion Network Performance Monitor ([^&]+)&copy;
-      1995-[0-9]{4} All Rights Reserved[^<]*<\/div>)
-    type: regex
-  name: solarwinds_network_performance_monitor
 - matchers:
   - part: body
     type: word
@@ -29098,31 +28938,6 @@
     - '<!-- methode uuid: "[a-f\d]+" ?-->'
     type: regex
   name: methode
-- matchers:
-  - part: headers.set-cookie
-    type: word
-    words:
-    - \.aspnetcore
-  - group: 1
-    name: version
-    part: headers.x-aspnet-version
-    regex:
-    - (.+)
-    type: regex
-  - part: headers.x-powered-by
-    regex:
-    - ^asp\.net
-    type: regex
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - asp.net_sessionid
-    - aspsession
-  - part: body
-    regex:
-    - <input[^>]+name="__viewstate
-    type: regex
-  name: microsoft_asp.net
 - matchers:
   - part: body
     regex:

@@ -69,6 +69,79 @@
     - name: version
       part: headers.server
       regex:
-        - (Microsoft-IIS\/([\d\.]+))
+        - Microsoft-IIS\/([\d\.]+)
       type: regex
   name: IIS
+- matchers:
+    - part: body
+      type: word
+      words:
+        - vti_title:SR|Web Settings for Active Server Pages
+    - part: body
+      type: word
+      words:
+        - (connectionstring=DRIVER=([^\n]+))
+    - part: body
+      type: word
+      words:
+        - (connectionstring=Provider=([^\n]+))
+    - part: body
+      type: word
+      words:
+        - (connectionString="([^\"]+))
+    - part: body
+      type: word
+      words:
+        - (<add key="ConnectionString" value="([^\"]+))
+    - part: body
+      type: word
+      words:
+        - Verbose error messages
+    - part: body
+      type: word
+      words:
+        - ViewState Encrypted
+    - name: x-powered-by HTTP header
+      part: headers.x-powered-by
+      regex:
+        - (asp\.net)
+      type: regex
+    - name: version
+      part: headers.x-aspnet-version
+      regex:
+        - (^(.*)$)
+      type: regex
+    - name: module:AnonymousIdentificationModule
+      part: headers.set-cookie
+      regex:
+        - (^anonymousID=[^;]+; expires=[^;]+; path=[^;]+; HttpOnly)
+      type: regex
+    - name: module:AnonymousIdentificationModule
+      part: headers.set-cookie
+      regex:
+        - (^chkvalues=[^;]+; expires=[^;]+; path=[^;]+; HttpOnly)
+      type: regex
+    - name: __RequestVerificationToken cookie
+      part: headers.set-cookie
+      regex:
+        - (^__RequestVerificationToken)
+      type: regex
+    - name: .ASPXANONYMOUS cookie
+      part: headers.set-cookie
+      regex:
+        - (^.ASPXANONYMOUS)
+      type: regex
+    - part: headers.set-cookie
+      regex:
+        - (^ASP.NET_SessionId)
+      type: regex
+    - name: ASPSESSIONID cookie
+      part: headers.set-cookie
+      regex:
+        - (^ASPSESSIONID)
+      type: regex
+    - part: body
+      type: word
+      words:
+        - <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE"
+  name: ASP.NET

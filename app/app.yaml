@@ -822,3 +822,30 @@
         part: title
         words:
           - "LibreNMS"
+- matchers:
+    - part: title
+      type: word
+      words:
+        - SolarWinds Orion
+        - Orion Network Performance Monitor
+    - part: body
+      type: word
+      words:
+        - <TD Class=PageHeader>Network Performance Monitor</TD>
+    - name: version
+      part: body
+      type: word
+      words:
+        - <link rel="stylesheet" type="text/css" href="/SolarWinds.css">
+        - <!-- Stylesheets left here to support legacy resources -->
+        - <img src="../NetPerfMon/images/SolarWinds.Logo.jpg" border=0>
+        - <img src="/NetPerfMon/images/SolarWinds.Logo.jpg" border=0>
+        - <img src="/NetPerfMon/images/SolarWinds.Logo.gif" alt="Site Logo"/>
+        - <a href="/Login.asp"><u><b>Retry Login<b><u></a>
+    - name: version
+      part: body
+      regex:
+        - (<div id="footer">[^S]*SolarWinds Orion Network Performance Monitor ([^&]+)&copy;
+          1995-[0-9]{4} All Rights Reserved[^<]*<\/div>)
+      type: regex
+  name: SolarWinds-Network-Performance-Monitor

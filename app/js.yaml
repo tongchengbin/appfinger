@@ -19,3 +19,9 @@
         - bootstrap.min.js?ver=([\d\.]+)
       type: regex
   name: bootstrap
+- matchers:
+    - part: body
+      regex:
+        - <meta [^>]*name="DC\.title"[^>]*>
+      type: regex
+  name: dublincore
