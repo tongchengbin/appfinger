@@ -397,3 +397,14 @@
         - "content=\"OpenCms"
         - "/opencms/"
         - "Powered by OpenCms"
+- matchers:
+    - type: word
+      part: body
+      words:
+        - "<frame src=\"/interface/login/filler.php"
+        - openemr=
+    - type: word
+      part: title
+      words:
+        - OpenEMR
+  name: OpenEMR

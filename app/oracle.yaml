@@ -1,0 +1,124 @@
+- matchers:
+    - part: body
+      words:
+        - "[oracleexception]: ora-"
+      type: word
+  name: Oracle-Database
+- matchers:
+    - part: headers.server
+      type: regex
+      name: version
+      regex:
+        - ^Oracle-Application-Server-(1[01]g)
+  name: Oracle-Application-Server
+- matchers:
+    - part: headers.server
+      words:
+        - Oracle-HTTP-Server
+      type: word
+  name: Oracle-HTTP-Server
+- matchers:
+    - part: title
+      type: word
+      words:
+        - Welcome to Oracle Fusion Middleware
+    - part: body
+      type: word
+      words:
+        - <link href="css/fmw_bottom_area.css" rel="stylesheet" type="text/css">
+        - TO ORACLE<strong> FUSION MIDDLEWARE
+  name: Oracle-Fusion-Middleware
+
+- name: Oracle-ADF-Faces
+  matchers:
+    - type: word
+      part: body
+      words:
+        - 'content="oracle adf'
+        - "<!-- created by oracle adf faces"
+        - "var _adfwindowopenerror"
+- matchers:
+    - part: body
+      type: word
+      words:
+        - <body class="hasInterface hasGradient hasSidebar " onload="initPage();">
+    - part: body
+      type: word
+      words:
+        - <div id="oaHeaderBranding" class="brandingAdServer">OpenX</div>
+    - part: body
+      type: word
+      words:
+        - <span class="tab-s">Welcome to OpenX</span><br />
+    - name: version
+      part: body
+      regex:
+        - (<meta name="generator" content="OpenX v([^\s]+) - finger:\/\/www\.openx\.org"(
+          \/)?>)
+      type: regex
+  name: openx
+- matchers:
+    - part: body
+      words:
+        - Oracle Access Manager
+      type: word
+  name: Oracle-Access-Manager
+- matchers:
+    - part: headers.proxy-agent
+      regex:
+        - Oracle-iPlanet-Web-Server\/([\d\.]+)
+      type: regex
+  name: Oracle-iPlanet-Web-Server
+- matchers:
+    - part: headers.server
+      regex:
+        - iPlanet-Web-Proxy-Server\/([\d\.]+)
+      type: regex
+  name: Oracle-iPlanet-Web-Proxy-Server
+- matchers:
+    - part: title
+      type: word
+      words:
+        - Oracle Real User Experience Insight
+  name: Oracle-Real-User-Experience-Insight
+- matchers:
+    - part: body
+      type: word
+      words:
+        - com.primavera.detectplugin.detectpluginapplet.class
+        - class="introareabuildid
+        - primavera systems, inc
+    - part: title
+      type: word
+      words:
+        - Primavera Contract Management
+
+  name: Oracle-Primerva
+- matchers:
+    - name: version
+      part: headers.server
+      regex:
+        - Oracle_WebDb_Listener\/([^\s]+)
+      type: regex
+  name: Oracle-WebDb
+- matchers:
+    - name: version
+      part: headers.x-atg-version
+      words:
+        - ATGPlatform
+      type: word
+  name: Oracle-Commerce
+- matchers:
+    - part: headers.server
+      words:
+        -  Oracle-Web-Cache
+      type: word
+  name: Oracle-Web-Cache
+- matchers:
+    - group: 1
+      name: version
+      part: header
+      regex:
+        - 'Oraclecommercecloud-Version: ([\d\.]+)'
+      type: regex
+  name: Oracle-Commerce-Cloud

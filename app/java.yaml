@@ -5,3 +5,10 @@
       name: version
       regex:
         - java/([\d\.\w-]+)
+- name: JSP
+  matchers:
+    - part: headers.x-powered-by
+      type: regex
+      name: version
+      regex:
+        - JSP(?:\/([\d\.]+))
