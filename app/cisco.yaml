@@ -26,3 +26,28 @@
         - "Cisco"
         - "/webui/login/login.js"
       type: word
+- matchers:
+    - part: body
+      words:
+        - ACE XML Gateway
+      type: word
+  name: Cisco-ACE
+- matchers:
+    - part: body
+      type: word
+      words:
+        - Cisco IP Phone
+  name: Cisco-IP-Phone
+
+- matchers:
+    - part: body
+      type: word
+      words:
+        - '<title>Cisco Systems, Inc. VPN 3000 Concentrator '
+  name: Cisco-VPN-3000-Concentrator
+- matchers:
+    - part: headers.server
+      words:
+        - Adaptive Security Appliance HTTP
+      type: word
+  name: Cisco-Adaptive-Security-Appliance

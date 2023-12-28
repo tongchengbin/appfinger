@@ -4,3 +4,11 @@
       words:
         - Adobe Connect
   name: Adobe-Connect
+- matchers:
+    - part: title
+      words:
+        - AEM 登录
+        - AEM Sign In
+        - AEM Assets Brand Portal
+      type: word
+  name: Adobe-Experience-Manager

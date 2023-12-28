@@ -4,3 +4,40 @@
       type: word
       words:
         - "EC2ws"
+- matchers:
+    - part: headers.server
+      regex:
+        - ^ecs
+      type: regex
+    - part: title
+      type: word
+      words:
+        - "Amazon ECS"
+  name: Amazon-ECS
+- matchers:
+    - part: headers.set-cookie
+      type: word
+      words:
+        - AWSALB
+        - AWSALBCORS
+  name: Amazon-ALB
+
+- matchers:
+    - part: headers.via
+      words:
+        - (cloudfront)
+      type: word
+  name: Amazon-Cloudfront
+
+- matchers:
+    - part: headers.server
+      type: word
+      words:
+        - awselb
+  name: Amazon-ELB
+- matchers:
+    - part: headers.server
+      words:
+        - AmazonS3
+      type: word
+  name: Amazon-S3

@@ -68,15 +68,6 @@
       words:
         - App-webs
       type: word
-
-- name: openresty
-  matchers:
-    - part: headers.server
-      words:
-        - openresty
-      type: word
-
-
 - name: Coyote
   matchers:
     - name: version
@@ -219,12 +210,7 @@
       type: word
       words:
         - openresty
-- name: OpenResty
-  matchers:
-    - part: headers.server
-      type: word
-      words:
-        - openresty
+
 
 - name: CloudFlare
   matchers:
@@ -560,3 +546,9 @@
         - CherryPy(?:/([\d.]+))?
       type: regex
   name: cherrypy
+- matchers:
+    - part: headers.server
+      type: word
+      words:
+        - AlmaLinux
+  name: AlmaLinux
