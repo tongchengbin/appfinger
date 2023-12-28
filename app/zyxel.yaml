@@ -4,3 +4,9 @@
       type: word
       words:
         - "USG FLEX"
+- matchers:
+    - part: title
+      type: word
+      words:
+        - 'Welcome to the Web-Based Configurator'
+  name: ZyXel-Router

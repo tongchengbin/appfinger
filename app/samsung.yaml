@@ -1,7 +1,13 @@
-- name: SAMSUNG AP
+- name: SAMSUNG-AP
   matchers:
     - type: word
       part: body
       name: "SAMSUNG-AP"
       words:
         - "<span>samsung ap manager</span>"
+- matchers:
+      - type: word
+        part: body
+        words:
+          - "location = \"/sws/index.html\";"
+  name: Samsung-Printer

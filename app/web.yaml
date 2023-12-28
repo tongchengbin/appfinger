@@ -19159,12 +19159,6 @@
     - ' songwin = window.open("songinfo.php?songid="+songid, "songinfowin", "location=no,status=no,menubar=no,scrollbars=yes,resizeable=yes,height=400,width=650");'
   name: samphpweb
 - matchers:
-  - part: body
-    type: word
-    words:
-    - var debugMode = ("$$GSI_TCPIP_IP_ADDR$$".indexOf(".")
-  name: samsung_printer
-- matchers:
   - name: HTTP Server Header
     part: headers.server
     regex:
@@ -25640,58 +25634,6 @@
     - (Powered by[:]? <a href="finger:\/\/www.zylone.com[\/]*[^>]+>Zylone IT)
     type: regex
   name: zylone_it
-- matchers:
-  - part: body
-    type: word
-    words:
-    - '<title>.:: Welcome to the Web-Based Configurator::.</title><meta finger-equiv=''content-type''
-      content=''text/html;charset=iso-8859-1''>'
-  - part: body
-    type: word
-    words:
-    - <form method="post" action="/Forms/rpAuth_1" onSubmit="LoginClick(document.forms[0].hiddenPassword,
-      document.forms[0].LoginPassword);"><p>&nbsp;</p>
-  - part: body
-    type: word
-    words:
-    - Welcome to your router Configuration Interface<p></p>Enter your password and
-      press enter or click "Login"<p></p><img src="Images/i_key.gif" width="11" height="17"  align="absmiddle">
-      <strong>
-  - name: model:VSG
-    part: body
-    type: word
-    words:
-    - <font size="3" color="3366CC" face="Arial"><b><i>Vantage Service Gateway</i>&nbsp;</b></font>
-  - name: model:VSG
-    part: body
-    type: word
-    words:
-    - <frameset rows="75,97%,25" framespacing="0" border="0" frameborder="0">
-  - part: body
-    type: word
-    words:
-    - loginPassword.value = "ZyXEL ZyWALL Series";
-  - name: version
-    part: body
-    regex:
-    - (<td height="40" colspan="4" class="Auth">Prestige ([^<]+)<)
-    type: regex
-  - name: HTTP Server Header
-    part: headers.server
-    regex:
-    - (^ZyXEL-RomPager)
-    type: regex
-  - name: version
-    part: headers.server
-    regex:
-    - (^ZyXEL-RomPager\/([^\s]+)$)
-    type: regex
-  - name: HTTP Server Header
-    part: headers.server
-    regex:
-    - (^RomPager)
-    type: regex
-  name: zyxel_router
 - matchers:
   - part: body
     type: word
