@@ -283,7 +283,7 @@
 - name: PrestaShop
   matchers:
     - type: word
-      part: headers
+      part: headers.set-cookie
       words:
         - "PrestaShop"
 - name: 3CX
@@ -345,28 +345,6 @@
       name: "ASP-Nuke"
       words:
         - "content=\"ASPNUKE"
-- name: AVCON6
-  redirects: true
-  matchers:
-    - type: word
-      part: body
-      name: "AVCON6"
-      words:
-        - "filename=avcon6setup.exe"
-        - "language_dispose.action"
-      condition: and
-    - type: word
-      part: body
-      name: "AVCON6"
-      words:
-        - "filename=AVCON6Setup.exe"
-      condition: and
-    - type: word
-      part: body
-      name: "AVCON6"
-      words:
-        - "avcon"
-      condition: and
 - name: beward_n100_h.264
   matchers:
     - type: word
@@ -849,3 +827,58 @@
           1995-[0-9]{4} All Rights Reserved[^<]*<\/div>)
       type: regex
   name: SolarWinds-Network-Performance-Monitor
+- name: Certbot
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Certbot"
+- matchers:
+    - name: version
+      part: headers.x-powered-by
+      regex:
+        - ^Chamilo ([\d\.]+)
+      type: regex
+    - part: body
+      type: word
+      words:
+        - <link href="finger://www.chamilo.org/documentation.php" rel="Help" />
+    - part: body
+      type: word
+      words:
+        - '<!-- end of #main" started at the end of banner.inc.php -->'
+  name: Chamilo
+- name: Qlik-Sense
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Qlik Sense Hub
+- name: swagger-UI
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "-1180440057"
+    - part: title
+      type: word
+      words:
+        - swagger
+- matchers:
+    - part: title
+      type: word
+      words:
+        - Cacti
+  name: cacti
+- name: Salia-PLCC
+  matchers:
+    - part: body
+      type: word
+      words:
+          - Salia PLCC
+- name: Ray
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "463802404"

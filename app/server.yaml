@@ -201,14 +201,10 @@
       words:
         - proftpd
 - matchers:
-    - part: headers.server
-      regex:
-        - (lighttpd)
-      type: regex
     - name: version
       part: headers.server
       regex:
-        - (^[\s]*lighttpd\/([^\s]+))
+        - lighttpd(?:/([\d.]+))?
       type: regex
   name: lighttpd
 - name: Proxygen
@@ -216,7 +212,7 @@
     - part: headers.server
       type: word
       words:
-        - Proxygen
+        - proxygen
 - name: OpenResty
   matchers:
     - part: headers.server
@@ -504,3 +500,48 @@
         - mod_(?:rails|rack)
       type: regex
   name: Rails
+- name: DarkHttpd
+  matchers:
+    - part: headers.server
+      name: version
+      regex:
+        - darkhttpd(:?/([\d\w\.-]+))?
+      type: regex
+- matchers:
+    - part: headers.server
+      words:
+        - CrushFTP
+      type: word
+    - group: 1
+      name: version
+      part: headers.server
+      regex:
+        - ^CrushFTP (HTTP[\d]? Server )?Version ([\d\.]+)$
+      type: regex
+    - name: CrushAuth Cookie
+      part: headers.set-cookie
+      regex:
+        - (^CrushAuth=)
+      type: regex
+    - name: version
+      part: headers.www-authenticate
+      regex:
+        - ^Basic realm="CrushFTP Server Version ([\d\.]+)"$
+      type: regex
+  name: crushftp
+- matchers:
+    - group: 1
+      name: version
+      part: headers.server
+      regex:
+        - ^h2o(?:/)?([\d\.]+)?
+      type: regex
+    - part: headers.Set-Cookie
+      type: word
+      words:
+        - h2o_casper
+    - part: title
+      type: word
+      words:
+        - H2O Flow
+  name: H2O

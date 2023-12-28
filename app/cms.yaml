@@ -388,3 +388,12 @@
       words:
         - "Powered by MediaWiki"
   name: mediawiki
+
+- name: opencms
+  matchers:
+    - type: word
+      part: body
+      words:
+        - "content=\"OpenCms"
+        - "/opencms/"
+        - "Powered by OpenCms"

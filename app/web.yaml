@@ -760,43 +760,6 @@
   - part: body
     type: word
     words:
-    - <tr><td colspan="2" class="smallhead" align="center">ZoneMinder Login</td></tr>
-  - part: body
-    type: word
-    words:
-    - (<div id="monitorSummary"><a href="\?view=groups" onclick="createPopup\( '\?view=groups',
-      'zmGroups', 'groups' \); return\( false \);">([\d]+ Monitors)<\/a><\/div>)
-  - part: body
-    type: word
-    words:
-    - '(<a href="javascript: newWindow\( ''\/index\.php\?view=groups'', ''zmGroups'',
-      400, 220 \);">([\d]+ Monitors)<\/a>)'
-  - name: version
-    part: body
-    regex:
-    - (Running<\/a> - <a href="\?view=version" onclick="createPopup\( '\?view=version',
-      'zmVersion', 'version' \); return\( false \);">v([^<^\s]+)<\/a><\/h2>)
-    type: regex
-  - name: version
-    part: body
-    regex:
-    - '(Running<\/a> - <a href="javascript: newWindow\( ''\/index\.php\?view=version'',
-      ''zmVersion'', 320, 140 \);">v([^<^\s]+)<\/a>)'
-    type: regex
-  - name: version
-    part: headers.server
-    regex:
-    - (^ZoneMinder Video Server\/([^\s]+)$)
-    type: regex
-  - part: headers.set-cookie
-    regex:
-    - (ZMSESSID=[^;]+)
-    type: regex
-  name: zoneminder
-- matchers:
-  - part: body
-    type: word
-    words:
     - <title>Coppermine Photo Gallery - Home</title>
   - part: body
     regex:
@@ -1496,23 +1459,7 @@
     - (<script [^>]*src=["|'][^>]*addthis\.com\/js)
     type: regex
   name: addthis
-- matchers:
-  - part: body
-    type: word
-    words:
-    - <script src="/common/scripts/showContent.js"></script><script type="text/javascript"
-      src="/common/scripts/breezeUI.js"></script><script>
-  - name: version
-    part: body
-    regex:
-    - (<a class="loginHelp" title="([^\s^\"]+)" target="_blank" href="\/common\/help\/[^\/]+\/go\/login_ts\.html"(
-      target="_blank")?>Help<\/a>)
-    type: regex
-  - part: headers.BREEZESESSION
-    regex:
-    - (BREEZESESSION=breez[^;]+;)
-    type: regex
-  name: adobe_connect
+
 - matchers:
   - name: div class parbase
     part: body
@@ -4318,16 +4265,6 @@
   - part: body
     type: word
     words:
-    - <title>Login to Cacti</title>
-  - part: body
-    type: word
-    words:
-    - <body bgcolor="#FFFFFF" onload="document.login.login_username.focus()">
-  name: cacti
-- matchers:
-  - part: body
-    type: word
-    words:
     - <select name="numCurrencyID" class="currencymenu" onchange="javascript:document.getElementById('currmenuform').submit();">
   - name: version
     part: body
@@ -4861,39 +4798,6 @@
     - (<a href="finger:\/\/www.jmarshall.com\/tools\/cgiproxy\/"><i>CGIProxy ([^<]+)<\/i><\/a>)
     type: regex
   name: cgiproxy
-- matchers:
-  - name: version
-    part: headers.x-powered-by
-    regex:
-    - (^Chamilo ([\d\.]+))
-    type: regex
-  - part: body
-    type: word
-    words:
-    - <link href="finger://www.chamilo.org/documentation.php" rel="Help" />
-  - part: body
-    regex:
-    - (<meta name="Generator" content="Chamilo ([\d\.]+)">)
-    type: regex
-  - part: body
-    type: word
-    words:
-    - '<!-- end of #main" started at the end of banner.inc.php -->'
-  - group: 1
-    name: version
-    part: body
-    regex:
-    - (<\/div>(Portal|Plattform|Platform|Plataforma) <a href="finger:\/\/www\.chamilo\.org\/?"
-      target="_blank">Chamilo ([^<^\s]+)<\/a> &copy;)
-    type: regex
-  - group: 1
-    name: version
-    part: body
-    regex:
-    - (<div class="copyright">(Portal|Plattform|Platform|Plataforma) <a href="finger:\/\/www\.chamilo\.org\/?"
-      target="_blank">Chamilo ([^<^\s]+)<\/a> &copy;)
-    type: regex
-  name: chamilo
 - matchers:
   - name: version
     part: headers.server
@@ -6111,28 +6015,6 @@
     - (Kill=kill=(Yes|No))
     type: regex
   name: createlive_cms
-- matchers:
-  - part: headers.server
-    regex:
-    - (^CrushFTP )
-    type: regex
-  - group: 1
-    name: version
-    part: headers.server
-    regex:
-    - (^CrushFTP (HTTP[\d]? Server )?Version ([\d\.]+)$)
-    type: regex
-  - name: CrushAuth Cookie
-    part: headers.set-cookie
-    regex:
-    - (^CrushAuth=)
-    type: regex
-  - name: version
-    part: headers.www-authenticate
-    regex:
-    - (^Basic realm="CrushFTP Server Version ([\d\.]+)"$)
-    type: regex
-  name: crushftp
 - matchers:
   - part: body
     type: word
@@ -15814,26 +15696,6 @@
   name: open_xchange
 - matchers:
   - part: body
-    regex:
-    - (<meta name="generator"[^>]+content="OpenCms"( \/)?>)
-    type: regex
-  - name: version
-    part: body
-    regex:
-    - (<meta name="generator"[^>]+content="Opencms version ([\d\.]+)"( \/)?>)
-    type: regex
-  - part: headers.server
-    regex:
-    - (^OpenCms)
-    type: regex
-  - name: version
-    part: headers.server
-    regex:
-    - (^OpenCms\/([a-z\d\.]+))
-    type: regex
-  name: opencms
-- matchers:
-  - part: body
     type: word
     words:
     - Powered by <a href="finger://www.OpenConf.org" target="_blank">OpenConf</a>
@@ -18891,14 +18753,6 @@
     words:
     - pyrocms
   name: pyrocms
-- matchers:
-  - group: 1
-    name: version
-    part: headers.server
-    regex:
-    - (?:^|\s)python(?:/([\d.]+))?
-    type: regex
-  name: python
 - matchers:
   - name: version
     part: body
@@ -28223,18 +28077,6 @@
     - _gumroad_app_session
     - _gumroad_guid
   name: gumroad
-- matchers:
-  - group: 1
-    name: version
-    part: headers.server
-    regex:
-    - ^h2o(?:/)?([\d\.]+)?
-    type: regex
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - h2o_casper
-  name: h2o
 - matchers:
   - part: headers.server
     regex:

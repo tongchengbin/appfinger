@@ -134,3 +134,22 @@
       condition: and
       words:
         - "ACTi 监控摄像机"
+- name: AVCON6
+  redirects: true
+  matchers:
+    - type: word
+      part: body
+      words:
+        - "filename=avcon6setup.exe"
+        - "language_dispose.action"
+      condition: and
+- matchers:
+    - part: title
+      type: word
+      words:
+        - "ZM - Login"
+    - part: headers.set-cookie
+      words:
+        - ZMSESSID=
+      type: word
+  name: ZoneMinder

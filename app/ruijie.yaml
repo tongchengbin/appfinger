@@ -29,6 +29,10 @@
         - "login.getdeviceinfo"
 - name: RG-UAC
   matchers:
+    - part: title
+      type: word
+      words:
+        - RG-UAC登录页面
     - type: word
       part: body
       words:

@@ -1,3 +1,11 @@
+- matchers:
+    - group: 1
+      name: version
+      part: headers.server
+      regex:
+        - Python(?:/([\d.]+))?
+      type: regex
+  name: python
 - name: TornadoServer
   matchers:
   - part: headers.server
@@ -11,3 +19,10 @@
       part: title
       words:
         - Jupyter Notebook
+- name: aiohttp
+  matchers:
+    - type: regex
+      name: version
+      part: headers.server
+      regex:
+          - aiohttp(?:/([\d.]+))?
