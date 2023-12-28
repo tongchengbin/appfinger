@@ -31,3 +31,17 @@
       type: word
       words:
         - iconify-icon.min.js
+- matchers:
+    - part: headers.vary
+      type: word
+      words:
+        - x-inertia
+  name: inertia.js
+- matchers:
+    - group: 1
+      name: version
+      part: headers.x-powered-by
+      regex:
+        - ^next\.js ?([0-9.]+)?
+      type: regex
+  name: next.js

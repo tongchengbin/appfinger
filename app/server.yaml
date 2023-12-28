@@ -552,3 +552,25 @@
       words:
         - AlmaLinux
   name: AlmaLinux
+- matchers:
+    - group: 1
+      name: version
+      part: headers.server
+      regex:
+        - mod_rack(?:/([\d.]+))?
+      type: regex
+    - group: 1
+      name: version
+      part: headers.x-powered-by
+      regex:
+        - mod_rack(?:/([\d.]+))?
+      type: regex
+  name: Mod-Rack
+- matchers:
+    - group: 1
+      name: version
+      part: headers.server
+      regex:
+        - phusion passenger ([\d.]+)
+      type: regex
+  name: Phusion-Passenger

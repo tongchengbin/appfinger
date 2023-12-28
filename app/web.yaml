@@ -66,18 +66,6 @@
     type: regex
   name: gerrit
 - matchers:
-  - name: jquery.js
-    part: body
-    regex:
-    - (<script[^>]+src="[^"]+textpattern\/jquery.js[^"]*">)
-    type: regex
-  - name: css.php
-    part: body
-    regex:
-    - (<link[^>]+href=\"[^"]+textpattern\/css.php[^"]*" \/>)
-    type: regex
-  name: textpattern
-- matchers:
   - name: enableLinkTracking
     part: body
     type: word
@@ -15066,22 +15054,6 @@
 - matchers:
   - part: body
     regex:
-    - (<object)
-    type: regex
-  - group: 1
-    part: body
-    type: word
-    words:
-    - (<object [^>]*(codebase|codetype|type)\s*=\s*['"]([^"']+)['"])
-  - group: 1
-    part: body
-    type: word
-    words:
-    - (<object [^>]*(codebase|codetype|type)\s*=\s*([^\s>'"]+))
-  name: object
-- matchers:
-  - part: body
-    regex:
     - (<body>[\s]+[\s]+<p id="aliasource">[\s]+<a href="finger:\/\/www\.obm\.org">OBM\.org<\/a>[\s]+<\/p>[\s]+<h1>)
     type: regex
   - part: headers.set-cookie
@@ -16021,22 +15993,6 @@
     words:
     - Web.com
   name: parked_domain
-- matchers:
-  - part: headers.server
-    regex:
-    - (.*Phusion_Passenger)
-    type: regex
-  - name: version
-    part: headers.server
-    regex:
-    - ([\s]+Phusion_Passenger\/([\d\.]+))
-    type: regex
-  - name: version
-    part: headers.x-powered-by
-    regex:
-    - (Phusion Passenger \(mod_rails\/mod_rack\) ([\d\.]+))
-    type: regex
-  name: passenger
 - matchers:
   - name: rss link type
     part: body
@@ -25762,12 +25718,7 @@
     - <link[^>]+ rel="stylesheet/less"
     type: regex
   name: less
-- matchers:
-  - part: headers.vary
-    type: word
-    words:
-    - x-inertia
-  name: inertia.js
+
 - matchers:
   - group: 1
     name: version
@@ -25910,14 +25861,7 @@
     words:
     - application/wasm
   name: webassembly
-- matchers:
-  - group: 1
-    name: version
-    part: headers.x-powered-by
-    regex:
-    - ^next\.js ?([0-9.]+)?
-    type: regex
-  name: next.js
+
 - matchers:
   - part: headers.Set-Cookie
     type: word
@@ -25934,12 +25878,7 @@
     words:
     - <!-- begin jekyll seo tag
   name: jekyll
-- matchers:
-  - part: body
-    regex:
-    - <[^>]+\sdata-v(?:ue)?-
-    type: regex
-  name: vue.js
+
 - matchers:
   - part: body
     regex:
@@ -26445,14 +26384,6 @@
     - <!-- cached by blitz on
   name: blitz
 - matchers:
-  - group: 1
-    name: version
-    part: headers.x-powered-by
-    regex:
-    - ^blitz\.js?([0-9.]+)?
-    type: regex
-  name: blitz.js
-- matchers:
   - part: body
     regex:
     - <[^>]+/binaries/(?:[^/]+/)*content/gallery/
@@ -26603,12 +26534,6 @@
   name: carrot_quest
 - matchers:
   - part: headers.x-powered-by
-    type: word
-    words:
-    - catberry
-  name: catberry.js
-- matchers:
-  - part: headers.x-powered-by
     regex:
     - ^nextguest cms
     type: regex
@@ -26704,16 +26629,7 @@
     words:
     - flowproxy-origin
   name: combahton_flowshield
-- matchers:
-  - part: headers.chec-version
-    type: word
-    words:
-    - .*
-  - part: headers.x-powered-by
-    type: word
-    words:
-    - commerce.js
-  name: commerce.js
+
 - matchers:
   - part: headers.Set-Cookie
     type: word
@@ -28323,13 +28239,7 @@
     - nxcli\.net$
     type: regex
   name: nexcess
-- matchers:
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - __host-next-auth.csrf-token
-    - __secure-next-auth.callback-url
-  name: nextauth.js
+
 - matchers:
   - part: headers.server
     regex:
@@ -28511,12 +28421,6 @@
   name: oxygen
 - matchers:
   - part: body
-    type: word
-    words:
-    - <\/div>\s*<!-- outercontainer -->\s*<div\s*id="printcontainer"><\/div>
-  name: pdf.js
-- matchers:
-  - part: body
     regex:
     - <[^>]+powered by php-nuke
     type: regex
@@ -28638,20 +28542,6 @@
     words:
     - phoenix_p_session
   name: phoenix_site
-- matchers:
-  - group: 1
-    name: version
-    part: headers.server
-    regex:
-    - phusion passenger ([\d.]+)
-    type: regex
-  - group: 1
-    name: version
-    part: headers.x-powered-by
-    regex:
-    - phusion passenger(?:\(r\))? ?([\d.]+)?
-    type: regex
-  name: phusion_passenger
 - matchers:
   - part: headers.content-security-policy
     type: word
@@ -29057,16 +28947,6 @@
     - <div [^>]*id="_saber"
     type: regex
   name: saber
-- matchers:
-  - part: headers.x-powered-by
-    regex:
-    - ^sails(?:$|[^a-z0-9])
-    type: regex
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - sails.sid
-  name: sails.js
 - matchers:
   - part: headers.Set-Cookie
     type: word
@@ -29859,12 +29739,6 @@
     - vscommerce
   name: visualsoft
 - matchers:
-  - part: body
-    regex:
-    - <script [^>]*src="[^"]*voog\.com/tracker\.js
-    type: regex
-  name: voog.com_website_builder
-- matchers:
   - part: headers.Set-Cookie
     type: word
     words:
@@ -30175,12 +30049,6 @@
     - zid_catalog_session
   name: zid
 - matchers:
-  - part: headers.x-powered-by
-    type: word
-    words:
-    - actionhero api
-  name: actionhero.js
-- matchers:
   - part: headers.content-security-policy
     type: word
     words:
@@ -30208,12 +30076,6 @@
     - <img [^>]*src="[^/]*//[^/]*eway\.com
     type: regex
   name: eway_payments
-- matchers:
-  - part: headers.x-powered-by
-    regex:
-    - ^enduro\.js
-    type: regex
-  name: enduro.js
 - matchers:
   - part: headers.x-powered-by
     regex:
@@ -30246,12 +30108,6 @@
     words:
     - <a href="/(?:cgi-bin/)?ikiwiki\.cgi\?do=
   name: ikiwiki
-- matchers:
-  - part: body
-    regex:
-    - <div[^>]+data-pjax-container
-    type: regex
-  name: jquery_pjax
 - matchers:
   - group: 1
     name: version
@@ -30308,20 +30164,6 @@
     - mod_python(?:/([\d.]+))?
     type: regex
   name: mod_python
-- matchers:
-  - group: 1
-    name: version
-    part: headers.server
-    regex:
-    - mod_rack(?:/([\d.]+))?
-    type: regex
-  - group: 1
-    name: version
-    part: headers.x-powered-by
-    regex:
-    - mod_rack(?:/([\d.]+))?
-    type: regex
-  name: mod_rack
 - matchers:
   - group: 1
     name: version
@@ -30430,12 +30272,6 @@
     - <[^>]+data-sr(?:-id)
     type: regex
   name: scrollreveal
-- matchers:
-  - part: headers.x-powered-by
-    regex:
-    - ^total\.js
-    type: regex
-  name: total.js
 - matchers:
   - group: 1
     name: version

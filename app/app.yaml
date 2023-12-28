@@ -882,3 +882,9 @@
       type: word
       words:
         - "463802404"
+- matchers:
+    - part: headers.x-powered-by
+      type: word
+      words:
+        - Catberry
+  name: Catberry.js
