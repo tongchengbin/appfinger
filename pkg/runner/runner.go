@@ -33,7 +33,12 @@ func formatExtract(extract map[string]map[string]string) string {
 func NewRunner(options *Options) (*Runner, error) {
 	runner := &Runner{
 		options: options,
-		finger:  finger.New(&finger.Options{Timeout: time.Second * time.Duration(options.Timeout), Proxy: options.Proxy, Home: options.FingerHome}),
+		finger: finger.New(&finger.Options{Timeout: time.Second * time.Duration(options.Timeout),
+			Proxy:             options.Proxy,
+			Home:              options.FingerHome,
+			DisableJavaScript: options.DisableJavaScript,
+			DisableIcon:       options.DisableIcon,
+		}),
 		callback: func(r *Runner, url string, banner *finger.Banner, extract map[string]map[string]string) {
 			for _, output := range r.outputs {
 				out := &OutputFields{URL: url, Extract: extract}

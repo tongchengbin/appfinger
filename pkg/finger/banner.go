@@ -12,9 +12,11 @@ import (
 )
 
 type Options struct {
-	Timeout time.Duration
-	Home    string
-	Proxy   string
+	Timeout           time.Duration
+	Home              string
+	Proxy             string
+	DisableJavaScript bool
+	DisableIcon       bool
 }
 
 type Rule struct {
@@ -36,16 +38,17 @@ type Banner struct {
 }
 
 type AppFinger struct {
-	Rules       []*Rule
-	timeout     time.Duration
-	Proxy       string
-	DisableIcon bool
+	Rules   []*Rule
+	timeout time.Duration
+	Proxy   string
+	options *Options
 }
 
 func New(options *Options) *AppFinger {
 	app := &AppFinger{
 		Proxy:   options.Proxy,
 		timeout: options.Timeout,
+		options: options,
 	}
 	app.LoadAppFinger(options.Home)
 	return app
@@ -58,7 +61,7 @@ func (f *AppFinger) LoadAppFinger(directory string) {
 		//	 判断文件夹是否存在
 		_, err := os.Stat(directory)
 		if err == nil {
-			contents = append(contents, appfinger.LoadDirectoryRule(directory)...)
+			contents = append(contents, appfinger.LoadDirectoryRule(directory, f.options.DisableJavaScript)...)
 		}
 	}
 	if len(contents) == 0 {
@@ -201,7 +204,7 @@ func mergeMaps(map1, map2 map[string]map[string]string) map[string]map[string]st
 	return result
 }
 func (f *AppFinger) MatchURI(uri string) (*Banner, map[string]map[string]string) {
-	banners, err := Request(uri, f.timeout, f.Proxy, f.DisableIcon)
+	banners, err := Request(uri, f.timeout, f.Proxy, f.options.DisableIcon)
 	var fingerprints map[string]map[string]string
 	if err != nil && banners == nil {
 		gologger.Warning().Msg(err.Error())
