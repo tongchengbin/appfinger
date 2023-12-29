@@ -157,3 +157,9 @@
         - ZMSESSID=
       type: word
   name: ZoneMinder
+- name: Vidyo-Router
+  matchers:
+    - part: title
+      type: word
+      words:
+        - VidyoRouter Configuration

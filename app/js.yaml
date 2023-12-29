@@ -45,3 +45,9 @@
         - ^next\.js ?([0-9.]+)?
       type: regex
   name: next.js
+- matchers:
+    - part: body
+      words:
+        - ext-base.js
+      type: word
+  name: ext.js

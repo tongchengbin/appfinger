@@ -7862,12 +7862,6 @@
   name: expressionengine
 - matchers:
   - part: body
-    regex:
-    - (<script [^>]*src=["'][^>]*ext\-base\.js["'])
-    type: regex
-  name: extjs
-- matchers:
-  - part: body
     type: word
     words:
     - <title>Login - eXtplorer</title>
