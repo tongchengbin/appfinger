@@ -986,11 +986,10 @@
         - "XNAT"
 - name: Xerox-WorkCentre
   matchers:
-    - part: title
+    - part: body
       type: word
       words:
-        - Xerox WorkCentre
-        - XEROX ColorQube
+        - "document.write('<title>' + 'XEROX WORKCENTRE');"
 - name: WSO2-Management-Console
   matchers:
     - part: title
