@@ -52,7 +52,14 @@ func getExecRedirect(url string, jsCodes []string) string {
 	if url[len(url)-1] != '/' {
 		url += "/"
 	}
-	initWindowsCode := fmt.Sprintf(`var window = {location: {href: '%s'}};`, url)
+	initWindowsCode := fmt.Sprintf(`
+		var window = {
+			location: {href: '%s'}
+			open: function(url, target) {
+				window.href =url;
+		}
+};
+`, url)
 	_, err := vm.Run(initWindowsCode)
 	var consoleLogs []string
 	_ = vm.Set("console", map[string]interface{}{
