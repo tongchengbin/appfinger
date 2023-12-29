@@ -28,7 +28,7 @@ func findRefresh(n *html.Node) string {
 	var uri string
 	if n.Type == html.ElementNode && n.Data == "meta" {
 		for _, attr := range n.Attr {
-			if attr.Key == "http-equiv" && attr.Val == "Refresh" {
+			if strings.ToLower(attr.Key) == "http-equiv" && strings.ToLower(attr.Val) == "refresh" {
 				uri = extractUri(n)
 				if uri != "" {
 					return uri
