@@ -47,9 +47,12 @@ func findRefresh(n *html.Node) string {
 	}
 	return ""
 }
-func getExecRedirect(jsCodes []string) string {
+func getExecRedirect(url string, jsCodes []string) string {
 	vm := otto.New()
-	initWindowsCode := `var window = {location: {href: ''}};`
+	if url[len(url)-1] != '/' {
+		url += "/"
+	}
+	initWindowsCode := fmt.Sprintf(`var window = {location: {href: '%s'}};`, url)
 	_, err := vm.Run(initWindowsCode)
 	var consoleLogs []string
 	_ = vm.Set("console", map[string]interface{}{
@@ -91,7 +94,11 @@ func getExecRedirect(jsCodes []string) string {
 		}
 		if properties.IsObject() {
 			href, _ := result.Object().Get("href")
-			return href.String()
+			if href.IsString() {
+				return href.String()
+			} else {
+				return ""
+			}
 
 		} else if properties.IsString() {
 			return properties.String()
@@ -105,7 +112,7 @@ func getExecRedirect(jsCodes []string) string {
 	}
 	return ""
 }
-func parseJavaScript(htmlContent string) string {
+func parseJavaScript(url string, htmlContent string) string {
 	// 在这里解析JavaScript，提取跳转信息
 	//<meta http-equiv="Refresh"content="0;url=/yyoa/index.jsp">
 	doc, err := html.Parse(strings.NewReader(htmlContent))
@@ -148,7 +155,7 @@ func parseJavaScript(htmlContent string) string {
 	if len(scripts) > 2 {
 		return ""
 	} else {
-		return getExecRedirect(scripts)
+		return getExecRedirect(url, scripts)
 	}
 }
 

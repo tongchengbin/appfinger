@@ -259,7 +259,7 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 		}
 		banners = append(banners, banner)
 		// 解析JavaScript跳转
-		jsRedirectUri := parseJavaScript(bodyBytes)
+		jsRedirectUri := parseJavaScript(nextURI, bodyBytes)
 		if jsRedirectUri == "" {
 			break
 		} else {
