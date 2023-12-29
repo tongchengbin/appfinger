@@ -353,13 +353,11 @@
       type: word
   name: phpbb
 - matchers:
-    - group: 1
-      name: version
-      part: body
-      regex:
-        - adminer</a> <span class="version">([\d.]+)</span>
-      type: regex
-  name: adminer
+    - part: title
+      words:
+        - Adminer
+      type: word
+  name: Adminer
 - matchers:
     - part: headers.set-cookie
       type: word
@@ -408,3 +406,18 @@
       words:
         - OpenEMR
   name: OpenEMR
+- matchers:
+    - part: body
+      type: word
+      words:
+        - "<div id=\"loginWindow\" class=\" clearfix\">"
+        - "<div id=\"content\" class=\"content\" onKeyPress=\"javascript:doSubmit(event);\">"
+        - "<p class=\"note\">view : <b>default/article</b></p>"
+        - "<meta name=\"description\" content=\"HandMade, an Ionize theme\" />"
+  name: Ionize-CMS
+- matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "880812652"
+  name: BloofoxCMS

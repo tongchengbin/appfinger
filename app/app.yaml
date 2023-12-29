@@ -4,6 +4,11 @@
       type: word
       words:
         - "zbx_sessionid="
+    - part: body
+      type: word
+      words:
+        - images/general/zabbix.ico
+        - "meta name=\"Author\" content=\"Zabbix SIA\""
 - name: vBulletin
   matchers:
     - part: headers.set-cookie
@@ -936,3 +941,58 @@
       type: word
       words:
         - 'Basic realm="Please login"'
+- matchers:
+    - part: body
+      type: word
+      words:
+        - <h2>OpenLookup Node Status</h2>
+  name: OpenLookup
+- matchers:
+    - part: body
+      words:
+        - recaptcha_ajax.js
+      type: word
+  name: recaptcha
+- matchers:
+    - part: body
+      regex:
+        - (<a href="finger:\/\/(sendcard.sf.net|www.sendcard.org)\/"( title="download your
+          own PHP e-card script")?><img src="poweredbysendcard102x47.gif"[^>]+alt="Powered
+          by sendcard - an advanced PHP e-card program"[^>]*><\/a>)
+      type: regex
+    - part: body
+      type: word
+      words:
+        - '<div style="display: none; color: White;">scscsc320</div>'
+        - "<!-- The following line should allow me to search on google and find sendcard installations -->"
+  name: sendcard
+- name: yealink
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Yealink"
+- name: XploitSPY
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "XploitSPY"
+- name: XNAT
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "XNAT"
+- name: Xerox-WorkCentre
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Xerox WorkCentre
+- name: WSO2-Management-Console
+  matchers:
+    - part: title
+      type: word
+      words:
+        - WSO2 Management Console

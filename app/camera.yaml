@@ -127,6 +127,10 @@
       words:
         - canon
         - "<title>Network Camera</title>"
+    - part: title
+      type: word
+      words:
+        - LiveApplet
 - name: ACTi Camera
   matchers:
     - path: body
