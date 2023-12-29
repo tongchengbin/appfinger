@@ -43,3 +43,15 @@
       type: word
       words:
         - lighttpd
+- name: WIFISKY-7层流控路由器
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "WIFISKY 7层流控路由器"
+- name: 安网科技-智能路由系统
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "安网科技-智能路由系统"

@@ -412,6 +412,10 @@
       type: regex
       regex:
         - WildFly(?:/([\d\.]+))?
+    - part: title
+      type: word
+      words:
+        - Welcome to WildFly
 - name: MiniServ
   matchers:
     - part: headers.server

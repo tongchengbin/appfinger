@@ -29522,14 +29522,6 @@
     - _gat_wnd_header
   name: webnode
 - matchers:
-  - group: 1
-    name: version
-    part: headers.server
-    regex:
-    - ^weblogic\sserver\s([\d\.]+)?
-    type: regex
-  name: weblogic_server
-- matchers:
   - part: headers.Set-Cookie
     type: word
     words:
