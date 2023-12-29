@@ -990,6 +990,7 @@
       type: word
       words:
         - Xerox WorkCentre
+        - XEROX ColorQube
 - name: WSO2-Management-Console
   matchers:
     - part: title
