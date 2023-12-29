@@ -588,12 +588,12 @@
       part: title
       words:
         - "EMPHPSID"
-- name: rconfig
+- name: rConfig
   matchers:
     - type: word
-      part: body
+      part: title
       words:
-        - "rConfigLogo"
+        - "rConfig"
 - name: thinvnc
   matchers:
     - type: word
@@ -888,3 +888,51 @@
       words:
         - Catberry
   name: Catberry.js
+- name: Xui
+  matchers:
+    - part: title
+      type: word
+      words:
+        - X-UI Login
+- name: WebMin
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Webmin
+- name: Wazuh
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Wazuh
+- name: Tiny-FileManager
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Tiny File Manager
+- name: PowerJob
+  matchers:
+    - part: title
+      type: word
+      words:
+        - PowerJob
+- name: Magnolia
+  matchers:
+    - part: body
+      type: word
+      words:
+        - Magnolia is a registered trademark
+- name: Kanboard
+  matchers:
+    - part: body
+      type: word
+      words:
+        - /?controller=UserAjaxController&amp;action=status
+- name: GoIP
+  matchers:
+    - part: headers.www-authenticate
+      type: word
+      words:
+        - 'Basic realm="Please login"'
