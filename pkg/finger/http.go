@@ -241,11 +241,6 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 		req.Header.Set("Accept", "*/*")
 		req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.58")
 		resp, err := client.Do(req)
-		if err != nil && strings.Contains(err.Error(), "EOF") {
-			client.Transport.(*http.Transport).CloseIdleConnections()
-			client, _ = NewClient(proxyURL, timeout)
-			continue
-		}
 		if err != nil && err.Error() != http.ErrUseLastResponse.Error() {
 			return banners, err
 		}
