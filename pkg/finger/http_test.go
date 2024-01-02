@@ -157,7 +157,7 @@ func TestRegex(t *testing.T) {
 }
 
 func TestRedirect(t *testing.T) {
-	uri := parseJavaScript(`<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+	uri := parseJavaScript("", `<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html lang="ja" oncontextmenu="return false">
 <head>
 <meta finger-equiv="pragma" content="no-cache">
@@ -176,7 +176,7 @@ location.replace("./live/index2.html?Language=1")
 }
 
 func TestRedirect2(t *testing.T) {
-	uri := parseJavaScript(`<!doctype html>
+	uri := parseJavaScript("", `<!doctype html>
 <html>
 <head>
 	<title></title>

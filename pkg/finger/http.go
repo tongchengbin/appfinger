@@ -163,39 +163,49 @@ func murmurhash(data []byte) int32 {
 	return int32(hasher.Sum32())
 }
 
-func Request(uri string, timeout time.Duration, proxyURL string, disableIcon bool) ([]*Banner, error) {
-	var proxyURl *url.URL
-	var err error
-	if proxyURL != "" {
-		proxyURl, err = url.Parse(proxyURL)
-		if err != nil {
-			return nil, err
-		}
-	}
+func isConnectionResetError(err error) bool {
+	var netErr net.Error
+	isNetErr := errors.As(err, &netErr)
+	return isNetErr && netErr.Timeout() && strings.Contains(err.Error(), "use of closed network connection")
+}
+
+func NewTransport(proxyURL string) (*http.Transport, error) {
 	// proxy
 	transport := &http.Transport{
 		TLSClientConfig: &tls.Config{
 			MinVersion:           tls.VersionTLS10,
 			InsecureSkipVerify:   true,
 			GetClientCertificate: nil}}
-	if strings.HasPrefix("http://", proxyURL) || strings.HasPrefix("https://", proxyURL) {
-		transport.Proxy = http.ProxyURL(proxyURl)
-	} else {
-		socksURL, proxyErr := url.Parse(proxyURL)
-		if proxyErr != nil {
-			return nil, err
-		}
-		dialer, err := proxy.FromURL(socksURL, proxy.Direct)
+	if proxyURL != "" {
+		proxyURl, err := url.Parse(proxyURL)
 		if err != nil {
 			return nil, err
 		}
-		dc := dialer.(interface {
-			DialContext(ctx context.Context, network, addr string) (net.Conn, error)
-		})
-		transport.DialContext = dc.DialContext
+		if strings.HasPrefix("http://", proxyURL) || strings.HasPrefix("https://", proxyURL) {
+			transport.Proxy = http.ProxyURL(proxyURl)
+		} else {
+			socksURL, proxyErr := url.Parse(proxyURL)
+			if proxyErr != nil {
+				return nil, err
+			}
+			dialer, err := proxy.FromURL(socksURL, proxy.Direct)
+			if err != nil {
+				return nil, err
+			}
+			dc := dialer.(interface {
+				DialContext(ctx context.Context, network, addr string) (net.Conn, error)
+			})
+			transport.DialContext = dc.DialContext
+		}
 	}
-	// fix http redirect https
-	client := &http.Client{
+	return transport, nil
+}
+func NewClient(proxy string, timeout time.Duration) (*http.Client, error) {
+	transport, err := NewTransport(proxy)
+	if err != nil {
+		return nil, err
+	}
+	return &http.Client{
 		Transport: transport,
 		CheckRedirect: func(req *http.Request, via []*http.Request) error {
 			if len(via) >= 10 {
@@ -210,6 +220,14 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 			return nil
 		},
 		Timeout: timeout,
+	}, nil
+}
+
+func Request(uri string, timeout time.Duration, proxyURL string, disableIcon bool) ([]*Banner, error) {
+	var err error
+	client, err := NewClient(proxyURL, timeout)
+	if err != nil {
+		return nil, err
 	}
 	var banners []*Banner
 	var nextURI = uri
@@ -223,6 +241,11 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 		req.Header.Set("Accept", "*/*")
 		req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.58")
 		resp, err := client.Do(req)
+		if err != nil && strings.Contains(err.Error(), "EOF") {
+			client.Transport.(*http.Transport).CloseIdleConnections()
+			client, _ = NewClient(proxyURL, timeout)
+			continue
+		}
 		if err != nil && err.Error() != http.ErrUseLastResponse.Error() {
 			return banners, err
 		}
@@ -247,7 +270,13 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 		// 分割响应头和响应体
 		headerBytes := RawData[:index]
 		bodyBytes := RawData[index+len(separator):]
-		banner := &Banner{Body: RawData, Header: headerBytes, StatusCode: resp.StatusCode, Response: RawData, Headers: map[string]string{}}
+		banner := &Banner{
+			Body:       RawData,
+			BodyHash:   murmurhash([]byte(RawData)),
+			Header:     headerBytes,
+			StatusCode: resp.StatusCode,
+			Response:   RawData,
+			Headers:    map[string]string{}}
 		banner.Title = getTitle([]byte(bodyBytes))
 		for k, v := range resp.Header {
 			banner.Headers[strings.ToLower(k)] = strings.Join(v, ",")
@@ -275,7 +304,7 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 			iconURL = "/favicon.ico"
 		}
 		if isAbsoluteURL(iconURL) {
-			iconURL = urlJoin(nextURI, iconURL)
+			iconURL = joinURL(nextURI, iconURL)
 		}
 		var body []byte
 		if strings.HasPrefix(iconURL, "data:") {
