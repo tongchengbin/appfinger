@@ -29380,20 +29380,6 @@
     name: version
     part: headers.server
     regex:
-    - mod_rails(?:/([\d.]+))?
-    type: regex
-  - group: 1
-    name: version
-    part: headers.x-powered-by
-    regex:
-    - mod_rails(?:/([\d.]+))?
-    type: regex
-  name: mod_rails
-- matchers:
-  - group: 1
-    name: version
-    part: headers.server
-    regex:
     - mod_wsgi(?:/([\d.]+))?
     type: regex
   - group: 1

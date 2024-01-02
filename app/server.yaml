@@ -615,3 +615,10 @@
       regex:
         - Konichiwa(?:/([\w\.]+))
       type: regex
+- matchers:
+    - name: version
+      part: headers.server
+      regex:
+        - mod_rails(?:/([\d.]+))?
+      type: regex
+  name: Mod-Rails
