@@ -1,0 +1,6 @@
+- name: Elasticsearch
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "You Know, for Search"

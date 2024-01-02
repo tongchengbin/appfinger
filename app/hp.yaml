@@ -1,0 +1,7 @@
+- name: HP-Switch
+  matchers:
+    - name: mode
+      type: regex
+      part: title
+      regex:
+        - "HP (.+) Switch"

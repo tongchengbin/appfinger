@@ -1,0 +1,14 @@
+- name: HG532e
+  matchers:
+    - part: title
+      type: word
+      case-insensitive: true
+      words:
+        - hg532e
+- name: HG532s
+  matchers:
+    - part: title
+      type: word
+      case-insensitive: true
+      words:
+        - hg532s

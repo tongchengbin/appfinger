@@ -1,0 +1,51 @@
+- matchers:
+    - name: version
+      part: headers.server
+      regex:
+        - ^PRTG\/([^\s]+)$
+      type: regex
+  name: PRTG
+- name: PAN-OS
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "GlobalProtect Portal"
+- name: Telecom-Gateway
+  matchers:
+    - part: body
+      type: word
+      words:
+        - <TITLE>系统登录</TITLE>
+        - "http://se.360.cn/"
+- name: Panabit-iXCache
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "iXCache"
+- name: opencats
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "opencats"
+- name: ADSLR-SAC
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "飞鱼星企业级智能上网行为管理系统"
+- name: DLink-AC
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "AC集中管理平台"
+        - "D-Link路由器管理页"
+- name: DLink
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "D-Link Router Management System"
