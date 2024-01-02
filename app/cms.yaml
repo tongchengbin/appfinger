@@ -17,7 +17,7 @@
       type: word
       words:
         - "Sitecore"
-- name: smartbi
+- name: SmartBi
   matchers:
     - part: body
       type: word
@@ -158,12 +158,12 @@
       words:
         - "Copyright\" content=\"FineCMS"
       condition: and
-- name: showdoc
+- name: ShowDoc
   matchers:
     - part: title
       type: word
       words:
-        - showdoc
+        - ShowDoc
 - name: atomcms
   matchers:
     - part: body
@@ -421,3 +421,15 @@
       words:
         - "880812652"
   name: BloofoxCMS
+- matchers:
+    - part: headers.Set-Cookie
+      type: word
+      words:
+        - october_session
+  name: October-CMS
+- name: Batflat-CMS
+  matchers:
+    - part: headers.X-Created-By
+      type: word
+      words:
+        - "Batflat"

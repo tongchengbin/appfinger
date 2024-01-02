@@ -41,7 +41,7 @@
         - '<meta name="searchtitle" content="泛微云桥e-Bridge"> '
 
 # 致远OA
-- name: SeeYon OA
+- name: SeeYon-OA
   matchers:
     - part: body
       type: word
@@ -155,3 +155,15 @@
         - "蓝凌软件 版权所有"
         - "url : Com_Parameter.ResPath+\"jsp/clearSsoCookie.jsp\""
       condition: and
+- name: O2OA
+  matchers:
+    - part: title
+      type: word
+      words:
+        - O2OA
+- name: JinHer-OA
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 金和协同管理平台

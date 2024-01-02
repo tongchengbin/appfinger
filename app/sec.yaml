@@ -83,3 +83,17 @@
       type: word
       words:
         - "网康下一代防火墙"
+- name: NS-ICG
+  matchers:
+    - part: title
+      type: word
+      condition: and
+      words:
+        - 网康
+        - 互联网控制网关
+- matchers:
+    - part: title
+      type: word
+      words:
+        - " (DVWA)"
+  name: DVWA

@@ -1043,35 +1043,6 @@
   - part: body
     type: word
     words:
-    - <head><title>NBX NetSet</title>
-  - part: body
-    type: word
-    words:
-    - <HEAD><TITLE>NBX NetSet</TITLE>
-  - part: body
-    type: word
-    words:
-    - <!-- (c) Copyright, 3Com Corporation or its subsidiaries, 2004.  All Rights
-      Reserved. -->
-  - part: body
-    type: word
-    words:
-    - <!-- Gregory Brucato  4/22/98  NBX Corporation -->
-  - name: version
-    part: body
-    regex:
-    - (<META HTTP-EQUIV="sysObjectID" CONTENT="([\d\.]{20,30})">)
-    type: regex
-  - part: body
-    type: word
-    words:
-    - <span class="splashTitleIPTelephony">&nbsp;3Com<SUP><span class="splashTitleNBXReg">&reg;</span></SUP>
-      IP Telephony Solution</span>
-  name: 3com_nbx
-- matchers:
-  - part: body
-    type: word
-    words:
     - '<!--START: 3dcart stats-->'
   - part: body
     type: word
@@ -2301,35 +2272,6 @@
       libre)
     type: regex
   name: artiphp_cms
-- matchers:
-  - part: body
-    type: word
-    words:
-    - '(<\/noscript>[\s]+<div id="system-info">[\s]+<ul>[\s]+<li>System Name : ([^<]+)<\/li>)'
-  - part: body
-    regex:
-    - (<img src="\/images\/arubalogo\.gif" width="200" height="51"[\s]+alt="Aruba(
-      Wireless)? Networks" title="Aruba( Wireless)? Networks"\/>)
-    type: regex
-  - part: body
-    type: word
-    words:
-    - <form id="login-form" method="post" autocomplete="off" action="/screens/wms/wms.login">
-  name: aruba_device
-- matchers:
-  - part: body
-    type: word
-    words:
-    - logging level warnings stm
-  - part: body
-    type: word
-    words:
-    - packet-capture-defaults tcp disable udp disable sysmsg disable other disable
-  - part: body
-    type: word
-    words:
-    - ids-policy rate-frame-type-param disassoc node-time-interval
-  name: aruba_mobility_controller_config_file
 - matchers:
   - name: version
     part: body
@@ -6457,42 +6399,6 @@
   name: diy_cms
 - matchers:
   - part: body
-    regex:
-    - (<div id="explanation">[\s]+<p>[\s]+You're seeing this error because you have
-      <code>DEBUG = True<\/code> in[\s]+your[\s]+Django settings file)
-    type: regex
-  - part: body
-    regex:
-    - <meta name="robots" content="NONE,NOARCHIVE"><title>Welcome to Django</title>
-    type: regex
-  - part: body
-    type: word
-    words:
-    - (<li>Start your first app by running <code>python ([^\/]+)\/manage\.py startapp
-      \[appname\]<\/code>\.<\/li>)
-  - part: body
-    regex:
-    - (<form action="\/admin\/[^"^>]*" method="post" id="login-form"><div style='display:none;'><input
-      type='hidden' id='csrfmiddlewaretoken' name='csrfmiddlewaretoken' value='[a-f\d]{32}'
-      \/><\/div>)
-    type: regex
-  - name: csrftoken cookie
-    part: headers.set-cookie
-    regex:
-    - (csrftoken)
-    type: regex
-  - name: django_ cookie
-    part: headers.set-cookie
-    regex:
-    - (django_)
-    type: regex
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - django_language
-  name: django
-- matchers:
-  - part: body
     type: word
     words:
     - <title>Power Controller </title>
@@ -6938,22 +6844,6 @@
     - 259F9FDF-97EA-4C59-B957-5160CAB6884E
   name: dvr_webclient
 - matchers:
-  - part: body
-    type: word
-    words:
-    - "\t\t<title>Damn Vulnerable Web App (DVWA) - Login</title>"
-  - part: body
-    regex:
-    - "(\t\t<link rel=\"stylesheet\" type=\"text\\/css\" href=\"[^\"]*dvwa\\/css\\\
-      /login.css\" \\/>)"
-    type: regex
-  - part: body
-    type: word
-    words:
-    - "\t\t\t<p><label for=\"pass\">Password</label><input type=\"password\" AUTOCOMPLETE=\"\
-      off\" size=\"20\" name=\"password\"></p><br />"
-  name: dvwa
-- matchers:
   - name: HTML Body
     part: body
     type: word
@@ -7344,17 +7234,6 @@
     words:
     - (<[^>]+href=[^>]*mailto:([^\'\"\?>]+)[^>]*>)
   name: email
-- matchers:
-  - name: version
-    part: headers.server
-    regex:
-    - (Mbedthis-Appweb\/(.*))
-    type: regex
-  - part: headers.server
-    regex:
-    - (^Mbedthis-Appweb)
-    type: regex
-  name: embedthis_appweb
 - matchers:
   - part: body
     type: word
@@ -8747,33 +8626,6 @@
     type: regex
   name: geonode
 - matchers:
-  - part: body
-    type: word
-    words:
-    - <link rel="shortcut icon" href="resources/org.geoserver.web.GeoServerBasePage/favicon.ico"/>
-  - part: body
-    type: word
-    words:
-    - <link href="resources/org.geoserver.web.GeoServerBasePage/favicon.ico" rel="shortcut
-      icon"/>
-  - part: body
-    regex:
-    - (<body>[\s]+<p><b>Redirecting to the actual home page\.<\/b><\/p>[\s]+<p>If
-      you're stuck here, it means you don't have javascript[\s]+enabled\. Javascript
-      is required to actually use the GeoServer admin console.<\/p>[\s]+<\/body>[\s]+<\/html>)
-    type: regex
-  - name: version
-    part: body
-    regex:
-    - (<p>[\s]+<span>This GeoServer instance is running version <strong>([^<^\s]+)<\/strong>\.
-      For more information please contact the <a href="[^"^>]*">administrator<\/a>\.<\/span>[\s]+<\/p>[\s]+<\/div>)
-    type: regex
-  - part: body
-    type: word
-    words:
-    - (<div id="welcome">[\s]+<p>[\s]+This GeoServer belongs to <a><span>([^<]+)<\/span><\/a>\.[\s]+<\/p>)
-  name: geoserver
-- matchers:
   - name: version
     part: body
     regex:
@@ -9968,55 +9820,6 @@
   name: ilient_sysaid
 - matchers:
   - part: body
-    type: word
-    words:
-    - Derivative Work - 1996, 1998-2000 Copyright 1996, 1998-2000 The Regents of the
-      University of California<br>
-  - part: body
-    regex:
-    - (<title>[\s]+HP Integrated Lights-Out( [\d])?[\s]+<\/title>)
-    type: regex
-  - part: body
-    type: word
-    words:
-    - <a href="finger://www.hp.com/servers/lights-out" target="new"><IMG height=60 src="ilo.gif"
-      width=150 border=0 alt="Integrated Lights-Out"></a>
-  - part: body
-    type: word
-    words:
-    - 'document.title="Integrated Lights Out: "+serverName;'
-  - name: version
-    part: body
-    regex:
-    - 2.x
-    type: regex
-    words:
-    - <a href="finger://www.hp.com/go/ilo" target="new"><IMG src="iLO2_blue.jpg" height=57
-      border=0 alt="Integrated Lights-Out"></a>
-  - group: 1
-    name: version
-    part: body
-    regex:
-    - ((\*|&copy;)[\s]{1,2}Copyright 2002,[\s]?([\d]{4}) Hewlett-Packard Development
-      Company, L\.P\.)
-    type: regex
-  - group: 1
-    name: version
-    part: body
-    regex:
-    - ((\*|&copy;)[\s]{1,2}Copyright ([\d]{4}) Hewlett-Packard Development Company,
-      L\.P\.)
-    type: regex
-  - name: version
-    part: body
-    regex:
-    - 2.x
-    type: regex
-    words:
-    - 'document.title="Integrated Lights Out 2: "+serverName;'
-  name: ilo
-- matchers:
-  - part: body
     regex:
     - (<td (width="160"|rowspan="2")><iframe allowtransparency="yes" frameborder="0"
       height="100%" width="100%" scrolling="auto" title="(frmcontent|frmlist)" name="(frmcontent|frmlist)"
@@ -10088,23 +9891,6 @@
     words:
     - <span id="modCommunityNewsletterError" class="error">Incorrect e-mail address</span>
   name: impresspages_cms
-- matchers:
-  - name: Set-cookie Header
-    part: headers.set-cookie
-    regex:
-    - (incap_ses_)
-    type: regex
-  - name: Set-cookie Header
-    part: headers.set-cookie
-    regex:
-    - (incap_visid_83_)
-    type: regex
-  - name: visid_incap_ cookie
-    part: headers.set-cookie
-    regex:
-    - (^visid_incap_)
-    type: regex
-  name: incapsula_waf
 - matchers:
   - part: body
     type: word
@@ -10813,23 +10599,6 @@
     type: regex
   name: java_management_extensions
 - matchers:
-  - name: Jboss default title
-    part: body
-    regex:
-    - (<title>Welcome to JBoss AS<\/title>)
-    type: regex
-  - name: link to Web Console
-    part: body
-    regex:
-    - (<a href=\"\/web-console\/\">Jboss Web Console<\/a>)
-    type: regex
-  - name: link to JMX Console
-    part: body
-    regex:
-    - (<a href=\"\/jmx-console\/\">JMX Console<\/a>)
-    type: regex
-  name: jboss
-- matchers:
   - name: version
     part: body
     regex:
@@ -10872,46 +10641,6 @@
     words:
     - <!-- end jcow_application_box -->
   name: jcow
-- matchers:
-  - part: body
-    regex:
-    - (<script>var isRunAsTest=false; var rootURL="[^"]*";<\/script>)
-    type: regex
-  - name: version
-    part: body
-    regex:
-    - (<\/span><a href="finger:\/\/jenkins\-ci\.org\/">Jenkins ver\. ([^<]+)<\/a>)
-    type: regex
-  - part: headers.x-hudson-theme
-    regex:
-    - (^.*$)
-    type: regex
-  - part: headers.x-instance-identity
-    regex:
-    - (^.*$)
-    type: regex
-  - part: headers.x-hudson-cli-port
-    regex:
-    - (^.*$)
-    type: regex
-  - name: version
-    part: headers.x-jenkins
-    regex:
-    - (^(.+)$)
-    type: regex
-  - part: headers.x-hudson
-    regex:
-    - (^.*$)
-    type: regex
-  - part: headers.x-jenkins-cli-port
-    regex:
-    - (^.*$)
-    type: regex
-  - part: headers.x-ssh-endpoint
-    regex:
-    - (^.*$)
-    type: regex
-  name: jenkins
 - matchers:
   - part: headers.server
     regex:
@@ -12171,39 +11900,6 @@
     words:
     - <link rel="stylesheet" type="text/css" href="/eproc/assets/application.css"/>
   name: lpse
-- matchers:
-  - part: body
-    type: word
-    words:
-    - '<a style="color: white; text-decoration: none" href="/cgi-bin/luci">LuCI -
-      Lua Configuration Interface</a>'
-  - part: body
-    type: word
-    words:
-    - <link rel="stylesheet" type="text/css" media="screen" href="/luci-static/openwrt.org/cascade.css"
-      />
-  - part: body
-    type: word
-    words:
-    - <li><a href="/cgi-bin/luci/admin/">Administration</a></li>
-  - group: 0
-    name: version
-    part: body
-    regex:
-    - (<p class="luci"><a href="\/cgi-bin\/luci\/about">Powered by LuCI [^<]+ \(v([^\)]+)\)<\/a><\/p>)
-    type: regex
-  - name: version
-    part: body
-    regex:
-    - (<p class="luci"><a href="\/cgi-bin\/luci\/about">Powered by LuCI ([\d\.]+)<\/a><\/p>)
-    type: regex
-  - group: 1
-    part: body
-    type: word
-    words:
-    - '(<div id="header">[\r\n]*<h1>OpenWrt Firmware<\/h1>[\r\n]*<p>[\r\n]*([^<]+)<br
-      \/>[\r\n]*Load: [^<]{10,15}<br \/>[\r\n]*Hostname: ([^\r\n<]+)[\s]*<\/p>[\r\n]*<\/div>)'
-  name: luci
 - matchers:
   - part: headers.server
     regex:
@@ -13713,42 +13409,6 @@
     - '  MySource, MySource Matrix and Squiz.net are registered Trademarks of Squiz
       Pty Ltd'
   name: mysource_matrix
-- matchers:
-  - name: version
-    part: body
-    regex:
-    - (------------------------------------------------------[\r]?\n-- Server version[\s]+([^\r^\n]+))
-    type: regex
-  - name: version
-    part: body
-    regex:
-    - '(^# phpMyAdmin MySQL-Dump[\s]+# version [^\s]+[\s]+# finger:\/\/www.phpmyadmin.net\/
-      \(download page\)[\s#]+# Host: [^\s]+[\s]+# Generation Time: [^\n]+[\s]+# Server
-      version: ([\d\.]+))'
-    type: regex
-  - part: body
-    type: word
-    words:
-    - '(^-- MySQL dump [\d\.]+[\r]?\n--[\r]?\n-- Host: ([^\s]+)[\s]+Database:[\s]+([^\r^\n]+))'
-  - group: 1
-    part: body
-    type: word
-    words:
-    - '(^-- MySQL dump [\d\.]+[\r]?\n--[\r]?\n-- Host: ([^\s]+)[\s]+Database:[\s]+([^\r^\n]+))'
-  - part: body
-    type: word
-    words:
-    - '(^# phpMyAdmin MySQL-Dump[\s]+# version [^\s]+[\s]+# finger:\/\/www.phpmyadmin.net\/
-      \(download page\)[\s#]+# Host: ([^\s]+)[\s]+# Generation Time: [^\#]+# Server
-      version:[^\#]+# PHP Version:[^\#]+# Database : `([^\`]+)`)'
-  - group: 1
-    part: body
-    type: word
-    words:
-    - '(^# phpMyAdmin MySQL-Dump[\s]+# version [^\s]+[\s]+# finger:\/\/www.phpmyadmin.net\/
-      \(download page\)[\s#]+# Host: ([^\s]+)[\s]+# Generation Time: [^\#]+# Server
-      version:[^\#]+# PHP Version:[^\#]+# Database : `([^\`]+)`)'
-  name: mysql_dump
 - matchers:
   - part: body
     type: word
@@ -16674,37 +16334,6 @@
     type: regex
   name: phpmoneybooks
 - matchers:
-  - name: version
-    part: body
-    regex:
-    - (<title>phpMyAdmin ([^\s^<]+)[^<]*<\/title>)
-    type: regex
-  - name: version
-    part: body
-    regex:
-    - (PMA_VERSION\:"([0-9\.]+)",auth_type)
-    type: regex
-  - name: version
-    part: body
-    regex:
-    - (<h2>Welcome to  phpMyAdmin ([^<]+)<\/h2>)
-    type: regex
-  - part: body
-    type: word
-    words:
-    - <img src="./themes/original/img/logo_right.png" id="imLogo" name="imLogo" alt="phpMyAdmin"
-      border="0" /></a>
-  - part: body
-    regex:
-    - (<form method="post" action="index\.php" target="_(top|parent)"><input type="hidden"
-      name="phpMyAdmin" value=")
-    type: regex
-  - part: headers.set-cookie
-    type: word
-    words:
-    - phpmyadmin_https
-  name: phpmyadmin
-- matchers:
   - part: headers.www-authenticate
     regex:
     - ([bB]asic realm="phpMyBackupPro")
@@ -17861,28 +17490,6 @@
   - part: body
     type: word
     words:
-    - (<title>PRTG Network Monitor \(([^\)]+)\)&nbsp;\|&nbsp;Welcome<\/title>)
-  - name: version
-    part: body
-    regex:
-    - (<link rel="stylesheet" type="text\/css" href="\/css\/prtgmini\.css\?prtgversion=([^"]+)"
-      media="print,screen,projection" \/>)
-    type: regex
-  - name: version
-    part: headers.server
-    regex:
-    - (^PRTG)
-    type: regex
-  - name: version
-    part: headers.server
-    regex:
-    - (^PRTG\/([^\s]+)$)
-    type: regex
-  name: prtg_network_monitor
-- matchers:
-  - part: body
-    type: word
-    words:
     - <div class="left"><img src="pre/images/ic_support.png" width="23" height="23"
       alt="" /></div>
   - part: body
@@ -18710,18 +18317,6 @@
     - (^WEBrick\/[\d\.]+ \(Ruby\/([\d\.]+)\/[\d]{4}-[\d]{2}-[\d]{2}\))
     type: regex
   name: ruby
-- matchers:
-  - part: body
-    type: word
-    words:
-    - <div class="box"><img src="/images/logo_login.gif" width="173" height="52" alt="Ruckus
-      Wireless" title="Ruckus Wireless" />
-  - part: body
-    type: word
-    words:
-    - (<td><h2>Air Quality:<\/h2><\/td>[\s]+<td><img src="images\/[^\/^\.]+\.gif"
-      width="24" height="20" \/>\s*<span id="ssid">([^<^\s]+)<\/span><\/td>)
-  name: ruckus_wireless_router
 - matchers:
   - part: body
     type: word
@@ -20486,28 +20081,6 @@
     - (^SpirePRO CMS)
     type: regex
   name: spirepro_cms
-- matchers:
-  - name: version
-    part: body
-    regex:
-    - (<p class="footer">&copy; 2005-20[\d]{2} Splunk Inc\. Splunk ([^<]+)\.<\/p>)
-    type: regex
-  - part: body
-    type: word
-    words:
-    - '<p><span>First time logging in?</span> Splunk''s default credentials are </p><p>username:
-      <span>admin</span><br />password: <span>changeme</span></p><p>If you''ve forgotten
-      your username or password, please contact your Splunk administrator.</p>'
-  - part: headers.set-cookie
-    regex:
-    - (session_id_8000=[a-f\d]{32};)
-    type: regex
-  - part: body
-    type: word
-    words:
-    - '(var CONFIG = \{"licenseType": "[^\"]+", "os_name": "[^"]+", "locale":[^\}]+"installType":
-      "([^"]+)")'
-  name: splunk
 - matchers:
   - part: body
     type: word
@@ -25886,14 +25459,6 @@
     type: regex
   name: ant_design
 - matchers:
-  - group: 1
-    name: version
-    part: headers.server
-    regex:
-    - ^apisix(?:/([\d\.]+))?$
-    type: regex
-  name: apisix
-- matchers:
   - part: body
     regex:
     - <html[^>]* xmlns:jspwiki=
@@ -25942,12 +25507,6 @@
     - artifactory(?:/([\d.]+))?
     type: regex
   name: artifactory_web_server
-- matchers:
-  - part: headers.x-servername
-    type: word
-    words:
-    - \.aruba\.it
-  name: aruba.it
 - matchers:
   - part: headers.server
     type: word
@@ -27360,14 +26919,6 @@
     type: regex
   name: irroba
 - matchers:
-  - group: 1
-    name: version
-    part: headers.x-powered-by
-    regex:
-    - jbossweb(?:-([\d.]+))?
-    type: regex
-  name: jboss
-- matchers:
   - part: headers.powered
     type: word
     words:
@@ -27969,12 +27520,6 @@
     type: regex
   name: oxid_eshop_professional_edition
 - matchers:
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - october_session
-  name: october_cms
-- matchers:
   - part: body
     type: word
     words:
@@ -28432,18 +27977,6 @@
     words:
     - rx-web
   name: rx_web_server
-- matchers:
-  - part: headers.server
-    regex:
-    - ^rainloop
-    type: regex
-  - group: 1
-    name: version
-    part: body
-    regex:
-    - <link[^>]href="rainloop/v/([0-9.]+)/static/apple-touch-icon\.png/>
-    type: regex
-  name: rainloop
 - matchers:
   - part: headers.Set-Cookie
     type: word
@@ -29000,12 +28533,6 @@
     words:
     - spiritshop_id
   name: spiritshop
-- matchers:
-  - part: headers.server
-    type: word
-    words:
-    - splunkd
-  name: splunkd
 - matchers:
   - part: body
     regex:
@@ -29862,14 +29389,6 @@
     - mod_rails(?:/([\d.]+))?
     type: regex
   name: mod_rails
-- matchers:
-  - group: 1
-    name: version
-    part: headers.server
-    regex:
-    - mod_ssl(?:/([\d.]+))?
-    type: regex
-  name: mod_ssl
 - matchers:
   - group: 1
     name: version

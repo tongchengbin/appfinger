@@ -38,13 +38,11 @@
         - x-inertia
   name: inertia.js
 - matchers:
-    - group: 1
-      name: version
-      part: headers.x-powered-by
-      regex:
-        - ^next\.js ?([0-9.]+)?
-      type: regex
-  name: next.js
+    - part: headers.x-powered-by
+      words:
+        - Next.js
+      type: word
+  name: Next.js
 - matchers:
     - part: body
       words:

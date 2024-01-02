@@ -7,7 +7,15 @@
         - "<span>samsung ap manager</span>"
 - matchers:
       - type: word
-        part: body
+        part: title
         words:
-          - "location = \"/sws/index.html\";"
+          - "SyncThru Web Service"
   name: Samsung-Printer
+
+- name: Samsung-AP
+  matchers:
+    - type: word
+      part: title
+      words:
+        - "Samsung AP"
+      condition: and

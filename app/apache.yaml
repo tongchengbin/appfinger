@@ -26,3 +26,51 @@
       type: word
       words:
         - Apache Tomcat
+- name: OFBiz
+  matchers:
+    - part: headers.set-cookie
+      type: word
+      words:
+        - 'OFBiz.Visitor'
+- name: Druid
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'Apache Druid'
+- name: Ranger
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'Ranger - Sign In'
+- name: Kylin
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'Kylin'
+- name: karaf
+  matchers:
+    - part: headers.Www-Authenticate
+      type: word
+      words:
+        - 'realm="karaf"'
+- name: Dubbo
+  matchers:
+    - part: headers.Www-Authenticate
+      type: word
+      words:
+        - 'realm="dubbo"'
+- name: APISIX
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'Apache APISIX Dashboard'
+- name: Ambari
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'Ambari'

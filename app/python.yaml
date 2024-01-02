@@ -26,3 +26,10 @@
       part: headers.server
       regex:
           - aiohttp(?:/([\d.]+))?
+- matchers:
+    - part: headers.set-cookie
+      words:
+        - csrftoken
+        - django_language
+      type: word
+  name: Django

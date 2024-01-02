@@ -28,8 +28,9 @@
 - matchers:
     - name: version
       part: headers.server
+      case-insensitive: true
       regex:
-        - Apache(?:/([\d\.]+))?
+        - apache(?:/([\d\.]+))?
       type: regex
     - name: os
       part: headers.server
@@ -81,13 +82,13 @@
       type: word
       words:
         - rocketmq-console
-- name: activemq
+- name: ActiveMQ
   matchers:
     - part: title
       type: word
       words:
         - Apache ActiveMQ
-- name: nacos
+- name: Nacos
   matchers:
     - part: title
       type: word
@@ -149,12 +150,8 @@
       words:
         - "/nagiosxi/images/favicon.ico"
         - "click the link below to get started using nagios xi."
-- name: panabit Gateway
+- name: Panabit-Gateway
   matchers:
-    - part: body
-      type: word
-      words:
-          - "background-image: url('/icones/fundo_firebox.png')"
     - part: body
       type: word
       condition: and
@@ -167,18 +164,12 @@
       words:
         - Maintain
         - Panalog
-    - part: body
-      type: word
-      condition: and
-      words:
-        - id=\"codeno\"
-        - 日志系统
-- name: Ruckus Wireless
+- name: Ruckus-Wireless
   matchers:
-    - part: icon_hash
+    - part: title
       type: word
       words:
-        - "-2069844696"
+        - "Ruckus Wireless"
 - name: aura
   matchers:
     - part: headers.server
@@ -430,17 +421,17 @@
       words:
         - PROMETHEUS
 - matchers:
-    - group: 0
-      name: version
+    - name: version
       part: headers.server
       regex:
         - Jetty(?:/([\d\.]+))
+        - Jetty\((?:([\w\.]+))\)
       type: regex
     - part: body
       type: word
       words:
         - <p><i><small><a href="finger://jetty.mortbay.org">Powered by Jetty://</a></small></i></p>
-  name: jetty
+  name: Jetty
 - name: RAILS
   matchers:
     - type: word
@@ -578,3 +569,49 @@
         - phusion passenger ([\d.]+)
       type: regex
   name: Phusion-Passenger
+- matchers:
+    - part: headers.server
+      words:
+        - RainLoop
+      type: word
+  name: RainLoop
+- name: beegoServer
+  matchers:
+    - part: headers.server
+      type: regex
+      name: version
+      regex:
+        - beegoServer(?::([\d\.]+))
+- matchers:
+    - part: headers.x-powered-by
+      case-insensitive: true
+      words:
+        - jboss
+      type: word
+    - part: title
+      case-insensitive: true
+      words:
+        - jboss
+      type: word
+  name: JBoss
+- name: Cowboy
+  matchers:
+    - part: headers.server
+      words:
+        - Cowboy
+      type: word
+- matchers:
+    - name: version
+      part: headers.server
+      regex:
+        - Mbedthis-Appweb(:?/(.*))
+      type: regex
+  name: APP-WEB
+
+- name: Konichiwa
+  matchers:
+    - part: headers.server
+      name: version
+      regex:
+        - Konichiwa(?:/([\w\.]+))
+      type: regex

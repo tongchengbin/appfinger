@@ -11,3 +11,9 @@
       words:
         - Google Web Server
   name: Google-Web-Server
+- name: Google-Earth
+  matchers:
+    - part: title
+      type: word
+      words:
+        - GEE Server

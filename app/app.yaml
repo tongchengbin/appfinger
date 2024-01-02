@@ -96,12 +96,6 @@
       type: word
       words:
         - 'OpenShift'
-- name: OFBiz
-  matchers:
-    - part: body
-      type: word
-      words:
-        - 'Apache OFBiz'
 - name: Papercut
   matchers:
     - part: title
@@ -186,12 +180,6 @@
       type: word
       words:
         - 'ManageEngine Desktop Central'
-- name: Druid
-  matchers:
-    - part: title
-      type: word
-      words:
-        - 'Apache Druid'
 - name: Spring
   matchers:
     - part: header
@@ -419,7 +407,7 @@
     - part: title
       type: word
       words:
-        - glpi
+        - GLPI
 - name: FortiNAC
   matchers:
     - part: title
@@ -617,7 +605,7 @@
       part: title
       words:
         - "influxdb"
-- name: Nexus
+- name: Nexus-Repository-Manager
   matchers:
     - type: word
       part: body
@@ -720,12 +708,12 @@
       type: word
       words:
         - clusterengine
-- name: Minio
+- name: MinIO-Console
   matchers:
-    - part: body
+    - part: title
       type: word
       words:
-        - MinIO Browser
+        - MinIO Console
 - name: 明源云ERP
   matchers:
     - part: body
@@ -780,7 +768,7 @@
       type: word
       words:
         - "GitLab"
-  name: gitlab
+  name: GitLab
 - name: Question2Answer
   matchers:
     - part: body
@@ -815,8 +803,7 @@
       type: word
       words:
         - <TD Class=PageHeader>Network Performance Monitor</TD>
-    - name: version
-      part: body
+    - part: body
       type: word
       words:
         - <link rel="stylesheet" type="text/css" href="/SolarWinds.css">
@@ -828,10 +815,16 @@
     - name: version
       part: body
       regex:
-        - (<div id="footer">[^S]*SolarWinds Orion Network Performance Monitor ([^&]+)&copy;
-          1995-[0-9]{4} All Rights Reserved[^<]*<\/div>)
+        - <div id="footer">[^S]*SolarWinds Orion Network Performance Monitor ([^&]+)&copy;
+          1995-[0-9]{4} All Rights Reserved[^<]*<\/div>
       type: regex
   name: SolarWinds-Network-Performance-Monitor
+- name: SolarWinds
+  matchers:
+    - part: title
+      type: word
+      words:
+        - SolarWinds
 - name: Certbot
   matchers:
     - part: title
@@ -996,3 +989,410 @@
       type: word
       words:
         - WSO2 Management Console
+- name: VERSA
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "-1053531639"
+- name: FlexVNF
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Flex VNF Web-UI
+- name: umami
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "-130447705"
+    - part: title
+      type: word
+      words:
+        - umami
+- name: Trassir
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Trassir Webview"
+- name: ToolJet
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ToolJet"
+- name: TimeKeeper
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "TimeKeeper Management"
+    - part: icon_hash
+      type: word
+      words:
+        - "2134367771"
+- name: SuperMICRO
+  matchers:
+    - part: body
+      type: word
+      condition: and
+      words:
+        - "ATEN International Co Ltd."
+        - "LANG_LOGIN_INVALID_USERNAME"
+- name: Structurizr
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Structurizr"
+- name: SteVe
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "SteVe - Steckdosenverwaltung"
+- name: StackStorm
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "StackStorm"
+    - part: icon_hash
+      type: word
+      words:
+        - "-1105655963"
+- matchers:
+    - part: title
+      words:
+        - Splunk
+      type: word
+  name: Splunk
+- matchers:
+    - part: title
+      words:
+        - SonarQube
+      type: word
+  name: SonarQube
+- matchers:
+    - part: title
+      words:
+        - SequoiaDB
+      type: word
+  name: SequoiaDB
+- matchers:
+    - part: title
+      words:
+        - SeedDMS
+      type: word
+  name: SeedDMS
+- matchers:
+    - group: 1
+      name: version
+      part: headers.server
+      regex:
+        - mod_ssl(?:/([\d.]+))?
+      type: regex
+  name: Mod-SSL
+- name: RockMongo
+  matchers:
+    - part: title
+      words:
+        - RockMongo
+      type: word
+- name: NetMan
+  matchers:
+    - part: title
+      words:
+        - NetMan
+      type: word
+- name: RICOH-Network-Printer
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "/web/guest/it/websys/webArch/mainFrame.cgi"
+- name: RICOH
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "/web/guest/it/websys/webArch/mainFrame.cgi"
+- name: Rancher
+  matchers:
+    - type: word
+      part: icon_hash
+      words:
+        - "464587962"
+- name: RabbitMQ
+  matchers:
+    - part: title
+      words:
+        - RabbitMQ Management
+      type: word
+- matchers:
+    - part: title
+      type: word
+      words:
+        - phpMyAdmin
+  name: phpMyAdmin
+- name: Pentaho
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Pentaho Business Analytics
+- name: Supershell
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Supershell
+- name: KingSoft-v8
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 在线安装-V8+终端安全系统
+- name: ClusterEngine
+  matchers:
+    - part: title
+      type: word
+      words:
+        - ClusterEngine
+- name: 中新金盾信息安全管理系统
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 中新金盾信息安全管理系统
+- name: CipherTrust
+  matchers:
+    - part: cert
+      type: word
+      words:
+        - CipherTrust
+- name: Aruba-Instant
+  matchers:
+    - part: cert
+      type: word
+      case-insensitive: true
+      words:
+        - instant.arubanetworks.com
+- name: OpenMediaVault
+  matchers:
+    - part: title
+      type: word
+      words:
+        - openmediavault
+- name: OpenEMR
+  matchers:
+    - part: title
+      type: word
+      words:
+        - OpenEMR
+- name: NPS
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'window.nps = { "web_base_url": "" }'
+- name: NetSUS
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "NetSUS Server Login"
+- name: MOFI4500
+  matchers:
+    - part: title
+      type: word
+      words:
+        - MOFI4500
+- name: MantisBT
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Mantis"
+        - MantisBT
+- name: Lutron
+  matchers:
+    - part: body
+      type: word
+      words:
+        - <h1>LUTRON</h1>
+- name: Leostream
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Leostream"
+- name: Kettle
+  matchers:
+    - part: headers.www-authenticate
+      type: word
+      words:
+        - Kettle
+- name: JupyterHub
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "JupyterHub"
+- matchers:
+    - part: headers
+      words:
+        - X-Jenkins
+      type: word
+    - part: title
+      words:
+        - Jenkins
+      type: word
+  name: Jenkins
+- name: Hybris
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Hybris"
+- name: Hortonworks-SmartSense
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Hortonworks SmartSense"
+- name: HongDian-Router
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'location.href = "/gui/login.cgi";'
+
+- name: Gophish
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Gophish"
+- matchers:
+    - part: body
+      type: word
+      words:
+        - /geoserver&nbsp;
+  name: GeoServer
+- name: FRP
+  matchers:
+    - part: body
+      type: word
+      words:
+        - <p><em>Faithfully yours, frp.</em></p
+- name: ETL3100
+  matchers:
+    - part: body
+      type: word
+      words:
+        - ETL3100
+- name: EMQX
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "1450564860"
+        - "1474686268"
+        - "711611658"
+        - "-670975485"
+        - "-76327490"
+    - part: title
+      type: word
+      words:
+        - "EMQX Dashboard"
+- name: EasyReport
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "EasyReport"
+- name: Dataiku
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Dataiku"
+- name: DataHub
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "DataHub"
+- name: DataEase
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "DataEase"
+- name: HUE
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Welcome to Hue"
+- name: China-Unicom
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "China Unicom"
+- name: Azkaban
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Azkaban Web Client"
+- name: Apollo
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Apollo配置中心"
+    - part: icon_hash
+      type: word
+      words:
+        - "11794165"
+- name: Kafka-Center
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Kafka Center"
+- name: DolphinScheduler
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "DolphinScheduler"
+- name: AlphaWeb
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "AlphaWeb"
+- name: Canal-Admin
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Canal Admin"
+- name: CS141
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'ng-app="cs141'
+- name: 3COM
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "3Com Corporation Web Interface"

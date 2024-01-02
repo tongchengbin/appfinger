@@ -135,3 +135,15 @@
         - Oracle WebLogic Server 管理控制台
         - Error 404--Not Found
   name: WebLogic-Server
+- name: Oracle-PeopleSoft
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Oracle PeopleSoft"
+- name: Oracle-Business-Intelligence
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Oracle business intelligence"

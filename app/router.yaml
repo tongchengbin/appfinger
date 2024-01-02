@@ -55,3 +55,15 @@
       type: word
       words:
         - "安网科技-智能路由系统"
+- name: ipTIME
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ipTIME"
+- name: CaiMore-Gateway
+  matchers:
+    - part: headers.www-authenticate
+      type: word
+      words:
+        - "CaiMore Gateway"
