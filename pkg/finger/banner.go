@@ -26,6 +26,7 @@ type Rule struct {
 }
 
 type Banner struct {
+	BodyHash    int32
 	Body        string
 	Header      string
 	Headers     map[string]string
