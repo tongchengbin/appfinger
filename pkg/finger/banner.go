@@ -207,7 +207,7 @@ func mergeMaps(map1, map2 map[string]map[string]string) map[string]map[string]st
 func (f *AppFinger) MatchURI(uri string) (*Banner, map[string]map[string]string) {
 	banners, err := Request(uri, f.timeout, f.Proxy, f.options.DisableIcon)
 	var fingerprints map[string]map[string]string
-	if err != nil && banners == nil {
+	if err != nil && (banners == nil || len(banners) == 0) {
 		gologger.Warning().Msg(err.Error())
 		return nil, nil
 	}
