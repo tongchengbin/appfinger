@@ -4,3 +4,4 @@ dist/
 .goreleaser.yaml
 output.json
 productrelation.txt
+cmd/sample

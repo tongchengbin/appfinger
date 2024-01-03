@@ -13,8 +13,8 @@
     - part: title
       type: word
       words:
-        - superset
-- name: unomi
+        - Superset
+- name: Unomi
   matchers:
     - part: title
       type: word
