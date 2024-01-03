@@ -1,0 +1,19 @@
+# 暂定 实际遇到了再调整
+- name: whisper商城
+  matchers:
+    - part: title
+      type: word
+      words:
+        - whisper商城
+- name: Aligera-AG561
+  matchers:
+    - part: title
+      type: word
+      words:
+        - whisper商城
+- name: NC-LINK-Router
+  matchers:
+    - part: title
+      type: word
+      words:
+        - NC-LINK Wireless Router

@@ -37,19 +37,25 @@
       regex:
         - Apache\/[0-9.]+ \(([^\)]+)\)
       type: regex
+    - part: title
+      type: word
+    - part: title
+      type: regex
+      name: os
+      regex:
+        - "Apache2 (Ubuntu|Debian) Default Page"
   name: Apache-HTTP-Server
 - name: mxhttpd
   matchers:
     - part: headers.server
-      regex:
-        - (mxhttpd)
-      type: regex
+      words:
+        - mxhttpd
+      type: word
     - name: version
       part: headers.server
       regex:
         - mxhttpd\/(.+)$
       type: regex
-
 - name: UPnP
   matchers:
     - part: headers.server
@@ -215,6 +221,10 @@
       type: word
       words:
         - cloudflare
+    - part: title
+      type: word
+      words:
+        - "Cloudflare"
 - name: Caddy
   matchers:
     - part: headers.server

@@ -4,3 +4,9 @@
       type: word
       words:
         - "Integrated Dell Remote Access Controller"
+- name: DELL-SonicWALL
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "DELL SonicWALL"

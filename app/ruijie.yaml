@@ -37,3 +37,21 @@
       part: body
       words:
         - "Get_Verify_Info"
+- name: RG-Switch
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Ruijie Easy-Smart Switch
+- name: Ruijie
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Ruijie
+- name: RG-WALL
+  matchers:
+    - part: title
+      type: word
+      words:
+        - RG-WALL

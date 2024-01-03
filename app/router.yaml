@@ -4,6 +4,10 @@
     type: word
     words:
     - TP-LINK
+  - part: title
+    type: word
+    words:
+      - TP-LINK
   - part: headers.server
     type: regex
     name: version
@@ -16,7 +20,6 @@
         - RouterOS
   name: mikrotik RouterOS
 
-
 - name: NETGEAR
   matchers:
     - part: headers.Www-Authenticate
@@ -27,7 +30,11 @@
       type: regex
       name: mode
       regex:
-        - NETGEAR ([\w\d.]+)
+        - NETGEAR ([\w\.]+)
+    - part: title
+      type:  word
+      words:
+        - NETGEAR Router
 
 - name: ToToLink
   matchers-condition: and
@@ -67,3 +74,250 @@
       type: word
       words:
         - "CaiMore Gateway"
+- name: Actiontec-Router
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Actiontec | WIRELESS ROUTER"
+
+- name: TOPNET-Router
+  matchers:
+    - part: title
+      condition: and
+      type: word
+      words:
+        - "ROUTER"
+        - "TOPNET"
+
+- name: Tenda-Router
+  matchers:
+    - part: title
+      case-insensitive: true
+      condition: and
+      type: word
+      words:
+        - "tenda"
+        - "router"
+- name: Vodafone-Router
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Vodafone ADSL Router"
+- name: ASUS-Router
+  matchers:
+    - part: title
+      type: regex
+      name: mode
+      group: 3
+      regex:
+        - "ASUS (.*) (router|Router) (.*)"
+- name: ASUS
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ASUS Login"
+- name: Micronet-Router
+  matchers:
+    - part: title
+      condition: and
+      type: word
+      words:
+        - "Router"
+        - "Micronet"
+- name: Gigaset-Router
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Gigaset Router"
+- name: Synology-Router
+  matchers:
+    - part: title
+      type: word
+      condition: and
+      words:
+        - "Router"
+        - "Synology"
+- name: iStoreOS-Router
+  matchers:
+    - part: title
+      type: word
+      condition: and
+      words:
+        - "iStoreOS"
+        - "RouterDog"
+- name: iBall-Router
+  matchers:
+    - part: title
+      type: word
+      condition: and
+      words:
+        - "iBall"
+        - "Router"
+- name: iRZ-Router
+  matchers:
+    - part: title
+      type: word
+      condition: and
+      words:
+        - "iRZ"
+        - "Router"
+- name: TalkTalk-Router
+  matchers:
+    - part: title
+      type: word
+      condition: and
+      words:
+        - "TalkTalk"
+        - "Router"
+- name: TP-LINK-Router
+  matchers:
+    - part: title
+      type: word
+      condition: and
+      words:
+        - "TP-LINK"
+        - "Router"
+- name: TP-LINK-WR1043N
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "WR1043N"
+- name: TD-W8950N
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "TD-W8950N"
+- name: Crossbar-Router
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Crossbar.io application router"
+- name: HOPR-Admin
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "HOPR Admin"
+- name: FW325R
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "FW325R"
+
+- name: Cytanet-Wireless-Zone
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Cytanet Wireless Zone"
+- name: EDIMAX-Wireless
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "EDIMAX WIRELESS"
+- name: Archer-C9
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "TP-LINK Archer C9"
+- name: TP-LINK-Manager
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "TP-LINK统一管理平台"
+- name: Tenda-WiFi
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Tenda Wi-Fi"
+- name: PfSense-Wifi
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "pfSense-fsl-wifi"
+- name: PfSense
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "pfSense"
+- name: UAG2100
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "UAG2100"
+- name: UAG4100
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "UAG4100"
+- name: Inhand-Router
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Inhand Router"
+- name: FRITZ-Box-Router
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "FRITZ!Box"
+- name: GPON-Gateway
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "GPON Home Gateway"
+- name: Vigor-Router
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Vigor"
+- name: SIERRA-ADSL
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "::: ACEmanager :::"
+- name: Neterbit-NSL-224
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Neterbit NSL-224"
+- matchers:
+    - part: title
+      type: word
+      words:
+        - OpenWrt
+  name: OpenWrt
+- matchers:
+    - part: title
+      type: word
+      words:
+        - Gargoyle Router
+  name: Gargoyle-Router
+
+- matchers:
+    - part: title
+      type: word
+      words:
+        - AT&T WiFi
+  name: ATT-WiFi

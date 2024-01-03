@@ -293,13 +293,7 @@
     - <a href="https://owncloud\.com" target="_blank">owncloud inc\.</a><br/>your
       cloud, your data, your way!
   name: owncloud
-- matchers:
-  - name: generator
-    part: body
-    type: word
-    words:
-    - <meta name="generator" content="Odoo"/>
-  name: odoo
+
 - matchers:
   - part: headers.set-cookie
     regex:
@@ -507,18 +501,7 @@
     words:
     - <TITLE>Expresso Livre - Login</TITLE>
   name: egroupware
-- matchers:
-  - name: Admin-Login-Page
-    part: body
-    type: word
-    words:
-    - <a id="poweredby" href="finger://craftcms.com/" title="Powered by Craft CMS">
-  - name: CraftSessionId cookie
-    part: headers.set-cookie
-    regex:
-    - (CraftSessionId)
-    type: regex
-  name: craft-cms
+
 - matchers:
   - part: headers.server
     regex:
@@ -5374,23 +5357,6 @@
   - part: body
     type: word
     words:
-    - <meta id="confluence-context-path" name="confluence-context-path" content="">
-  - part: body
-    type: word
-    words:
-    - <li class="noprint"><a href="finger://www.atlassian.com/software/confluence" class="hover-footer-link">Atlassian
-      Confluence</a>
-  - name: version
-    part: body
-    regex:
-    - (Powered by <a href="finger:\/\/www\.atlassian\.com\/software\/confluence"[^>]*>Atlassian
-      Confluence<\/a> ([\d\._]+))
-    type: regex
-  name: confluence
-- matchers:
-  - part: body
-    type: word
-    words:
     - <h2 align=center>ConfTool Conference Administration</h2>
   - group: 2
     name: version
@@ -6646,25 +6612,6 @@
 - matchers:
   - part: body
     regex:
-    - (<img[^>]+src="[^"]*\/dotAsset\/)
-    type: regex
-  - part: body
-    regex:
-    - (<link[^>]+href="[^"]*\/dotAsset\/)
-    type: regex
-  - part: body
-    regex:
-    - (<a[^>]+href="[^h][^"]*index\.dot)
-    type: regex
-  - name: dotcms cookie
-    part: headers.set-cookie
-    regex:
-    - (dotcms)
-    type: regex
-  name: dotcms
-- matchers:
-  - part: body
-    regex:
     - (src="[^"]*\/portals\/_default\/(containers|skins))
     type: regex
   - name: copyright
@@ -7309,12 +7256,6 @@
       Manager<\/a><\/td><\/tr><\/table><br>)
     type: regex
   name: emo_realty_manager
-- matchers:
-  - part: body
-    type: word
-    words:
-    - ' - Powered by EmpireCMS</title>'
-  name: empire_cms
 - matchers:
   - part: body
     regex:
@@ -9891,33 +9832,6 @@
     words:
     - <span id="modCommunityNewsletterError" class="error">Incorrect e-mail address</span>
   name: impresspages_cms
-- matchers:
-  - part: body
-    type: word
-    words:
-    - <title>Index of /
-  - part: body
-    type: word
-    words:
-    - <a href="?C=N;O=D">Name</a></th><th><a href="?C=M;O=A">Last modified</a>
-  - part: body
-    regex:
-    - (<a href="\?C=N;O=D">Name<\/a>[\s]*<a href="\?C=M;O=A">Last modified<\/a>)
-    type: regex
-  - part: body
-    regex:
-    - (<pre>Name[\s]+Last modified[\s]+Size[\s]+<hr>)
-    type: regex
-  - part: body
-    regex:
-    - (<A HREF="\?N=D">Name<\/A>[\s]+<A HREF="\?M=A">Last modified<\/A>)
-    type: regex
-  - name: minimal apache listing
-    part: body
-    regex:
-    - (<title>Index of \/[^<]*<\/title>[\s]*<\/head>[\s]*<body>[\s]*<h1>Index of )
-    type: regex
-  name: index_of
 - matchers:
   - part: body
     regex:
@@ -15017,17 +14931,6 @@
     type: regex
   name: opennms
 
-- matchers:
-  - part: body
-    type: word
-    words:
-    - <title>OpenWrt Administrative Console</title>
-  - part: body
-    type: word
-    words:
-    - 'OpenWrt Administrative Console<br />Redirecting to : <a style="color: inherit;"
-      href="/cgi-bin/webif.sh">main page</a></p>'
-  name: openwrt
 
 
 - matchers:
@@ -17456,13 +17359,6 @@
     - (^ProScan)
     type: regex
   name: proscan
-- matchers:
-  - name: js tag
-    part: body
-    regex:
-    - (<script [^>]*(prototype[^>]*.js)[^>]*)
-    type: regex
-  name: prototype
 - matchers:
   - name: version
     part: body
@@ -20741,30 +20637,6 @@
     - <!-- Please don't remove my credits! I worked hard to create this theme and
       distribute it freely. Thanks! -->
   name: syndeocms
-- matchers:
-  - name: Device Name in Page Title
-    part: body
-    type: word
-    words:
-    - (<title>Synology DiskStation - ([^\s]+)<\/title>)
-  - name: Login Page HTML Comment
-    part: body
-    type: word
-    words:
-    - <!-- Don't contain any text node to avoid IE insertBefore bug -->
-  - name: SYNO.SDS.Session JavaScript
-    part: body
-    type: word
-    words:
-    - <script type="text/javascript">SYNO.SDS.Session = {
-  - name: Login Form HTML
-    part: body
-    type: word
-    words:
-    - '<div id="sds-login-dialog-form" style="position: absolute; top: -10000px; left:
-      -10000px;"><form id="login-form" class="x-plain-body" method="POST" action="login.cgi"
-      target="login_iframe"'
-  name: synology_diskstation
 - matchers:
   - part: body
     type: word
@@ -26388,12 +26260,6 @@
     words:
     - fortertoken
   name: forter
-- matchers:
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - fgtserver
-  name: fortinet_fortigate
 - matchers:
   - part: body
     regex:

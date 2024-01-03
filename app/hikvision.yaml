@@ -4,6 +4,10 @@
       type: word
       words:
         - "portal_sess"
+    - part: title
+      type: word
+      words:
+        - 综合安防管理平台
 - name: Hikvision-iVMS
   matchers:
     - part: body

@@ -1,5 +1,9 @@
 - name: PHP
   matchers:
+    - part: title
+      type: word
+      words:
+        - PHP
     - part: headers.x-powered-by
       type: regex
       name: version

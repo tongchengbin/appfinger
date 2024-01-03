@@ -1,0 +1,64 @@
+- name: GR2200
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "GR2200系统管理"
+- name: ER2200
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ER2200G2系统管理"
+- name: ER3100
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ER3100系统管理"
+        - "ER3100G2系统管理"
+- name: GR3200
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "GR3200系统管理"
+
+- name: ER3200
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ER3200G2系统管理"
+        - "ER3200系统管理"
+- name: ER3260
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ER3260G2系统管理"
+- name: GR5200
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "GR5200系统管理"
+- name: ER5200
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ER5200G2系统管理"
+- name: ER6300
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ER6300G2系统管理"
+- name: ER8300
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ER8300G2系统管理"
+        - "ER8300G2-X系统管理"

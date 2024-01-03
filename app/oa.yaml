@@ -86,13 +86,13 @@
 
 # yonyou
 
-- name: CHANJET_Remote
+- name: ChanJet-Remote
   matchers:
     - part: body
       type: word
       words:
         - 远程通CHANJET_Remote
-- name: CHANJET_TPlus
+- name: ChanJet-TPlus
   matchers:
     - part: body
       type: word

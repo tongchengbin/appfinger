@@ -1,3 +1,9 @@
+- name: Cisco
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Cisco Systems"
 - name: RV042
   matchers:
     - part: cert
@@ -34,7 +40,7 @@
       type: word
   name: Cisco-ACE
 - matchers:
-    - part: body
+    - part: title
       type: word
       words:
         - Cisco IP Phone
@@ -52,3 +58,34 @@
         - Adaptive Security Appliance HTTP
       type: word
   name: Cisco-Adaptive-Security-Appliance
+- name: Cisco-ASDM
+  matchers:
+    - part: title
+      name: version
+      regex:
+        - Cisco ASDM ([\d\.]+)
+      type: regex
+- name: Cisco-Integrated-Management-Controller
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Cisco Integrated Management Controller
+- name: Cisco-Meeting
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Cisco Meeting
+- name: Cisco-Meraki
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Cisco Meraki
+- name: Cisco-SPA
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Cisco SPA

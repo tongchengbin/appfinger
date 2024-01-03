@@ -6,6 +6,10 @@
       type: regex
   name: IIS
 - matchers:
+    - part: title
+      type: word
+      words:
+        - IIS Windows Server
     - part: body
       type: word
       words:
@@ -24,3 +28,9 @@
       words:
         - "frontpage"
   name: FrontPage-Extensions"
+- name: Outlook
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Outlook

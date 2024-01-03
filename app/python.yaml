@@ -33,3 +33,13 @@
         - django_language
       type: word
   name: Django
+- matchers:
+    - part: body
+      type: word
+      words:
+        - <meta name="generator" content="Odoo"/>
+    - part: title
+      type: word
+      words:
+        - Odoo
+  name: Odoo

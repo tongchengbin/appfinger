@@ -1,96 +1,90 @@
-- name: F460
-  matchers-condition: and
-  matchers:
-    - part: body
-      type: word
-      words:
-        - "F460"
-    - part: headers.server
-      type: word
-      words:
-        - "ZTE"
-- name: H167A
+- name: TL-WR941HP
   matchers:
     - part: title
       type: word
       words:
-        - H167A
-- name: H168N
+        - "TL-WR941HP"
+- name: TL-WPA4220
   matchers:
     - part: title
       type: word
       words:
-        - H168N
-- name: ZXV10
+        - "TL-WPA4220"
+- name: TL-WDR4300
   matchers:
     - part: title
       type: word
       words:
-        - ZXV10
-- name: H288A
+        - "TL-WDR4300"
+- name: TL-MR3020
   matchers:
     - part: title
       type: word
       words:
-        - H288A
-- name: F670L
+        - "TL-MR3020"
+- name: TL-MR3020
   matchers:
     - part: title
       type: word
       words:
-        - F670L
-- name: F670
+        - "TL-WR845N"
+- name: TL-WPA8631P
   matchers:
     - part: title
       type: word
       words:
-        - F670
-- name: F670E
+        - "TL-WPA8631P"
+- name: TL-WDR3600
   matchers:
     - part: title
       type: word
       words:
-        - F670E
-- name: F671Y
+        - "TL-WDR3600"
+- name: TL-WR1045ND
   matchers:
     - part: title
       type: word
       words:
-        - F671Y
-- name: F660
+        - "TL-WR1045ND"
+- name: TL-WR940N
   matchers:
     - part: title
       type: word
       words:
-        - F660
-- name: F680
+        - "TL-WR940N"
+- name: TL-WR949N
   matchers:
     - part: title
       type: word
       words:
-        - F680
-- name: H8102E
+        - "TL-WR949N"
+- name: TL-WR840N
   matchers:
     - part: title
       type: word
       words:
-        - H8102E
-- name: F670Y
+        - "TL-WR840N"
+- name: TL-WR740N
   matchers:
     - part: title
       type: word
       words:
-        - F670Y
-- name: H268A
+        - "TL-WR740N"
+- name: TL-WR841N
   matchers:
     - part: title
       type: word
       words:
-        - H268A
-- name: ZXHN-Router
+        - "TL-WR841N"
+- name: TL-WR820N
   matchers:
     - part: title
-      type: regex
-      name: mode
-      regex:
-        - ZXHN ([\w\d]+)
+      type: word
+      words:
+        - "TL-WR820N"
+- name: TL-SC2000N
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "TL-SC2000N"

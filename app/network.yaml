@@ -36,16 +36,51 @@
       type: word
       words:
         - "飞鱼星企业级智能上网行为管理系统"
-- name: DLink-AC
+- name: NETGEAR-Gateway
+  matchers:
+    - part: title
+      type: regex
+      name: mode
+      regex:
+        - NETGEAR Gateway (.*)
+- name: NETGEAR-Router
+  matchers:
+    - part: title
+      type: regex
+      name: mode
+      regex:
+        - NETGEAR ([\w\d])
+    - part: title
+      type: word
+      words:
+        - Netgear Router Setup
+- matchers:
+    - part: headers.Set-Cookie
+      type: word
+      words:
+        - fgtserver
+  name: FortiGate
+- name: SonicWall
   matchers:
     - part: title
       type: word
       words:
-        - "AC集中管理平台"
-        - "D-Link路由器管理页"
-- name: DLink
+        - "SonicWall - Authentication"
+- name: ePMP
   matchers:
-    - part: body
+    - part: title
       type: word
       words:
-        - "D-Link Router Management System"
+        - "ePMP"
+- name: Teltonika
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Teltonika Networks"
+- name: VoIP-Gateway
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "VoIP Gateway"

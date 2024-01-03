@@ -100,8 +100,9 @@
   matchers:
     - part: title
       type: word
+      case-insensitive: true
       words:
-        - 'Papercut'
+        - 'papercut'
 - name: Pega
   matchers:
     - part: title
@@ -556,12 +557,13 @@
       part: title
       words:
         - "zeroShell"
+        - "ZeroShell"
 - name: Axis
   matchers:
     - type: word
       part: title
       words:
-        - "Axis 2 - Home"
+        - "Axis"
 - name: Struts
   matchers:
     - type: word
@@ -714,9 +716,10 @@
       type: word
       words:
         - MinIO Console
+        - MinIO Browser
 - name: 明源云ERP
   matchers:
-    - part: body
+    - part: title
       type: word
       words:
         - 明源云ERP
@@ -787,12 +790,18 @@
       part: headers.set-cookie
       words:
         - "cprelogin"
+    - type: word
+      part: title
+      words:
+        - "cPanel Login"
+        - "WHM Login"
+        - "Login no WHM"
 - name: LibreNMS
   matchers:
-      - type: word
-        part: title
-        words:
-          - "LibreNMS"
+    - type: word
+      part: title
+      words:
+        - "LibreNMS"
 - matchers:
     - part: title
       type: word
@@ -860,6 +869,7 @@
         - "-1180440057"
     - part: title
       type: word
+      case-insensitive: true
       words:
         - swagger
 - matchers:
@@ -1396,3 +1406,226 @@
       type: word
       words:
         - "3Com Corporation Web Interface"
+- name: E-Soonlink
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "E-Soonlink"
+- name: HTTP-Proxy
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Proxy Authentication Required"
+- name: SOCKS-Proxy
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "This is a SOCKS Proxy"
+- name: WebMail
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Webmail Login"
+- name: Ascend-ERP
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Ascend ERP System"
+- name: Subra-ERP
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Subra ERP-Login"
+- name: Snippets-API
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Snippets API"
+- name: Espo-CRM
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "EspoCRM"
+- name: Plesk-Obsidian
+  matchers:
+    - part: title
+      type: regex
+      name: version
+      regex:
+        - Plesk Obsidian ([\d\.]+)
+- name: Plesk-Onyx
+  matchers:
+    - part: title
+      type: regex
+      name: version
+      regex:
+        - Plesk Onyx ([\d\.]+)
+- name: Intelbras
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Intelbras
+- name: Keenetic
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Keenetic Web"
+- name: SoftEther-VPN
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "SoftEther VPN Server"
+- name: Roundcube-Webmail
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Roundcube Webmail"
+- name: Jellyfin
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Jellyfin"
+- name: airCube
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "airCube"
+- name: qBittorrent
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "qBittorrent Web UI"
+- name: EagleEyes
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "EagleEyes Web"
+- name: oneThingCloud
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "网心云设备"
+- name: FileMaker-Database-Server
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "FileMaker Website"
+- name: Emby
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Emby"
+- matchers:
+    - part: body
+      type: word
+      words:
+        - <meta id="confluence-context-path" name="confluence-context-path" content="">
+    - part: title
+      type: word
+      words:
+        - Confluence
+  name: Confluence
+- matchers:
+    - part: title
+      type: word
+      words:
+        - Juniper Web Device Manager
+  name: Juniper-Web-Manager
+- name: Usermin
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Login to Usermin"
+- name: YunoHost-Admin
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "YunoHost Admin"
+- name: ChatGPT-Web
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ChatGPT Next Web"
+        - "ChatGPT"
+- name: 微擎-公众平台自助引擎
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "微擎 - 公众平台自助引擎"
+- name: 网易云音乐API
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "网易云音乐 API"
+- name: Chatoot
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Chatwoot"
+- name: IVSWeb
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "IVSWeb"
+- name: Trojan-Panel
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Trojan Panel"
+- name: Forsaken-Mail
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Forsaken Mail"
+- name: ATT-USM-Anywhere
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "USM Anywhere Sensor"
+- name: 中国移动融合企业网关
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "中国移动融合企业网关"
+- name: 凌风认证计费
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "凌风认证计费"
+- name: GitHub-Enterprise
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "GitHub Enterprise"

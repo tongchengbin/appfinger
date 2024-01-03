@@ -1,3 +1,9 @@
+- name: VMware
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "VMware"
 - name: vRealize Network Insight
   matchers:
     - part: title
@@ -10,7 +16,6 @@
       type: word
       words:
         - "Vmware Cloud"
-
 - name: vmware nsx
   matchers:
     - part: body
@@ -47,3 +52,21 @@
       type: word
       words:
         - "VMware vCenter"
+- name: Vmware-ESXi
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "VMware ESXi"
+- name: Vmware-FTP
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "VMWARE FTP SERVER"
+- name: Vmware-Workspace
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "VMware Workspace ONE"

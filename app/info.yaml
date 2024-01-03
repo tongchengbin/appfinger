@@ -1,0 +1,21 @@
+#一些组件或者信息泄露匹配
+- matchers:
+    - part: body
+      type: word
+      words:
+        - <title>Index of /
+  name: IndexOf
+- name: 色情网站
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "国产极品视频"
+        - "新葡的京集团"
+        - "成人精品"
+    - part: title
+      type: word
+      condition: and
+      words:
+        - "国产"
+        - "成"

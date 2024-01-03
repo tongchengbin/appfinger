@@ -1,3 +1,9 @@
+- name: ZyXEL
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ZyXEL"
 - name: USG FLEX
   matchers:
     - part: title
@@ -10,3 +16,41 @@
       words:
         - 'Welcome to the Web-Based Configurator'
   name: ZyXel-Router
+
+- name: USG60
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "USG60"
+- name: USG110
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "USG110"
+- name: USG40W
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "USG40W"
+- name: USG20-VPN
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "USG20-VPN"
+- name: ZyWALL
+  matchers:
+    - part: title
+      type: regex
+      name: mode
+      regex:
+        - ZyWALL ([\w\d-]+)
+- name: ZyXEL-KeenETIC
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ZyXEL KEENETIC LITE"

@@ -19,3 +19,28 @@
       words:
         - "Samsung AP"
       condition: and
+- name: Samsung-Network-Camera
+  matchers:
+    - type: word
+      part: title
+      words:
+        - "SAMSUNG NETWORK CAMERA"
+- name: Samsung-DVR
+  matchers:
+    - type: word
+      part: title
+      words:
+        - "Samsung DVR"
+- name: Samsung-NVR
+  matchers:
+    - type: word
+      part: title
+      words:
+        - "SAMSUNG TECHWIN NVR Web Viewer"
+        - "Web Viewer for Samsung NVR"
+- name: Samsung-5G
+  matchers:
+    - type: word
+      part: title
+      words:
+        - "Samsung 5G Station Admin Settings"

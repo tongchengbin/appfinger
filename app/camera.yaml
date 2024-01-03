@@ -23,6 +23,10 @@
       name: version
       regex:
         - Avtech\/([\d.]+)
+    - part: title
+      type: word
+      words:
+        - "::: Login :::"
   name: avtech
 
 - name: Panasonic-Network-Camera
@@ -31,6 +35,67 @@
       type: word
       words:
         - Panasonic
+    - part: title
+      name: mode
+      type: regex
+      regex:
+        - (DG-[\w\d]+) Network Camera
+    - part: title
+      name: mode
+      type: regex
+      regex:
+        - (BB-[\w\d]+) Network Camera
+- name: Panasonic-BL-VP104W
+  matchers:
+    - part: title
+      type: word
+      words:
+        - BL-VP104W Network Camera
+- name: VideoIQ-Network-Camera
+  matchers:
+    - part: title
+      type: word
+      words:
+        - VideoIQ Camera Login
+- name: Vilar-Network-Camera
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Vilar IPCamera Login
+- name: DG-NS202A
+  matchers:
+    - part: title
+      type: word
+      words:
+        - DG-NS202A Network Camera
+- name: DG-SF334
+  matchers:
+    - part: title
+      type: word
+      words:
+        - DG-SF334 Network Camera
+- name: Sony-Network-Camera
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Sony Network Camera
+
+- name: 5MP-VP104W
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 5MP Network Camera
+
+- name: iPro-Network-Camera
+  matchers:
+    - part: title
+      type: regex
+      name: mode
+      regex:
+        - (WV-[\w\d-]+) Network Camera
 
 - name: UNIView
   matchers:
@@ -131,6 +196,10 @@
       type: word
       words:
         - LiveApplet
+    - part: title
+      type: word
+      words:
+        - Network Camera VB-C60
 - name: ACTi Camera
   matchers:
     - path: body
@@ -163,3 +232,73 @@
       type: word
       words:
         - VidyoRouter Configuration
+- name: AXIS-Network-Camera
+  matchers:
+    - part: title
+      type: regex
+      name: mode
+      regex:
+        - AXIS ([\d\w-]+) Network Camera
+- name: iPOLiS-Network-Camera
+  matchers:
+    - part: title
+      type: word
+      words:
+        - iPOLiS NETWORK CAMERA WEBVIEWER
+- name: Sunba-Network-Camera
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Sunba IP Camera Web Control
+- name: UniFi-NVR
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "UniFi NVR:"
+- name: CPPLUS-NVR
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "CPPLUS NVR –Web View"
+- name: CPPLUS-DVR
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "CPPLUS DVR –Web View"
+- name: AHD-DVR
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "AHD DVR"
+- name: Hanwha-DVR
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Web Viewer for Hanwha DVR"
+- name: Inspire DVR
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Inspire DVR"
+- name: NETSurveillance
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "NETSurveillance WEB"
+        - "Network Surveillance"
+- name: Instar-Camera
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "INSTAR IP Cameras"
+        - "INSTAR Full-HD IP-Camera"
+        - "INSTAR 2K+ IP-Camera"

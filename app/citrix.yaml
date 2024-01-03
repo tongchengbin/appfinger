@@ -66,3 +66,10 @@
         - Citrix Web PN Server
       type: word
   name: Citrix-Web-PN-server
+- name: Citrix-XenServer
+  matchers:
+    - part: title
+      type: regex
+      name: version
+      regex:
+        - Welcome to Citrix XenServer ([\d\.]+)

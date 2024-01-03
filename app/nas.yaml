@@ -22,3 +22,10 @@
     type: word
     words:
       - "CN=NAS542"
+- name: Vaswani-NAS
+  matchers:
+    - part: title
+      type: word
+      condition: and
+      words:
+        - "Vaswani NAS"

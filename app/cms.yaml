@@ -433,3 +433,35 @@
       type: word
       words:
         - "Batflat"
+- matchers:
+    - part: title
+      type: word
+      words:
+        - Welcome to Craft CMS
+    - part: headers.set-cookie
+      words:
+        - CraftSessionId
+      type: word
+  name: craft-CMS
+- matchers:
+    - part: title
+      type: word
+      words:
+        - 'Powered by EmpireCMS'
+  name: Empire-CMS
+- matchers:
+    - part: title
+      words:
+        - "dotCMS:"
+      type: word
+    - part: headers.set-cookie
+      words:
+        - dotcms
+      type: word
+  name: Dot-CMS
+- matchers:
+    - part: title
+      words:
+        - "OpenERP"
+      type: word
+  name: OpenERP

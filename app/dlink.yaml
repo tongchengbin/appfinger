@@ -1,0 +1,88 @@
+- name: DLink-AC
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "AC集中管理平台"
+        - "D-Link路由器管理页"
+- name: DLink-AP
+  matchers:
+    - part: title
+      type: word
+      condition: and
+      words:
+        - "D-LINK"
+        - "WIRELESS AP"
+- name: DLink-AP
+  matchers:
+    - part: title
+      type: word
+      condition: and
+      case-insensitive: true
+      words:
+        - "d-link"
+        - "router"
+
+- name: DLink
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "D-Link Router Management System"
+    - part: title
+      type: word
+      case-insensitive: true
+      words:
+        - "d-link"
+- name: DLink-Wireless-Access
+  matchers:
+    - part: title
+      type: word
+      condition: and
+      words:
+        - "D-Link"
+        - "WIRELESS ACCESS POINT"
+- name: DLink-Wireless-Camera
+  matchers:
+    - part: title
+      type: word
+      condition: and
+      words:
+        - "D-Link"
+        - "WIRELESS INTERNET CAMERA"
+
+- name: DIR-X1860Z
+  matchers:
+    - part: title
+      type: word
+      condition: and
+      words:
+        - "DIR-X1860Z"
+- name: DIR-X3060Z
+  matchers:
+    - part: title
+      type: word
+      condition: and
+      words:
+        - "DIR-X3060Z"
+- name: DIR-825M
+  matchers:
+    - part: title
+      type: word
+      condition: and
+      words:
+        - "DIR-825M"
+- name: DIR-300
+  matchers:
+    - part: title
+      type: word
+      condition: and
+      words:
+        - "DIR-300"
+- name: DIR-100
+  matchers:
+    - part: title
+      type: word
+      condition: and
+      words:
+        - "DIR-100"

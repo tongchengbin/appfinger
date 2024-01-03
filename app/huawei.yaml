@@ -12,3 +12,40 @@
       case-insensitive: true
       words:
         - hg532s
+- name: HG532
+  matchers:
+    - part: title
+      type: word
+      case-insensitive: true
+      words:
+        - hg532
+- name: HG531
+  matchers:
+    - part: title
+      type: word
+      words:
+        - HG531
+- name: HG630
+  matchers:
+    - part: title
+      type: word
+      words:
+        - HG630
+- name: HG659
+  matchers:
+    - part: title
+      type: word
+      words:
+        - HG659
+- name: HG255s
+  matchers:
+    - part: title
+      type: word
+      words:
+        - HG255s
+- name: HuaWei-IPC
+  matchers:
+    - part: title
+      type: word
+      words:
+        - HUAWEI IPC

@@ -26,6 +26,7 @@
       type: word
       words:
         - Apache Tomcat
+        - Tomcat
 - name: OFBiz
   matchers:
     - part: headers.set-cookie
