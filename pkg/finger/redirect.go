@@ -59,11 +59,13 @@ func getExecRedirect(url string, jsCodes []string, onload string) string {
 			}
 		};
 		var top = {
-			window: window	
+			window: window,
+			location: location,
 			document: {
 				location: window.location		
 			}
 		}
+		window.top = top;
 `, url)
 	_, err := vm.Run(initWindowsCode)
 	if err != nil {
@@ -102,7 +104,7 @@ func getExecRedirect(url string, jsCodes []string, onload string) string {
 			window.location.href = top.document.location.href;
 		}
 		var finalHref = window.location.href;
-		console.log(JSON.stringify(window))
+		//console.log(JSON.stringify(window))
 	`, onload))
 	if err != nil {
 		gologger.Debug().Msgf("Error getting result:%v", err)
