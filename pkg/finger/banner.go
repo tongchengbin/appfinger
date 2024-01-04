@@ -168,6 +168,8 @@ func getMatchPart(part string, banner *Banner) string {
 		return banner.Response
 	case "icon_hash":
 		return fmt.Sprintf("%v", banner.IconHash)
+	case "body_hash":
+		return fmt.Sprintf("%v", banner.BodyHash)
 	}
 	return ""
 }
