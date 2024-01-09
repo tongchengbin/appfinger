@@ -29,7 +29,6 @@ func getTitle(body []byte) string {
 
 	// Tokenize the HTML document and check for fingerprints as required
 	tokenizer := html.NewTokenizer(bytes.NewReader(body))
-
 	for {
 		tt := tokenizer.Next()
 		switch tt {
@@ -44,6 +43,7 @@ func getTitle(body []byte) string {
 					continue
 				}
 				title = tokenizer.Token().Data
+				return title
 			}
 		}
 	}
@@ -281,6 +281,7 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 			cert := resp.TLS.PeerCertificates[0]
 			banner.Certificate = parseCertificateInfo(cert)
 		}
+		println(banner.Title)
 		banners = append(banners, banner)
 		// 解析JavaScript跳转
 		jsRedirectUri := parseJavaScript(nextURI, bodyBytes)
