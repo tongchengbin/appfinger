@@ -4,3 +4,20 @@
       type: word
       words:
         - "IBM HTTP Server"
+- name: IBM-WebSphere
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "<BR><I>IBM WebSphere Application Server</I>"
+    - name: version
+      part: headers.server
+      regex:
+        - ^WebSphere Application Server\/([^\s]+)$
+      type: regex
+- name: IBM-OpenAdmin-Tool
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - 965982073

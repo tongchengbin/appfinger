@@ -66,18 +66,15 @@
     type: regex
   name: gerrit
 - matchers:
-  - name: enableLinkTracking
-    part: body
+  - part: body
     type: word
     words:
     - _paq.push(['enableLinkTracking'])
-  - name: Title
-    part: body
+  - part: body
     type: word
     words:
     - <title>Sign in - Matomo</title>
-  - name: MATOMO_SESSID Cookie
-    part: headers.Set-Cookie
+  - part: headers.Set-Cookie
     type: word
     words:
     - MATOMO_SESSID
@@ -603,18 +600,6 @@
     - <a href="https?://www\.sympa\.org">\s*powered by sympa\s*</a>
   name: sympa
 - matchers:
-  - name: version
-    part: body
-    regex:
-    - (<meta name="generator" content="TYPO3 ([\d\.]+) CMS")
-    type: regex
-  - name: fe_typo_user cookie
-    part: headers.set-cookie
-    regex:
-    - (^fe_typo_user)
-    type: regex
-  name: typo3
-- matchers:
   - part: body
     regex:
     - <!-- (?:start|end) open web analytics tracker -->
@@ -821,12 +806,6 @@
     - ^(.+)$
     type: regex
   name: umbraco
-- matchers:
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - cmssessid
-  name: cms_made_simple
 - matchers:
   - part: body
     type: word
@@ -1037,14 +1016,6 @@
     type: regex
   name: 3dcart
 - matchers:
-  - group: 1
-    name: version
-    part: headers.server
-    regex:
-    - (^4D_v[\d]{1,2}(_SQL)?\/([\d\.]+)$)
-    type: regex
-  name: "4d"
-- matchers:
   - part: body
     regex:
     - (Copyright &copy; 2002-[0-9]{4} <a href="finger:\/\/www.4homepages.de[\>]*>4homepages.de<\/a>)
@@ -1132,13 +1103,6 @@
     - (^ABO\.CMS( E-commerce| Corporative)? ([\d\.]+))
     type: regex
   name: abo_cms
-- matchers:
-  - name: version
-    part: headers.server
-    regex:
-    - (^Abyss\/([^\s]+))
-    type: regex
-  name: abyss_web_server
 - matchers:
   - name: version
     part: headers.server
@@ -1259,17 +1223,6 @@
     - '<title>ACollab : Accessible Collaboration Environment:'
   name: acollab
 - matchers:
-  - part: body
-    type: word
-    words:
-    - '<title>AContent: Learning Content Repository:'
-  - part: body
-    type: word
-    words:
-    - <dt><span class="required" title="Required Field">*</span><label for="login">Login
-      Name or Email</label></dt>
-  name: acontent
-- matchers:
   - name: version
     part: body
     regex:
@@ -1286,23 +1239,6 @@
     - (<tr class="layout_footer_bgcolor">\s*<td width="776"[^>]*>\s+Copyright@2003-(20[\d]{2})
       ACTi Corporation All Rights Reserved)
   name: acti_web_configurator
-- matchers:
-  - part: body
-    type: word
-    words:
-    - <form method="post" id="system_form_2" class="uniForm focusFirstField">
-  - name: version
-    part: body
-    regex:
-    - (if\(\!App\.data\) \{ App\.data = \{\}; \}\s+App\.data\.quick_search_url = "[^"]+";\s+App\.data\.ac_version
-      = "([^"]+)";)
-    type: regex
-  - name: powered by footer
-    part: body
-    type: word
-    words:
-    - <p id="powered_by"><a href="finger://www.activecollab.com/"
-  name: activecollab
 - matchers:
   - name: version
     part: headers.server
@@ -2782,31 +2718,6 @@
     - (HOMEBASEID=)
     type: regex
   name: axentra_hipserv
-- matchers:
-  - part: body
-    type: word
-    words:
-    - '            top.opener.location.href="/?login=";'
-  - part: body
-    type: word
-    words:
-    - <div>Powered by <a href="finger://www.axigen.com" target="_blank" class="gray">Axigen
-      Mail Server</a></div>
-  - part: body
-    type: word
-    words:
-    - Powered by <a href="finger://www.axigen.com/" target="_blank">Axigen Mail Server</a>
-  - part: body
-    type: word
-    words:
-    - <div class="nojsContainer"><h1>In order to access AXIGEN Webmail, <br />you
-      must enable Javascript in your browser!</h1></div>
-  - name: version
-    part: body
-    regex:
-    - (<title>AXIGEN Webmail - v([\d\.]+)<\/title>)
-    type: regex
-  name: axigen_mail_server
 - matchers:
   - name: version
     part: body
@@ -5086,33 +4997,6 @@
     type: regex
   name: cmydocument
 - matchers:
-  - name: ci_session cookie
-    part: headers.set-cookie
-    regex:
-    - (ci_session)
-    type: regex
-  name: codeigniter_php_framework
-- matchers:
-  - part: body
-    type: word
-    words:
-    - <TITLE>CoDeSys WebVisualization</TITLE>
-  - part: body
-    type: word
-    words:
-    - <APPLET CODEBASE=. CODE=webvisu/WebVisu.class name="WebVisu" width="100%" height="100%"
-      id="webvisuapplet">
-  - part: body
-    type: word
-    words:
-    - <APPLET CODEBASE=. CODE=webvisu/WebVisu.class name="WebVisu" width="99%" height="99%"
-      id="webvisuapplet">
-  - part: body
-    type: word
-    words:
-    - <param name="archive" value="webvisu.jar,minml.jar">
-  name: codesys_web_visualization
-- matchers:
   - part: body
     type: word
     words:
@@ -5787,25 +5671,6 @@
     - (^strMyLanguage=)
     type: regex
   name: cuteflow
-- matchers:
-  - part: body
-    type: word
-    words:
-    - <td align="right" class="arial12whitebold">Log on to:&nbsp; </td>
-  - part: body
-    type: word
-    words:
-    - <INPUT TYPE=HIDDEN NAME="js_autodetect_results" VALUE="SMPREF_JS_OFF">
-  - part: body
-    type: word
-    words:
-    - <noscript><font class="arial12whitebold">JavaScript must be enabled in order
-      for you to use cyberoam admin console.</font></noscript><br>
-  - part: body
-    type: word
-    words:
-    - <!-- PUT THE LOGIC OF YOUR PAGE HERE -->
-  name: cyberoam_appliance
 - matchers:
   - name: version
     part: headers.server
@@ -9555,18 +9420,6 @@
     type: regex
   name: ibm_webseal
 - matchers:
-  - name: version
-    part: headers.server
-    regex:
-    - (^WebSphere Application Server\/([^\s]+)$)
-    type: regex
-  - name: module:Snoop Servlet
-    part: body
-    type: word
-    words:
-    - <HTML><HEAD><TITLE>Snoop Servlet</TITLE></HEAD><BODY BGCOLOR="#FFFFEE">
-  name: ibm_websphere
-- matchers:
   - part: headers.x-backside-transport
     type: word
     words:
@@ -9587,40 +9440,6 @@
     words:
     - <dl class="box boxLogo  box02 iceshop">
   name: iceshop
-- matchers:
-  - part: body
-    regex:
-    - (<DIV align="center" CLASS="copy">Powered by[\s]+<A HREF="finger:\/\/www.icewarp.com\/"
-      target="_blank" CLASS="copylink">IceWarp Software<\/A> <A HREF="finger:\/\/(www\.)?icewarp\.com\/Products\/Merak_Email_Server_Software\/"
-      target="_blank" CLASS="copylink">Merak Email Server<\/A><BR>)
-    type: regex
-  - part: body
-    type: word
-    words:
-    - <noscript>Please, enable <strong>JavaScript</strong> for this site and if such
-      option is not available, download the latest <a href="finger://www.microsoft.com/windows/downloads/ie/getitnow.mspx">Internet
-      Explorer</a> or <a href="finger://www.getfirefox.com">Mozilla FireFox</a>.</noscript>
-  - group: 1
-    name: version
-    part: body
-    regex:
-    - (<DIV align="center" CLASS="copy">Powered by[\s]+<A HREF="finger:\/\/www\.icewarp\.com\/"
-      target="_blank" CLASS="copylink">IceWarp Software<\/A> <A HREF="finger:\/\/(www\.)?icewarp\.com\/Products\/Merak_Email_Server_Software\/"
-      target="_blank" CLASS="copylink">Merak Email Server<\/A><BR>IceWarp Web Mail
-      ([\d\.]+) \([^\)]+\)<\/DIV>)
-    type: regex
-  - name: version
-    part: body
-    regex:
-    - '(Powered by <a href="finger:\/\/www.icewarp.com">IceWarp Software<\/a> <a href="finger:\/\/www\.icewarp\.com\/Products\/Merak_Email_Server_Software\/">IceWarp
-      Server<\/a> [^\s]+ 1999-20[\d]{2}<br \/> Version: ([\d\.]+))'
-    type: regex
-  - part: body
-    type: word
-    words:
-    - <span id="cipher"><input type="checkbox" name="xcipher" value="1" >Encrypted
-      login</span>
-  name: icewarp_email_server
 - matchers:
   - part: headers.server
     regex:
@@ -10648,14 +10467,7 @@
     type: regex
   name: jobberbase
 
-- matchers:
-  - name: html body
-    part: body
-    regex:
-    - (src="\/dana\-na\/css\/ds\.js">|<img border="0" src="welcome\.cgi\?p=logo|src="\/dana\-na\/imgs\/space\.gif"|document\.cookie
-      = "DSPREAUTH="\+ escape\(""\)|src="\/dana\-na\/auth\/url_default\/s)
-    type: regex
-  name: juniper_netscreen_secure_access
+
 - matchers:
   - part: body
     regex:
@@ -10850,39 +10662,6 @@
     - (^Keil-EWEB)
     type: regex
   name: keil_embedded_web_server
-- matchers:
-  - name: version
-    part: body
-    regex:
-    - (<\/title><meta name="generator" content="Kentico CMS [^\(^>]{1,5} \(build ([\d\.]{1,10})\)
-      [^"^>]*" \/>)
-    type: regex
-  - name: CMSCsrfCookie cookie
-    part: headers.set-cookie
-    regex:
-    - (CMSCsrfCookie)
-    type: regex
-  - name: CMSCurrentTheme cookie
-    part: headers.set-cookie
-    regex:
-    - (CMSCurrentTheme)
-    type: regex
-  - name: CMSPreferredCulture cookie
-    part: headers.set-cookie
-    regex:
-    - (CMSPreferredCulture)
-    type: regex
-  - name: CMSCsrfCookie cookie
-    part: headers.set-cookie
-    regex:
-    - (CMSCsrfCookie)
-    type: regex
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - cmscookielevel
-    - cmspreferredculture
-  name: kentico_cms
 - matchers:
   - part: headers.server
     regex:
@@ -11287,17 +11066,6 @@
     - (^Gordian Embedded)
     type: regex
   name: lantronix_device
-- matchers:
-  - name: laravel_session cookie
-    part: headers.set-cookie
-    regex:
-    - (^laravel_session)
-    type: regex
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - laravel_session
-  name: laravel
 - matchers:
   - part: body
     regex:
@@ -12782,17 +12550,6 @@
   name: mochiweb
 - matchers:
   - part: body
-    regex:
-    - (<script [^>]*src=["'][^>]*modernizr[^>]*\.js)
-    type: regex
-  - name: version
-    part: body
-    regex:
-    - <script [^>]*src=["'][^>]*modernizr-([^>]+)\.js
-    type: regex
-  name: modernizr
-- matchers:
-  - part: body
     type: word
     words:
     - <link rel="stylesheet" href="modlogan.css" type="text/css" />
@@ -13585,13 +13342,6 @@
     - (^NetBox Version (.+)$)
     type: regex
   name: netbox
-- matchers:
-  - name: version
-    part: headers.server
-    regex:
-    - (^NetCache appliance \(NetApp\/([^\)]+)\)$)
-    type: regex
-  name: netcache_appliance
 - matchers:
   - part: headers.server
     regex:
@@ -14930,48 +14680,6 @@
       ask for my password for two weeks<\/p>)
     type: regex
   name: opennms
-
-
-
-- matchers:
-  - part: body
-    type: word
-    words:
-    - <html OT='SiebWebMainWindow'>
-  - part: body
-    type: word
-    words:
-    - <p>Scripting is used to manage data interactions between the Siebel server/Web
-      Server and the User Interface. This requires JavaScript to be enabled  in the
-      web browser </p>
-  - part: body
-    type: word
-    words:
-    - Temporarily Unavailable
-  - part: body
-    type: word
-    words:
-    - alert("Your session timed out because you were idle for too long.  Please log
-      in again to resume.\nIf you had a Siebel attachment open, your changes may have
-      been lost.  Please save the file locally, close it, and reattach it to the appropriate
-      record.");
-  - part: body
-    type: word
-    words:
-    - <script language="javascript">top._swescript = window;</script>
-  - part: body
-    type: word
-    words:
-    - <!-- SWELogin.swt  -->
-  - part: body
-    type: word
-    words:
-    - eService
-  - part: body
-    type: word
-    words:
-    - </form><script language="javascript">var formObj = document.forms["RedirectForHost"];formObj.SWEHo.value=top.location.hostname;formObj.submit();</script></body></html>
-  name: siebel
 - matchers:
   - part: body
     type: word
@@ -17546,22 +17254,6 @@
       Version:<\/b> ([^\(]+) \([^\(]+\)<br \/>)
     type: regex
   name: qcubed_development_framework
-- matchers:
-  - name: version
-    part: body
-    regex:
-    - (qdPM ([^\s]+) &nbsp;is redistributable under the\s+<a class="footer-text")
-    type: regex
-  - part: body
-    type: word
-    words:
-    - (Copyright @ (20[\d]{2}) <a class="footer-text" target="_blank"( title="open
-      source project management software")? href="finger:\/\/(www\.qds-team\.com|qdpm\.net\/)">)
-  - part: headers.set-cookie
-    regex:
-    - (qdpm(_extended)?=[^;]+;)
-    type: regex
-  name: qdpm
 - matchers:
   - part: body
     type: word
@@ -22872,23 +22564,6 @@
     - <div id="serendipityLeftSideBar">
   name: web2py
 - matchers:
-  - name: version
-    part: body
-    regex:
-    - (<!-- Generated by The Webalizer  Ver\. ([^\s]+) -->)
-    type: regex
-  - name: version
-    part: body
-    regex:
-    - '(<!-- Webalizer Version ([^\s]+) \(Mod: [\d]{1,2}-[a-zA-Z]{3}-[\d]{4}\) -->)'
-    type: regex
-  - name: version
-    part: body
-    regex:
-    - (<A HREF="finger:\/\/www\.webalizer\.org\/"><STRONG>Webalizer Version ([^<]+)<\/STRONG><\/A>)
-    type: regex
-  name: webalizer_log
-- matchers:
   - part: body
     type: word
     words:
@@ -22990,32 +22665,6 @@
     - (<meta name="generator" content="WEBCOMpro CMS ([^\s]+) . Patrick Heyer, www\.webcompro-cms\.com">)
     type: regex
   name: webcompro_cms
-- matchers:
-  - part: headers.server
-    regex:
-    - ([^\r^\n]*DAV\/)
-    type: regex
-  - name: version
-    part: headers.server
-    regex:
-    - ([^\r^\n]*DAV\/([^\s^\r^\n]*))
-    type: regex
-  - name: MS-Author-Via HTTP Header
-    part: headers.MS-Author-Via
-    regex:
-    - (^[\s]*DAV)
-    type: regex
-  - name: version
-    part: headers.dav
-    regex:
-    - ([\s]*1,2,<finger:\/\/([^>]+)>)
-    type: regex
-  - name: x-webdav-status HTTP Header
-    part: headers.x-webdav-status
-    regex:
-    - ()
-    type: regex
-  name: webdav
 - matchers:
   - part: headers.server
     regex:
@@ -23788,13 +23437,6 @@
       '
   name: wpquiz
 - matchers:
-  - name: version
-    part: body
-    regex:
-    - (^[0-9]+.[0-9]{2}.[0-9]{2} [0-9]{2}:[0-9]{2} [A|B]{1} [^>]*> ([^\ ]+) )
-    type: regex
-  name: ws_ftp_log
-- matchers:
   - part: body
     type: word
     words:
@@ -24393,16 +24035,6 @@
     words:
     - <meta name="Description" content="Yamamah is free photo gallery cms" />
   name: yamamah
-- matchers:
-  - part: body
-    regex:
-    - (<(param|embed) [^>]*youtube\.com\/v)
-    type: regex
-  - part: body
-    regex:
-    - (<iframe [^>]*src=['"]https?:\/\/(www\.)?youtube\.com\/embed\/)
-    type: regex
-  name: youtube
 - matchers:
   - name: version
     part: body
@@ -25035,17 +24667,6 @@
     words:
     - application/wasm
   name: webassembly
-
-- matchers:
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - yii_csrf_token
-  - part: body
-    regex:
-    - <!\[cdata\[yii-block-(?:head|body-begin|body-end)\]
-    type: regex
-  name: yii
 - matchers:
   - part: body
     type: word
@@ -25066,25 +24687,11 @@
     type: regex
   name: windows_server
 - matchers:
-  - part: headers.x-powered-by
-    regex:
-    - ^express(?:$|,)
-    type: regex
-  name: express
-- matchers:
   - part: headers.server
     regex:
     - ^netlify
     type: regex
   name: netlify
-- matchers:
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - ci_session
-    - exp_last_activity
-    - exp_tracker
-  name: codeigniter
 - matchers:
   - part: body
     regex:
@@ -25561,24 +25168,6 @@
     - <link rel=["']stylesheet["'] [^>]+boldgrid
     type: regex
   name: boldgrid
-- matchers:
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - bf_session
-  - group: 1
-    name: version
-    part: body
-    regex:
-    - powered by <a[^>]+href="https?://(?:www\.)?cibonfire\.com[^>]*>bonfire v([^<]+)
-    type: regex
-  name: bonfire
-- matchers:
-  - part: body
-    regex:
-    - <link[^>]+href="[^>]*bootstrap-table(?:\.min)?\.css
-    type: regex
-  name: bootstrap_table
 - matchers:
   - group: 1
     name: version
@@ -28692,16 +28281,6 @@
     - unix
   name: unix
 - matchers:
-  - part: headers.server
-    type: word
-    words:
-    - ubuntu
-  - part: headers.x-powered-by
-    type: word
-    words:
-    - ubuntu
-  name: ubuntu
-- matchers:
   - part: body
     regex:
     - <form [^>]*action="[^"]*\/cgi-bin\/uceditor\?(?:[^"]*&)?merchantid=[^"]
@@ -29222,14 +28801,6 @@
     name: version
     part: headers.server
     regex:
-    - mod_jk(?:/([\d\.]+))?
-    type: regex
-  name: mod_jk
-- matchers:
-  - group: 1
-    name: version
-    part: headers.server
-    regex:
     - mod_perl(?:/([\d\.]+))?
     type: regex
   name: mod_perl
@@ -29241,20 +28812,6 @@
     - mod_python(?:/([\d.]+))?
     type: regex
   name: mod_python
-- matchers:
-  - group: 1
-    name: version
-    part: headers.server
-    regex:
-    - mod_wsgi(?:/([\d.]+))?
-    type: regex
-  - group: 1
-    name: version
-    part: headers.x-powered-by
-    regex:
-    - mod_wsgi(?:/([\d.]+))?
-    type: regex
-  name: mod_wsgi
 - matchers:
   - group: 1
     name: version

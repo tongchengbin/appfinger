@@ -1,19 +1,6 @@
 #各种web 服务器
 - matchers:
     - part: headers.server
-      regex:
-        - (Microsoft-HTTPAPI)
-      type: regex
-    - name: version
-      part: headers.server
-      regex:
-        - Microsoft-HTTPAPI\/(.+)$
-      type: regex
-  name: Microsoft HTTPAPI
-
-
-- matchers:
-    - part: headers.server
       words:
         - nginx
       type: word
@@ -39,6 +26,8 @@
       type: regex
     - part: title
       type: word
+      words:
+        - "Welcome to nginx!"
     - part: title
       type: regex
       name: os
@@ -632,3 +621,85 @@
         - mod_rails(?:/([\d.]+))?
       type: regex
   name: Mod-Rails
+- matchers:
+    - name: version
+      part: headers.server
+      regex:
+        - mod_wsgi(?:/([\d.]+))?
+      type: regex
+    - name: version
+      part: headers.x-powered-by
+      regex:
+        - mod_wsgi(?:/([\d.]+))?
+      type: regex
+  name: Mod-WSGI
+- matchers:
+    - name: version
+      part: headers.server
+      regex:
+        - ^NetCache appliance \(NetApp\/([^\)]+)\)$
+      type: regex
+  name: Netcache-Appliance
+- matchers:
+    - part: headers.x-powered-by
+      words:
+        - Express
+      type: word
+  name: Express
+- matchers:
+    - part: headers.server
+      name: version
+      regex:
+        - ecstatic-([\d\.]+)
+      type: regex
+  name: Node-Ecstatic
+- matchers:
+    - part: headers.X-Server
+      words:
+        - AfterlogicDAVServer
+      type: word
+  name: Afterlogic
+- name: Airtame
+  matchers:
+    - part: body
+      words:
+        - "To access the settings of your Airtame"
+        - "https://airtame.com/download"
+      condition: and
+      type: word
+- name: Artica-Web-Proxy
+  matchers:
+    - part: body
+      words:
+        - 'Welcome to the Artica Web Administration Interface'
+      type: word
+- matchers:
+    - name: version
+      part: headers.server
+      regex:
+        - mod_jk(?:/([\d\.]+))?
+      type: regex
+  name: mod_jk
+
+- matchers:
+    - type: word
+      part: body
+      words:
+        - "/4DACTION/"
+        - "/4DSTATS"
+        - "/4DHTMLSTATS"
+        - "/4DCACHECLEAR"
+        - "/4DWEBTEST"
+      condition: or
+    - name: version
+      part: headers.server
+      regex:
+        - '4D(?:_V[0-9]+)?/([0-9.]+)'
+      type: regex
+  name: "4d"
+- matchers:
+    - part: body
+      type: word
+      words:
+        - Welcome to Abyss Web Server
+  name: Abyss-Web-Server

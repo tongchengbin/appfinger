@@ -22,6 +22,10 @@
       type: word
       words:
         - "999357577"
+    - part: headers.server
+      type: word
+      words:
+        - Hikvision-Webs
     - part: body
       words:
         - "/doc/page/login.asp?_"

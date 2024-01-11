@@ -11,4 +11,8 @@
         - AEM Sign In
         - AEM Assets Brand Portal
       type: word
+    - part: body
+      type: word
+      words:
+        - Welcome to Adobe Experience Manager
   name: Adobe-Experience-Manager

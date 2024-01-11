@@ -99,6 +99,12 @@
       words:
         - "tenda"
         - "router"
+- name: Tenda-11N-Wireless
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Tenda 11N Wireless Router Login Screen"
 - name: Vodafone-Router
   matchers:
     - part: title
@@ -321,3 +327,33 @@
       words:
         - AT&T WiFi
   name: ATT-WiFi
+- name: evLink
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "EVlink Local Controller"
+- name: EVSE-web
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "EVSE Web Interface"
+- name: TLR-2005KSH
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "TLR-2005KSH"
+- name: TEW-827DRU
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "TEW-827DRU"
+- name: hwl-2511-ss
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "hwl-2511-ss"

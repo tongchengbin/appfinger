@@ -2,6 +2,13 @@
     - name: version
       part: headers.server
       regex:
+        - Microsoft-HTTPAPI(?:\/([\d\.]+))
+      type: regex
+  name: Microsoft-HTTPAPI
+- matchers:
+    - name: version
+      part: headers.server
+      regex:
         - Microsoft-IIS\/([\d\.]+)
       type: regex
   name: IIS
@@ -15,11 +22,11 @@
       words:
         - content=\"Visual Basic .NET 7.1
         - vti_title:SR|Web Settings for Active Server Pages
-    - name: x-powered-by HTTP header
-      part: headers.x-powered-by
-      regex:
-        - (asp\.net)
-      type: regex
+    - part: headers.x-powered-by
+      case-insensitive: true
+      words:
+        - asp.net
+      type: word
   name: ASP.NET
 - matchers:
     - type: word

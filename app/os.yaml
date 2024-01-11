@@ -11,3 +11,13 @@
       type: word
       regex:
         - linux
+- matchers:
+    - part: headers.server
+      type: word
+      words:
+        - ubuntu
+    - part: headers.x-powered-by
+      type: word
+      words:
+        - ubuntu
+  name: Ubuntu

@@ -302,3 +302,16 @@
         - "INSTAR IP Cameras"
         - "INSTAR Full-HD IP-Camera"
         - "INSTAR 2K+ IP-Camera"
+- name: Selea-Network-Camera
+  matchers:
+    - part: headers.server
+      type: word
+      words:
+          - "selea_httpd"
+- name: AVideo
+  matchers:
+    - part: title
+      type: word
+      case-insensitive: true
+      words:
+        - "avideo"

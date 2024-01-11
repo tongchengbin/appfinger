@@ -1,26 +1,23 @@
-- name: RuiJie EG
+- name: RuiJie-EG
   matchers:
     - type: word
       part: body
-      name: "SAMSUNG-AP"
       words:
         - "锐捷网络有限公司 eg易网关"
-        - "webchat.ruijie.com.cn"
-        - "4008 111 000"
-        - "www.ruijie.com.cn/service/know.aspx"
-- name: RuiJie Smart Web
+        - "请输入您的RG-EG易网关的用户名和密码"
+- name: RuiJie-SmartWeb
   matchers:
     - type: word
-      part: body
+      part: title
       words:
-        - "<label>锐捷网络有限公司交换机WEB管理</label>"
+        - "无线smartWeb--登录页面"
 - name: RuiJie-NBR-Router
   matchers:
     - type: word
       part: body
       words:
         - "free_nbr_login_form.png"
-- name: RuiJie EWeb
+- name: RuiJie-EWeb
   matchers:
     - type: word
       part: body

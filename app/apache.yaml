@@ -75,3 +75,15 @@
       type: word
       words:
         - 'Ambari'
+- name: Shiro
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Shiro
+- name: Apache-Miracle
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Apache Miracle Linux Web Server

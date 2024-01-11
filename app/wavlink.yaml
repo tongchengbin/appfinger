@@ -1,0 +1,28 @@
+- name: Wavlink-WiFi-APP
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Wi-Fi APP Login"
+    - part: icon_hash
+      type: word
+      words:
+        - "-1350437236"
+- name: WN530HG4
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'var Model="WN530HG4";'
+- name: WN533A8
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'var Model="WN533A8";'
+- name: WN535G3
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'var Model="WN535G3";'

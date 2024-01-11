@@ -1,0 +1,24 @@
+- name: FortiNet
+  matchers:
+    - part: cert
+      type: word
+      words:
+        - "Fortinet"
+- matchers:
+    - part: cert
+      type: word
+      words:
+        - CN=FortiGate
+  name: FortiGate
+- name: FortiNet-SslVPN
+  matchers:
+    - part: headers.set-cookie
+      type: word
+      words:
+          - "SVPNNETWORKCOOKIE"
+- name: FortiMail
+  matchers:
+    - part: cert
+      type: word
+      words:
+        - "CN=FortiMail"

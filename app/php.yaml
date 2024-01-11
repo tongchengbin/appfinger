@@ -27,3 +27,9 @@
       type: word
       words:
         - phpsessid
+- matchers:
+    - part: headers.Set-Cookie
+      type: word
+      words:
+        - laravel_session
+  name: Laravel

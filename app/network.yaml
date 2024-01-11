@@ -54,12 +54,6 @@
       type: word
       words:
         - Netgear Router Setup
-- matchers:
-    - part: headers.Set-Cookie
-      type: word
-      words:
-        - fgtserver
-  name: FortiGate
 - name: SonicWall
   matchers:
     - part: title

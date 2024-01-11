@@ -1,5 +1,5 @@
 
-- name: weaver_oa
+- name: Weaver-OA
   matchers:
     - part: body
       type: word
@@ -84,7 +84,6 @@
         - whirRootPath
         - 万户OA
 
-# yonyou
 
 - name: ChanJet-Remote
   matchers:
@@ -99,31 +98,7 @@
       words:
         - /tplus/
 
-- name: yonyou_nc
-  matchers:
-    - part: body
-      type: word
-      words:
-        - "logo/images/ufida_nc.png"
-        - "用友NC"
-- name: U8
-  matchers:
-    - part: body
-      type: word
-      words:
-        - "getFirstU8Accid"
-- name: yonyou_fe
-  matchers:
-    - part: body
-      type: word
-      words:
-        - "用友 FE协同办公平台"
-- name: yonyou_ufida_nc
-  matchers:
-    - part: body
-      type: word
-      words:
-        - "ufida_nc.png"
+
 - name: Cloud OA
   matchers:
     - part: body
@@ -167,3 +142,9 @@
       type: word
       words:
         - 金和协同管理平台
+- name: FindReport
+  matchers:
+    - part: body
+      type: word
+      words:
+          - "/ReportServer?op=resource"

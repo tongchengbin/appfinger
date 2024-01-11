@@ -1,3 +1,22 @@
+- matchers:
+    - part: body
+      type: word
+      words:
+        - <meta name="generator" content="WordPress.com" />
+        - <a href="finger://www.wordpress.com">Powered by WordPress</a>
+        - /wp-content/plugins/
+    - name: powered by link
+      part: body
+      type: word
+      words:
+        -
+    - name: version
+      part: body
+      regex:
+        - <meta name="generator" content="WordPress ([0-9\.]+)"
+      type: regex
+  name: Wordpress
+
 - name: 3dprint-lite
   matchers:
     - part: body
@@ -22,27 +41,108 @@
       type: word
       words:
         - "/age-gate/"
-- matchers:
+- name: School-Management-Pro
+  matchers:
     - part: body
       type: word
       words:
-        - <meta name="generator" content="WordPress.com" />
-    - name: powered by link
-      part: body
+          - "school-management-pro"
+- name: PDF-Print
+  matchers:
+    - part: body
       type: word
       words:
-        - <a href="finger://www.wordpress.com">Powered by WordPress</a>
-    - name: version
-      part: body
-      regex:
-        - <meta name="generator" content="WordPress ([0-9\.]+)"
-      type: regex
-    - part: headers.link
+        - /wp-content/plugins/pdf-print/
+- name: Email-Subscribers
+  matchers:
+    - part: body
       type: word
       words:
-        - rel="https://api\.w\.org/"
-    - part: headers.x-pingback
-      regex:
-        - /xmlrpc\.php$
+        - /wp-content/plugins/email-subscribers/
+- name: Sp-Client-Document-Manager
+  matchers:
+    - part: body
+      type: word
+      words:
+        - /wp-content/plugins/sp-client-document-manager/
+- name: Car-Repair-Services
+  matchers:
+    - part: body
+      type: word
+      words:
+        - /wp-content/plugins/car-repair-services/
+- name: Embed-Swagger
+  matchers:
+    - part: body
+      type: word
+      words:
+        - /wp-content/plugins/embed-swagger/
+- name: SpeakOut
+  matchers:
+    - part: body
+      type: word
+      words:
+        - /wp-content/plugins/speakout/
+- name: Social-Share
+  matchers:
+    - part: body
+      type: word
+      words:
+        - /wp-content/plugins/social-share/
+- name: MinioRange-Login-Openid
+  matchers:
+    - part: body
+      type: word
+      words:
+        - /wp-content/plugins/miniorange-login-openid/
+- name: MinioRange-WPCargo
+  matchers:
+    - part: body
+      type: word
+      words:
+        - /wp-content/plugins/wpcargo/
+- name: Redux-Framework
+  matchers:
+    - part: body
+      type: word
+      words:
+        - /wp-content/plugins/redux_framework/
+
+- name: Documentor
+  matchers:
+    - part: body
+      type: word
+      words:
+        - /wp-content/plugins/documentor/
+- name: Easync-Booking
+  matchers:
+    - part: body
+      type: word
+      words:
+        - /wp-content/plugins/easync-booking/
+- name: login-as-customer-or-user
+  matchers:
+    - part: body
+      type: word
+      words:
+        - /wp-content/plugins/login-as-customer-or-user/
+- name: wordpress-gdpr
+  matchers:
+    - part: body
+      type: word
+      words:
+        - /wp-content/plugins/wordpress-gdpr/
+- name: coming-soon
+  matchers:
+    - part: body
+      type: word
+      words:
+        - /wp-content/plugins/coming-soon/
+#  特殊处理
+- name: WP-Plugin
+  matchers:
+    - part: body
       type: regex
-  name: wordpress
+      name: $0
+      regex:
+          - /wp-content/plugins/(.*?)/.*?\?ver=([\d\.]+)

@@ -43,6 +43,13 @@
       type: word
       words:
         - HG255s
+- name: HG255s
+  matchers:
+    - part: title
+      type: word
+      words:
+        - HG658d
+
 - name: HuaWei-IPC
   matchers:
     - part: title

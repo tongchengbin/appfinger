@@ -18,7 +18,7 @@
       regex:
         - bootstrap.min.js?ver=([\d\.]+)
       type: regex
-  name: bootstrap
+  name: Bootstrap
 - matchers:
     - part: body
       regex:

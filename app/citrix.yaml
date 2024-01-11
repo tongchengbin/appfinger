@@ -4,6 +4,12 @@
       type: word
       words:
         - "NetScaler AAA"
+- name: Citrix
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Citrix Login"
 
 - name: Citrix Gateway
   matchers:

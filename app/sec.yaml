@@ -121,9 +121,42 @@
       type: word
       words:
         - Sophos
+    - part: cert
+      type: word
+      words:
+        - "CN=Sophos_CA"
+- name: Sophos-Web-Appliance
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "-893681401"
+- name: Sophos-Cyberoam-Appliance
+  matchers:
+    - part: cert
+      type: word
+      words:
+        - "Cyberoam Appliance"
+        - "CN=Appliance_Certificate"
+- name: Sophos-Cyberoam-SSLVPN
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Cyberoam SSL VPN Portal"
+    - part: body
+      type: word
+      words:
+        - "sslvpnuserportalloginform"
 - name: JumpServer
   matchers:
     - part: title
       type: word
       words:
         - JumpServer
+- name: FortiDDoS
+  matchers:
+    - part: title
+      type: word
+      words:
+        - FortiDDoS

@@ -1,4 +1,4 @@
-- name: Amazon-EC2
+- name: AWS-EC2
   matchers:
     - part: headers.server
       type: word
@@ -40,4 +40,4 @@
       words:
         - AmazonS3
       type: word
-  name: Amazon-S3
+  name: AWS-S3

@@ -35,6 +35,12 @@
       type: word
       words:
         - "ZzzCMS"
+- name: zzcms
+  matchers:
+    - part: body
+      type: word
+      words:
+        - content="zzcms
 - name: 74cms
   matchers:
     - type: word
@@ -170,6 +176,12 @@
       type: word
       words:
         - "/atom/js/app.js"
+- name: AppCMS
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "Powerd by AppCMS"
 - name: mcms
   matchers:
     - part: body
@@ -458,10 +470,49 @@
       words:
         - dotcms
       type: word
-  name: Dot-CMS
+  name: dotCMS
+- name: YzmCMS
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "Powered By YzmCMS"
 - matchers:
     - part: title
       words:
         - "OpenERP"
       type: word
   name: OpenERP
+- matchers:
+    - part: body
+      words:
+        - content="Kentico CMS
+      type: word
+    - part: headers.Set-Cookie
+      type: word
+      words:
+        - CMSCurrentTheme
+        - CMSCsrfCookie
+        - CMSPreferredCulture
+        - cmscookielevel
+        - cmspreferredculture
+  name: Kentico-CMS
+- matchers:
+    - part: headers.Set-Cookie
+      type: word
+      words:
+        - cmssessid
+  name: CMS-Made-simple
+- matchers:
+    - part: headers.X-Typo3-Parsetime
+      words:
+        - 0ms
+      type: word
+  name: Typo3
+- name: openSIS
+  matchers:
+    - part: body
+      type: word
+      case-sensitive: true
+      words:
+        - "opensis"

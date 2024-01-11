@@ -55,34 +55,35 @@
   matchers:
     - part: title
       type: word
-      condition: and
       words:
         - "DIR-X1860Z"
 - name: DIR-X3060Z
   matchers:
     - part: title
       type: word
-      condition: and
       words:
         - "DIR-X3060Z"
 - name: DIR-825M
   matchers:
     - part: title
       type: word
-      condition: and
       words:
         - "DIR-825M"
 - name: DIR-300
   matchers:
     - part: title
       type: word
-      condition: and
       words:
         - "DIR-300"
 - name: DIR-100
   matchers:
     - part: title
       type: word
-      condition: and
       words:
         - "DIR-100"
+- name: DIR-615
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "DIR-615"

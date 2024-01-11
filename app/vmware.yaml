@@ -70,3 +70,21 @@
       type: word
       words:
         - "VMware Workspace ONE"
+- name: VMWware-Carbon-Black-EDR
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "VMWware Carbon Black EDR"
+- name: VMWware-Horizon-DaaS
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Horizon DaaS"
+- name: SaltStack-Config
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "SaltStack Config"
