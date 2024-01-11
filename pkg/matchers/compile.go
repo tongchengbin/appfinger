@@ -9,7 +9,6 @@ import (
 // CompileMatchers performs the initial setup operation on a matcher
 func (matcher *Matcher) CompileMatchers() error {
 	var ok bool
-
 	// Support hexadecimal encoding for matchers too.
 	if matcher.Encoding == "hex" {
 		for i, word := range matcher.Words {

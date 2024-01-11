@@ -16,7 +16,7 @@ func extractUri(n *html.Node) string {
 			parts := strings.Split(attr.Val, ";")
 			for _, part := range parts {
 				if strings.Contains(strings.ToLower(part), "url=") {
-					redirectURL := strings.TrimPrefix(strings.TrimSpace(strings.Split(part, "=")[1]), "/")
+					redirectURL := strings.TrimSpace(strings.SplitN(part, "=", 2)[1])
 					return redirectURL
 				}
 			}
@@ -35,7 +35,6 @@ func findRefresh(n *html.Node) string {
 					return uri
 
 				}
-				//return
 			}
 		}
 	}
@@ -125,6 +124,45 @@ func getExecRedirect(url string, jsCodes []string, onload string) string {
 	}
 	return result.String()
 }
+func findAttribute(attrs []html.Attribute, key string) string {
+	for _, attr := range attrs {
+		if attr.Key == key {
+			return attr.Val
+		}
+	}
+	return ""
+}
+func extractCharset(htmlContent string) string {
+	reader := strings.NewReader(htmlContent)
+	doc, err := html.Parse(reader)
+	if err != nil {
+		return "UTF-8"
+	}
+
+	var charset string
+	var traverse func(*html.Node)
+	traverse = func(n *html.Node) {
+		if n.Type == html.ElementNode && n.Data == "meta" {
+			for _, attr := range n.Attr {
+				if attr.Key == "http-equiv" && strings.EqualFold(attr.Val, "Content-Type") {
+					contentAttr := findAttribute(n.Attr, "content")
+					charsetIndex := strings.Index(contentAttr, "charset=")
+					if charsetIndex != -1 {
+						charset = contentAttr[charsetIndex+len("charset="):]
+						break
+					}
+				}
+			}
+		}
+
+		for c := n.FirstChild; c != nil; c = c.NextSibling {
+			traverse(c)
+		}
+	}
+	traverse(doc)
+	return strings.ToUpper(strings.TrimSpace(charset))
+}
+
 func parseJavaScript(url string, htmlContent string) string {
 	// 在这里解析JavaScript，提取跳转信息
 	//<meta http-equiv="Refresh"content="0;url=/yyoa/index.jsp">

@@ -5,12 +5,14 @@ import (
 	"github.com/projectdiscovery/gologger"
 	"github.com/projectdiscovery/gologger/levels"
 	"github.com/stretchr/testify/assert"
-	"gopkg.in/yaml.v3"
+	"golang.org/x/net/html/charset"
 	"io"
 	"log"
 	"net"
+	"net/http"
 	"os"
 	"regexp"
+	"strings"
 	"testing"
 	"time"
 )
@@ -44,23 +46,6 @@ Connection: close
 Content-Type: text/html; charset=UTF-8`}
 	appFinger.Match(banner)
 
-}
-
-func TestRule(t *testing.T) {
-	content := `- name: nginx
-  matchers-condition: or
-  matchers:
-  - type: word
-    name: Jupyter
-    words:
-      - <title>Jupyter Notebook</title>
-    part: body
-`
-	a := assert.New(t)
-	var rules []*Rule
-	err := yaml.Unmarshal([]byte(content), &rules)
-	a.Nil(err)
-	a.Equal(rules[0].Name, "nginx")
 }
 
 func TestAppFinger2(t *testing.T) {
@@ -228,4 +213,37 @@ func TestLocalFile(t *testing.T) {
 		log.Println("Error sending file content to client:", err)
 		return
 	}
+}
+
+func TestRegex2(t *testing.T) {
+	regex, _ := regexp.Compile(`/wp-content/plugins/([\w-]+)/(?:.*\?ver=([\d.]+))?`)
+	matched := regex.FindAllStringSubmatch(`<script type='text/javascript' src='https://care.cz/wp-content/plugins/salient-portfolio/js/third-party/imagesLoaded.min.js?ver=4.1.4' id='imagesLoaded-js'></script>
+<script type='text/javascript' src='https://care.cz/wp-content/plugins/interactive-geo-maps/assets/maps-service/assets/js/app.min.js?' id='interactive-geo-maps_map_service-js'></script>`, -1)
+	fmt.Printf("%v\n", matched)
+}
+
+func TestMurmurhash(t *testing.T) {
+	assert.Equal(t, int32(851989093), mmh3([]byte("foo")))
+}
+
+func TestCharset(t *testing.T) {
+	req, err := http.Get("http://1.180.157.154:8087/login.jsp")
+	if err != nil {
+		return
+	}
+	//println(req.TransferEncoding)
+	body, err := io.ReadAll(req.Body)
+	if err != nil {
+		return
+	}
+	r, err := charset.NewReaderLabel("gb2312", strings.NewReader(string(body)))
+	if err != nil {
+		return
+	}
+
+	decodedBody, err := io.ReadAll(r)
+	if err != nil {
+		return
+	}
+	println(string(decodedBody))
 }

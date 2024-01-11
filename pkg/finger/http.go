@@ -10,8 +10,8 @@ import (
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/projectdiscovery/gologger"
-	"github.com/spaolacci/murmur3"
 	"golang.org/x/net/html"
+	"golang.org/x/net/html/charset"
 	"golang.org/x/net/proxy"
 	"golang.org/x/text/encoding/charmap"
 	"golang.org/x/text/encoding/simplifiedchinese"
@@ -49,11 +49,11 @@ func getTitle(body []byte) string {
 	}
 }
 
-func ResponseDecoding(body []byte, charset string) string {
+func ResponseDecoding(body []byte, label string) string {
 	// 根据编码 对响应结果进行解码
 	var str string
-	charset = strings.Trim(strings.Trim(strings.ToUpper(charset), "\""), ";")
-	switch charset {
+	label = strings.Trim(strings.Trim(strings.ToUpper(label), "\""), ";")
+	switch label {
 	case "UTF-8":
 		str = string(body)
 	case "UTF8":
@@ -81,12 +81,12 @@ func ResponseDecoding(body []byte, charset string) string {
 		}
 		str = string(decodedBody)
 	case "GB2312":
-		decoder := simplifiedchinese.HZGB2312.NewDecoder()
-		decodedBody, _, err := transform.Bytes(decoder, body)
+		r, err := charset.NewReaderLabel("gb2312", strings.NewReader(string(body)))
 		if err != nil {
 			return ""
 		}
-		str = string(decodedBody)
+		data, _ := io.ReadAll(r)
+		str = string(data)
 	case "US-ASCII":
 		str = string(body)
 	default:
@@ -141,26 +141,6 @@ func parseIconFile(body string) string {
 }
 func isAbsoluteURL(url string) bool {
 	return !(strings.HasPrefix(url, "http://") || strings.HasPrefix(url, "https://"))
-}
-func InsertInto(s string, interval int, sep rune) string {
-	var buffer bytes.Buffer
-	before := interval - 1
-	last := len(s) - 1
-	for i, char := range s {
-		buffer.WriteRune(char)
-		if i%interval == before && i != last {
-			buffer.WriteRune(sep)
-		}
-	}
-	buffer.WriteRune(sep)
-	return buffer.String()
-}
-func murmurhash(data []byte) int32 {
-	stdBase64 := base64.StdEncoding.EncodeToString(data)
-	stdBase64 = InsertInto(stdBase64, 76, '\n')
-	hasher := murmur3.New32WithSeed(0)
-	hasher.Write([]byte(stdBase64))
-	return int32(hasher.Sum32())
 }
 
 func isConnectionResetError(err error) bool {
@@ -248,13 +228,21 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 		nextURI = resp.Request.URL.String()
 		//rawResp.
 		_ = resp.Write(&rawResp)
+		content := rawResp.Bytes()
 		var charset = "UTF-8"
 		contentType := resp.Header.Get("Content-Type")
 		if strings.Contains(contentType, "charset=") {
 			charsetIndex := strings.Index(contentType, "charset=")
 			charset = strings.Trim(contentType[charsetIndex+len("charset="):], " ")
+		} else {
+			tagCharset := extractCharset(string(content))
+			if tagCharset != "" {
+				charset = tagCharset
+			}
+
 		}
-		RawData := ResponseDecoding(rawResp.Bytes(), charset)
+		println(charset)
+		RawData := ResponseDecoding(content, charset)
 		separator := []byte("\r\n\r\n")
 		gologger.Debug().Msg("Dump HTTP Response For " + nextURI + "\r\n" + RawData)
 		index := strings.Index(RawData, "\r\n\r\n")
@@ -267,7 +255,7 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 		bodyBytes := RawData[index+len(separator):]
 		banner := &Banner{
 			Body:       RawData,
-			BodyHash:   murmurhash([]byte(RawData)),
+			BodyHash:   mmh3([]byte(RawData)),
 			Header:     headerBytes,
 			StatusCode: resp.StatusCode,
 			Response:   RawData,
@@ -280,8 +268,8 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 		if resp.TLS != nil {
 			cert := resp.TLS.PeerCertificates[0]
 			banner.Certificate = parseCertificateInfo(cert)
+			gologger.Debug().Msg("Dump Cert For " + nextURI + "\r\n" + banner.Certificate)
 		}
-		println(banner.Title)
 		banners = append(banners, banner)
 		// 解析JavaScript跳转
 		jsRedirectUri := parseJavaScript(nextURI, bodyBytes)
@@ -329,7 +317,7 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 				return banners, err
 			}
 		}
-		iconHash := murmurhash(body)
+		iconHash := mmh3(body)
 		for _, banner := range banners {
 			banner.IconHash = iconHash
 		}

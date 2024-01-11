@@ -20,9 +20,11 @@ type Options struct {
 }
 
 type Rule struct {
-	Name              string              `json:"name,omitempty"`
-	MatchersCondition string              `yaml:"matchers-condition" json:"matchers_condition,omitempty"`
-	Matchers          []*matchers.Matcher `json:"matchers,omitempty"`
+	Name              string `json:"name,omitempty"`
+	MatchersCondition string `yaml:"matchers-condition" json:"matchers_condition,omitempty"`
+	// 组件太多  采用层级匹配 优化匹配速度
+	Require  []string            `json:"require,omitempty"`
+	Matchers []*matchers.Matcher `json:"matchers,omitempty"`
 }
 
 type Banner struct {
@@ -174,9 +176,21 @@ func getMatchPart(part string, banner *Banner) string {
 	return ""
 }
 
+func isRequire(requires []string, results map[string]map[string]string) bool {
+	for _, require := range requires {
+		if _, ok := results[require]; ok {
+			return true
+		}
+	}
+	return false
+}
+
 func (f *AppFinger) Match(banner *Banner) map[string]map[string]string {
 	result := make(map[string]map[string]string)
 	for _, rule := range f.Rules {
+		if len(rule.Require) > 0 && !isRequire(rule.Require, result) {
+			continue
+		}
 		ok, extract := rule.Match(banner)
 		if ok {
 			if result[rule.Name] == nil {
@@ -186,7 +200,6 @@ func (f *AppFinger) Match(banner *Banner) map[string]map[string]string {
 					result[rule.Name][k] = v
 				}
 			}
-
 		}
 	}
 	return result
@@ -220,5 +233,9 @@ func (f *AppFinger) MatchURI(uri string) (*Banner, map[string]map[string]string)
 	if _, ok := fingerprints["honeypot"]; ok {
 		return banners[len(banners)-1], map[string]map[string]string{"honeypot": make(map[string]string)}
 	}
+	if _, ok := fingerprints["Wordpress"]; ok {
+		fingerprints = mergeMaps(fingerprints, MatchWpPlugin(banners[len(banners)-1]))
+	}
+
 	return banners[len(banners)-1], fingerprints
 }
