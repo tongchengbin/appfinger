@@ -54,3 +54,15 @@
       type: word
       words:
         - "ZyXEL KEENETIC LITE"
+- name: Zywall2Plus
+  matchers:
+    - part: title
+      type: word
+      words:
+          - "Zywall2Plus"
+- name: VMG1312-B10D
+  matchers:
+    - part: title
+      type: word
+      words:
+          - "VMG1312-B10D"

@@ -141,11 +141,10 @@
       part: body
       words:
         - "dotnetcms"
-- name: fine_cms
+- name: fineCMS
   matchers:
     - type: word
       part: body
-      name: "FineCMS"
       words:
         - "powered by finecms"
         - "dayrui@gmail.com"
@@ -154,13 +153,11 @@
       condition: and
     - type: word
       part: body
-      name: "FineCMS"
       words:
         - "Powered by FineCMS"
       condition: and
     - type: word
       part: body
-      name: "FineCMS"
       words:
         - "Copyright\" content=\"FineCMS"
       condition: and
@@ -516,3 +513,205 @@
       case-sensitive: true
       words:
         - "opensis"
+- name: GHost
+  matchers:
+    - part: body
+      type: word
+      words:
+          - 'content="@ghost'
+- matchers:
+    - part: headers.set-cookie
+      type: word
+      words:
+        - CONCRETE5
+  name: Concrete5
+- matchers:
+    - part: title
+      type: word
+      words:
+        - Concrete CMS
+  name: Concrete-CMS
+- name: Monstra-CMS
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "419828698"
+- name: Phuket-CMS
+  matchers:
+    - part: body
+      type: word
+      words:
+          - "Andaman Leisure Phuket"
+-  name: FindCMS
+   matchers:
+     - type: word
+       part: body
+       words:
+         - copyright" content="finecms
+- name: Eleanor-CMS
+  matchers:
+    - part: body
+      type: word
+      words:
+          - "eleanor"
+- name: MaxSite-CMS
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'content="MaxSite CMS'
+
+- name: GetSimple-CMS
+  matchers:
+    - part: body
+      type: word
+      words:
+          - 'Platform: PHP / GetSimple CMS'
+
+- name: MyuCMS
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'MyuCMS'
+        - 'MYUCMS'
+- name: U5CMS
+  matchers:
+    - part: body
+      type: word
+      words:
+          - 'u5CMS</a>'
+- name: EYouCMS
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'Powered by EyouCms'
+- name: DevalCMS
+  matchers:
+    - part: body
+      type: word
+      words:
+          - '-642345745'
+- name: webEdition-CMS
+  matchers:
+    - part: body
+      type: word
+      words:
+          - 'webEdition CMS'
+- name: OECMS
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'OECMS'
+- name: SuperSign-CMS
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'SuperSign'
+- name: Grav-CMS
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'Grav CMS'
+- name: High-CMS
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'HighMail'
+- name: Mara-CMS
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'Powered by Mara cms'
+- name: Mara-CMS
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'Powered by Mara cms'
+
+- name: Backdrop-CMS
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'content="Backdrop CMS'
+- name: FeiFei-CMS
+  matchers:
+    - part: body
+      type: word
+      words:
+          - '#navbar-feifeicms'
+- name: PCFinal-CMS
+  matchers:
+    - part: body
+      type: word
+      words:
+          - '凡诺'
+- name: ExponentCMS
+  matchers:
+    - part: body
+      type: word
+      words:
+        - '/exponentcms/'
+- name: Navigate-CMS
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'Navigate CMS'
+- name: Shirne-CMS
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - '-2054141914'
+- name: RPCMS
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'RPCMS'
+- name: GDIDEES-CMS
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'content="GDIDEES :'
+- name: wow-CMS
+  matchers:
+    - part: title
+      type: word
+      words:
+          - 'WoW-CMS'
+- name: 迅优cms
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'cnxunchi'
+- name: dzzoffice
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'static/dzzicon/icon.css'
+- name: Ametys
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'Ametys CMS Open source'
+- name: ChurchCRM
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'ChurchCRM'

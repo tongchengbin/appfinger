@@ -307,19 +307,6 @@
         - gunicorn(?:/([\d.]+))?
       type: regex
   name: gunicorn
-- matchers:
-    - group: 1
-      name: version
-      part: headers.server
-      regex:
-        - 'glassfish(?: server)?(?: open source edition)?(?: ?/?([\d.]+))?'
-        - 'Oracle GlassFish Server ([0-9.]+)'
-      type: regex
-    - part: headers.server
-      words:
-        - 'Oracle GlassFish Server'
-      type: word
-  name: glassfish
 - name: Amazon-S3
   matchers:
     - part: headers.server
@@ -643,7 +630,7 @@
 - matchers:
     - part: headers.x-powered-by
       words:
-        - Express
+        - "Express"
       type: word
   name: Express
 - matchers:
@@ -703,3 +690,22 @@
       words:
         - Welcome to Abyss Web Server
   name: Abyss-Web-Server
+- name: Labkey-Server
+  matchers:
+    - part: headers.server
+      type: word
+      words:
+          - "Labkey"
+- name: Pacsone-Server
+  matchers:
+    - part: body
+      type: word
+      words:
+        - <SMALL>PacsOne Server ([\d\.]+)</SMALL>
+- name: CirCarLife-Scada
+  matchers:
+    - part: headers.server
+      type: regex
+      name: version
+      regex:
+        - CirCarLife Scada (v[\d\.]+)

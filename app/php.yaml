@@ -33,3 +33,9 @@
       words:
         - laravel_session
   name: Laravel
+- name: OURPHP
+  matchers:
+    - part: body
+      type: word
+      words:
+        - content="OURPHP"

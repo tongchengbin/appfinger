@@ -1,4 +1,11 @@
-- name: yonyou_nc
+- name: Yonyou-NC
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "logo/images/ufida_nc.png"
+        - "用友NC"
+- name: Yonyou-NC
   matchers:
     - part: body
       type: word
@@ -11,13 +18,13 @@
       type: word
       words:
         - U8智能客户端
-- name: yonyou_fe
+- name: Yonyou-FE
   matchers:
     - part: body
       type: word
       words:
         - "用友 FE协同办公平台"
-- name: yonyou_ufida_nc
+- name: UFida-NC
   matchers:
     - part: body
       type: word

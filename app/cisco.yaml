@@ -4,6 +4,10 @@
       type: word
       words:
         - "Cisco Systems"
+    - part: cert
+      type: word
+      words:
+       - "Cisco Systems"
 - name: RV042
   matchers:
     - part: cert
@@ -89,3 +93,52 @@
       type: word
       words:
         - Cisco SPA
+- name: RV132W
+  matchers:
+    - part: body
+      type: word
+      words:
+          - RV132W Wireless-N VPN Firewall
+- name: RV132W
+  matchers:
+    - part: body
+      type: word
+      words:
+        - RV134W Wireless-AC VPN Firewall
+- name: RV110W
+  matchers:
+    - part: body
+      type: word
+      words:
+        - RV110W
+- name: RV130W
+  matchers:
+    - part: body
+      type: word
+      words:
+        - RV130W
+- name: RV215W
+  matchers:
+    - part: body
+      type: word
+      words:
+        - RV215W
+- name: RV340
+  matchers:
+    - part: body
+      type: word
+      words:
+        - Cisco rv340
+
+- name: RV134W
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "RV134W Wireless-AC VPN Firewall"
+- name: RV320
+  matchers:
+    - part: cert
+      type: word
+      words:
+        - "OU=RV320"

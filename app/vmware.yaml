@@ -88,3 +88,27 @@
       type: word
       words:
         - "SaltStack Config"
+- name: VMWware-Cloud-Redirect
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "VMware Cloud Director"
+- name: VMWware-vCloud-Director
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "VMware vCloud Director"
+- name: VMWware-FTP-Server
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "VMWARE FTP SERVER"
+- name: VMWware-Horizon-DaaS
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Horizon DaaS"

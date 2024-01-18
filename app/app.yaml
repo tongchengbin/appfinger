@@ -1914,6 +1914,7 @@
       type: word
       words:
         - "ShareFile Login"
+        - "ShareFile Storage Server"
 - name: SpeedTest-Tracker
   matchers:
     - part: title
@@ -2146,3 +2147,174 @@
       type: word
       words:
         - "yeswiki-base.css"
+- name: uvdesk
+  matchers:
+    - part: title
+      type: word
+      case-insensitive: true
+      words:
+        - "UVDesk Helpdesk Community Edition - Installation Wizard"
+- name: oscommerce
+  matchers:
+    - part: headers.ser-cookie
+      type: word
+      case-insensitive: true
+      words:
+          - "osCsid="
+- name: Everything
+  matchers:
+    - type: word
+      part: icon_hash
+      words:
+        - "-977323269"
+- name: eShop
+  matchers:
+    - type: word
+      part: body
+      words:
+        - "eShop Installer"
+- name: akamai
+  matchers:
+    - type: word
+      part: headers.pragma
+      words:
+          - "akamai-x-cache-on"
+          - "akamai-x-cache-remote"
+- name: Cobub-Razor
+  matchers:
+    - type: word
+      part: title
+      words:
+          - "Cobub Razor"
+- name: SearchBlox
+  matchers:
+    - type: word
+      part: title
+      words:
+          - "Search Results"
+- name: Easy-Appointments
+  matchers:
+    - type: word
+      part: body
+      words:
+          - "Easy!Appointments"
+- name: Opcache
+  matchers:
+    - type: word
+      part: title
+      words:
+        - "Opcache Control Panel"
+- name: Server-Monitor
+  matchers:
+    - type: word
+      part: title
+      words:
+        - "SERVER MONITOR"
+- name: Purchase-Order-System
+  matchers:
+    - type: word
+      part: body
+      words:
+        - "/purchase-order-system/"
+- name: GraphQL
+  matchers:
+    - type: word
+      part: icon_hash
+      words:
+        - "-1067420240"
+- name: Reprise-License-Manager
+  matchers:
+    - type: word
+      part: title
+      words:
+          - "Reprise License"
+- name: DomainMOD
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "DomainMOD"
+- name: PMB
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "1469328760"
+- name: mooDating
+  matchers:
+    - part: word
+      type: word
+      words:
+        - content="mooDating
+- name: HiBoss
+  matchers:
+    - part: title
+      type: word
+      words:
+          - "酒店宽带运营系统"
+- name: AtMail
+  matchers:
+    - part: headers.set-cookie
+      type: word
+      words:
+          - "atmail"
+- name: OpsView
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'target="opsview-help"'
+- name: ntopng
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'ntopng'
+- name: Chyrp
+  matchers:
+    - part: headers.set-cookie
+      type: word
+      words:
+        - 'ChyrpSession'
+- name: Harbor
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'Harbor'
+- name: Grav
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'Grav Register Admin User'
+- name: FUDforum
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'Powered by: FUDforum'
+- name: Discourse
+  matchers:
+    - part: body
+      type: word
+      words:
+          - 'content="Discourse'
+- name: Lucee
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Rapid web development with Lucee!"
+- name: Vehicle-Service-Management-System
+  matchers:
+    - part: title
+      type: word
+      words:
+          - "Vehicle Management System"
+- name: CandidATS
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "CandidATS"

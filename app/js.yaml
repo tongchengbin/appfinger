@@ -49,3 +49,11 @@
         - ext-base.js
       type: word
   name: ext.js
+
+- matchers:
+    - part: body
+      name: version
+      regex:
+        - ng-version="([\d\.]+)"
+      type: regex
+  name: Angularjs

@@ -87,3 +87,53 @@
       type: word
       words:
         - "DIR-615"
+- name: DIR-850L
+  matchers:
+    - part: headers.server
+      type: word
+      words:
+        - "DIR-850L"
+- name: DIR-816L
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "DIR-816L</div>"
+
+- name: DIR-600M
+  matchers:
+    - part: headers.Www-Authenticate
+      type: word
+      words:
+        - DIR-600M
+- name: DIR-610
+  matchers:
+    - type: word
+      part: headers.server
+      words:
+        - "DIR-610"
+- name: DIR-860L
+  matchers:
+    - type: word
+      part: body
+      words:
+        - ": DIR-860L"
+
+- name: DIR-866L
+  matchers:
+    - type: word
+      part: body
+      words:
+        - '<a href="http://support.dlink.com.tw/">DIR-866L</a>'
+- name: DIR-652
+  matchers:
+    - type: word
+      part: body
+      words:
+        - '<a href="http://support.dlink.com.tw/">DIR-652</a>'
+- name: DHP-1565
+  matchers:
+    - type: word
+      part: body
+      words:
+        - '<a href="http://support.dlink.com.tw/">DHP-1565</a>'

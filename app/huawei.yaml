@@ -43,7 +43,7 @@
       type: word
       words:
         - HG255s
-- name: HG255s
+- name: HG658d
   matchers:
     - part: title
       type: word

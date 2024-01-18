@@ -357,3 +357,15 @@
       type: word
       words:
         - "hwl-2511-ss"
+- name: SMS-Gateway
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "SMS Gateway"
+- name: TEW-827DRU
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "TEW-827DRU"

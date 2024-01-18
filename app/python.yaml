@@ -43,3 +43,21 @@
       words:
         - Odoo
   name: Odoo
+- name: flower
+  matchers:
+    - type: word
+      part: icon_hash
+      words:
+        - "-374133142"
+- name: PySpider
+  matchers:
+    - type: word
+      part: title
+      words:
+          - Dashboard - pyspider
+- name: Tautulli
+  matchers:
+    - type: word
+      part: title
+      words:
+        - Tautulli

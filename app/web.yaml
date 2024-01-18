@@ -5176,68 +5176,6 @@
     type: regex
   name: concrete5
 - matchers:
-  - name: status:401
-    part: body
-    type: word
-    words:
-    - '<table border="1" cellpadding="0" cellspacing="0" scrolling="no" style="border-collapse:
-      collapse"bordercolor="#FFFFFF" width="80%">'
-  - name: model:Flexor 151
-    part: body
-    type: word
-    words:
-    - <title>Flexor 151 Home</title>
-  - name: model:Flexor 151
-    part: body
-    type: word
-    words:
-    - <td><b>Flexor 151</b> is connected and working properly, for more information
-  - name: model:Flexor 151
-    part: body
-    type: word
-    words:
-    - 'Advanced configuration: <a style="font-size: 90%" href="voice.html">Voice Settings</a>&nbsp;&nbsp;&nbsp;<a
-      style="font-size: 90%" href="network.html">Network Settings</a>&nbsp;&nbsp;&nbsp;<a
-      style="font-size: 90%" href="qos.html">QoS Settings</a>'
-  - name: model:Flexor 151
-    part: body
-    type: word
-    words:
-    - <h2><a class="lg" href="status.html">Flexor 151</a></h2>
-  - name: model:e-con TDL-3424M
-    part: body
-    type: word
-    words:
-    - <tr valign="middle"><td class="tmainhead"><img src="/webconfig/images/blank.gif"
-      width="49" height="10" alt="" hspace="0" vspace="0" align="top" id="logospacer">e-con
-      TDL-3424M Ethernet Router</td></tr>
-  - name: model:Allied Telesyn-iMG634WA
-    part: body
-    type: word
-    words:
-    - <TITLE>AT-iMG634WA</TITLE>
-  - name: model:Allied Telesyn-iMG606BD
-    part: body
-    type: word
-    words:
-    - <TITLE>AT-iMG606BD</TITLE>
-  - name: model:Allied Telesyn-iMG646BD
-    part: body
-    type: word
-    words:
-    - <TITLE>AT-iMG646BD</TITLE>
-  - name: version
-    part: headers.server
-    regex:
-    - (Conexant-EmWeb\/([^\r^\n]+))
-    type: regex
-  - name: version
-    part: headers.server
-    regex:
-    - (Virata-EmWeb\/([^\r^\n]+))
-    type: regex
-  name: conexant_emweb
-- matchers:
   - part: body
     type: word
     words:
@@ -7675,48 +7613,6 @@
     - (Powered by <a href="finger:\/\/compmaster.prv.pl">F3Site v([\d\.]+) plus<\/a>)
     type: regex
   name: f3site
-- matchers:
-  - name: BIGIP cookie
-    part: headers.set-cookie
-    regex:
-    - (BIGIP)
-    type: regex
-  - name: CEBrowser cookie
-    part: headers.set-cookie
-    regex:
-    - (CEBrowser)
-    type: regex
-  - name: ceSessionUID cookie
-    part: headers.set-cookie
-    regex:
-    - (ceSessionUID)
-    type: regex
-  - name: LoadingAsMobile cookie
-    part: headers.set-cookie
-    regex:
-    - (LoadingAsMobile)
-    type: regex
-  - name: _SitePath cookie
-    part: headers.set-cookie
-    regex:
-    - (_SitePath)
-    type: regex
-  - part: headers.server
-    regex:
-    - ^big-?ip$
-    type: regex
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - f5_fullwt
-    - f5_ht_shrinked
-    - f5_st
-    - lastmrh_session
-    - mrhsequence
-    - mrhsession
-    - mrhshint
-    - tin
-  name: f5_bigip
 - matchers:
   - group: 1
     part: body
@@ -24675,12 +24571,6 @@
   name: jekyll
 
 - matchers:
-  - part: body
-    regex:
-    - <(?:div|html)[^>]+ng-app=
-    type: regex
-  name: angularjs
-- matchers:
   - part: headers.server
     regex:
     - win32|win64
@@ -25373,12 +25263,6 @@
     - flowproxy-origin
   name: combahton_flowshield
 
-- matchers:
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - concrete5
-  name: concrete_cms
 - matchers:
   - part: headers.Set-Cookie
     type: word

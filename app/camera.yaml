@@ -28,6 +28,17 @@
       words:
         - "::: Login :::"
   name: avtech
+- name: Avtech-Network-Camera
+  matchers-condition: and
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "www.avtech.com"
+    - part: title
+      type: word
+      words:
+        - "Login"
 
 - name: Panasonic-Network-Camera
   matchers:
@@ -315,3 +326,13 @@
       case-insensitive: true
       words:
         - "avideo"
+- name: NUUO-NVR
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Network Video Recorder Login"
+    - part: body
+      type: word
+      words:
+        - "NVRsolo"

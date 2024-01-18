@@ -29,3 +29,10 @@
       condition: and
       words:
         - "Vaswani NAS"
+
+- name: Wisegiga-NAS
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+          - "175710103"

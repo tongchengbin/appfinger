@@ -147,3 +147,34 @@
       type: word
       words:
         - "Oracle business intelligence"
+- name: Oracle WebCenter
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Oracle WebCenter"
+- name: RV134W
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "RV134W Wireless-AC VPN Firewall"
+- name: RV320
+  matchers:
+    - part: cert
+      type: word
+      words:
+        - "OU=RV320"
+- matchers:
+    - group: 1
+      name: version
+      part: headers.server
+      regex:
+        - 'glassfish(?: server)?(?: open source edition)?(?: ?/?([\d.]+))?'
+        - 'Oracle GlassFish Server ([0-9.]+)'
+      type: regex
+    - part: headers.server
+      words:
+        - 'Oracle GlassFish Server'
+      type: word
+  name: Oracle-GlassFish-Server

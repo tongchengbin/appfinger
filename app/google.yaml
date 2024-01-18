@@ -17,3 +17,9 @@
       type: word
       words:
         - GEE Server
+- name: Google-Cloud
+  matchers:
+    - part: headers.server
+      type: word
+      words:
+        - Google Cloud
