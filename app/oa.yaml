@@ -32,6 +32,12 @@
       type: word
       words:
         - /general/login/view//images/updateload.gif
+- name: E-Weaver
+  matchers:
+    - part: body
+      type: word
+      words:
+        - /weaver/weaver.file.MakeValidateCode
 
 - name: e-bridge
   matchers:

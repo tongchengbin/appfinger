@@ -87,3 +87,13 @@
       type: word
       words:
         - Apache Miracle Linux Web Server
+- name: Apache-Hadoop-YARN
+  matchers:
+    - part: title
+      type: word
+      words:
+          - All Applications
+    - part: body
+      type: word
+      words:
+        - "parseHadoopProgress "

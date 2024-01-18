@@ -35,10 +35,13 @@
       type:  word
       words:
         - NETGEAR Router
-
 - name: ToToLink
   matchers-condition: and
   matchers:
+    - part: title
+      type: word
+      words:
+        - "Totolink"
     - part: body
       condition: and
       words:
@@ -369,3 +372,9 @@
       type: word
       words:
         - "TEW-827DRU"
+- name: SG-204-MR
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "<strong>SG </strong>2404 MR"

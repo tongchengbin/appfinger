@@ -160,3 +160,9 @@
       type: word
       words:
         - FortiDDoS
+- name: KingSoft-v8
+  matchers:
+    - part: title
+      type: word
+      words:
+        - V8+终端安全系统

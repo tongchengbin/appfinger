@@ -16,3 +16,9 @@
       words:
         - Welcome to Adobe Experience Manager
   name: Adobe-Experience-Manager
+- name: Adobe-Media-Server
+  matchers:
+    - part: title
+      type: word
+      words:
+          - Adobe Media Server
