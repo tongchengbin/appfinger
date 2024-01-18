@@ -1,7 +1,6 @@
 package finger
 
 import (
-	"fmt"
 	"regexp"
 )
 
@@ -12,7 +11,6 @@ func MatchWpPlugin(banner *Banner) map[string]map[string]string {
 	matchedPaths := pluginReg.FindAllStringSubmatch(banner.Body, -1)
 	pluginInfo := make(map[string]map[string]string)
 	for _, matches := range matchedPaths {
-		fmt.Printf("%v\n", matches)
 		if len(matches) > 1 {
 			pluginInfo[matches[1]] = map[string]string{}
 			if len(matches) > 2 {
@@ -21,6 +19,5 @@ func MatchWpPlugin(banner *Banner) map[string]map[string]string {
 			}
 		}
 	}
-	fmt.Printf("%v", pluginInfo)
 	return pluginInfo
 }
