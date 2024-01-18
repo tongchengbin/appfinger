@@ -229,20 +229,19 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 		//rawResp.
 		_ = resp.Write(&rawResp)
 		content := rawResp.Bytes()
-		var charset = "UTF-8"
+		var charSet = "UTF-8"
 		contentType := resp.Header.Get("Content-Type")
 		if strings.Contains(contentType, "charset=") {
 			charsetIndex := strings.Index(contentType, "charset=")
-			charset = strings.Trim(contentType[charsetIndex+len("charset="):], " ")
+			charSet = strings.Trim(contentType[charsetIndex+len("charset="):], " ")
 		} else {
 			tagCharset := extractCharset(string(content))
 			if tagCharset != "" {
-				charset = tagCharset
+				charSet = tagCharset
 			}
 
 		}
-		println(charset)
-		RawData := ResponseDecoding(content, charset)
+		RawData := ResponseDecoding(content, charSet)
 		separator := []byte("\r\n\r\n")
 		gologger.Debug().Msg("Dump HTTP Response For " + nextURI + "\r\n" + RawData)
 		index := strings.Index(RawData, "\r\n\r\n")
