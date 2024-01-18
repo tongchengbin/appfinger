@@ -12,28 +12,6 @@
       type: regex
   matchers-condition: or
   name: Nginx
-- matchers:
-    - name: version
-      part: headers.server
-      case-insensitive: true
-      regex:
-        - apache(?:/([\d\.]+))?
-      type: regex
-    - name: os
-      part: headers.server
-      regex:
-        - Apache\/[0-9.]+ \(([^\)]+)\)
-      type: regex
-    - part: title
-      type: word
-      words:
-        - "Welcome to nginx!"
-    - part: title
-      type: regex
-      name: os
-      regex:
-        - "Apache2 (Ubuntu|Debian) Default Page"
-  name: Apache-HTTP-Server
 - name: mxhttpd
   matchers:
     - part: headers.server
