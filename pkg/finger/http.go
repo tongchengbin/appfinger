@@ -89,6 +89,13 @@ func ResponseDecoding(body []byte, label string) string {
 		str = string(data)
 	case "US-ASCII":
 		str = string(body)
+	case "BIG5":
+		r, err := charset.NewReaderLabel("big5", strings.NewReader(string(body)))
+		if err != nil {
+			return ""
+		}
+		data, _ := io.ReadAll(r)
+		str = string(data)
 	default:
 		str = string(body)
 	}
