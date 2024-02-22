@@ -66,3 +66,33 @@
       type: word
       words:
           - "VMG1312-B10D"
+- name: VPN50
+  matchers:
+    - part: title
+      type: word
+      words:
+          - "VPN50"
+- name: VPN50
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "VPN50"
+- name: VPN100
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "VPN100"
+- name: VPN300
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "VPN300"
+- name: VPN1000
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "VPN1000"
