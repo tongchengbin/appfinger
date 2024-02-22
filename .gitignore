@@ -5,3 +5,4 @@ dist/
 output.json
 productrelation.txt
 cmd/sample
+Makefile
