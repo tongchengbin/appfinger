@@ -1,0 +1,12 @@
+- name: SXSKZY-ERP
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+          - "-1700598274"
+- name: 明源云ERP
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "明源地产研究院"

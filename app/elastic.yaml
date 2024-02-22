@@ -4,3 +4,11 @@
       type: word
       words:
         - "You Know, for Search"
+- name: Kibana
+  matchers:
+    - part: header
+      type: word
+      case-insensitive: true
+      words:
+        - "kbn-name"
+        - "kibana"

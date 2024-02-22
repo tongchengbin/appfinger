@@ -1,3 +1,9 @@
+- name: Huawei-VPN
+  matchers:
+    - part: headers.server
+      type: word
+      words:
+          - "Huawei Auth-Http Server"
 - name: HG532e
   matchers:
     - part: title

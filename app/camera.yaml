@@ -190,14 +190,14 @@
 # https://zdiiin.com.tw/
 - name: ZD-HVR
   matchers:
-    - path: body
+    - part: body
       type: word
       words:
         - "doc/page/login.html"
 
 - name: Canon Camera
   matchers:
-    - path: body
+    - part: body
       type: word
       condition: and
       words:
@@ -213,7 +213,7 @@
         - Network Camera VB-C60
 - name: ACTi Camera
   matchers:
-    - path: body
+    - part: body
       type: word
       condition: and
       words:
@@ -243,13 +243,6 @@
       type: word
       words:
         - VidyoRouter Configuration
-- name: AXIS-Network-Camera
-  matchers:
-    - part: title
-      type: regex
-      name: mode
-      regex:
-        - AXIS ([\d\w-]+) Network Camera
 - name: iPOLiS-Network-Camera
   matchers:
     - part: title
@@ -336,3 +329,13 @@
       type: word
       words:
         - "NVRsolo"
+- matchers:
+    - part: headers.www_authenticate
+      type: word
+      words:
+        - AXIS
+    - part: title
+      type: word
+      words:
+        - AXIS
+  name: Axis-Network-Camera

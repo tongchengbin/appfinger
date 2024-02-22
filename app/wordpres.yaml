@@ -138,11 +138,3 @@
       type: word
       words:
         - /wp-content/plugins/coming-soon/
-#  特殊处理
-- name: WP-Plugin
-  matchers:
-    - part: body
-      type: regex
-      name: $0
-      regex:
-          - /wp-content/plugins/(.*?)/.*?\?ver=([\d\.]+)

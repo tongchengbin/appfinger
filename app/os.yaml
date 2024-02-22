@@ -9,7 +9,7 @@
         - Linux\/([\d\.\w-]+)
     - part: headers.server
       type: word
-      regex:
+      words:
         - linux
 - matchers:
     - part: headers.server

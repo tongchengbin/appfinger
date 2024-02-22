@@ -58,12 +58,21 @@
       words:
         - "isHighPerformance : !!SFIsHighPerformance,"
 
+- name: 奇安信天擎
+  matchers:
+    - part: title
+      type: word
+      words:
+          - "奇安信天擎"
+
 - name: 360新天擎
   matchers:
     - part: title
       type: word
       words:
         - "360新天擎"
+        - "360天擎"
+        - "360天擎终端安全管理系统"
 - name: TopSec Reporter
   matchers:
     - part: body

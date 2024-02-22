@@ -4,3 +4,15 @@
       type: word
       words:
         - "/him/api/rest/v1.0/node/role"
+- name: 亿赛通电子文档安全管理系统
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "电子文档安全管理系统"
+- name: 华测监测预警系统
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "-628229493"

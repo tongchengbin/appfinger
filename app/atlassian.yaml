@@ -1,0 +1,59 @@
+- name: Atlassian
+  matchers:
+    - part: headers.set-cookie
+      type: word
+      words:
+        - atlassian.xsrf.token
+- matchers:
+    - part: body
+      type: word
+      words:
+        - com.atlassian.jira
+  name: Jira
+- matchers:
+    - part: body
+      type: word
+      words:
+        - com.atlassian.confluence
+        - Printed by Atlassian Confluence
+    - part: title
+      type: word
+      words:
+        - Confluence
+  name: Confluence
+- matchers:
+    - part: body
+      type: word
+      words:
+        - com.atlassian.crowd
+  name: Crowd
+- matchers:
+    - part: headers.Set-Cookie
+      type: word
+      words:
+        - FESESSIONID
+  name: FishEye
+- matchers:
+    - part: title
+      type: word
+      words:
+        - Crucible
+  name: Crucible
+- matchers:
+    - part: body
+      type: word
+      words:
+        - com.atlassian.bamboo
+  name: Bamboo
+- name: bitbucket
+  matchers:
+    - type: word
+      part: body
+      words:
+        - com.atlassian.bitbucket
+- name: Atlassian-Edge
+  matchers:
+    - type: word
+      part: headers.server
+      words:
+        - AtlassianEdge

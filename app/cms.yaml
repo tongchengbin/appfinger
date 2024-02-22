@@ -61,7 +61,7 @@
 - name: AeroCMS
   matchers:
     - part: body
-      type: word
+      type: regex
       regex:
         - 'content="(.*)AeroCMS(.*)'
     - part: title
@@ -715,3 +715,738 @@
       type: word
       words:
         - 'ChurchCRM'
+
+- name: XOOPS-CMS
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'content="XOOPS'
+- matchers:
+    - part: body
+      words:
+        - content="Bart Verstricht"
+      type: word
+  name: Barts-CMS
+- matchers:
+    - part: body
+      name: version
+      regex:
+        - 'BLOX CMS version: ([\d.]+)'
+      type: regex
+  name: BLOX-CMS
+- matchers:
+    - name: version
+      part: body
+      regex:
+        - <meta name="generator" content="BrowserCMS ([^\"]+)"
+      type: regex
+  name: BrowserCMS
+- matchers:
+    - part: headers.set-cookie
+      type: word
+      words:
+        - "chillyCMS"
+  name: chillyCMS
+- matchers:
+    - part: body
+      type: word
+      words:
+        - This website is powered by CitusCMS
+  name: CitusCMS
+- matchers:
+    - part: headers.set-cookie
+      words:
+        - cm3session
+      type: word
+  name: CM3-CMS
+- matchers:
+    - part: body
+      words:
+        - content="CMSimple
+      type: word
+  name: CMSimple
+- matchers:
+    - part: title
+      type: word
+      words:
+        - Constructr
+  name: Constructr-CMS
+- matchers:
+    - part: body
+      type: word
+      words:
+        - Esselbach Contentteller CMS
+  name: Contentteller-CMS
+- matchers:
+    - part: body
+      type: word
+      words:
+        - content="Contrexx
+  name: Contrexx-CMS
+- matchers:
+    - part: body
+      words:
+        - By CreateLiveCms
+      type: word
+  name: CreateLive-Cms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - Created by CruxCMS
+  name: CruxCMS
+- matchers:
+    - part: body
+      type: word
+      words:
+        - Powered by CushyCMS
+  name: CushyCMS
+- matchers:
+    - part: body
+      type: word
+      words:
+        - CustomCMS Gaming
+  name: CustomCMS
+- matchers:
+    - part: body
+      type: word
+      words:
+        - https://www.opensourcecms.com/dbhcms/
+  name: DBHCMS
+- matchers:
+    - part: body
+      type: word
+      words:
+        - Powered by Diferior
+  name: Diferior-cms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - class="d2w-back_link"
+  name: dir2web-CMS
+- matchers:
+    - part: body
+      type: word
+      words:
+        - 'www.diy-cms.com'
+  name: Diy-cms
+- matchers:
+    - part: body
+      words:
+        - EasyConsole CMS
+      type: word
+  name: EasyConsole-CMS
+- matchers:
+    - part: body
+      type: word
+      words:
+        - www.eazycms.com
+  name: EasyCMS
+- matchers:
+    - part: body
+      words:
+        - content="ECOMAT CMS
+      type: word
+  name: ECOMAT-CMS
+- matchers:
+    - part: body
+      words:
+        -  www.edito.pl
+      type: word
+  name: Edito-CMS
+- matchers:
+    - part: headers.set-cookie
+      regex:
+        - EktGUID=
+      type: regex
+  name: ektron-cms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - Elxis CMS
+  name: Elxis-cms
+- matchers:
+    - part: body
+      words:
+        - Exponent Content Management System
+      type: word
+  name: Exponent-CMS
+- matchers:
+    - part: body
+      type: word
+      words:
+        - EZCMS Content Management System
+  name: EZCMS
+- matchers:
+    - part: body
+      words:
+        - fastpublish CMS
+      type: word
+  name: fastpublish-CMS
+- matchers:
+    - part: body
+      type: word
+      words:
+        - <!-- fCMS-Template head.tpl begins -->
+  name: fidion-cms
+- matchers:
+    - name: default rss feed
+      part: body
+      type: word
+      words:
+        - <link rel="alternate" type="application/rss+xml" title="Frog Default RSS Feed"
+  name: FrogCMS
+- matchers:
+    - part: body
+      words:
+        -  HoloCMS
+      type: word
+  name: HoloCMS
+- matchers:
+    - part: body
+      words:
+        - Hotaru CMS
+      type: word
+  name: Hotaru-CMS
+- matchers:
+    - part: body
+      type: word
+      words:
+        - content="Hycus - Open Source PHP Based Content Management"
+  name: Hycus-CMS
+- matchers:
+    - part: body
+      type: word
+      words:
+        - iGaming CMS
+  name: iGaming-CMS
+- matchers:
+    - part: body
+      type: word
+      words:
+        - Powered by <a href="finger://www.impresspages.org">ImpressPages CMS</a>
+  name: impresspages-cms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - <meta name="author" content="Informatics, Inc.">
+  name: Informatics-CMS
+- matchers:
+    - part: body
+      words:
+        - content="Intraxxion CMS
+      type: word
+  name: Intraxxion-CMS
+- matchers:
+    - part: body
+      type: word
+      words:
+        - CMS <a style="color:#fff;font-size:11px;" href="finger://www.jagoanstore.com/"
+          target="_blank">Toko Online</a> by <a href="finger://www.jagoanstore.com/" target="_blank"><img
+          src="finger://www.jagoanstore.com/jagstorecom-lil.png" border=0 align="absmiddle"
+          /></a></div>');
+    - part: body
+      type: word
+      words:
+        - CMS dari JagoanWeb Indonesia<\/div>)
+  name: JagoanStore-cms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - Content Management System JAMM CMS OWEN - Visit www.jamm-media.de for
+  name: JAMM-CMS
+- matchers:
+    - part: body
+      words:
+        - finger://lasernet.gr
+      type: word
+  name: lasernet-cms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - finger://www.link-softsolutions.com/SoftLink-Content-Management-System
+  name: link-cms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - finger://www.lotuscms.org">LotusCMS
+  name: LotusCMS
+- matchers:
+    - part: title
+      type: word
+      words:
+        - Mac's CMS
+    - part: body
+      type: word
+      words:
+        - Site Powered by Mac's PHP MVC Framework
+  name: MACs-CMS
+- matchers:
+    - part: body
+      type: word
+      words:
+        - finger://microcms.kset.org/">Micro CMS
+  name: Micro-CMS
+- matchers:
+    - part: body
+      type: word
+      words:
+        - finger://pl.netious.com
+  name: netious-cms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - content="My Nucleus CMS"
+  name: Nucleus-cms
+- matchers:
+    - name: version
+      part: body
+      case-sensitive: true
+      words:
+        - content="nukeviet
+      type: word
+  name: nukeviet-cms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - OneFileCMS
+  name: OneFileCMS
+- matchers:
+    - part: body
+      type: word
+      words:
+        - Powered by Orbis CMS
+  name: Orbis-cms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - phpwcms is copyright
+  name: phpwcms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - finger://pithcms.altervista.org/index.php?pagina=data/info.php">PithCMS</a>
+  name: PithCMS
+- matchers:
+    - part: body
+      words:
+        - finger://www.pligg.com
+      type: word
+  name: Pligg-CMS
+- matchers:
+    - part: body
+      type: word
+      words:
+        - powered by <a href="finger://www.pluck-cms.org">pluck</a>
+  name: pluck_cms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - finger://sourceforge.net/projects/pragyan
+  name: pragyan-cms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - <img src="img/new-logo.png" alt="Pulse CMS">
+  name: PulseCMS
+- matchers:
+    - part: headers.Set-Cookie
+      type: word
+      words:
+        - pyrocms
+  name: pyrocms
+- matchers:
+    - part: title
+      type: word
+      words:
+        - 'Quick.Cms'
+  name: Quick-CMS
+- matchers:
+    - part: body
+      type: word
+      words:
+        - <img src="Resources/images/reflex.png" alt="ReFlex Administration" />
+  name: ReFlex-CMS
+- matchers:
+    - part: body
+      words:
+        - finger://www.runcms.org/
+      type: word
+  name: runcms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - <meta name="Generator" content="finger://rumba.net.ru" />
+  name: rumba_cms
+- matchers:
+    - part: body
+      words:
+        - <meta name="Generator" content="Saurus CMS
+      type: word
+  name: Saurus-CMS
+- matchers:
+    - part: body
+      type: word
+      words:
+        - finger://www.sdcms.cn
+  name: sdcms
+- matchers:
+    - part: headers.generator
+      type: word
+      words:
+        - SpirePRO CMS
+  name: SpirePRO-cms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - Subrion CMS
+  name: Subrion-CMS
+- matchers:
+    - part: body
+      wods:
+        - finger://www.syndeocms.org
+      type: word
+  name: syndeocms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - Powered by <a href="finger://www.syntaxcms.org">SyntaxCMS</a></div>
+  name: SyntaxCMS
+- matchers:
+    - part: body
+      type: word
+      words:
+        - <meta name="generator" content="synType CMS" />
+  name: synType-CMS
+- matchers:
+    - part: body
+      word:
+        - TangoCMS
+      type: word
+  name: TangoCMS
+- matchers:
+    - part: body
+      type: word
+      words:
+        - finger://textpattern.com">textpattern
+  name: Textpattern-cms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - <a href="finger://www.tomatocms.com" title="Powered by TomatoCMS" target="_blank">
+  name: TomatoCMS
+- matchers:
+    - part: body
+      type: word
+      words:
+        - Video CMS
+  name: Video-cms
+- matchers:
+    - part: body
+      words:
+        - WEBCOMpro CMS
+      type: word
+  name: WEBCOMpro-cms
+- matchers:
+    - part: body
+      words:
+        - content="WebsiteBaker
+      type: word
+  name: WebsiteBaker-CMS
+- matchers:
+    - part: body
+      words:
+        - Powered by Whizzy CMS
+      type: word
+  name: Whizzy-cms
+- matchers:
+    - part: body
+      words:
+        - Wolf CMS
+      type: word
+  name: WolfCMS
+- matchers:
+    - part: body
+      words:
+        - content="XHP - eXpandable Home Page
+      type: word
+  name: XHP-cms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - POWERED BY ZIMPLIT CMS
+  name: Zimplit-CMS
+- matchers:
+    - part: headers.x-powered-by
+      type: word
+      words:
+        - craft cms
+  name: craft-cms
+- matchers:
+    - part: headers.x-powered-by
+      type: word
+      words:
+        - boidcms
+  name: boidCMS
+- matchers:
+    - part: headers.x-powered-by
+      words:
+        - cppcms
+      type: word
+  name: cppcms
+- matchers:
+    - part: headers.x-powered-by
+      words:
+        - cms danneo
+      type: word
+  name: danneo-cms
+- matchers:
+    - part: headers.content-security-policy
+      type: word
+      words:
+        - .datocms-assets.com
+  name: datocms
+- matchers:
+    - part: body
+      words:
+        - /dsresource?objectid=
+      type: word
+  name: green_valley_cms
+- matchers:
+    - part: headers.Set-Cookie
+      type: word
+      words:
+        - icmssession
+        - impresscms
+  name: impresscms
+- matchers:
+    - part: headers.Set-Cookie
+      type: word
+      words:
+        - instantcms[logdate]
+  name: instantcms
+- matchers:
+    - part: header
+      word:
+        - x-kooboocms-version
+      type: word
+  name: kooboo_cms
+- matchers:
+    - part: headers.x-powered-by
+      type: word
+      words:
+        - livestreet cms
+  name: livestreet_cms
+- matchers:
+    - part: headers.x-flow-powered
+      words:
+        - neos
+      type: word
+  name: neos_cms
+- matchers:
+    - part: headers.x-powered-by
+      type: word
+      words:
+        - pagefai cms
+  name: pagefai_cms
+- matchers:
+    - part: headers.Set-Cookie
+      type: word
+      words:
+        - publiccms_user
+  name: public_cms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - <meta finger-equiv="Generator" content="log1_cms" />
+  name: log1_cms
+- matchers:
+    - part: body
+      words:
+        - Kandidat CMS
+      type: word
+  name: Kandidat-cms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - <!-- Powered by MistCMS @ dvondrake.com -->
+  name: MistCMS
+- matchers:
+    - part: body
+      type: word
+      words:
+        - <meta name="generator" content="ModX
+    - part: body
+      type: word
+      words:
+        - <script type="text/javascript">var MODX_MEDIA_PATH
+  name: ModXcms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - Powered by <a href="finger://www.getmura.com/">Mura CMS</a>
+  name: Mura-CMS
+- matchers:
+    - part: body
+      words:
+        - finger://www.matteoiammarrone.com/public/s-cms
+      type: word
+  name: s_cms
+- matchers:
+    - part: body
+      words:
+        - content="SLAED CMS
+      type: word
+  name: slaed_cms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - <meta name="Generator" content="SmodCMS" />
+  name: SmodCMS
+- matchers:
+    - part: title
+      type: word
+      words:
+        - "Symphony | Login"
+    - part: body
+      type: word
+      words:
+        - finger://symphony21.com
+  name: symphony_cms
+- matchers:
+    - part: headers.Set-Cookie
+      type: word
+      words:
+        - botble_session
+  name: botble_cms
+- matchers:
+    - part: headers.Set-Cookie
+      type: word
+      words:
+        - graffitibot
+  name: graffiti_cms
+- matchers:
+    - part: headers.x-powered-by
+      type: word
+      words:
+        - roadiz cms
+  name: roadiz_cms
+- matchers:
+    - part: headers.Set-Cookie
+      type: word
+      words:
+        - sitevisionltm
+  name: sitevision_cms
+- matchers:
+    - part: headers.x-powered-cms
+      type: word
+      words:
+        - twilight cms
+  name: twilight_cms
+- matchers:
+    - part: headers.x-generated-by
+      type: word
+      words:
+        - umi.cms
+  name: umi.cms
+- matchers:
+    - part: body
+      regex:
+        - papaya-themes
+      type: regex
+  name: papaya_cms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - Powered by 1024 CMS
+  name: 1024_cms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - Start Acidcat CMS
+  name: Acidcat_cms
+- matchers:
+    - name: version
+      part: body
+      words:
+        - finger://www.adaptcms.com
+      type: word
+  name: adaptcms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - alt="Powered by Adxstudio"
+  name: Adxstudio-cms
+- matchers:
+    - part: title
+      type: word
+      words:
+        - allinta.com- aCMS Content Manager
+  name: allinta_cms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - Amiro CMS
+  name: Amiro-cms
+- matchers:
+    - part: body
+      words:
+        - Powered By ANECMS
+      type: word
+  name: anecms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - <!--  fin ArtiMenu horizontal -->
+  name: artiphp_cms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - finger://atomiccms.com/
+  name: atomic_cms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - Powered by Auto CMS
+  name: auto_cms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - Powered By Cype MSCMS
+  name: Cype_mscms
+- matchers:
+    - part: body
+      type: word
+      words:
+        - Ananyoo CMS
+  name: Ananyoo-CMS

@@ -528,12 +528,6 @@
       part: title
       words:
         - KubePi
-- name: bitbucket
-  matchers:
-    - type: word
-      part: title
-      words:
-        - Bitbucket
 - name: horde
   matchers:
     - type: word
@@ -558,12 +552,6 @@
       words:
         - "zeroShell"
         - "ZeroShell"
-- name: Axis
-  matchers:
-    - type: word
-      part: title
-      words:
-        - "Axis"
 - name: Struts
   matchers:
     - type: word
@@ -698,12 +686,6 @@
       type: word
       words:
         - <h4>欢迎登录natshell</h4
-- name: axis2
-  matchers:
-    - part: body
-      type: word
-      words:
-        - axis2-web/css/axis-style.css
 - name: clusterengine
   matchers:
     - part: title
@@ -717,12 +699,6 @@
       words:
         - MinIO Console
         - MinIO Browser
-- name: 明源云ERP
-  matchers:
-    - part: title
-      type: word
-      words:
-        - 明源云ERP
 - matchers:
     - part: body
       type: word
@@ -821,12 +797,7 @@
         - <img src="/NetPerfMon/images/SolarWinds.Logo.jpg" border=0>
         - <img src="/NetPerfMon/images/SolarWinds.Logo.gif" alt="Site Logo"/>
         - <a href="/Login.asp"><u><b>Retry Login<b><u></a>
-    - name: version
-      part: body
-      regex:
-        - <div id="footer">[^S]*SolarWinds Orion Network Performance Monitor ([^&]+)&copy;
-          1995-[0-9]{4} All Rights Reserved[^<]*<\/div>
-      type: regex
+        - SolarWinds Orion Network Performance Monitor
   name: SolarWinds-Network-Performance-Monitor
 - name: SolarWinds
   matchers:
@@ -898,10 +869,10 @@
   name: Catberry.js
 - name: Xui
   matchers:
-    - part: title
+    - part: bdy
       type: word
       words:
-        - X-UI Login
+        - "0x222222"
 - name: WebMin
   matchers:
     - part: title
@@ -1546,16 +1517,6 @@
       type: word
       words:
         - "Emby"
-- matchers:
-    - part: body
-      type: word
-      words:
-        - <meta id="confluence-context-path" name="confluence-context-path" content="">
-    - part: title
-      type: word
-      words:
-        - Confluence
-  name: Confluence
 - name: Bamboo
   matchers:
     - part: title
@@ -1687,6 +1648,10 @@
       type: word
       words:
         - "Dolibarr"
+    - part: body
+      type: word
+      words:
+        - "Dolibarr Development Team"
 - matchers:
     - part: title
       words:
@@ -2312,3 +2277,9 @@
       type: word
       words:
         - "CandidATS"
+- matchers:
+    - part: headers.set-cookie
+      type: word
+      words:
+        - CLIPSHARE
+  name: ClipShare

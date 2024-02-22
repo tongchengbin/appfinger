@@ -1,4 +1,4 @@
-- name: iSecure-Center
+- name: Hikvision-iSecure-Center
   matchers:
     - part: headers.set-cookie
       type: word

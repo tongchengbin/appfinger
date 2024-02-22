@@ -154,3 +154,10 @@
       type: word
       words:
           - "/ReportServer?op=resource"
+
+- name: Glodon
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "/Services/Identification/"
