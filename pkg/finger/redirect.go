@@ -47,10 +47,11 @@ func findRefresh(n *html.Node) string {
 	}
 	return ""
 }
-func getExecRedirect(url string, jsCodes []string, onload string) string {
+func getExecRedirect(uri string, jsCodes []string, onload string) string {
 	vm := otto.New()
+	parsed, _ := url.Parse(uri)
 	initWindowsCode := fmt.Sprintf(`
-		var location = {href:"%s"};
+		var location = {href:"%s",hostname:"%s","protocol":"%s"};
 		var window = {
 			location: location,
 			open: function(url, target) {
@@ -64,8 +65,11 @@ func getExecRedirect(url string, jsCodes []string, onload string) string {
 				location: window.location		
 			}
 		}
+		var document = {
+			location: window.location,	
+		};
 		window.top = top;
-`, url)
+`, uri, parsed.Hostname(), parsed.Scheme)
 	_, err := vm.Run(initWindowsCode)
 	if err != nil {
 		gologger.Debug().Msgf("Error getting result:%v", err)
@@ -118,8 +122,8 @@ func getExecRedirect(url string, jsCodes []string, onload string) string {
 		gologger.Debug().Msgf("Error getting result:%v", err)
 		return ""
 	}
-	uri := result.String()
-	if uri == url {
+	r2 := result.String()
+	if r2 == uri {
 		return ""
 	}
 	return result.String()

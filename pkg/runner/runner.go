@@ -30,6 +30,10 @@ func formatExtract(extract map[string]map[string]string) string {
 	return strings.Join(s, ",")
 }
 
+func StringTerms(s string) string {
+	return strings.Trim(strings.ReplaceAll(strings.ReplaceAll(s, "\n", ""), "\t", ""), " ")
+}
+
 func NewRunner(options *Options) (*Runner, error) {
 	runner := &Runner{
 		options: options,
@@ -45,7 +49,7 @@ func NewRunner(options *Options) (*Runner, error) {
 				s, _ := json.Marshal(out)
 				_, _ = output.Write(append(s, "\n"...))
 			}
-			gologger.Info().Msgf("[%s] %v [%v]", aurora.Green(url).String(), formatExtract(extract), aurora.Yellow(banner.Title).String())
+			gologger.Info().Msgf("[%s] %v [%v]", aurora.Green(url).String(), formatExtract(extract), aurora.Yellow(StringTerms(banner.Title)).String())
 		},
 	}
 	var outputs []io.Writer
