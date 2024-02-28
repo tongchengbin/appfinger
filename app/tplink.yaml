@@ -119,3 +119,9 @@
       type: word
       words:
           - "tplinkwifi.net"
+    - part: body
+      type: word
+      condition: and
+      words:
+        - "com.tplink.tether"
+        - "Opening..."
