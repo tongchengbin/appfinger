@@ -250,7 +250,14 @@ func joinURL(baseURL, path string) string {
 	if err != nil {
 		return ""
 	}
+	var ref = &url.URL{}
+	if strings.Contains(path, "?") {
+		ref.Path = strings.Split(path, "?")[0]
+		ref.RawQuery = strings.Split(path, "?")[1]
+	} else {
+		ref.Path = strings.Split(path, "?")[0]
+	}
 	// 使用 ResolveReference 方法拼接路径
-	fullURL := base.ResolveReference(&url.URL{Path: path})
+	fullURL := base.ResolveReference(ref)
 	return fullURL.String()
 }

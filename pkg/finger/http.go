@@ -314,9 +314,13 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 				// 图片异常不影响
 				return banners, err
 			}
+			req.Header.Set("Referer", nextURI)
 			resp, err := client.Do(req)
 			if err != nil {
 				return banners, err
+			}
+			if resp.StatusCode != 200 {
+				return banners, errors.New("图标请求失败")
 			}
 			body, err = io.ReadAll(resp.Body)
 			if err != nil {
