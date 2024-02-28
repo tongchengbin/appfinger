@@ -28,16 +28,16 @@ type Rule struct {
 }
 
 type Banner struct {
-	BodyHash    int32
-	Body        string
-	Header      string
-	Headers     map[string]string
-	Title       string
-	StatusCode  int
-	Response    string
-	SSL         bool
-	Certificate string
-	IconHash    int32
+	BodyHash    int32             `json:"body_hash"`
+	Body        string            `json:"body"`
+	Header      string            `json:"header"`
+	Headers     map[string]string `json:"headers"`
+	Title       string            `json:"title"`
+	StatusCode  int               `json:"status_code"`
+	Response    string            `json:"response"`
+	SSL         bool              `json:"ssl"`
+	Certificate string            `json:"certificate"`
+	IconHash    int32             `json:"icon_hash"`
 }
 
 type AppFinger struct {
