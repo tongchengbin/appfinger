@@ -1,3 +1,22 @@
+- name: TP-Link
+  matchers:
+    - part: headers.server
+      type: word
+      words:
+        - TP-LINK
+    - part: title
+      type: word
+      words:
+        - TP-LINK
+    - part: headers.server
+      type: regex
+      name: version
+      regex:
+        - TP-LINK\/([\d.]+)
+    - part: headers.Www-Authenticate
+      type: word
+      words:
+        - TP-LINK
 - name: TL-WR941HP
   matchers:
     - part: title
@@ -88,3 +107,15 @@
       type: word
       words:
         - "TL-SC2000N"
+- name: WR1043ND
+  matchers:
+    - part: headers.Www-Authenticate
+      type: word
+      words:
+        - "WR1043ND"
+- name: TP-Link-WIFI
+  matchers:
+    - part: cert
+      type: word
+      words:
+          - "tplinkwifi.net"
