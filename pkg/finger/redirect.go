@@ -95,10 +95,13 @@ func getExecRedirect(uri string, jsCodes []string, onload string) string {
 			return ""
 		}
 	}
-	_, err = vm.Run(fmt.Sprintf(`
+	code := fmt.Sprintf(`
 		%s
 		if (window.onload) {
 			window.onload();
+		}
+		if(top.location){
+			window.location = top.location
 		}
 		if(location.href){
 			window.location.href = location.href;
@@ -106,16 +109,22 @@ func getExecRedirect(uri string, jsCodes []string, onload string) string {
 		if(top.document.location.href){
 			window.location.href = top.document.location.href;
 		}
-		var finalHref = window.location.href;
-		//console.log(JSON.stringify(window))
-	`, onload))
+		var finalHref;
+		if (Object.prototype.toString.call(window.location)=== '[object Object]') {
+			finalHref = window.location.href;
+		}else{
+			finalHref = window.location;
+		}
+	`, onload)
+	_, err = vm.Run(code)
+	for _, log := range consoleLogs {
+		fmt.Println(">>|", log)
+	}
 	if err != nil {
 		gologger.Debug().Msgf("Error getting result:%v", err)
 		return ""
 	}
-	//for _, log := range consoleLogs {
-	//	fmt.Println(">>|", log)
-	//}
+
 	// 获取执行后的地址
 	result, err := vm.Get("finalHref")
 	if err != nil {
