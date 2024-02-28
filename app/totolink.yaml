@@ -1,0 +1,13 @@
+- name: ToToLink
+  matchers:
+    - part: title
+      type: word
+      case-insensitive: true
+      words:
+        - "totolink"
+- name: ToToLink-A3
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "TOTOLINK A3"

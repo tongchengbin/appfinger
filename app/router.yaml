@@ -20,24 +20,6 @@
       type:  word
       words:
         - NETGEAR Router
-- name: ToToLink
-  matchers-condition: and
-  matchers:
-    - part: title
-      type: word
-      words:
-        - "Totolink"
-    - part: body
-      condition: and
-      words:
-        - "/error.html"
-        - "/phone/login.html"
-        - "/login.html"
-      type: word
-    - part: headers.server
-      type: word
-      words:
-        - lighttpd
 - name: WIFISKY-7层流控路由器
   matchers:
     - part: title

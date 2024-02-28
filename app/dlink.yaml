@@ -137,3 +137,9 @@
       part: body
       words:
         - '<a href="http://support.dlink.com.tw/">DHP-1565</a>'
+- name: DSL-6740C
+  matchers:
+    - type: word
+      part: title
+      words:
+        - "DSL-6740C"
