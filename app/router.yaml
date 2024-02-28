@@ -378,3 +378,9 @@
       type: word
       words:
         - "<strong>SG </strong>2404 MR"
+- name: GoCloud
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "gocloud.sysauth.duser"

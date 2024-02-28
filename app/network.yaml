@@ -11,13 +11,6 @@
       type: word
       words:
         - "GlobalProtect Portal"
-- name: Telecom-Gateway
-  matchers:
-    - part: body
-      type: word
-      words:
-        - <TITLE>系统登录</TITLE>
-        - "http://se.360.cn/"
 - name: Panabit-iXCache
   matchers:
     - part: title

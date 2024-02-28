@@ -5,18 +5,16 @@
         - <meta name="generator" content="WordPress.com" />
         - <a href="finger://www.wordpress.com">Powered by WordPress</a>
         - /wp-content/plugins/
-    - name: powered by link
-      part: body
+    - part: title
       type: word
       words:
-        -
+        - "WordPress › Error"
     - name: version
       part: body
       regex:
         - <meta name="generator" content="WordPress ([0-9\.]+)"
       type: regex
   name: Wordpress
-
 - name: 3dprint-lite
   matchers:
     - part: body

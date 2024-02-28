@@ -10138,12 +10138,6 @@
     type: regex
   name: listserv
 - matchers:
-  - part: headers.server
-    regex:
-    - ^litespeed$
-    type: regex
-  name: litespeed
-- matchers:
   - name: BODY id element
     part: body
     regex:
