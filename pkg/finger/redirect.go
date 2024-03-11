@@ -69,6 +69,7 @@ func getExecRedirect(uri string, jsCodes []string, onload string) string {
 			location: window.location,	
 		};
 		window.top = top;
+		self = window;
 `, uri, parsed.Hostname(), parsed.Scheme)
 	_, err := vm.Run(initWindowsCode)
 	if err != nil {
@@ -236,6 +237,10 @@ func parseJavaScript(url string, htmlContent string) string {
 func urlJoin(base, path string) string {
 	if strings.HasPrefix(path, "http://") || strings.HasPrefix(path, "https://") {
 		return path
+	}
+	if strings.HasPrefix(path, "../") {
+		//	 todo last path
+		path = strings.TrimPrefix(path, "..")
 	}
 	if base[len(base)-1] != '/' && path[0] != '/' {
 		base += "/"
