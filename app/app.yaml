@@ -21,8 +21,9 @@
   matchers:
     - part: title
       type: word
+      case-insensitive: true
       words:
-        - "Login - pyLoad"
+        - "pyLoad"
 - name: SpringBoot
   matchers:
     - part: 'body'
@@ -2283,3 +2284,27 @@
       words:
         - CLIPSHARE
   name: ClipShare
+
+- matchers:
+    - part: title
+      type: word
+      words:
+        - "ConnectWise"
+        - "ScreenConnect"
+  name: ConnectWise
+
+- matchers:
+    - part: title
+      type: word
+      case-insensitive: true
+      words:
+        - "ip-guard"
+  name: IP-Guard
+
+- matchers:
+    - part: title
+      type: word
+      case-insensitive: true
+      words:
+        - "datacube3"
+  name: DataCube3

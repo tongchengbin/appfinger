@@ -115,6 +115,10 @@
         - "WR1043ND"
 - name: TP-Link-WIFI
   matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "-1028703177"
     - part: cert
       type: word
       words:

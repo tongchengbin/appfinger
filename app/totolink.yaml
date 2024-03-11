@@ -5,10 +5,6 @@
       case-insensitive: true
       words:
         - "totolink"
-    - part: icon_hash
-      type: word
-      words:
-        - "-1028703177"
 - name: ToToLink-A3
   matchers:
     - part: title

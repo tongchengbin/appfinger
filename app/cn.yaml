@@ -16,3 +16,9 @@
       type: word
       words:
         - "-628229493"
+- name: 广州图创图书馆集群管理系统
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "3RD Auto System Interlib"
