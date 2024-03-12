@@ -132,8 +132,8 @@
     - part: title
       type: word
       words:
-        - Oracle WebLogic Server 管理控制台
-        - Error 404--Not Found
+        - Welcome to Weblogic Application Server
+        - Oracle Application Testing Suite
   name: WebLogic-Server
 - name: Oracle-PeopleSoft
   matchers:
