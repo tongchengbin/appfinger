@@ -1,0 +1,18 @@
+- name: ASUS-Router
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ASUS Login"
+    - part: title
+      type: regex
+      name: mode
+      group: 3
+      regex:
+        - "ASUS (.*) (router|Router) (.*)"
+- name: ASUS-ZenWiFi-AX
+  matchers:
+    - part: body
+      type: word
+      words:
+        - '<div class="prod_madelName">ZenWiFi AX</div>'

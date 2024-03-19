@@ -49,12 +49,6 @@
       type: word
       words:
         - 'WEB SERVICE'
-- name: MIKROTIK-Router
-  matchers:
-    - part: title
-      type: word
-      words:
-        - 'RouterOS router configuration page'
 - name: Flexnet
   matchers:
     - part: title
@@ -2308,3 +2302,10 @@
       words:
         - "datacube3"
   name: DataCube3
+
+- name: GoAnywhere-MFT
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "GoAnywhere Web Client"

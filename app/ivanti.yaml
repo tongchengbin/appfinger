@@ -1,0 +1,7 @@
+- name: iVanTi-Connect-Secure
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "/dana-na/css/ds"
+        - "/dana-na/auth/url_default/welcome.cgi"

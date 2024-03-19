@@ -1,0 +1,12 @@
+- name: DrayTek-Vigor-Router
+  matchers:
+    - part: cert
+      type: word
+      condition: and
+      words:
+          - "CN=Vigor Router"
+          - "OU=DrayTek Support"
+    - part: title
+      type: word
+      words:
+        - "Vigor"

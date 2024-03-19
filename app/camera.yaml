@@ -339,3 +339,10 @@
       words:
         - AXIS
   name: Axis-Network-Camera
+
+- name: Surveillance-Device
+  matchers:
+    - part: title
+      type: word
+      words:
+        - Surveillance Device

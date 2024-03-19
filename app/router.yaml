@@ -1,10 +1,3 @@
-- matchers:
-    - part: title
-      type: word
-      words:
-        - RouterOS
-  name: mikrotik RouterOS
-
 - name: NETGEAR
   matchers:
     - part: headers.Www-Authenticate
@@ -81,20 +74,6 @@
       type: word
       words:
         - "Vodafone ADSL Router"
-- name: ASUS-Router
-  matchers:
-    - part: title
-      type: regex
-      name: mode
-      group: 3
-      regex:
-        - "ASUS (.*) (router|Router) (.*)"
-- name: ASUS
-  matchers:
-    - part: title
-      type: word
-      words:
-        - "ASUS Login"
 - name: Micronet-Router
   matchers:
     - part: title
@@ -260,12 +239,6 @@
       type: word
       words:
         - "GPON Home Gateway"
-- name: Vigor-Router
-  matchers:
-    - part: title
-      type: word
-      words:
-        - "Vigor"
 - name: SIERRA-ADSL
   matchers:
     - part: title
@@ -351,3 +324,22 @@
       type: word
       words:
         - "gocloud.sysauth.duser"
+
+- name: Cerio-DT-300N
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "DT-300N"
+- name: Cerio-DT-Router
+  matchers:
+    - part: body
+      type: word
+      words:
+        - '<span id="model">DT'
+- name: MIKROTIK-Router
+  matchers:
+    - part: body
+      type: word
+      words:
+        - RouterOS
