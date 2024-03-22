@@ -9,7 +9,7 @@ import (
 	"github.com/tongchengbin/appfinger/pkg/runner"
 )
 
-const Version = "v1.0.37"
+const Version = "v1.0.38"
 
 var Banner = fmt.Sprintf(`
 ______          %s             ________  __                                         
