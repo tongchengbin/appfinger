@@ -43,12 +43,12 @@ func main() {
 	appRunner, err := runner.NewRunner(options)
 	if err != nil {
 		gologger.Error().Msgf(err.Error())
-		panic(err)
+		return
 	}
 	fmt.Printf(Banner)
 	err = appRunner.Enumerate()
 	if err != nil {
 		gologger.Error().Msgf(err.Error())
-		panic(err)
+		return
 	}
 }
