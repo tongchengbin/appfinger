@@ -216,6 +216,7 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 	if err != nil {
 		return nil, err
 	}
+	defer client.CloseIdleConnections()
 	var banners []*Banner
 	var nextURI = uri
 	for ret := 0; ret < 3; ret++ {
