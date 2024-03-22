@@ -9,7 +9,10 @@ import (
 	"github.com/tongchengbin/appfinger/pkg/runner"
 )
 
-const Banner = `  ______                       ________  __                                         
+const Version = "v3.0.0.1"
+
+var Banner = fmt.Sprintf(`
+______          %s             ________  __                                         
  /      \                     |        \|  \                                        
 |  $$$$$$\  ______    ______  | $$$$$$$$ \$$ _______    ______    ______    ______  
 | $$__| $$ /      \  /      \ | $$__    |  \|       \  /      \  /      \  /      \ 
@@ -21,13 +24,17 @@ const Banner = `  ______                       ________  __
           | $$      | $$                              |  \__| $$                    
           | $$      | $$                               \$$    $$                    
            \$$       \$$                                \$$$$$$                     
-`
+`, Version)
 
 func main() {
 	gologger.DefaultLogger.SetMaxLevel(levels.LevelWarning)
 	options := runner.ParseOptions()
 	if options.Debug {
 		gologger.DefaultLogger.SetMaxLevel(levels.LevelDebug)
+	}
+	if options.Version {
+		gologger.Info().Msgf("AppFinger Version: %s", Version)
+		return
 	}
 	if options.UpdateRule {
 		customrules.DefaultProvider.Update(context.Background(), options.FingerHome)

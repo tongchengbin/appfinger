@@ -30,6 +30,7 @@ type Options struct {
 	UpdateRule        bool
 	DisableIcon       bool
 	DisableJavaScript bool
+	Version           bool
 }
 
 func ParseOptions() *Options {
@@ -47,6 +48,7 @@ func ParseOptions() *Options {
 		flagSet.BoolVarP(&options.UpdateRule, "update-rule", "ur", false, "update rule from github.com/tongchengbin/appfinger"),
 		flagSet.BoolVarP(&options.DisableIcon, "disable-icon", "di", false, "disabled icon request to matcher"),
 		flagSet.BoolVarP(&options.DisableJavaScript, "disable-js", "dj", false, "disabled matcher javascript rule"),
+		flagSet.BoolVarP(&options.Version, "version", "v", false, "show version"),
 	)
 	flagSet.CreateGroup("Help", "Help",
 		flagSet.BoolVar(&options.Debug, "debug", false, "debug"),
