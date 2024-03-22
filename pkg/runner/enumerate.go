@@ -10,9 +10,9 @@ import (
 	"sync"
 )
 
-func (r *Runner) EnumerateMultipleDomainsWithCtx(ctx context.Context, reader io.Reader, writers []io.Writer) error {
+func (r *Runner) EnumerateMultipleDomainsWithCtx(ctx context.Context, reader io.Reader) error {
 	scanner := bufio.NewScanner(reader)
-	urlCh := make(chan string)
+	urlCh := make(chan string, 10)
 	var wg sync.WaitGroup
 	for i := 0; i < r.options.Threads; i++ {
 		wg.Add(1)
@@ -40,7 +40,6 @@ func (r *Runner) EnumerateMultipleDomainsWithCtx(ctx context.Context, reader io.
 }
 
 func (r *Runner) Enumerate() error {
-	var outputs []io.Writer
 	ctx := context.Background()
 	if r.options.OutputFile != "" {
 		outputWriter := NewOutputWriter(true)
@@ -58,19 +57,19 @@ func (r *Runner) Enumerate() error {
 	// If we have multiple domains as input,
 	if len(r.options.URL) > 0 {
 		reader := strings.NewReader(strings.Join(r.options.URL, "\n"))
-		return r.EnumerateMultipleDomainsWithCtx(ctx, reader, outputs)
+		return r.EnumerateMultipleDomainsWithCtx(ctx, reader)
 	}
 	if r.options.UrlFile != "" {
 		f, err := os.Open(r.options.UrlFile)
 		if err != nil {
 			return err
 		}
-		err = r.EnumerateMultipleDomainsWithCtx(ctx, f, outputs)
+		err = r.EnumerateMultipleDomainsWithCtx(ctx, f)
 		_ = f.Close()
 		return err
 	}
 	if r.options.Stdin {
-		return r.EnumerateMultipleDomainsWithCtx(ctx, os.Stdin, outputs)
+		return r.EnumerateMultipleDomainsWithCtx(ctx, os.Stdin)
 	}
 	return nil
 }

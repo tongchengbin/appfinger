@@ -223,7 +223,7 @@ func (f *AppFinger) MatchURI(uri string) (*Banner, map[string]map[string]string)
 	banners, err := Request(uri, f.timeout, f.Proxy, f.options.DisableIcon)
 	var fingerprints map[string]map[string]string
 	if err != nil && (banners == nil || len(banners) == 0) {
-		gologger.Warning().Msg(err.Error())
+		gologger.Debug().Msg(err.Error())
 		return nil, nil
 	}
 	for _, banner := range banners {

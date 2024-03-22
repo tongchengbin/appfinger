@@ -23,6 +23,7 @@ type Options struct {
 	Proxy             string
 	Output            io.Writer
 	OutputFile        string
+	OutputType        string
 	Stdin             bool
 	FingerHome        string
 	Debug             bool
@@ -51,7 +52,9 @@ func ParseOptions() *Options {
 		flagSet.BoolVar(&options.Debug, "debug", false, "debug"),
 	)
 	flagSet.CreateGroup("output", "Output",
-		flagSet.StringVarP(&options.OutputFile, "output", "o", "", "file to write output to"))
+		flagSet.StringVarP(&options.OutputFile, "output", "o", "", "file to write output to"),
+		flagSet.StringVar(&options.OutputType, "output-format", "txt", "输出文件格式"),
+	)
 	if err := flagSet.Parse(); err != nil {
 		fmt.Println(err.Error())
 		os.Exit(1)

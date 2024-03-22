@@ -61,6 +61,7 @@ func NewRunner(options *Options) (*Runner, error) {
 			return nil, err
 		}
 		outputs = append(outputs, file)
+
 	}
 	runner.outputs = outputs
 	return runner, nil
