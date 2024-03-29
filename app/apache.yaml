@@ -81,7 +81,7 @@
       type: word
       words:
         - 'Apache APISIX Dashboard'
-- name: Ambari
+- name: Apache-Ambari
   matchers:
     - part: title
       type: word

@@ -510,7 +510,7 @@
   matchers:
     - part: body
       type: word
-      case-sensitive: true
+      case-insensitive: true
       words:
         - "opensis"
 - name: GHost
@@ -685,7 +685,7 @@
       type: word
       words:
         - 'content="GDIDEES :'
-- name: wow-CMS
+- name: wowCMS
   matchers:
     - part: title
       type: word
@@ -1009,7 +1009,7 @@
 - matchers:
     - name: version
       part: body
-      case-sensitive: true
+      case-insensitive: true
       words:
         - content="nukeviet
       type: word
@@ -1450,3 +1450,10 @@
       words:
         - Ananyoo CMS
   name: Ananyoo-CMS
+
+- name: HiShop
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "Hishop development team"
