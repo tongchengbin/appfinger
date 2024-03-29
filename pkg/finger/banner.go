@@ -221,7 +221,7 @@ func mergeMaps(map1, map2 map[string]map[string]string) map[string]map[string]st
 }
 func (f *AppFinger) MatchURI(uri string) (banner Banner, fingerprints map[string]map[string]string, err error) {
 	banners, err := Request(uri, f.timeout, f.Proxy, f.options.DisableIcon)
-	if err != nil && (banners == nil || len(banners) == 0) {
+	if err != nil {
 		return banner, fingerprints, err
 	}
 	for _, b := range banners {

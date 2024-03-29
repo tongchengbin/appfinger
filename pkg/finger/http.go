@@ -267,6 +267,8 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 	var banners []Banner
 	var banner Banner
 	var nextURI = uri
+	var req *http.Request
+	var resp *http.Response
 	for ret := 0; ret < 3; ret++ {
 		banner, nextURI, err = RequestOnce(client, nextURI)
 		if err == nil {
@@ -299,13 +301,13 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 			}
 
 		} else {
-			req, err := http.NewRequest("GET", iconURL, nil)
+			req, err = http.NewRequest("GET", iconURL, nil)
 			if err != nil {
 				// 图片异常不影响
 				return banners, err
 			}
 			req.Header.Set("Referer", nextURI)
-			resp, err := client.Do(req)
+			resp, err = client.Do(req)
 			if err != nil {
 				return banners, err
 			}
@@ -318,9 +320,12 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 			}
 		}
 		iconHash := mmh3(body)
-		for _, banner := range banners {
-			banner.IconHash = iconHash
+		for _, b := range banners {
+			b.IconHash = iconHash
 		}
+	}
+	if len(banners) == 0 {
+		return banners, errors.New("banner empty")
 	}
 	return banners, nil
 }
