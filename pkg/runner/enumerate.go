@@ -19,8 +19,8 @@ func (r *Runner) EnumerateMultipleDomainsWithCtx(ctx context.Context, reader io.
 		go func() {
 			defer wg.Done()
 			for url := range urlCh {
-				banner, extract := r.finger.MatchURI(url)
-				if banner == nil {
+				banner, extract, err := r.finger.MatchURI(url)
+				if err != nil {
 					continue
 				}
 				r.callback(r, url, banner, extract)

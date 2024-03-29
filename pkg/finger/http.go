@@ -54,9 +54,7 @@ func ResponseDecoding(body []byte, label string) string {
 	var str string
 	label = strings.Trim(strings.Trim(strings.ToUpper(label), "\""), ";")
 	switch label {
-	case "UTF-8":
-		str = string(body)
-	case "UTF8":
+	case "UTF-8", "UTF8", "US-ASCII":
 		str = string(body)
 	case "GBK":
 		// 解码为GBK编码
@@ -87,8 +85,6 @@ func ResponseDecoding(body []byte, label string) string {
 		}
 		data, _ := io.ReadAll(r)
 		str = string(data)
-	case "US-ASCII":
-		str = string(body)
 	case "BIG5":
 		r, err := charset.NewReaderLabel("big5", strings.NewReader(string(body)))
 		if err != nil {
@@ -150,12 +146,6 @@ func isAbsoluteURL(url string) bool {
 	return !(strings.HasPrefix(url, "http://") || strings.HasPrefix(url, "https://"))
 }
 
-func isConnectionResetError(err error) bool {
-	var netErr net.Error
-	isNetErr := errors.As(err, &netErr)
-	return isNetErr && netErr.Timeout() && strings.Contains(err.Error(), "use of closed network connection")
-}
-
 func NewTransport(proxyURL string) (*http.Transport, error) {
 	// proxy
 	transport := &http.Transport{
@@ -210,83 +200,82 @@ func NewClient(proxy string, timeout time.Duration) (*http.Client, error) {
 	}, nil
 }
 
-func Request(uri string, timeout time.Duration, proxyURL string, disableIcon bool) ([]*Banner, error) {
+func RequestOnce(client *http.Client, uri string) (banner Banner, redirectURL string, err error) {
+	// 开始请求数据
+	var resp *http.Response
+	// 完整响应
+	headers := getBuffer()
+	body := getBuffer()
+	defer func() {
+		putBuffer(headers)
+		putBuffer(body)
+	}()
+	req, err := http.NewRequest("GET", uri, nil)
+	if err != nil {
+		return banner, redirectURL, err
+	}
+	req.Header.Set("Accept", "*/*")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.58")
+	resp, err = client.Do(req)
+	if err != nil && err.Error() != http.ErrUseLastResponse.Error() {
+		return banner, redirectURL, err
+	}
+	// 先读取Body 剩余的就是header
+	defer func(Body io.ReadCloser) {
+	}(resp.Body)
+	_, err = body.ReadFrom(resp.Body)
+	if err != nil {
+		return banner, redirectURL, err
+	}
+	err = resp.Write(headers)
+	if err != nil {
+		return banner, redirectURL, err
+	}
+	banner = Banner{
+		Body:       body.String(),
+		BodyHash:   mmh3([]byte(body.String())),
+		Header:     headers.String(),
+		StatusCode: resp.StatusCode,
+		Response:   headers.String() + body.String(),
+		Headers:    map[string]string{}}
+	banner.Title = getTitle(body.Bytes())
+	for k, v := range resp.Header {
+		banner.Headers[strings.ToLower(k)] = strings.Join(v, ",")
+	}
+	// 获取服务器证书信息
+	if resp.TLS != nil {
+		cert := resp.TLS.PeerCertificates[0]
+		banner.Certificate = parseCertificateInfo(cert)
+		gologger.Debug().Msg("Dump Cert For " + uri + "\r\n" + banner.Certificate)
+	}
+	// 解析JavaScript跳转
+	jsRedirectUri := parseJavaScript(uri, body.String())
+	if jsRedirectUri != "" {
+		uri = urlJoin(uri, jsRedirectUri)
+		gologger.Debug().Msgf("redirect URL:%s", uri)
+	}
+	return banner, uri, nil
+}
+
+func Request(uri string, timeout time.Duration, proxyURL string, disableIcon bool) ([]Banner, error) {
 	var err error
 	client, err := NewClient(proxyURL, timeout)
 	if err != nil {
 		return nil, err
 	}
 	defer client.CloseIdleConnections()
-	var banners []*Banner
+	var banners []Banner
+	var banner Banner
 	var nextURI = uri
 	for ret := 0; ret < 3; ret++ {
-		var rawResp bytes.Buffer
-		// 开始请求数据
-		req, err := http.NewRequest("GET", nextURI, nil)
-		if err != nil {
-			return banners, err
-		}
-		req.Header.Set("Accept", "*/*")
-		req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.58")
-		resp, err := client.Do(req)
-		if err != nil && err.Error() != http.ErrUseLastResponse.Error() {
-			return banners, err
-		}
-		// redirect location refresh
-		nextURI = resp.Request.URL.String()
-		//rawResp.
-		_ = resp.Write(&rawResp)
-		content := rawResp.Bytes()
-		var charSet = "UTF-8"
-		contentType := resp.Header.Get("Content-Type")
-		if strings.Contains(contentType, "charset=") {
-			charsetIndex := strings.Index(contentType, "charset=")
-			charSet = strings.Trim(contentType[charsetIndex+len("charset="):], " ")
-		} else {
-			tagCharset := extractCharset(string(content))
-			if tagCharset != "" {
-				charSet = tagCharset
-			}
-
-		}
-		RawData := ResponseDecoding(content, charSet)
-		separator := []byte("\r\n\r\n")
-		gologger.Debug().Msg("Dump HTTP Response For " + nextURI + "\r\n" + RawData)
-		index := strings.Index(RawData, "\r\n\r\n")
-		if index == -1 {
-			gologger.Warning().Msg("无法找到响应头和响应体的分割点:" + nextURI + "\r\n\r\n" + RawData)
-			return banners, errors.New("不是标准HTTP响应")
-		}
-		// 分割响应头和响应体
-		headerBytes := RawData[:index]
-		bodyBytes := RawData[index+len(separator):]
-		banner := &Banner{
-			Body:       RawData,
-			BodyHash:   mmh3([]byte(RawData)),
-			Header:     headerBytes,
-			StatusCode: resp.StatusCode,
-			Response:   RawData,
-			Headers:    map[string]string{}}
-		banner.Title = getTitle([]byte(bodyBytes))
-		for k, v := range resp.Header {
-			banner.Headers[strings.ToLower(k)] = strings.Join(v, ",")
-		}
-		// 获取服务器证书信息
-		if resp.TLS != nil {
-			cert := resp.TLS.PeerCertificates[0]
-			banner.Certificate = parseCertificateInfo(cert)
-			gologger.Debug().Msg("Dump Cert For " + nextURI + "\r\n" + banner.Certificate)
+		banner, nextURI, err = RequestOnce(client, nextURI)
+		if err == nil {
+			break
 		}
 		banners = append(banners, banner)
-		// 解析JavaScript跳转
-		jsRedirectUri := parseJavaScript(nextURI, bodyBytes)
-		if jsRedirectUri == "" {
+		if nextURI == "" {
 			break
-		} else {
-			nextURI = urlJoin(uri, jsRedirectUri)
-			gologger.Debug().Msgf("redirect URL:%s", nextURI)
 		}
-
 	}
 	// 解析icon
 	if len(banners) > 0 && !disableIcon {

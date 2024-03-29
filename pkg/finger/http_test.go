@@ -247,3 +247,15 @@ func TestCharset(t *testing.T) {
 	}
 	println(string(decodedBody))
 }
+
+func TestReqOnce(t *testing.T) {
+	client, err := NewClient("", time.Second*time.Duration(2))
+	assert.Nil(t, err)
+	_, _, err = RequestOnce(client, "http://finger.lostpeach.cn")
+	assert.Nil(t, err)
+}
+
+func TestRequest(t *testing.T) {
+	_, err := Request("http://finger.lostpeach.cn", time.Second*time.Duration(2), "", true)
+	assert.Nil(t, err)
+}

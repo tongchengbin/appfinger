@@ -219,23 +219,20 @@ func mergeMaps(map1, map2 map[string]map[string]string) map[string]map[string]st
 	}
 	return result
 }
-func (f *AppFinger) MatchURI(uri string) (*Banner, map[string]map[string]string) {
+func (f *AppFinger) MatchURI(uri string) (banner Banner, fingerprints map[string]map[string]string, err error) {
 	banners, err := Request(uri, f.timeout, f.Proxy, f.options.DisableIcon)
-	var fingerprints map[string]map[string]string
 	if err != nil && (banners == nil || len(banners) == 0) {
-		gologger.Debug().Msg(err.Error())
-		return nil, nil
+		return banner, fingerprints, err
 	}
-	for _, banner := range banners {
+	for _, b := range banners {
 		// is honeypot.yaml
-		fingerprints = mergeMaps(fingerprints, f.Match(banner))
+		fingerprints = mergeMaps(fingerprints, f.Match(&b))
 	}
 	if _, ok := fingerprints["honeypot"]; ok {
-		return banners[len(banners)-1], map[string]map[string]string{"honeypot": make(map[string]string)}
+		return banners[len(banners)-1], map[string]map[string]string{"honeypot": make(map[string]string)}, nil
 	}
 	if _, ok := fingerprints["Wordpress"]; ok {
-		fingerprints = mergeMaps(fingerprints, MatchWpPlugin(banners[len(banners)-1]))
+		fingerprints = mergeMaps(fingerprints, MatchWpPlugin(&banners[len(banners)-1]))
 	}
-
-	return banners[len(banners)-1], fingerprints
+	return banners[len(banners)-1], fingerprints, nil
 }
