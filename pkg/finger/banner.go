@@ -29,9 +29,9 @@ type Rule struct {
 
 type Banner struct {
 	BodyHash    int32             `json:"body_hash"`
-	Body        string            `json:"body"`
-	Header      string            `json:"header"`
-	Headers     map[string]string `json:"headers"`
+	Body        string            `json:"-"`
+	Header      string            `json:"-"`
+	Headers     map[string]string `json:"-"`
 	Title       string            `json:"title"`
 	StatusCode  int               `json:"status_code"`
 	Response    string            `json:"response"`
