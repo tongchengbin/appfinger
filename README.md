@@ -1,6 +1,7 @@
 # AppFinger - Web Application Fingerprint Scanner
 
-AppFinger is an open-source web application fingerprint scanner designed to identify and analyze web applications based on their unique characteristics.
+AppFinger is an open-source web application fingerprint scanner designed to identify and analyze web applications based
+on their unique characteristics.
 
 ## Usage
 
@@ -21,21 +22,33 @@ AppFinger is an open-source web application fingerprint scanner designed to iden
     -o, -output string  file to write output to
 
 ## Example
+
     appfinger -u https://example.com
 
 ## How it Works
 
-AppFinger scans web applications by analyzing their unique fingerprints, providing valuable insights into the technologies used.
+AppFinger scans web applications by analyzing their unique fingerprints, providing valuable insights into the
+technologies used.
 
 ## Contributing
+
 Feel free to contribute to AppFinger by opening issues or submitting pull requests on GitHub.
 
 ## License
+
 AppFinger is licensed under the MIT License. See the LICENSE file for details.
 
+## Benchmark
 
+10W Req
+
+| Ver    | MEM(max)                                     | 时间                 |
+|--------|----------------------------------------------|--------------------|
+| 1.0.43 | 1191855000/969539192/1257704928              | 160/154/151        |
+| 1.0.44 | 1524363248/1675546632/1291158080/1774138832/2849387072 | 145/126/86/124/101 |
 
 ## Todo
+
 ```
 magmi 11
 online_fire_reporting_system 11

@@ -1,7 +1,6 @@
 package finger
 
 import (
-	"bytes"
 	"context"
 	"crypto/tls"
 	"crypto/x509"
@@ -10,92 +9,23 @@ import (
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/projectdiscovery/gologger"
-	"golang.org/x/net/html"
-	"golang.org/x/net/html/charset"
 	"golang.org/x/net/proxy"
-	"golang.org/x/text/encoding/charmap"
-	"golang.org/x/text/encoding/simplifiedchinese"
-	"golang.org/x/text/transform"
 	"io"
 	"net"
 	"net/http"
 	"net/url"
+	"regexp"
 	"strings"
 	"time"
 )
 
-func getTitle(body []byte) string {
-	var title string
-
-	// Tokenize the HTML document and check for fingerprints as required
-	tokenizer := html.NewTokenizer(bytes.NewReader(body))
-	for {
-		tt := tokenizer.Next()
-		switch tt {
-		case html.ErrorToken:
-			return title
-		case html.StartTagToken:
-			token := tokenizer.Token()
-			switch token.Data {
-			case "title":
-				// Next text token will be the actual title of the page
-				if tokenType := tokenizer.Next(); tokenType != html.TextToken {
-					continue
-				}
-				title = tokenizer.Token().Data
-				return title
-			}
-		}
+func getTitle(htmlContent string) string {
+	re := regexp.MustCompile(`(?i)<title[^>]*>([^<]+)</title>`)
+	matches := re.FindStringSubmatch(htmlContent)
+	if len(matches) >= 2 {
+		return matches[1]
 	}
-}
-
-func ResponseDecoding(body []byte, label string) string {
-	// 根据编码 对响应结果进行解码
-	var str string
-	label = strings.Trim(strings.Trim(strings.ToUpper(label), "\""), ";")
-	switch label {
-	case "UTF-8", "UTF8", "US-ASCII":
-		str = string(body)
-	case "GBK":
-		// 解码为GBK编码
-		decoder := simplifiedchinese.GB18030.NewDecoder()
-		decodedBody, _, err := transform.Bytes(decoder, body)
-		if err != nil {
-			return ""
-		}
-		str = string(decodedBody)
-	case "ISO-8859-1":
-		decoder := charmap.ISO8859_1.NewDecoder()
-		decodedBody, _, err := transform.Bytes(decoder, body)
-		if err != nil {
-			return ""
-		}
-		str = string(decodedBody)
-	case "GB18030":
-		decoder := simplifiedchinese.GB18030.NewDecoder()
-		decodedBody, _, err := transform.Bytes(decoder, body)
-		if err != nil {
-			return ""
-		}
-		str = string(decodedBody)
-	case "GB2312":
-		r, err := charset.NewReaderLabel("gb2312", strings.NewReader(string(body)))
-		if err != nil {
-			return ""
-		}
-		data, _ := io.ReadAll(r)
-		str = string(data)
-	case "BIG5":
-		r, err := charset.NewReaderLabel("big5", strings.NewReader(string(body)))
-		if err != nil {
-			return ""
-		}
-		data, _ := io.ReadAll(r)
-		str = string(data)
-	default:
-		str = string(body)
-	}
-	return str
+	return ""
 }
 
 func parseCertificateInfo(cert *x509.Certificate) string {
@@ -203,12 +133,15 @@ func NewClient(proxy string, timeout time.Duration) (*http.Client, error) {
 func RequestOnce(client *http.Client, uri string) (banner Banner, redirectURL string, err error) {
 	// 开始请求数据
 	var resp *http.Response
+
 	// 完整响应
 	headers := getBuffer()
 	body := getBuffer()
+	bodyIO := getBuffer()
 	defer func() {
 		putBuffer(headers)
 		putBuffer(body)
+		putBuffer(bodyIO)
 	}()
 	req, err := http.NewRequest("GET", uri, nil)
 	if err != nil {
@@ -231,14 +164,21 @@ func RequestOnce(client *http.Client, uri string) (banner Banner, redirectURL st
 	if err != nil {
 		return banner, redirectURL, err
 	}
+	// copy buffer
+
+	_, err = io.Copy(body, bodyIO)
+	if err != nil {
+		return banner, redirectURL, err
+	}
+
 	banner = Banner{
 		Body:       body.String(),
-		BodyHash:   mmh3([]byte(body.String())),
+		BodyHash:   mmh3(body.Bytes()),
 		Header:     headers.String(),
 		StatusCode: resp.StatusCode,
 		Response:   headers.String() + body.String(),
 		Headers:    map[string]string{}}
-	banner.Title = getTitle(body.Bytes())
+	banner.Title = getTitle(banner.Body)
 	for k, v := range resp.Header {
 		banner.Headers[strings.ToLower(k)] = strings.Join(v, ",")
 	}
@@ -249,7 +189,7 @@ func RequestOnce(client *http.Client, uri string) (banner Banner, redirectURL st
 		gologger.Debug().Msg("Dump Cert For " + uri + "\r\n" + banner.Certificate)
 	}
 	// 解析JavaScript跳转
-	jsRedirectUri := parseJavaScript(uri, body.String())
+	jsRedirectUri := parseJavaScript(uri, bodyIO)
 	if jsRedirectUri != "" {
 		uri = urlJoin(uri, jsRedirectUri)
 		gologger.Debug().Msgf("redirect URL:%s", uri)

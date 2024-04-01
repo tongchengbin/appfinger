@@ -5,6 +5,7 @@ import (
 	"github.com/projectdiscovery/gologger"
 	"github.com/robertkrimen/otto"
 	"golang.org/x/net/html"
+	"io"
 	"net/url"
 	"strings"
 )
@@ -177,10 +178,10 @@ func extractCharset(htmlContent string) string {
 	return strings.ToUpper(strings.TrimSpace(charset))
 }
 
-func parseJavaScript(url string, htmlContent string) string {
+func parseJavaScript(url string, bodyIO io.Reader) string {
 	// 在这里解析JavaScript，提取跳转信息
 	//<meta http-equiv="Refresh"content="0;url=/yyoa/index.jsp">
-	doc, err := html.Parse(strings.NewReader(htmlContent))
+	doc, err := html.Parse(bodyIO)
 	if err != nil {
 		return ""
 	}
@@ -201,6 +202,7 @@ func parseJavaScript(url string, htmlContent string) string {
 					onload = attr.Val
 				}
 			}
+
 		}
 		// 如果节点是一个script标签并且包含JavaScript代码，则将其添加到切片中
 		if n.Type == html.ElementNode && n.Data == "script" {
@@ -216,10 +218,14 @@ func parseJavaScript(url string, htmlContent string) string {
 				scripts = append(scripts, jsCode)
 			}
 		}
-		// 递归遍历子节点
-		for c := n.FirstChild; c != nil; c = c.NextSibling {
-			visitNode(c)
+		// 应该只需要迭代body,html 下的子标签 节约时间
+		if n.Type == html.ElementNode && (n.Data == "body" || n.Data == "html") {
+			// 递归遍历子节点
+			for c := n.FirstChild; c != nil; c = c.NextSibling {
+				visitNode(c)
+			}
 		}
+
 	}
 	visitNode(doc)
 	if len(scripts) > 2 {
