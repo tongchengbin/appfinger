@@ -183,15 +183,7 @@
       words:
         - "cloudflare-nginx"
         - "__cfduid="
-      condition: and
-    - part: headers.server
-      type: word
-      words:
-        - cloudflare
-    - part: title
-      type: word
-      words:
-        - "Cloudflare"
+        - "CF-RAY:"
 - name: Caddy
   matchers:
     - part: headers.server
