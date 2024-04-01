@@ -10,7 +10,6 @@ import (
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/projectdiscovery/gologger"
-	"golang.org/x/net/html"
 	"golang.org/x/net/html/charset"
 	"golang.org/x/net/proxy"
 	"golang.org/x/text/encoding/charmap"
@@ -20,33 +19,18 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"regexp"
 	"strings"
 	"time"
 )
 
 func getTitle(body []byte) string {
-	var title string
-
-	// Tokenize the HTML document and check for fingerprints as required
-	tokenizer := html.NewTokenizer(bytes.NewReader(body))
-	for {
-		tt := tokenizer.Next()
-		switch tt {
-		case html.ErrorToken:
-			return title
-		case html.StartTagToken:
-			token := tokenizer.Token()
-			switch token.Data {
-			case "title":
-				// Next text token will be the actual title of the page
-				if tokenType := tokenizer.Next(); tokenType != html.TextToken {
-					continue
-				}
-				title = tokenizer.Token().Data
-				return title
-			}
-		}
+	re := regexp.MustCompile(`(?i)<title[^>]*>([^<]+)</title>`)
+	matches := re.FindSubmatch(body)
+	if len(matches) >= 2 {
+		return string(matches[1])
 	}
+	return ""
 }
 
 func ResponseDecoding(body []byte, label string) string {
