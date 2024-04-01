@@ -28,16 +28,16 @@ type Rule struct {
 }
 
 type Banner struct {
-	BodyHash    int32             `json:"body_hash"`
-	Body        string            `json:"body"`
-	Header      string            `json:"header"`
-	Headers     map[string]string `json:"headers"`
+	BodyHash    string            `json:"body_hash"`
+	Body        string            `json:"-"`
+	Header      string            `json:"-"`
+	Headers     map[string]string `json:"-"`
 	Title       string            `json:"title"`
 	StatusCode  int               `json:"status_code"`
 	Response    string            `json:"response"`
 	SSL         bool              `json:"ssl"`
 	Certificate string            `json:"certificate"`
-	IconHash    int32             `json:"icon_hash"`
+	IconHash    string            `json:"icon_hash"`
 }
 
 type AppFinger struct {
@@ -219,20 +219,20 @@ func mergeMaps(map1, map2 map[string]map[string]string) map[string]map[string]st
 	}
 	return result
 }
-func (f *AppFinger) MatchURI(uri string) (banner Banner, fingerprints map[string]map[string]string, err error) {
+func (f *AppFinger) MatchURI(uri string) (banner *Banner, fingerprints map[string]map[string]string, err error) {
 	banners, err := Request(uri, f.timeout, f.Proxy, f.options.DisableIcon)
 	if err != nil {
 		return banner, fingerprints, err
 	}
 	for _, b := range banners {
 		// is honeypot.yaml
-		fingerprints = mergeMaps(fingerprints, f.Match(&b))
+		fingerprints = mergeMaps(fingerprints, f.Match(b))
 	}
 	if _, ok := fingerprints["honeypot"]; ok {
 		return banners[len(banners)-1], map[string]map[string]string{"honeypot": make(map[string]string)}, nil
 	}
 	if _, ok := fingerprints["Wordpress"]; ok {
-		fingerprints = mergeMaps(fingerprints, MatchWpPlugin(&banners[len(banners)-1]))
+		fingerprints = mergeMaps(fingerprints, MatchWpPlugin(banners[len(banners)-1]))
 	}
 	return banners[len(banners)-1], fingerprints, nil
 }

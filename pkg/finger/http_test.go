@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/projectdiscovery/gologger"
 	"github.com/projectdiscovery/gologger/levels"
+	"github.com/spaolacci/murmur3"
 	"github.com/stretchr/testify/assert"
 	"golang.org/x/net/html/charset"
 	"io"
@@ -223,7 +224,10 @@ func TestRegex2(t *testing.T) {
 }
 
 func TestMurmurhash(t *testing.T) {
-	assert.Equal(t, int32(851989093), mmh3([]byte("foo")))
+	mHash := murmur3.New32WithSeed(0)
+	mHash.Write([]byte("foo"))
+	hashNum := mHash.Sum32()
+	assert.Equal(t, int32(-156908512), int32(hashNum))
 }
 
 func TestCharset(t *testing.T) {

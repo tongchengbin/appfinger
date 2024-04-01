@@ -11,6 +11,7 @@ require (
 	github.com/projectdiscovery/goflags v0.1.26
 	github.com/projectdiscovery/gologger v1.1.11
 	github.com/projectdiscovery/utils v0.0.60
+	github.com/remeh/sizedwaitgroup v1.0.0
 	github.com/robertkrimen/otto v0.3.0
 	github.com/spaolacci/murmur3 v1.1.0
 	github.com/stretchr/testify v1.8.4

@@ -179,6 +179,7 @@ func extractCharset(htmlContent string) string {
 }
 
 func parseJavaScript(url string, bodyIO io.Reader) string {
+
 	// 在这里解析JavaScript，提取跳转信息
 	//<meta http-equiv="Refresh"content="0;url=/yyoa/index.jsp">
 	doc, err := html.Parse(bodyIO)
@@ -202,7 +203,6 @@ func parseJavaScript(url string, bodyIO io.Reader) string {
 					onload = attr.Val
 				}
 			}
-
 		}
 		// 如果节点是一个script标签并且包含JavaScript代码，则将其添加到切片中
 		if n.Type == html.ElementNode && n.Data == "script" {
@@ -225,7 +225,6 @@ func parseJavaScript(url string, bodyIO io.Reader) string {
 				visitNode(c)
 			}
 		}
-
 	}
 	visitNode(doc)
 	if len(scripts) > 2 {

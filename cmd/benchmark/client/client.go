@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/remeh/sizedwaitgroup"
 	"github.com/tongchengbin/appfinger/pkg/finger"
 	"log"
@@ -54,5 +55,9 @@ func main() {
 	}
 	wg.Wait()
 	t2 := time.Now().Unix()
+	var memStats runtime.MemStats
+	runtime.ReadMemStats(&memStats)
+	totalAllocatedMemory := memStats.TotalAlloc / 1024 / 1024 // 转换为MB
+	fmt.Printf("Total allocated memory: %d MB\n", totalAllocatedMemory)
 	println("TIME:", t2-t1)
 }

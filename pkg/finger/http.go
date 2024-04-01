@@ -1,14 +1,18 @@
 package finger
 
 import (
+	"bytes"
 	"context"
 	"crypto/tls"
 	"crypto/x509"
 	"encoding/base64"
 	"errors"
 	"fmt"
-	"github.com/PuerkitoBio/goquery"
 	"github.com/projectdiscovery/gologger"
+	"net/http/httputil"
+	"strconv"
+
+	"github.com/PuerkitoBio/goquery"
 	"golang.org/x/net/proxy"
 	"io"
 	"net"
@@ -130,19 +134,9 @@ func NewClient(proxy string, timeout time.Duration) (*http.Client, error) {
 	}, nil
 }
 
-func RequestOnce(client *http.Client, uri string) (banner Banner, redirectURL string, err error) {
+func RequestOnce(client *http.Client, uri string) (banner *Banner, redirectURL string, err error) {
 	// 开始请求数据
 	var resp *http.Response
-
-	// 完整响应
-	headers := getBuffer()
-	body := getBuffer()
-	bodyIO := getBuffer()
-	defer func() {
-		putBuffer(headers)
-		putBuffer(body)
-		putBuffer(bodyIO)
-	}()
 	req, err := http.NewRequest("GET", uri, nil)
 	if err != nil {
 		return banner, redirectURL, err
@@ -153,30 +147,25 @@ func RequestOnce(client *http.Client, uri string) (banner Banner, redirectURL st
 	if err != nil && err.Error() != http.ErrUseLastResponse.Error() {
 		return banner, redirectURL, err
 	}
-	// 先读取Body 剩余的就是header
-	defer func(Body io.ReadCloser) {
-	}(resp.Body)
-	_, err = body.ReadFrom(resp.Body)
-	if err != nil {
-		return banner, redirectURL, err
+	dump, _ := httputil.DumpResponse(resp, true)
+	// 获取Response 长度
+	var contentLength int
+	if ctl := resp.Header.Get("Content-Length"); ctl != "" {
+		contentLength, err = strconv.Atoi(ctl)
+		if err != nil {
+			return nil, "", err
+		}
+	} else {
+		contentLength = bytes.Index(dump, []byte("\r\n"))
 	}
-	err = resp.Write(headers)
-	if err != nil {
-		return banner, redirectURL, err
-	}
-	// copy buffer
-
-	_, err = io.Copy(body, bodyIO)
-	if err != nil {
-		return banner, redirectURL, err
-	}
-
-	banner = Banner{
-		Body:       body.String(),
-		BodyHash:   mmh3(body.Bytes()),
-		Header:     headers.String(),
+	headers := dump[0 : len(dump)-contentLength]
+	body := dump[len(dump)-contentLength : len(dump)]
+	banner = &Banner{
+		Body:       string(body),
+		BodyHash:   Mmh3(body),
+		Header:     string(headers),
 		StatusCode: resp.StatusCode,
-		Response:   headers.String() + body.String(),
+		Response:   string(dump),
 		Headers:    map[string]string{}}
 	banner.Title = getTitle(banner.Body)
 	for k, v := range resp.Header {
@@ -189,7 +178,7 @@ func RequestOnce(client *http.Client, uri string) (banner Banner, redirectURL st
 		gologger.Debug().Msg("Dump Cert For " + uri + "\r\n" + banner.Certificate)
 	}
 	// 解析JavaScript跳转
-	jsRedirectUri := parseJavaScript(uri, bodyIO)
+	jsRedirectUri := parseJavaScript(uri, resp.Body)
 	if jsRedirectUri != "" {
 		uri = urlJoin(uri, jsRedirectUri)
 		gologger.Debug().Msgf("redirect URL:%s", uri)
@@ -197,21 +186,22 @@ func RequestOnce(client *http.Client, uri string) (banner Banner, redirectURL st
 	return banner, uri, nil
 }
 
-func Request(uri string, timeout time.Duration, proxyURL string, disableIcon bool) ([]Banner, error) {
+func Request(uri string, timeout time.Duration, proxyURL string, disableIcon bool) ([]*Banner, error) {
 	var err error
 	client, err := NewClient(proxyURL, timeout)
 	if err != nil {
 		return nil, err
 	}
 	defer client.CloseIdleConnections()
-	var banners []Banner
-	var banner Banner
+	var banners []*Banner
+	var banner *Banner
 	var nextURI = uri
 	var req *http.Request
 	var resp *http.Response
 	for ret := 0; ret < 3; ret++ {
 		banner, nextURI, err = RequestOnce(client, nextURI)
-		if err == nil {
+		if err != nil {
+			gologger.Debug().Msg(err.Error())
 			break
 		}
 		banners = append(banners, banner)
@@ -259,7 +249,7 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 				return banners, err
 			}
 		}
-		iconHash := mmh3(body)
+		iconHash := Mmh3(body)
 		for _, b := range banners {
 			b.IconHash = iconHash
 		}
