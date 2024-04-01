@@ -386,6 +386,12 @@
       words:
         - /WPMS/asset/lib/gridster/
         - URL='/WPMS
+- name: applyct
+  matchers:
+    - part: body
+      type: word
+      words:
+        - /applyct/
 - name: elfinder
   matchers:
     - part: body

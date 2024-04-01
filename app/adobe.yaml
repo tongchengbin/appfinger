@@ -22,20 +22,3 @@
       type: word
       words:
           - Adobe Media Server
-
-- matchers:
-    - part: body
-      type: word
-      case-insensitive: true
-      words:
-        - /cfajax/
-        - crossdomain.xml
-        - cfide
-        - coldfusion.ajax
-        - <!-- START headerTags\\.cfm
-    - part: header
-      type: word
-      case-insensitive: true
-      words:
-        - cftoken
-  name: ColdFusion
