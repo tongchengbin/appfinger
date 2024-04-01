@@ -1,7 +1,6 @@
 package finger
 
 import (
-	"bytes"
 	"context"
 	"crypto/tls"
 	"crypto/x509"
@@ -255,13 +254,16 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 	var resp *http.Response
 	for ret := 0; ret < 3; ret++ {
 		banner, nextURI, err = RequestOnce(client, nextURI)
-		if err == nil {
+		if err != nil {
 			break
 		}
 		banners = append(banners, banner)
 		if nextURI == "" {
 			break
 		}
+	}
+	if len(banners) == 0 {
+		return nil, err
 	}
 	// 解析icon
 	if len(banners) > 0 && !disableIcon {
