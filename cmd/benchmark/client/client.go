@@ -40,11 +40,11 @@ func main() {
 	app := finger.New(&finger.Options{})
 	cnt := 1
 	t1 := time.Now().Unix()
-	for t := 0; t < 128; t++ {
+	for t := 0; t < 32; t++ {
 		wg.Add()
 		go func() {
 			defer wg.Done()
-			for cnt < 10000 {
+			for cnt < 1000 {
 				_, _ = app.MatchURI("http://127.0.0.1:8080")
 				cnt += 1
 				if cnt == 9000 {
