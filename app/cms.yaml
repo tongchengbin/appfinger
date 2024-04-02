@@ -268,13 +268,13 @@
 - name: pbootCMS
   matchers:
     - type: word
-      part: headers
+      part: header
       words:
         - "set-cookie: pbootsystem="
 - name: powercreator CMS
   matchers:
     - type: word
-      part: headers
+      part: header
       words:
         - "PowerCreator CMS"
 - name: webtareas

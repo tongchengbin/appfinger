@@ -369,7 +369,7 @@
 - name: ShopXO
   matchers:
     - type: word
-      part: headers
+      part: header
       name: "ShopXO"
       words:
         - "ShopXO"
@@ -526,17 +526,17 @@
 - name: horde
   matchers:
     - type: word
-      part: headers
+      part: header
       words:
         - "horde3"
       condition: and
     - type: word
-      part: headers
+      part: header
       words:
         - "Horde3"
       condition: and
     - type: word
-      part: headers
+      part: header
       words:
         - "Set-Cookie:Horde"
       condition: and
