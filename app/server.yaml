@@ -180,10 +180,11 @@
   matchers:
     - type: word
       part: headers
+      case-insensitive: true
       words:
         - "cloudflare-nginx"
         - "__cfduid="
-        - "CF-RAY:"
+        - "cf-ray:"
 - name: Caddy
   matchers:
     - part: headers.server
