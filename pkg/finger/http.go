@@ -17,6 +17,7 @@ import (
 	"io"
 	"net"
 	"net/http"
+	"net/http/httputil"
 	"net/url"
 	"regexp"
 	"strings"
@@ -186,13 +187,6 @@ func NewClient(proxy string, timeout time.Duration) (*http.Client, error) {
 func RequestOnce(client *http.Client, uri string) (banner Banner, redirectURL string, err error) {
 	// 开始请求数据
 	var resp *http.Response
-	// 完整响应
-	headers := getBuffer()
-	body := getBuffer()
-	defer func() {
-		putBuffer(headers)
-		putBuffer(body)
-	}()
 	req, err := http.NewRequest("GET", uri, nil)
 	if err != nil {
 		return banner, redirectURL, err
@@ -203,25 +197,18 @@ func RequestOnce(client *http.Client, uri string) (banner Banner, redirectURL st
 	if err != nil && err.Error() != http.ErrUseLastResponse.Error() {
 		return banner, redirectURL, err
 	}
-	// 先读取Body 剩余的就是header
-	defer func(Body io.ReadCloser) {
-	}(resp.Body)
-	_, err = body.ReadFrom(resp.Body)
-	if err != nil {
-		return banner, redirectURL, err
-	}
-	err = resp.Write(headers)
-	if err != nil {
-		return banner, redirectURL, err
-	}
+	// get raw headers
+	headers, _ := httputil.DumpResponse(resp, false)
+	// get body
+	body, _ := httputil.DumpResponse(resp, true)
 	banner = Banner{
-		Body:       body.String(),
-		BodyHash:   mmh3([]byte(body.String())),
-		Header:     headers.String(),
+		Body:       string(body),
+		BodyHash:   mmh3(body),
+		Header:     string(headers),
 		StatusCode: resp.StatusCode,
-		Response:   headers.String() + body.String(),
+		Response:   string(headers) + string(body),
 		Headers:    map[string]string{}}
-	banner.Title = getTitle(body.Bytes())
+	banner.Title = getTitle(body)
 	for k, v := range resp.Header {
 		banner.Headers[strings.ToLower(k)] = strings.Join(v, ",")
 	}
@@ -231,8 +218,8 @@ func RequestOnce(client *http.Client, uri string) (banner Banner, redirectURL st
 		banner.Certificate = parseCertificateInfo(cert)
 		gologger.Debug().Msg("Dump Cert For " + uri + "\r\n" + banner.Certificate)
 	}
-	// 解析JavaScript跳转
-	jsRedirectUri := parseJavaScript(uri, body.String())
+	//解析JavaScript跳转
+	jsRedirectUri := parseJavaScript(uri, string(body))
 	if jsRedirectUri != "" {
 		uri = urlJoin(uri, jsRedirectUri)
 		gologger.Debug().Msgf("redirect URL:%s", uri)
@@ -280,9 +267,11 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 			if len(base64Seps) == 2 {
 				body, err = base64.StdEncoding.DecodeString(base64Seps[1])
 				if err != nil {
+					println(1)
 					return banners, err
 				}
 			} else {
+				println(2)
 				return banners, err
 			}
 
@@ -298,7 +287,7 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 				return banners, err
 			}
 			if resp.StatusCode != 200 {
-				return banners, errors.New("图标请求失败")
+				return banners, nil
 			}
 			body, err = io.ReadAll(resp.Body)
 			if err != nil {
