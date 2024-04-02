@@ -179,7 +179,7 @@
 - name: CloudFlare
   matchers:
     - type: word
-      part: headers
+      part: header
       case-insensitive: true
       words:
         - "cloudflare-nginx"
