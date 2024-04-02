@@ -7,8 +7,6 @@ import (
 	"github.com/projectdiscovery/gologger/levels"
 	"github.com/tongchengbin/appfinger/pkg/external/customrules"
 	"github.com/tongchengbin/appfinger/pkg/runner"
-	"log"
-	"net/http"
 	_ "net/http/pprof"
 )
 
@@ -30,9 +28,6 @@ ______          %s             ________  __
 `, Version)
 
 func main() {
-	go func() {
-		log.Println(http.ListenAndServe(":6060", nil))
-	}()
 	gologger.DefaultLogger.SetMaxLevel(levels.LevelWarning)
 	options := runner.ParseOptions()
 	if options.Debug {
