@@ -18,6 +18,7 @@ type Options struct {
 	Proxy             string
 	DisableJavaScript bool
 	DisableIcon       bool
+	DebugResp         bool
 }
 
 type Rule struct {
@@ -230,7 +231,7 @@ func (f *AppFinger) MatchURI(uri string) (banner *Banner, fingerprints map[strin
 		u.Host = u.Hostname()
 	}
 	uri = u.String()
-	banners, err := Request(uri, f.timeout, f.Proxy, f.options.DisableIcon)
+	banners, err := Request(uri, f.timeout, f.Proxy, f.options.DisableIcon, f.options.DebugResp)
 	if err != nil {
 		return banner, fingerprints, err
 	}

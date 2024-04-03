@@ -39,6 +39,7 @@ func NewRunner(options *Options) (*Runner, error) {
 		options: options,
 		finger: finger.New(&finger.Options{Timeout: time.Second * time.Duration(options.Timeout),
 			Proxy:             options.Proxy,
+			DebugResp:         options.DebugResp,
 			Home:              options.FingerHome,
 			DisableJavaScript: options.DisableJavaScript,
 			DisableIcon:       options.DisableIcon,

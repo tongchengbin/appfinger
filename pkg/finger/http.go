@@ -200,7 +200,7 @@ func RequestOnce(client *http.Client, uri string) (banner *Banner, redirectURL s
 	// get raw headers
 	headers, _ := httputil.DumpResponse(resp, false)
 	// get body
-	body, _ := httputil.DumpResponse(resp, true)
+	body, _ := io.ReadAll(resp.Body)
 	banner = &Banner{
 		Body:       string(body),
 		BodyHash:   mmh3(body),
@@ -216,18 +216,20 @@ func RequestOnce(client *http.Client, uri string) (banner *Banner, redirectURL s
 	if resp.TLS != nil {
 		cert := resp.TLS.PeerCertificates[0]
 		banner.Certificate = parseCertificateInfo(cert)
-		gologger.Debug().Msg("Dump Cert For " + uri + "\r\n" + banner.Certificate)
 	}
 	//解析JavaScript跳转
 	jsRedirectUri := parseJavaScript(uri, string(body))
 	if jsRedirectUri != "" {
 		uri = urlJoin(uri, jsRedirectUri)
 		gologger.Debug().Msgf("redirect URL:%s", uri)
+		return banner, uri, nil
+	} else {
+		return banner, "", nil
 	}
-	return banner, uri, nil
+
 }
 
-func Request(uri string, timeout time.Duration, proxyURL string, disableIcon bool) ([]*Banner, error) {
+func Request(uri string, timeout time.Duration, proxyURL string, disableIcon bool, debugResp bool) ([]*Banner, error) {
 	var err error
 	client, err := NewClient(proxyURL, timeout)
 	if err != nil {
@@ -244,6 +246,14 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 		if err != nil {
 			break
 		}
+		if debugResp {
+			if banner.Certificate != "" {
+				fmt.Println("Dump Cert For " + uri + "\r\n" + banner.Certificate)
+			}
+			fmt.Println("Dump Response For " + uri + "\r\n" + banner.Response)
+
+		}
+
 		banners = append(banners, banner)
 		if nextURI == "" {
 			break
