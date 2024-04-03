@@ -30,6 +30,7 @@ type Rule struct {
 }
 
 type Banner struct {
+	Uri         string            `json:"uri"`
 	BodyHash    int32             `json:"body_hash"`
 	Body        string            `json:"-"`
 	Header      string            `json:"-"`

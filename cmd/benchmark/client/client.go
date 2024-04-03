@@ -45,7 +45,7 @@ func main() {
 		go func() {
 			defer wg.Done()
 			for cnt < 1000 {
-				_, _ = app.MatchURI("http://127.0.0.1:8080")
+				_, _, _ = app.MatchURI("http://127.0.0.1:8080")
 				cnt += 1
 				if cnt == 9000 {
 					report()

@@ -21,6 +21,7 @@ func (r *Runner) EnumerateMultipleDomainsWithCtx(ctx context.Context, reader io.
 			for url := range urlCh {
 				banner, extract, err := r.finger.MatchURI(url)
 				if err != nil {
+					gologger.Debug().Msg(err.Error())
 					continue
 				}
 				r.callback(r, url, banner, extract)

@@ -202,6 +202,7 @@ func RequestOnce(client *http.Client, uri string) (banner *Banner, redirectURL s
 	// get body
 	body, _ := io.ReadAll(resp.Body)
 	banner = &Banner{
+		Uri:        uri,
 		Body:       string(body),
 		BodyHash:   mmh3(body),
 		Header:     string(headers),
@@ -229,6 +230,51 @@ func RequestOnce(client *http.Client, uri string) (banner *Banner, redirectURL s
 
 }
 
+func readICON(client *http.Client, banner *Banner) (iconHash int32, err error) {
+	iconURL := parseIconFile(banner.Body)
+	if iconURL == "" {
+		iconURL = "/favicon.ico"
+	}
+	if isAbsoluteURL(iconURL) {
+		iconURL = joinURL(banner.Uri, iconURL)
+	}
+	var body []byte
+	if strings.HasPrefix(iconURL, "data:") {
+		base64Seps := strings.Split(iconURL, ",")
+		if len(base64Seps) == 2 {
+			body, err = base64.StdEncoding.DecodeString(base64Seps[1])
+			if err != nil {
+				return iconHash, err
+			}
+		} else {
+			return iconHash, errors.New("ICON 无法解析")
+		}
+
+	} else {
+		req, err := http.NewRequest("GET", iconURL, nil)
+		if err != nil {
+			// 图片异常不影响
+			return iconHash, err
+		}
+		req.Header.Set("Referer", banner.Uri)
+		resp, err := client.Do(req)
+		if err != nil {
+			return iconHash, err
+		}
+		if resp.StatusCode != 200 {
+			return iconHash, err
+		}
+		body, err = io.ReadAll(resp.Body)
+		if err != nil {
+			return iconHash, err
+		}
+	}
+	iconHash = mmh3(body)
+	// set
+	banner.IconHash = iconHash
+	return iconHash, nil
+}
+
 func Request(uri string, timeout time.Duration, proxyURL string, disableIcon bool, debugResp bool) ([]*Banner, error) {
 	var err error
 	client, err := NewClient(proxyURL, timeout)
@@ -239,8 +285,7 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 	var banners []*Banner
 	var banner *Banner
 	var nextURI = uri
-	var req *http.Request
-	var resp *http.Response
+
 	for ret := 0; ret < 3; ret++ {
 		banner, nextURI, err = RequestOnce(client, nextURI)
 		if err != nil {
@@ -251,9 +296,7 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 				fmt.Println("Dump Cert For " + uri + "\r\n" + banner.Certificate)
 			}
 			fmt.Println("Dump Response For " + uri + "\r\n" + banner.Response)
-
 		}
-
 		banners = append(banners, banner)
 		if nextURI == "" {
 			break
@@ -264,47 +307,9 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 	}
 	// 解析icon
 	if len(banners) > 0 && !disableIcon {
-		iconURL := parseIconFile(banners[len(banners)-1].Body)
-		if iconURL == "" {
-			iconURL = "/favicon.ico"
-		}
-		if isAbsoluteURL(iconURL) {
-			iconURL = joinURL(nextURI, iconURL)
-		}
-		var body []byte
-		if strings.HasPrefix(iconURL, "data:") {
-			base64Seps := strings.Split(iconURL, ",")
-			if len(base64Seps) == 2 {
-				body, err = base64.StdEncoding.DecodeString(base64Seps[1])
-				if err != nil {
-					return banners, err
-				}
-			} else {
-				return banners, err
-			}
-
-		} else {
-			req, err = http.NewRequest("GET", iconURL, nil)
-			if err != nil {
-				// 图片异常不影响
-				return banners, err
-			}
-			req.Header.Set("Referer", nextURI)
-			resp, err = client.Do(req)
-			if err != nil {
-				return banners, err
-			}
-			if resp.StatusCode != 200 {
-				return banners, nil
-			}
-			body, err = io.ReadAll(resp.Body)
-			if err != nil {
-				return banners, err
-			}
-		}
-		iconHash := mmh3(body)
-		for _, b := range banners {
-			b.IconHash = iconHash
+		_, err := readICON(client, banners[len(banners)-1])
+		if err != nil {
+			gologger.Debug().Msg(err.Error())
 		}
 	}
 	if len(banners) == 0 {
