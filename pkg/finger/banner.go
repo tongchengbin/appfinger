@@ -6,6 +6,7 @@ import (
 	"github.com/tongchengbin/appfinger"
 	"github.com/tongchengbin/appfinger/pkg/matchers"
 	"gopkg.in/yaml.v3"
+	"net/url"
 	"os"
 	"strings"
 	"time"
@@ -219,20 +220,29 @@ func mergeMaps(map1, map2 map[string]map[string]string) map[string]map[string]st
 	}
 	return result
 }
-func (f *AppFinger) MatchURI(uri string) (banner Banner, fingerprints map[string]map[string]string, err error) {
+func (f *AppFinger) MatchURI(uri string) (banner *Banner, fingerprints map[string]map[string]string, err error) {
+	// fix url
+	u, err := url.Parse(uri)
+	if err != nil {
+		return nil, nil, err
+	}
+	if (u.Scheme == "http" && u.Port() == "80") || (u.Scheme == "https" && u.Port() == "443") {
+		u.Host = u.Hostname()
+	}
+	uri = u.String()
 	banners, err := Request(uri, f.timeout, f.Proxy, f.options.DisableIcon)
 	if err != nil {
 		return banner, fingerprints, err
 	}
 	for _, b := range banners {
 		// is honeypot.yaml
-		fingerprints = mergeMaps(fingerprints, f.Match(&b))
+		fingerprints = mergeMaps(fingerprints, f.Match(b))
 	}
 	if _, ok := fingerprints["honeypot"]; ok {
 		return banners[len(banners)-1], map[string]map[string]string{"honeypot": make(map[string]string)}, nil
 	}
 	if _, ok := fingerprints["Wordpress"]; ok {
-		fingerprints = mergeMaps(fingerprints, MatchWpPlugin(&banners[len(banners)-1]))
+		fingerprints = mergeMaps(fingerprints, MatchWpPlugin(banners[len(banners)-1]))
 	}
 	return banners[len(banners)-1], fingerprints, nil
 }

@@ -184,7 +184,7 @@ func NewClient(proxy string, timeout time.Duration) (*http.Client, error) {
 	}, nil
 }
 
-func RequestOnce(client *http.Client, uri string) (banner Banner, redirectURL string, err error) {
+func RequestOnce(client *http.Client, uri string) (banner *Banner, redirectURL string, err error) {
 	// 开始请求数据
 	var resp *http.Response
 	req, err := http.NewRequest("GET", uri, nil)
@@ -201,7 +201,7 @@ func RequestOnce(client *http.Client, uri string) (banner Banner, redirectURL st
 	headers, _ := httputil.DumpResponse(resp, false)
 	// get body
 	body, _ := httputil.DumpResponse(resp, true)
-	banner = Banner{
+	banner = &Banner{
 		Body:       string(body),
 		BodyHash:   mmh3(body),
 		Header:     string(headers),
@@ -227,15 +227,15 @@ func RequestOnce(client *http.Client, uri string) (banner Banner, redirectURL st
 	return banner, uri, nil
 }
 
-func Request(uri string, timeout time.Duration, proxyURL string, disableIcon bool) ([]Banner, error) {
+func Request(uri string, timeout time.Duration, proxyURL string, disableIcon bool) ([]*Banner, error) {
 	var err error
 	client, err := NewClient(proxyURL, timeout)
 	if err != nil {
 		return nil, err
 	}
 	defer client.CloseIdleConnections()
-	var banners []Banner
-	var banner Banner
+	var banners []*Banner
+	var banner *Banner
 	var nextURI = uri
 	var req *http.Request
 	var resp *http.Response
@@ -267,11 +267,9 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 			if len(base64Seps) == 2 {
 				body, err = base64.StdEncoding.DecodeString(base64Seps[1])
 				if err != nil {
-					println(1)
 					return banners, err
 				}
 			} else {
-				println(2)
 				return banners, err
 			}
 

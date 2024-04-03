@@ -14,7 +14,7 @@ import (
 type Runner struct {
 	options  *Options
 	finger   *finger.AppFinger
-	callback func(runner *Runner, url string, banner finger.Banner, extract map[string]map[string]string)
+	callback func(runner *Runner, url string, banner *finger.Banner, extract map[string]map[string]string)
 	outputs  []io.Writer
 }
 
@@ -43,7 +43,7 @@ func NewRunner(options *Options) (*Runner, error) {
 			DisableJavaScript: options.DisableJavaScript,
 			DisableIcon:       options.DisableIcon,
 		}),
-		callback: func(r *Runner, url string, banner finger.Banner, extract map[string]map[string]string) {
+		callback: func(r *Runner, url string, banner *finger.Banner, extract map[string]map[string]string) {
 			for _, output := range r.outputs {
 				out := &OutputFields{URL: url, Extract: extract}
 				s, _ := json.Marshal(out)
