@@ -96,3 +96,66 @@
       type: word
       words:
         - "VPN1000"
+
+- name: ZyXEL-VSG1432-B101
+  matchers:
+    - part: title
+      type: word
+      case-insensitive: true
+      words:
+        - "zyxel vsg1432-b101"
+- name: ZyXEL-P-660HN-51
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ZyXEL P-660HN-51"
+- name: ZyXEL-LTE3301
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ZyXEL LTE3301"
+- name: ZyXEL-NBG4104
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ZyXEL NBG4104"
+- name: ZyXEL-EMG3425-Q10A
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ZyXEL EMG3425-Q10A"
+- name: ZyXEL-P-873HNUP-51B
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ZyXEL P-873HNUP-51B"
+- name: ZyXEL-VSG1435-B101
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ZyXEL VSG1435-B101"
+- name: ZyXEL-LTE3302
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ZyXEL LTE3302"
+
+- name: ZyXEL-LTE3316
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ZyXEL LTE3316"
+- name: ZyXEL-WAP6804
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ZyXEL WAP6804"
