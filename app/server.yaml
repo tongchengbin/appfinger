@@ -296,25 +296,17 @@
         - (^Cherokee)
       type: regex
 - matchers:
-    - part: headers.x-varnish
-      regex:
-        - ()
-      type: regex
-    - part: headers.server
-      regex:
-        - (^Varnish$)
-      type: regex
     - part: headers.set-cookie
-      regex:
-        - (ENUnique)
-      type: regex
+      words:
+        - ENUnique
+      type: word
     - group: 1
       name: version
-      part: headers.via
+      part: header
       regex:
-        - 'varnish(?: \(varnish/([\d.]+)\))?'
+        - Varnish(?:/([\d.]+))
       type: regex
-  name: varnish
+  name: Varnish
 - matchers:
     - name: version
       part: headers.server
