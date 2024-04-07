@@ -623,3 +623,10 @@
       name: version
       regex:
         - CirCarLife Scada (v[\d\.]+)
+
+- matchers:
+    - part: headers.server
+      words:
+        - AkamaiGHost
+      type: word
+  name: Akamai-CDN

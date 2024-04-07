@@ -1458,12 +1458,6 @@
     - '<title>AJA Video - FS1 Admin: Main</title> <link href="/css/aja_fs1.css"'
   name: aja_video_converter
 - matchers:
-  - part: headers.server
-    regex:
-    - (^AkamaiGHost)
-    type: regex
-  name: akamai_global_host
-- matchers:
   - part: body
     type: word
     words:
