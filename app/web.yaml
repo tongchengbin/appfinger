@@ -23083,12 +23083,6 @@
   - part: headers.Set-Cookie
     type: word
     words:
-    - __cf_bm
-  name: cloudflare_bot_management
-- matchers:
-  - part: headers.Set-Cookie
-    type: word
-    words:
     - cloudify_session
   name: cloudify.store
 - matchers:

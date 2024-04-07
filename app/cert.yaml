@@ -1,0 +1,6 @@
+- name: DigiCert
+  matchers:
+    - part: cert
+      type: word
+      words:
+        - "DigiCert"

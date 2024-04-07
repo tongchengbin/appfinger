@@ -174,17 +174,6 @@
       type: word
       words:
         - openresty
-
-
-- name: CloudFlare
-  matchers:
-    - type: word
-      part: header
-      case-insensitive: true
-      words:
-        - "cloudflare-nginx"
-        - "__cfduid="
-        - "cf-ray:"
 - name: Caddy
   matchers:
     - part: headers.server
@@ -630,6 +619,13 @@
         - AkamaiGHost
       type: word
   name: Akamai-CDN
+
+- matchers:
+    - part: headers.server
+      words:
+        - AkamaiNetStorage
+      type: word
+  name: AkamaiNetStorage
 
 - matchers:
     - part: headers.server

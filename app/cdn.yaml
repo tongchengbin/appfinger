@@ -1,0 +1,15 @@
+- name: CloudFlare
+  matchers:
+    - type: word
+      part: header
+      case-insensitive: true
+      words:
+        - "cloudflare-nginx"
+        - "__cfduid="
+        - "cf-ray:"
+- matchers:
+    - part: headers.Set-Cookie
+      type: word
+      words:
+        - __cf_bm
+  name: CloudFlare-Bot-Management
