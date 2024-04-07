@@ -130,9 +130,9 @@ func isAbsoluteURL(url string) bool {
 	return !(strings.HasPrefix(url, "http://") || strings.HasPrefix(url, "https://"))
 }
 
-func NewTransport(proxyURL string) (*http.Transport, error) {
+func NewTransport(proxyURL string) (transport *http.Transport, err error) {
 	// proxy
-	transport := &http.Transport{
+	transport = &http.Transport{
 		TLSClientConfig: &tls.Config{
 			MinVersion:           tls.VersionTLS10,
 			InsecureSkipVerify:   true,
@@ -142,7 +142,7 @@ func NewTransport(proxyURL string) (*http.Transport, error) {
 		if err != nil {
 			return nil, err
 		}
-		if strings.HasPrefix("http://", proxyURL) || strings.HasPrefix("https://", proxyURL) {
+		if strings.HasPrefix(proxyURL, "http://") || strings.HasPrefix(proxyURL, "https://") {
 			transport.Proxy = http.ProxyURL(proxyURl)
 		} else {
 			socksURL, proxyErr := url.Parse(proxyURL)

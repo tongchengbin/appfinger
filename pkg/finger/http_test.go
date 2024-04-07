@@ -256,6 +256,6 @@ func TestReqOnce(t *testing.T) {
 }
 
 func TestRequest(t *testing.T) {
-	_, err := Request("http://finger.lostpeach.cn", time.Second*time.Duration(2), "", true)
+	_, err := Request("http://finger.lostpeach.cn", time.Second*time.Duration(2), "", true, false)
 	assert.Nil(t, err)
 }

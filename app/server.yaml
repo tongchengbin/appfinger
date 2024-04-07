@@ -630,3 +630,11 @@
         - AkamaiGHost
       type: word
   name: Akamai-CDN
+
+- matchers:
+    - part: headers.server
+      type: regex
+      name: version
+      regex:
+        - bfe/([\d.]+)
+  name: Bfe

@@ -26411,11 +26411,3 @@
     - <div class="copyright">[^<]+<a[^>]+>xt:commerce
     type: regex
   name: xtcommerce
-
-- matchers:
-    - part: headers.server
-      type: regex
-      name: version
-      regex:
-        - 'bfe/([\d.]+)'
-  name: bfe
