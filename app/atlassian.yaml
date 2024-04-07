@@ -9,6 +9,10 @@
       type: word
       words:
         - com.atlassian.jira
+    - part: header
+      type: word
+      words:
+        - /plugins/servlet/samlsso
   name: Jira
 - matchers:
     - part: body
