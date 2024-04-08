@@ -22,3 +22,15 @@
       type: word
       words:
         - "3RD Auto System Interlib"
+- name: NCast
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "高清智能录播系统"
+- name: LikeShop
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "/pc/_nuxt/"

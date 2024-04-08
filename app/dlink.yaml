@@ -143,3 +143,9 @@
       part: title
       words:
         - "DSL-6740C"
+- name: DLink-DNS-ShareCenter
+  matchers:
+    - type: word
+      part: body
+      words:
+        - /cgi-bin/login_mgr.cgi

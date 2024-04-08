@@ -267,12 +267,6 @@
         - gunicorn(?:/([\d.]+))?
       type: regex
   name: gunicorn
-- name: Amazon-S3
-  matchers:
-    - part: headers.server
-      words:
-        - AmazonS3
-      type: word
 - name: cherokee
   matchers:
     - name: version
