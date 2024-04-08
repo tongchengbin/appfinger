@@ -1,0 +1,12 @@
+- name: Telesquare-Router
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'LangConvert("Please Input User ID and Password")'
+- name: TLR-2005KSH
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "TLR-2005KSH"

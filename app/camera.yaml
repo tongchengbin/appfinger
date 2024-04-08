@@ -346,3 +346,10 @@
       type: word
       words:
         - Surveillance Device
+
+- name: Amcrest-Camera
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "Amcrest Technologies"

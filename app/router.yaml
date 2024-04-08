@@ -282,12 +282,7 @@
       type: word
       words:
         - "EVSE Web Interface"
-- name: TLR-2005KSH
-  matchers:
-    - part: body
-      type: word
-      words:
-        - "TLR-2005KSH"
+
 - name: TEW-827DRU
   matchers:
     - part: body

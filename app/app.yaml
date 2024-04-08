@@ -2309,3 +2309,9 @@
       type: word
       words:
         - "GoAnywhere Web Client"
+- name: Progress-Kemp-LoadMaster
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "LoadMaster"

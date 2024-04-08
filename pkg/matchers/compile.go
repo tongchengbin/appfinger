@@ -4,6 +4,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"regexp"
+	"strings"
 )
 
 // CompileMatchers performs the initial setup operation on a matcher
@@ -39,7 +40,11 @@ func (matcher *Matcher) CompileMatchers() error {
 		}
 		matcher.regexCompiled = append(matcher.regexCompiled, compiled)
 	}
-
+	if matcher.CaseInsensitive {
+		for index, word := range matcher.Words {
+			matcher.Words[index] = strings.ToLower(word)
+		}
+	}
 	// Set up the condition type, if any.
 	if matcher.Condition != "" {
 		matcher.condition, ok = ConditionTypes[matcher.Condition]
