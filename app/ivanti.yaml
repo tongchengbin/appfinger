@@ -3,5 +3,6 @@
     - part: body
       type: word
       words:
+        - "welcome.cgi?p=logo"
         - "/dana-na/css/ds"
         - "/dana-na/auth/url_default/welcome.cgi"

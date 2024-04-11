@@ -21,3 +21,9 @@
       type: word
       words:
         - 965982073
+- name: IBM Operational Decision Manager
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "IBM ODM"

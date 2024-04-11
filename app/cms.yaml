@@ -1450,3 +1450,9 @@
       words:
         - Ananyoo CMS
   name: Ananyoo-CMS
+- name: Dolibarr
+  matchers:
+    - part: header
+      type: word
+      words:
+        - "DOLSESSID_"
