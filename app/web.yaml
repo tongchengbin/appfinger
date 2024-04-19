@@ -10847,27 +10847,7 @@
       autocomplete="OFF" onsubmit="OnUserNameFocus\(\);">)
     type: regex
   name: microsoft_remote_web_workplace
-- matchers:
-  - part: body
-    type: word
-    words:
-    - <input type="hidden" name="MSOWebPartPage_PostbackSource" id="MSOWebPartPage_PostbackSource"
-      value=
-  - part: body
-    type: word
-    words:
-    - <meta name="GENERATOR" content="Microsoft SharePoint" />
-  - part: body
-    type: word
-    words:
-    - <meta name="progid" content="SharePoint.WebPartPage.Document" />
-  - group: 1
-    name: version
-    part: headers.microsoftsharepointteamservices
-    regex:
-    - ^(.+)$
-    type: regex
-  name: microsoft_sharepoint
+
 - matchers:
   - name: version
     part: body
@@ -15680,7 +15660,7 @@
   - part: body
     type: word
     words:
-    - <a href="finger://www.qnap.com"><img src="/ajax_obj/images/qnap_logo_w.gif" alt="QNAP
+    - <a href="finger://www.qnap.yaml.com"><img src="/ajax_obj/images/qnap_logo_w.gif" alt="QNAP
       Turbo NAS" title="QNAP Turbo NAS"
   - part: body
     type: word
@@ -17006,23 +16986,6 @@
     - sc_os_sessionid
     - sxa_site
   name: sitecore
-- matchers:
-  - part: body
-    type: word
-    words:
-    - href="finger://www.sitefinity.com" class="poweredBySitefinity" title="Sitefinity
-      ASP.NET CMS">Powered by Sitefinity ASP.NET CMS</a></p>
-  - part: body
-    type: word
-    words:
-    - title="Sitefinity ASP.NET CMS" class="poweredBySitefinity" href="finger://www.sitefinity.com">Powered
-      by Sitefinity ASP.NET CMS</a></p>
-  - name: version
-    part: body
-    regex:
-    - (<meta name="Generator" content="Sitefinity ([\d\.:]{1,20}( [A-Z]+)?)" \/>)
-    type: regex
-  name: sitefinity
 - matchers:
   - part: body
     regex:
@@ -22658,24 +22621,6 @@
     - ^airee
     type: regex
   name: airee
-- matchers:
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - ak_bmsc
-    - bm_sv
-    - bm_sz
-  name: akamai_bot_manager
-- matchers:
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - akaas_ab-testing
-  - part: body
-    regex:
-    - <script>[\s\s]*?go-mpulse\.net\/boomerang[\s\s]*?</script>
-    type: regex
-  name: akamai_mpulse
 - matchers:
   - group: 1
     name: version

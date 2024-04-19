@@ -4,13 +4,6 @@
       type: word
       words:
         - "NetScaler AAA"
-- name: Citrix
-  matchers:
-    - part: title
-      type: word
-      words:
-        - "Citrix Login"
-
 - name: Citrix-Gateway
   matchers:
     - part: title
@@ -23,27 +16,19 @@
       type: word
       words:
         - "Digital Workplace"
-- name: NetScaler Gateway
+- name: NetScaler-Gateway
   matchers:
     - part: title
       type: word
       words:
         - "NetScaler Gateway"
+        - "Citrix Access Gateway"
 - name: Citrix SD-WAN
   matchers:
     - part: title
       type: word
       words:
           - "Citrix SD-WAN"
-- matchers:
-    - part: title
-      type: word
-      words:
-        - Citrix Gateway
-        - Netscaler Gateway
-        - NetScaler Gateway
-        - Citrix Access Gateway
-  name: Citrix-Access-Gateway
 - matchers:
     - part: headers.server
       words:
@@ -81,7 +66,20 @@
         - Welcome to Citrix XenServer ([\d\.]+)
 - name: Citrix-ADC
   matchers:
-    - part: icon_hash
+    - part: title
       type: word
       words:
-        - 177980953
+        - "Citrix Login"
+        - "Citrix ADC"
+- name: Citrix-XenMobile
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "XenMobile"
+- name: Citrix-StoreFront
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "/Citrix/StoreWeb"

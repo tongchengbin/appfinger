@@ -81,7 +81,7 @@
       type: word
       words:
         - 'Apache APISIX Dashboard'
-- name: Ambari
+- name: Apache Ambari
   matchers:
     - part: title
       type: word
@@ -109,3 +109,9 @@
       type: word
       words:
         - "parseHadoopProgress "
+- name: NiFi
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "NiFi"

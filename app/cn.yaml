@@ -34,3 +34,23 @@
       type: word
       words:
         - "/pc/_nuxt/"
+- name: 和信下一代云桌面
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "和信下一代云桌面"
+- name: Kyan监控设备
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "platform - Login"
+- name: 瑞友天翼应用虚拟化系统
+  matchers:
+    - part: body
+      type: word
+      condition: and
+      words:
+        - "www.realor.cn"
+        - "CasMain.XGI"

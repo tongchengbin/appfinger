@@ -13,6 +13,10 @@
       type: regex
   name: IIS
 - matchers:
+    - part: headers.server
+      type: word
+      words:
+        - "MS .NET Remoting"
     - part: title
       type: word
       words:
@@ -34,7 +38,8 @@
       case-insensitive: true
       words:
         - "frontpage"
-  name: FrontPage-Extensions"
+
+  name: FrontPage-Extensions
 - name: Outlook
   matchers:
     - part: title
@@ -47,3 +52,11 @@
       type: word
       words:
         - Skype for Business
+- matchers:
+    - group: 1
+      name: version
+      part: headers.Microsoftsharepointteamservices
+      regex:
+        - (.+)$
+      type: regex
+  name: Microsoft-SharePoint

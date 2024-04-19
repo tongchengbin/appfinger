@@ -10,3 +10,9 @@
       type: word
       words:
         - "TLR-2005KSH"
+- name: TLR-2855KS6
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "TLR-2855KS6"

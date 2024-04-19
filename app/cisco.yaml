@@ -8,7 +8,7 @@
       type: word
       words:
        - "Cisco Systems"
-- name: RV042
+- name: Cisco RV042
   matchers:
     - part: cert
       type: word
@@ -142,3 +142,10 @@
       type: word
       words:
         - "OU=RV320"
+
+- name: Unified-Manager
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'Cisco Unified Communications Manager'

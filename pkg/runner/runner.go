@@ -50,7 +50,7 @@ func NewRunner(options *Options) (*Runner, error) {
 				s, _ := json.Marshal(out)
 				_, _ = output.Write(append(s, "\n"...))
 			}
-			gologger.Info().Msgf("[%s] %v [%v]", aurora.Green(url).String(), formatExtract(extract), aurora.Yellow(StringTerms(banner.Title)).String())
+			gologger.Info().Msgf("[%s] %v [%v]", aurora.Green(url).String(), formatExtract(extract), aurora.Yellow(StringTerms(strings.ReplaceAll(banner.Title, "\r\n", ""))).String())
 		},
 	}
 	var outputs []io.Writer

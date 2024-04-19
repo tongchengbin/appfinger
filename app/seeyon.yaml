@@ -1,0 +1,6 @@
+- name: 致远互联-M1
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "M1-Server 已启动"

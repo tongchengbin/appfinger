@@ -73,12 +73,7 @@
         - "360新天擎"
         - "360天擎"
         - "360天擎终端安全管理系统"
-- name: TopSec Reporter
-  matchers:
-    - part: body
-      type: word
-      words:
-        - "Login @ Reporter"
+
 
 - name: MpSec ISG1000
   matchers:
@@ -124,7 +119,7 @@
       type: word
       words:
         - Internet Security by Zscaler
-- name: Sophos
+- name: Sophos-Firewall
   matchers:
     - part: title
       type: word
@@ -175,3 +170,9 @@
       type: word
       words:
         - V8+终端安全系统
+- name: 明御WEB应用防火墙
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 明御WEB应用防火墙

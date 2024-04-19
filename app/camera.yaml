@@ -353,3 +353,53 @@
       type: word
       words:
         - "Amcrest Technologies"
+        -
+
+- name: Milesight-Camera
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "Network Video Recorder"
+- name: PiXORD-Camera
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "<head><title>home.htm</title></head>"
+- name: Sanyo-Network-Camera
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "SANYO  NETWORK CAMERA"
+
+- name: Vivotek-Network-Camera
+  matchers:
+    - part: headers.server
+      type: word
+      words:
+        - "VVTK-HTTP-Server"
+
+
+- name: GeoVision-Camera
+  matchers:
+    - part: title
+      type: word
+      case-insensitive: true
+      condition: and
+      words:
+        - "GeoVision"
+        - "Camera"
+- name: iCanTek-Camera
+  matchers:
+    - part: header
+      type: word
+      words:
+        - "iCanWebServer"
+- name: KTB-Camera
+  matchers:
+    - part: headers.server
+      type: word
+      words:
+        - "GNU rsp/1.0"

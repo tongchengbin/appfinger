@@ -1,3 +1,33 @@
+- name: H3C-SecPath-运维审计系统
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "H3C SecPath 运维审计系统"
+- name: H3C-CVM
+  matchers:
+    - part: headers.Server
+      type: word
+      words:
+        - H3C-CVM
+- name: ER-Router
+  matchers:
+    - part: title
+      type: regex
+      regex:
+        - "ER(.*)系统管理"
+- name: G2-Router
+  matchers:
+    - part: title
+      type: regex
+      regex:
+        - "G2(.*)系统管理"
+- name: GR-Router
+  matchers:
+    - part: title
+      type: regex
+      regex:
+        - "GR(.*)系统管理"
 - name: GR2200
   matchers:
     - part: title

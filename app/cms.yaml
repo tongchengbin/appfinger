@@ -113,7 +113,7 @@
       words:
         - "<title>Welcome to use zentao"
         - "<title>Welcome to zentao"
-- name: hjsoft HCM
+- name: 宏景人力资源信息管理系统
   matchers:
     - type: word
       part: title
@@ -685,7 +685,7 @@
       type: word
       words:
         - 'content="GDIDEES :'
-- name: wow-CMS
+- name: wowCMS
   matchers:
     - part: title
       type: word
@@ -1456,3 +1456,25 @@
       type: word
       words:
         - "DOLSESSID_"
+
+- name: lin-cms-spring-boot
+  matchers:
+    - part: headers
+      type: word
+      words:
+        - "心上无垢，林间有风。"
+- name: Winter-CMS
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Winter CMS"
+
+- name: sitefinity-CMS
+  matchers:
+    - name: version
+      part: body
+      group: 1
+      regex:
+        - <meta name="Generator" content="Sitefinity ([\d\.:]{1,20}( [A-Z]+)?)" \/>
+      type: regex

@@ -179,7 +179,7 @@
     - part: headers.server
       type: word
       words:
-          - Caddy
+        - Caddy
 - matchers:
     - group: 1
       name: version
@@ -247,10 +247,10 @@
       type: word
 - name: LiteSpeed
   matchers:
-  - part: headers.server
-    type: word
-    words:
-      - LiteSpeed
+    - part: headers.server
+      type: word
+      words:
+        - LiteSpeed
 - matchers:
     - group: 1
       name: version
@@ -592,7 +592,7 @@
     - part: headers.server
       type: word
       words:
-          - "Labkey"
+        - "Labkey"
 - name: Pacsone-Server
   matchers:
     - part: body
@@ -614,12 +614,6 @@
       type: word
   name: Akamai-CDN
 
-- matchers:
-    - part: headers.server
-      words:
-        - AkamaiNetStorage
-      type: word
-  name: AkamaiNetStorage
 
 - matchers:
     - part: headers.server

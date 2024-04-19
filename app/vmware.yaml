@@ -10,6 +10,12 @@
       type: word
       words:
         - "VMware vRealize Network Insight"
+- name: vRealize-Log-Insight
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "vRealize Log Insight"
 - name: cloud foundation
   matchers:
     - part: title

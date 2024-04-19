@@ -39,12 +39,6 @@
       type: word
       words:
         - "/age-gate/"
-- name: School-Management-Pro
-  matchers:
-    - part: body
-      type: word
-      words:
-          - "school-management-pro"
 - name: PDF-Print
   matchers:
     - part: body

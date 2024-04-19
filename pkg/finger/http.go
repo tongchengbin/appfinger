@@ -172,9 +172,9 @@ func NewClient(proxy string, timeout time.Duration) (*http.Client, error) {
 			if len(via) >= 10 {
 				return http.ErrUseLastResponse
 			}
-			if via[0].URL.Hostname() != req.URL.Hostname() {
-				return http.ErrUseLastResponse
-			}
+			//if via[0].URL.Hostname() != req.URL.Hostname() {
+			//	return http.ErrUseLastResponse
+			//}
 			// 在这里可以自定义重定向策略
 			// 例如，你可以修改请求头，记录重定向次数等
 			// 默认行为是跟随重定向

@@ -16,7 +16,7 @@
       type: word
       words:
         - "NETGEAR R6850"
-- name: NETGEAR-DGN2200
+- name: DGN2200
   matchers:
     - part: headers.Www-Authenticate
       type: word
