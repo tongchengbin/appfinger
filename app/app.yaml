@@ -2416,3 +2416,9 @@
       type: word
       words:
         - "OpenMetadata"
+- name: 1Panel
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "1300107149"

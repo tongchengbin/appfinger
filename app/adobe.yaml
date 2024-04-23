@@ -1,4 +1,11 @@
 - matchers:
+    - part: headers.set-cookie
+      type: word
+      words:
+        - "cftoken="
+  name: ColdFusion
+
+- matchers:
     - part: title
       type: word
       words:
