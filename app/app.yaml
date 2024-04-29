@@ -1631,16 +1631,7 @@
       type: word
       words:
         - "Mattermost"
-- name: Dolibarr
-  matchers:
-    - part: title
-      type: word
-      words:
-        - "Dolibarr"
-    - part: body
-      type: word
-      words:
-        - "Dolibarr Development Team"
+
 - matchers:
     - part: title
       words:
@@ -2241,10 +2232,11 @@
           - 'content="Discourse'
 - name: Lucee
   matchers:
-    - part: title
+    - part: body
       type: word
       words:
         - "Rapid web development with Lucee!"
+        - "Welcome to your Lucee"
 - name: Vehicle-Service-Management-System
   matchers:
     - part: title

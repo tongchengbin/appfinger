@@ -96,75 +96,76 @@
         - tip-UNVWeChat
 - name: DaHua
   matchers:
-  - part: body
-    type: word
-    words:
+    - part: body
+      type: word
+      words:
         - "Dahua Technology Co., Ltd."
-- name: Netwavecamera
+- name: Netwave-Camera
   matchers:
-  - part: body
-    type: word
-    words:
+    - part: headers.server
+      type: word
+      words:
         - "Netwave IP Camera"
+
 - name: Foscam-Camera
   matchers:
-  - part: body
-    type: word
-    words:
+    - part: body
+      type: word
+      words:
         - "FOSCAM"
 
 - name: DVR httpd
   matchers:
-  - part: body
-    type: word
-    words:
+    - part: body
+      type: word
+      words:
         - "DVRDVS-Webs"
 
 - name: D_Link-DCS-IP-camera
   matchers:
-  - part: body
-    type: word
-    words:
+    - part: body
+      type: word
+      words:
         - "DCS-"
 - name: Mobotix-Network-Camera
   matchers:
-  - part: body
-    type: word
-    words:
+    - part: body
+      type: word
+      words:
         - "MOBOTIX AG, Germany"
 
 - name: panasonic Network Camera
   matchers:
-  - part: body
-    type: word
-    words:
+    - part: body
+      type: word
+      words:
         - "Panasonic Network Camera"
 
 - name: GeoHttpServer
   matchers:
-  - part: body
-    type: word
-    words:
+    - part: body
+      type: word
+      words:
         - "GeoHttpServer"
 
 - name: avn801_dvr
   matchers:
-  - part: body
-    type: word
-    words:
+    - part: body
+      type: word
+      words:
         - "AVN801"
 - name: DCS-5222LB1
   matchers:
-  - part: headers.www-authenticate
-    type: word
-    words:
+    - part: headers.www-authenticate
+      type: word
+      words:
         - 'DCS-5222LB1'
 
 - name: TVT DVR
   matchers:
-  - part: body
-    type: word
-    words:
+    - part: body
+      type: word
+      words:
         - "VideoPluginNotify"
 
 # https://zdiiin.com.tw/
@@ -291,7 +292,7 @@
     - part: headers.server
       type: word
       words:
-          - "selea_httpd"
+        - "selea_httpd"
 - name: AVideo
   matchers:
     - part: title
