@@ -118,3 +118,10 @@
       type: word
       words:
         - "Horizon DaaS"
+
+- matchers:
+    - part: cert
+      type: word
+      words:
+        - OU=VMware ESX Server
+  name: vmware-ESXi

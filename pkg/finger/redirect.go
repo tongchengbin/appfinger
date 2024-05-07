@@ -17,6 +17,9 @@ func extractUri(n *html.Node) string {
 			for _, part := range parts {
 				if strings.Contains(strings.ToLower(part), "url=") {
 					redirectURL := strings.TrimSpace(strings.SplitN(part, "=", 2)[1])
+					if strings.HasSuffix(redirectURL, "'") && strings.HasPrefix(redirectURL, "'") {
+						redirectURL = redirectURL[1 : len(redirectURL)-1]
+					}
 					return redirectURL
 				}
 			}
