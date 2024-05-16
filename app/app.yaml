@@ -2418,3 +2418,10 @@
       type: word
       words:
         - "1300107149"
+- name: OpenSpeedTest
+  matchers:
+    - part: title
+      type: word
+      case-insensitive: true
+      words:
+        - "OpenSpeedTest™"
