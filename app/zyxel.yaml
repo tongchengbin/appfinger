@@ -159,3 +159,30 @@
       type: word
       words:
         - "ZyXEL WAP6804"
+
+- name: ATP100
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ATP100"
+- name: ATP200
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ATP200"
+
+- name: ATP500
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ATP500"
+
+- name: ATP700
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ATP700"

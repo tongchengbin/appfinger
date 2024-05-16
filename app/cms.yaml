@@ -1478,3 +1478,11 @@
       regex:
         - <meta name="Generator" content="Sitefinity ([\d\.:]{1,20}( [A-Z]+)?)" \/>
       type: regex
+
+- name: Strapi
+  matchers:
+    - part: title
+      type: word
+      case-sensitive: true
+      words:
+        - "Strapi app"
