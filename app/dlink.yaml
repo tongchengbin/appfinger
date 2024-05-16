@@ -149,3 +149,9 @@
       part: body
       words:
         - /cgi-bin/login_mgr.cgi
+- name: DCS-2530L
+  matchers:
+    - type: word
+      part: headers.www-authenticate
+      words:
+        - "DCS-2530L"
