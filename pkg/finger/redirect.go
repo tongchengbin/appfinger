@@ -101,11 +101,19 @@ func getExecRedirect(uri string, jsCodes []string, onload string) string {
 	}
 	code := fmt.Sprintf(`
 		%s
+	
+		function isString(s) {
+			return typeof(s) ==="string";
+		}
 		if (window.onload) {
 			window.onload();
 		}
-		if(top.location){
-			window.location = top.location
+		if(self.location){
+			if(isString(self.location)){
+				window.location.href = self.location;
+			}else{
+				window.location.href = self.location.href;
+			}
 		}
 		if(location.href){
 			window.location.href = location.href;
