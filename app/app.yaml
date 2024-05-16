@@ -1247,10 +1247,10 @@
       words:
         - "Gophish"
 - matchers:
-    - part: body
+    - part: title
       type: word
       words:
-        - /geoserver&nbsp;
+        - GeoServer
   name: GeoServer
 - name: FRP
   matchers:
@@ -1517,6 +1517,10 @@
       type: word
       words:
         - Juniper Web Device Manager
+    - part: body
+      type: word
+      words:
+        - "Juniper Networks, Inc."
   name: Juniper-Web-Manager
 
 - matchers:
