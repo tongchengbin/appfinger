@@ -3,7 +3,6 @@ package finger
 import (
 	"context"
 	"crypto/tls"
-	"crypto/x509"
 	"encoding/base64"
 	"errors"
 	"fmt"
@@ -82,11 +81,12 @@ func ResponseDecoding(body []byte, label string) string {
 	return str
 }
 
-func parseCertificateInfo(cert *x509.Certificate) string {
+func parseCertificateInfo(ts *tls.ConnectionState) string {
+	cert := ts.PeerCertificates[0]
 	ss := fmt.Sprintf("SSL Certificate\nVersion: TLS 1.%d\nCipherSuit:%s\nCertificate:\n\tSignature Algorithm: %s\n",
 		cert.Version,
-		cert.SignatureAlgorithm.String(), cert.SignatureAlgorithm.String())
-
+		tls.CipherSuiteName(ts.CipherSuite),
+		cert.SignatureAlgorithm.String())
 	var isUser []string
 	if cert.Issuer.Country != nil {
 		isUser = append(isUser, fmt.Sprintf("C=%s", strings.Join(cert.Issuer.Country, ",")))
@@ -215,8 +215,8 @@ func RequestOnce(client *http.Client, uri string) (banner *Banner, redirectURL s
 	}
 	// 获取服务器证书信息
 	if resp.TLS != nil {
-		cert := resp.TLS.PeerCertificates[0]
-		banner.Certificate = parseCertificateInfo(cert)
+
+		banner.Certificate = parseCertificateInfo(resp.TLS)
 	}
 	//解析JavaScript跳转
 	jsRedirectUri := parseJavaScript(uri, string(body))
