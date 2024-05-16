@@ -5717,18 +5717,6 @@
     - 259F9FDF-97EA-4C59-B957-5160CAB6884E
   name: dvr_webclient
 - matchers:
-  - name: HTML Body
-    part: body
-    type: word
-    words:
-    - /dwr/engine.js'>
-  - name: HTML Body
-    part: body
-    type: word
-    words:
-    - /dwr/engine.js">
-  name: dwr
-- matchers:
   - part: headers.server
     regex:
     - (^RemObjects DXSock Web Server)

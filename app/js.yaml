@@ -57,3 +57,10 @@
         - ng-version="([\d\.]+)"
       type: regex
   name: Angularjs
+
+- matchers:
+    - part: body
+      type: word
+      words:
+        - /dwr/engine.js
+  name: DWR

@@ -2425,3 +2425,10 @@
       case-insensitive: true
       words:
         - "OpenSpeedTest™"
+- name: MessageSolution
+  matchers:
+    - part: title
+      type: word
+      case-insensitive: true
+      words:
+        - "MessageSolution"

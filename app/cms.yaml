@@ -109,10 +109,9 @@
 - name: ZenTao
   matchers:
     - type: word
-      part: body
+      part: headers.set-cookie
       words:
-        - "<title>Welcome to use zentao"
-        - "<title>Welcome to zentao"
+        - "zentaosid"
 - name: 宏景人力资源信息管理系统
   matchers:
     - type: word
@@ -518,7 +517,7 @@
     - part: body
       type: word
       words:
-          - 'content="@ghost'
+        - 'content="@ghost'
 - matchers:
     - part: headers.set-cookie
       type: word
@@ -542,19 +541,19 @@
     - part: body
       type: word
       words:
-          - "Andaman Leisure Phuket"
--  name: FindCMS
-   matchers:
-     - type: word
-       part: body
-       words:
-         - copyright" content="finecms
+        - "Andaman Leisure Phuket"
+- name: FindCMS
+  matchers:
+    - type: word
+      part: body
+      words:
+        - copyright" content="finecms
 - name: Eleanor-CMS
   matchers:
     - part: body
       type: word
       words:
-          - "eleanor"
+        - "eleanor"
 - name: MaxSite-CMS
   matchers:
     - part: body
@@ -567,7 +566,7 @@
     - part: body
       type: word
       words:
-          - 'Platform: PHP / GetSimple CMS'
+        - 'Platform: PHP / GetSimple CMS'
 
 - name: MyuCMS
   matchers:
@@ -581,7 +580,7 @@
     - part: body
       type: word
       words:
-          - 'u5CMS</a>'
+        - 'u5CMS</a>'
 - name: EYouCMS
   matchers:
     - part: body
@@ -593,13 +592,13 @@
     - part: body
       type: word
       words:
-          - '-642345745'
+        - '-642345745'
 - name: webEdition-CMS
   matchers:
     - part: body
       type: word
       words:
-          - 'webEdition CMS'
+        - 'webEdition CMS'
 - name: OECMS
   matchers:
     - part: title
@@ -648,13 +647,13 @@
     - part: body
       type: word
       words:
-          - '#navbar-feifeicms'
+        - '#navbar-feifeicms'
 - name: PCFinal-CMS
   matchers:
     - part: body
       type: word
       words:
-          - '凡诺'
+        - '凡诺'
 - name: ExponentCMS
   matchers:
     - part: body
@@ -690,7 +689,7 @@
     - part: title
       type: word
       words:
-          - 'WoW-CMS'
+        - 'WoW-CMS'
 - name: 迅优cms
   matchers:
     - part: title
@@ -853,7 +852,7 @@
 - matchers:
     - part: body
       words:
-        -  www.edito.pl
+        - www.edito.pl
       type: word
   name: Edito-CMS
 - matchers:
@@ -902,7 +901,7 @@
 - matchers:
     - part: body
       words:
-        -  HoloCMS
+        - HoloCMS
       type: word
   name: HoloCMS
 - matchers:
