@@ -36,3 +36,10 @@
       type: word
       words:
           - "175710103"
+
+- name: CasaOS
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "CasaOS"
