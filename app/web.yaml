@@ -9795,26 +9795,7 @@
     - (^libwww-perl-daemon\/([^\s]+))
     type: regex
   name: libwww_perl_daemon
-- matchers:
-  - part: body
-    type: word
-    words:
-    - <![CDATA[*/Liferay.Util.addInputFocus();/*]]>*
-  - part: headers.liferay-portal
-    type: word
-    words:
-    - (^Liferay Portal (.+ Edition) (.+)$)
-  - group: 1
-    name: version
-    part: headers.liferay-portal
-    regex:
-    - (^Liferay Portal (.+ Edition) (.+)$)
-    type: regex
-  - part: headers.set-cookie
-    regex:
-    - (GUEST_LANGUAGE_ID=[a-z]{2,3}_[A-Z]{2,3};)
-    type: regex
-  name: liferay
+
 - matchers:
   - part: body
     regex:

@@ -2432,3 +2432,10 @@
       case-insensitive: true
       words:
         - "MessageSolution"
+- matchers:
+    - part: headers.Liferay-Portal
+      name: version
+      type: regex
+      regex:
+        - Liferay Portal (.*)
+  name: Liferay-Portal
