@@ -2432,3 +2432,9 @@
       case-insensitive: true
       words:
         - "MessageSolution"
+- name: VoIPmonitor
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "VoIPmonitor"
