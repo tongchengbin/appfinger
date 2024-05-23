@@ -45,3 +45,10 @@
       words:
         - "openresty"
         - "Jetty"
+    - part: body
+      type: word
+      condition: and
+      case-insensitive: true
+      words:
+        - "Server: Server"
+        - "Server: Web Server"
