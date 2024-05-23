@@ -26073,14 +26073,7 @@
     words:
     - <a href="/(?:cgi-bin/)?ikiwiki\.cgi\?do=
   name: ikiwiki
-- matchers:
-  - group: 1
-    name: version
-    part: headers.server
-    regex:
-    - mini_httpd(?:/([\d.]+))?
-    type: regex
-  name: mini_httpd
+
 - matchers:
   - group: 1
     name: version

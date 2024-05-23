@@ -622,3 +622,11 @@
       regex:
         - bfe/([\d.]+)
   name: Bfe
+
+- matchers:
+    - name: version
+      part: headers.server
+      regex:
+        - mini_httpd(?:/([\d.]+))?
+      type: regex
+  name: Mini-HTTPd

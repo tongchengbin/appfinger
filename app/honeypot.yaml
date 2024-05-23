@@ -34,6 +34,14 @@
     - part: headers.server
       type: word
       condition: and
+      case-insensitive: true
       words:
         - "Boa"
         - "Seeyon"
+    - part: headers.server
+      type: word
+      condition: and
+      case-insensitive: true
+      words:
+        - "openresty"
+        - "Jetty"
