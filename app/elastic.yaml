@@ -4,6 +4,7 @@
       type: word
       words:
         - "You Know, for Search"
+        - "missing authentication credentials for REST"
 - name: Kibana
   matchers:
     - part: header

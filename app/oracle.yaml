@@ -178,3 +178,11 @@
         - 'Oracle GlassFish Server'
       type: word
   name: Oracle-GlassFish-Server
+
+
+- name: Oracle-Hospital
+  matchers:
+    - type: word
+      part: body
+      words:
+        - "/OperaLogin/Welcome.do"

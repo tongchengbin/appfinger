@@ -60,3 +60,10 @@
         - (.+)$
       type: regex
   name: Microsoft-SharePoint
+
+- name: Remote-Desktop
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "RD Web Access"

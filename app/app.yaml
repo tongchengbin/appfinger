@@ -1818,12 +1818,6 @@
         - "762074255"
       type: word
   name: qdPM
-- name: RD-Web-Access
-  matchers:
-    - part: body
-      type: word
-      words:
-        - "RD Web Access"
 - name: SelfCheck
   matchers:
     - part: title

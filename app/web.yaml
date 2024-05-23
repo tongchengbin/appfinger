@@ -1729,13 +1729,6 @@
     - (^AOLserver\/([^\s]+))
     type: regex
   name: aolserver
-- matchers:
-  - part: body
-    type: word
-    words:
-    - <frame marginwidth="5" marginheight="5" src="menu_empty.html" name="menu" noresize
-      scrolling="auto" frameborder="0">
-  name: b_link_aprouter
 
 - matchers:
   - part: body

@@ -338,3 +338,10 @@
       type: word
       words:
         - RouterOS
+
+- matchers:
+    - part: title
+      type: word
+      words:
+        - B-LINK
+  name: LB-Link-Router

@@ -24,3 +24,9 @@
       words:
         - "couchdb"
         - "GitLab"
+    - part: title
+      type: word
+      condition: and
+      words:
+        - "<title>TP-LINK WR340G</title>"
+        - "<title>TL-WR740N</title>"
