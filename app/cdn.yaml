@@ -13,3 +13,10 @@
       words:
         - __cf_bm
   name: CloudFlare-Bot-Management
+
+- name: 加速乐
+  matchers:
+    - part: headers.Set-Cookie
+      type: word
+      words:
+        - "__jsluid_h"

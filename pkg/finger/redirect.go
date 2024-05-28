@@ -54,7 +54,7 @@ func getExecRedirect(uri string, jsCodes []string, onload string) string {
 	vm := otto.New()
 	parsed, _ := url.Parse(uri)
 	initWindowsCode := fmt.Sprintf(`
-		var location = {href:"%s",hostname:"%s","protocol":"%s"};
+		var location = {href:"%s",hostname:"%s","protocol":"%s",pathname:"%s",search:""};
 		var window = {
 			location: location,
 			open: function(url, target) {
@@ -73,7 +73,7 @@ func getExecRedirect(uri string, jsCodes []string, onload string) string {
 		};
 		window.top = top;
 		self = window;
-`, uri, parsed.Hostname(), parsed.Scheme)
+`, uri, parsed.Hostname(), parsed.Scheme, parsed.Path)
 	_, err := vm.Run(initWindowsCode)
 	if err != nil {
 		gologger.Debug().Msgf("Error getting result:%v", err)
@@ -158,7 +158,6 @@ func findAttribute(attrs []html.Attribute, key string) string {
 	return ""
 }
 func ExtractCharset(htmlContent string) string {
-	println(11332)
 	reader := strings.NewReader(htmlContent)
 	doc, err := html.Parse(reader)
 	if err != nil {
@@ -187,7 +186,6 @@ func ExtractCharset(htmlContent string) string {
 		}
 	}
 	traverse(doc)
-	println(">>>>>>>", charset)
 	return strings.ToUpper(strings.TrimSpace(charset))
 }
 
