@@ -174,7 +174,6 @@ func ExtractCharset(htmlContent string) string {
 					charsetIndex := strings.Index(contentAttr, "charset=")
 					if charsetIndex != -1 {
 						charset = contentAttr[charsetIndex+len("charset="):]
-						println("<<<<", charset)
 						return
 					}
 				}
