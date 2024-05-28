@@ -157,7 +157,8 @@ func findAttribute(attrs []html.Attribute, key string) string {
 	}
 	return ""
 }
-func extractCharset(htmlContent string) string {
+func ExtractCharset(htmlContent string) string {
+	println(11332)
 	reader := strings.NewReader(htmlContent)
 	doc, err := html.Parse(reader)
 	if err != nil {
@@ -174,7 +175,8 @@ func extractCharset(htmlContent string) string {
 					charsetIndex := strings.Index(contentAttr, "charset=")
 					if charsetIndex != -1 {
 						charset = contentAttr[charsetIndex+len("charset="):]
-						break
+						println("<<<<", charset)
+						return
 					}
 				}
 			}
@@ -185,6 +187,7 @@ func extractCharset(htmlContent string) string {
 		}
 	}
 	traverse(doc)
+	println(">>>>>>>", charset)
 	return strings.ToUpper(strings.TrimSpace(charset))
 }
 

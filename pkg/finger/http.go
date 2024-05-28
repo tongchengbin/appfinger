@@ -23,13 +23,13 @@ import (
 	"time"
 )
 
-func getTitle(body []byte) string {
+func getTitle(body []byte) []byte {
 	re := regexp.MustCompile(`(?i)<title[^>]*>([^<]+)</title>`)
 	matches := re.FindSubmatch(body)
 	if len(matches) >= 2 {
-		return string(matches[1])
+		return matches[1]
 	}
-	return ""
+	return nil
 }
 
 func ResponseDecoding(body []byte, label string) string {
@@ -184,6 +184,16 @@ func NewClient(proxy string, timeout time.Duration) (*http.Client, error) {
 	}, nil
 }
 
+func ExtractContentTypeCharset(contentType string) (charset string) {
+	//	 从content-type 中提取Charset
+	re := regexp.MustCompile(`(?i)charset=([\w-]+)`)
+	matches := re.FindStringSubmatch(contentType)
+	if len(matches) >= 2 {
+		charset = matches[1]
+	}
+	return
+}
+
 func RequestOnce(client *http.Client, uri string) (banner *Banner, redirectURL string, err error) {
 	// 开始请求数据
 	var resp *http.Response
@@ -201,21 +211,27 @@ func RequestOnce(client *http.Client, uri string) (banner *Banner, redirectURL s
 	headers, _ := httputil.DumpResponse(resp, false)
 	// get body
 	body, _ := io.ReadAll(resp.Body)
+	label := ExtractContentTypeCharset(resp.Header.Get("Content-Type"))
+	if label == "" {
+		label = ExtractCharset(string(body))
+	}
+	bodyString := ResponseDecoding(body, label)
 	banner = &Banner{
 		Uri:        uri,
-		Body:       string(body),
+		Body:       bodyString,
 		BodyHash:   mmh3(body),
 		Header:     string(headers),
 		StatusCode: resp.StatusCode,
-		Response:   string(headers) + string(body),
-		Headers:    map[string]string{}}
-	banner.Title = getTitle(body)
+		Response:   string(headers) + bodyString,
+		Headers:    map[string]string{},
+		Charset:    label,
+	}
+	banner.Title = ResponseDecoding(getTitle(body), label)
 	for k, v := range resp.Header {
 		banner.Headers[strings.ToLower(k)] = strings.Join(v, ",")
 	}
 	// 获取服务器证书信息
 	if resp.TLS != nil {
-
 		banner.Certificate = parseCertificateInfo(resp.TLS)
 	}
 	//解析JavaScript跳转

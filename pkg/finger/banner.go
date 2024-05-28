@@ -41,6 +41,7 @@ type Banner struct {
 	SSL         bool              `json:"ssl"`
 	Certificate string            `json:"certificate"`
 	IconHash    int32             `json:"icon_hash"`
+	Charset     string            `json:"-"`
 }
 
 type AppFinger struct {
