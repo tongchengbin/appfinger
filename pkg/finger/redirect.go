@@ -52,7 +52,7 @@ func findRefresh(n *html.Node) string {
 }
 func getExecRedirect(uri string, jsCodes []string, onload string) string {
 	vm := otto.New()
-	parsed, _ := url.Parse(uri)
+	parsed, _ := url.Parse(url.PathEscape(uri))
 	initWindowsCode := fmt.Sprintf(`
 		var location = {href:"%s",hostname:"%s","protocol":"%s",pathname:"%s",search:""};
 		var window = {
@@ -76,7 +76,8 @@ func getExecRedirect(uri string, jsCodes []string, onload string) string {
 `, uri, parsed.Hostname(), parsed.Scheme, parsed.Path)
 	_, err := vm.Run(initWindowsCode)
 	if err != nil {
-		gologger.Debug().Msgf("Error getting result:%v", err)
+		fmt.Printf("JavaScript execution error:%s %v\n", uri, err)
+		return ""
 	}
 	var consoleLogs []string
 	_ = vm.Set("console", map[string]interface{}{
@@ -88,10 +89,7 @@ func getExecRedirect(uri string, jsCodes []string, onload string) string {
 			return otto.Value{}
 		},
 	})
-	if err != nil {
-		fmt.Println("JavaScript execution error:", err)
-		return ""
-	}
+
 	for _, code := range jsCodes {
 		_, err = vm.Run(code)
 		if err != nil {
