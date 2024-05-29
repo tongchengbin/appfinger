@@ -101,12 +101,7 @@
       words:
         - " (DVWA)"
   name: DVWA
-- name: Alibaba-Web-WAF
-  matchers:
-    - part: title
-      type: word
-      words:
-        - 阿里云 Web应用防火墙
+
 - name: legendsec-SecGate
   matchers:
     - part: title
