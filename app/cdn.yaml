@@ -20,6 +20,10 @@
       type: word
       words:
         - "__jsluid_"
+    - part: header
+      type: word
+      words:
+        - "X-Via-JSL"
 
 - name: Alibaba-Web-WAF
   matchers:
