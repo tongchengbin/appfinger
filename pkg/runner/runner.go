@@ -50,7 +50,13 @@ func NewRunner(options *Options) (*Runner, error) {
 				s, _ := json.Marshal(out)
 				_, _ = output.Write(append(s, "\n"...))
 			}
-			gologger.Info().Msgf("[%s] %v [%v]", aurora.Green(url).String(), formatExtract(extract), aurora.Yellow(StringTerms(strings.ReplaceAll(banner.Title, "\r\n", ""))).String())
+			l := fmt.Sprintf("[%s] %v [%v]", aurora.Green(url).String(), formatExtract(extract), aurora.Yellow(StringTerms(strings.ReplaceAll(banner.Title, "\r\n", ""))).String())
+			if banner.Cert != nil && len(banner.Cert.PeerCertificates) > 0 && banner.Cert.PeerCertificates[0].Subject.CommonName != "" {
+				org := strings.Join(banner.Cert.PeerCertificates[0].Subject.Organization, "|")
+				l += fmt.Sprintf(" [%s]", aurora.Magenta(org))
+
+			}
+			gologger.Info().Msgf(l)
 		},
 	}
 	var outputs []io.Writer

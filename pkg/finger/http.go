@@ -233,6 +233,7 @@ func RequestOnce(client *http.Client, uri string) (banner *Banner, redirectURL s
 	// 获取服务器证书信息
 	if resp.TLS != nil {
 		banner.Certificate = parseCertificateInfo(resp.TLS)
+		banner.Cert = resp.TLS
 	}
 	//解析JavaScript跳转
 	jsRedirectUri := parseJavaScript(uri, string(body))
