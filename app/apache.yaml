@@ -115,3 +115,9 @@
       type: word
       words:
         - "NiFi"
+- name: HugeGraph
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "HugeGraph"

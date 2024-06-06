@@ -2439,3 +2439,13 @@
       regex:
         - Liferay Portal (.*)
   name: Liferay-Portal
+- name: ADGuard
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Login"
+    - part: body
+      type: word
+      words:
+        - "assets/apple-touch-icon-180x180.png"

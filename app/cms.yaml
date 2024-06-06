@@ -1485,3 +1485,14 @@
       case-sensitive: true
       words:
         - "Strapi app"
+- matchers:
+    - part: headers.expires
+      type: word
+      words:
+        - 19 nov 1978
+    - name: version
+      part: headers.x-generator
+      regex:
+        - ^[dD]rupal(?:\s([\d.]+))?
+      type: regex
+  name: Drupal

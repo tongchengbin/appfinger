@@ -217,7 +217,7 @@ func RequestOnce(client *http.Client, uri string) (banner *Banner, redirectURL s
 	}
 	bodyString := ResponseDecoding(body, label)
 	banner = &Banner{
-		Uri:        uri,
+		Uri:        resp.Request.URL.String(),
 		Body:       bodyString,
 		BodyHash:   mmh3(body),
 		Header:     string(headers),
@@ -309,9 +309,9 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 		}
 		if debugResp {
 			if banner.Certificate != "" {
-				fmt.Println("Dump Cert For " + uri + "\r\n" + banner.Certificate)
+				fmt.Println("Dump Cert For " + banner.Uri + "\r\n" + banner.Certificate)
 			}
-			fmt.Println("Dump Response For " + uri + "\r\n" + banner.Response)
+			fmt.Println("Dump Response For " + banner.Uri + "\r\n" + banner.Response)
 		}
 		banners = append(banners, banner)
 		if nextURI == "" {
