@@ -1,6 +1,7 @@
 package finger
 
 import (
+	"crypto/tls"
 	"fmt"
 	"github.com/projectdiscovery/gologger"
 	"github.com/tongchengbin/appfinger"
@@ -30,18 +31,19 @@ type Rule struct {
 }
 
 type Banner struct {
-	Uri         string            `json:"uri"`
-	BodyHash    int32             `json:"body_hash"`
-	Body        string            `json:"body"`
-	Header      string            `json:"header"`
-	Headers     map[string]string `json:"-"`
-	Title       string            `json:"title"`
-	StatusCode  int               `json:"status_code"`
-	Response    string            `json:"_"`
-	SSL         bool              `json:"ssl"`
-	Certificate string            `json:"certificate"`
-	IconHash    int32             `json:"icon_hash"`
-	Charset     string            `json:"-"`
+	Uri         string               `json:"uri"`
+	BodyHash    int32                `json:"body_hash"`
+	Body        string               `json:"body"`
+	Header      string               `json:"header"`
+	Headers     map[string]string    `json:"-"`
+	Title       string               `json:"title"`
+	StatusCode  int                  `json:"status_code"`
+	Response    string               `json:"_"`
+	SSL         bool                 `json:"ssl"`
+	Certificate string               `json:"certificate"`
+	IconHash    int32                `json:"icon_hash"`
+	Charset     string               `json:"-"`
+	Cert        *tls.ConnectionState `json:"-"`
 }
 
 type AppFinger struct {
@@ -241,6 +243,8 @@ func (f *AppFinger) MatchURI(uri string) (banner *Banner, fingerprints map[strin
 	for _, b := range banners {
 		// is honeypot.yaml
 		fingerprints = mergeMaps(fingerprints, f.Match(b))
+		// free memory
+		b.Response = ""
 	}
 	if _, ok := fingerprints["honeypot"]; ok {
 		return banners[len(banners)-1], map[string]map[string]string{"honeypot": make(map[string]string)}, nil

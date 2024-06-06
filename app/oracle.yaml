@@ -111,7 +111,7 @@
 - matchers:
     - part: headers.server
       words:
-        -  Oracle-Web-Cache
+        - Oracle-Web-Cache
       type: word
   name: Oracle-Web-Cache
 - matchers:
@@ -179,10 +179,17 @@
       type: word
   name: Oracle-GlassFish-Server
 
-
 - name: Oracle-Hospital
   matchers:
     - type: word
       part: body
       words:
         - "/OperaLogin/Welcome.do"
+
+- name: Servlet
+  matchers:
+    - part: headers.x-powered-by
+      type: regex
+      name: version
+      regex:
+        - Servlet(?:/([\d\.]+))

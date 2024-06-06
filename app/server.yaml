@@ -409,13 +409,6 @@
       words:
         - H2O Flow
   name: H2O
-- name: Servlet
-  matchers:
-    - part: headers.x-powered-by
-      type: regex
-      name: version
-      regex:
-        - Servlet(?:/([\d\.]+))
 - matchers:
     - group: 1
       name: version
@@ -630,3 +623,10 @@
         - mini_httpd(?:/([\d.]+))?
       type: regex
   name: Mini-HTTPd
+
+- name: Lightstreamer-Server
+  matchers:
+    - part: headers.server
+      type: word
+      words:
+        - Lightstreamer

@@ -18733,25 +18733,6 @@
     type: regex
   name: tivo
 - matchers:
-  - part: body
-    type: word
-    words:
-    - <TITLE>Access Manager for e-business Login</TITLE>
-  - part: body
-    type: word
-    words:
-    - <!-- Copyright (C) 2000 Tivoli Systems, Inc. -->
-  - part: body
-    type: word
-    words:
-    - <!--- DO NOT TRANSLATE OR MODIFY any part of the hidden parameter(s) --->
-  - part: body
-    type: word
-    words:
-    - var warningString = "<B>WARNING:</B> To maintain your login session, make sure
-      that your browser is configured to accept Cookies.";
-  name: tivoli_access_manager
-- matchers:
   - part: headers.www-authenticate
     regex:
     - (TivoWebPlus)
