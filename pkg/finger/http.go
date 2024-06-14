@@ -238,7 +238,13 @@ func RequestOnce(client *http.Client, uri string) (banner *Banner, redirectURL s
 	//解析JavaScript跳转
 	jsRedirectUri := parseJavaScript(uri, string(body))
 	if jsRedirectUri != "" {
-		uri = urlJoin(uri, jsRedirectUri)
+		if jsRedirectUri[0] == '/' {
+			u, _ := url.Parse(banner.Uri)
+			uri = u.Scheme + "://" + u.Host + jsRedirectUri
+		} else {
+			uri = urlJoin(uri, jsRedirectUri)
+		}
+
 		gologger.Debug().Msgf("redirect URL:%s", uri)
 		return banner, uri, nil
 	} else {

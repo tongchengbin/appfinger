@@ -1,0 +1,6 @@
+- name: DaHua-DDS
+  matchers:
+  - type: word
+    part: body
+    words:
+        - "/portal/include/script/dahuaDefined/headCommon.js"

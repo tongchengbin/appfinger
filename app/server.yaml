@@ -630,3 +630,9 @@
       type: word
       words:
         - Lightstreamer
+- name: Squid
+  matchers:
+    - part: headers.server
+      type: word
+      words:
+        - squid
