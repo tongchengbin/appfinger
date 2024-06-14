@@ -44,6 +44,8 @@ type Banner struct {
 	IconHash    int32                `json:"icon_hash"`
 	Charset     string               `json:"-"`
 	Cert        *tls.ConnectionState `json:"-"`
+	IconURI     string               `json:"icon_uri"`
+	IconBytes   []byte               `json:"-"`
 }
 
 type AppFinger struct {

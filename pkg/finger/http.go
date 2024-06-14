@@ -254,6 +254,9 @@ func RequestOnce(client *http.Client, uri string) (banner *Banner, redirectURL s
 }
 
 func readICON(client *http.Client, banner *Banner) (iconHash int32, err error) {
+	var body []byte
+	var req *http.Request
+	var resp *http.Response
 	iconURL := parseIconFile(banner.Body)
 	if iconURL == "" {
 		iconURL = "/favicon.ico"
@@ -261,7 +264,6 @@ func readICON(client *http.Client, banner *Banner) (iconHash int32, err error) {
 	if isAbsoluteURL(iconURL) {
 		iconURL = joinURL(banner.Uri, iconURL)
 	}
-	var body []byte
 	if strings.HasPrefix(iconURL, "data:") {
 		base64Seps := strings.Split(iconURL, ",")
 		if len(base64Seps) == 2 {
@@ -274,13 +276,13 @@ func readICON(client *http.Client, banner *Banner) (iconHash int32, err error) {
 		}
 
 	} else {
-		req, err := http.NewRequest("GET", iconURL, nil)
+		req, err = http.NewRequest("GET", iconURL, nil)
 		if err != nil {
 			// 图片异常不影响
 			return iconHash, err
 		}
 		req.Header.Set("Referer", banner.Uri)
-		resp, err := client.Do(req)
+		resp, err = client.Do(req)
 		if err != nil {
 			return iconHash, err
 		}
@@ -291,9 +293,10 @@ func readICON(client *http.Client, banner *Banner) (iconHash int32, err error) {
 		if err != nil {
 			return iconHash, err
 		}
+		banner.IconURI = iconURL
 	}
 	iconHash = mmh3(body)
-	// set
+	banner.IconBytes = body
 	banner.IconHash = iconHash
 	return iconHash, nil
 }
@@ -330,7 +333,7 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 	}
 	// 解析icon
 	if len(banners) > 0 && !disableIcon {
-		_, err := readICON(client, banners[len(banners)-1])
+		_, err = readICON(client, banners[len(banners)-1])
 		if err != nil {
 			gologger.Debug().Msg(err.Error())
 		}
