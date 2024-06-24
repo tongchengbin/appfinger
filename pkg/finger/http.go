@@ -289,6 +289,12 @@ func readICON(client *http.Client, banner *Banner) (iconHash int32, err error) {
 		if resp.StatusCode != 200 {
 			return iconHash, err
 		}
+		defer func(Body io.ReadCloser) {
+			_ = Body.Close()
+		}(resp.Body)
+		if strings.Contains(resp.Header.Get("Content-Type"), "image") {
+			return iconHash, errors.New("icon Not Found")
+		}
 		body, err = io.ReadAll(resp.Body)
 		if err != nil {
 			return iconHash, err

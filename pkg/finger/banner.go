@@ -72,7 +72,6 @@ func (f *AppFinger) LoadAppFinger(directory string) {
 		//	 判断文件夹是否存在
 		_, err := os.Stat(directory)
 		if err == nil {
-
 			contents = append(contents, appfinger.LoadDirectoryRule(directory, f.options.DisableJavaScript)...)
 		}
 	}
