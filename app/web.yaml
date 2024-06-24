@@ -15314,23 +15314,7 @@
     - (^ProScan)
     type: regex
   name: proscan
-- matchers:
-  - name: version
-    part: body
-    regex:
-    - (<a href='finger:\/\/www\.proxmox\.com' target='_blank' class="boxheadline">Proxmox
-      Virtual Environment ([^<^\s]+)<\/a>)
-    type: regex
-  - part: body
-    type: word
-    words:
-    - <img alt="" style="display:block;border:0px;width:1000px;max-height:300px;"
-      src='/images/logo_pve.jpg'>
-  - part: headers.server
-    type: word
-    words:
-    - pve-api-daemon/[\d\.]+
-  name: proxmox_ve
+
 - matchers:
   - part: headers.proxy-authenticate
     type: word

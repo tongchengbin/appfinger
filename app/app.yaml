@@ -2449,3 +2449,10 @@
       type: word
       words:
         - "assets/apple-touch-icon-180x180.png"
+- matchers:
+    - part: headers.server
+      type: regex
+      name: version
+      regex:
+        - pve-api-daemon/([\d\.]+)
+  name: PVE
