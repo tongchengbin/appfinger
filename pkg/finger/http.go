@@ -295,12 +295,16 @@ func readICON(client *http.Client, banner *Banner) (iconHash int32, err error) {
 		if !strings.Contains(resp.Header.Get("Content-Type"), "image") {
 			return iconHash, errors.New("icon Not Found")
 		}
+		if resp.ContentLength == 0 {
+			return iconHash, errors.New("icon Not Found")
+		}
 		body, err = io.ReadAll(resp.Body)
 		if err != nil {
 			return iconHash, err
 		}
 		banner.IconURI = iconURL
 	}
+
 	iconHash = mmh3(body)
 	banner.IconBytes = body
 	banner.IconHash = iconHash
