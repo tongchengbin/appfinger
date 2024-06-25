@@ -7,6 +7,10 @@
         - "cloudflare-nginx"
         - "__cfduid="
         - "cf-ray:"
+    - type: word
+      part: cert
+      words:
+        - "OU=CloudFlare Origin CA"
 - matchers:
     - part: headers.Set-Cookie
       type: word

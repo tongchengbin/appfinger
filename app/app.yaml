@@ -858,7 +858,7 @@
   name: Catberry.js
 - name: Xui
   matchers:
-    - part: bdy
+    - part: body
       type: word
       words:
         - "0x222222"
@@ -2456,3 +2456,76 @@
       regex:
         - pve-api-daemon/([\d\.]+)
   name: PVE
+- name: 哪吒监控
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 哪吒监控</a>
+- name: Portainer
+  matchers:
+    - part: title
+      type: word
+      case-insensitive: true
+      words:
+        - "Portainer"
+- name: Nginx-Proxy-Manager
+  matchers:
+    - part: title
+      type: word
+      case-insensitive: true
+      words:
+        - "Nginx Proxy Manager"
+- name: CloudPanel
+  matchers:
+    - part: title
+      type: word
+      case-insensitive: true
+      words:
+        - "CloudPanel"
+- name: NextChat
+  matchers:
+    - part: title
+      type: word
+      case-insensitive: true
+      words:
+        - "NextChat"
+- name: Adv-Radius
+  matchers:
+    - part: title
+      type: word
+      case-insensitive: true
+      words:
+        - "Adv Radius"
+- name: 资产灯塔系统
+  matchers:
+    - part: title
+      type: word
+      case-insensitive: true
+      words:
+        - "资产灯塔系统"
+- name: OpenVPN
+  matchers:
+    - part: headers.server
+      type: word
+      words:
+        - "OpenVPN-AS"
+- name: Nextcloud
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Nextcloud"
+- name: 宝塔面板
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "安全入口校验失败"
+
+- name: Vaultwarden
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Vaultwarden"
