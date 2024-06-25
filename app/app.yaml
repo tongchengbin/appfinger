@@ -2462,6 +2462,10 @@
       type: word
       words:
         - 哪吒监控</a>
+    - part: icon_hash
+      type: word
+      words:
+        - "-1987640101"
 - name: Portainer
   matchers:
     - part: title
@@ -2476,6 +2480,7 @@
       case-insensitive: true
       words:
         - "Nginx Proxy Manager"
+        - "Nginx 代理管理器"
 - name: CloudPanel
   matchers:
     - part: title
@@ -2529,3 +2534,9 @@
       type: word
       words:
         - "Vaultwarden"
+- name: Cloudreve
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Cloudreve"
