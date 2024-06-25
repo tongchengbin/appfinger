@@ -261,21 +261,27 @@ func readICON(client *http.Client, banner *Banner) (iconHash int32, err error) {
 	if iconURL == "" {
 		iconURL = "/favicon.ico"
 	}
-	if isAbsoluteURL(iconURL) {
-		iconURL = joinURL(banner.Uri, iconURL)
-	}
+	var contentType string
 	if strings.HasPrefix(iconURL, "data:") {
-		base64Seps := strings.Split(iconURL, ",")
-		if len(base64Seps) == 2 {
-			body, err = base64.StdEncoding.DecodeString(base64Seps[1])
-			if err != nil {
-				return iconHash, err
+		iconData := iconURL[5:]
+		contentTypeSeps := strings.Split(iconData, ";")
+		if len(contentTypeSeps) == 2 {
+			contentType = contentTypeSeps[0]
+			content := contentTypeSeps[1]
+			base64Seps := strings.Split(content, ",")
+			if len(base64Seps) == 2 {
+				body, err = base64.StdEncoding.DecodeString(base64Seps[1])
+				if err != nil {
+					return iconHash, err
+				}
+			} else {
+				return iconHash, errors.New("ICON 无法解析")
 			}
-		} else {
-			return iconHash, errors.New("ICON 无法解析")
 		}
-
 	} else {
+		if isAbsoluteURL(iconURL) {
+			iconURL = joinURL(banner.Uri, iconURL)
+		}
 		req, err = http.NewRequest("GET", iconURL, nil)
 		if err != nil {
 			// 图片异常不影响
@@ -292,7 +298,8 @@ func readICON(client *http.Client, banner *Banner) (iconHash int32, err error) {
 		defer func(Body io.ReadCloser) {
 			_ = Body.Close()
 		}(resp.Body)
-		if !strings.Contains(resp.Header.Get("Content-Type"), "image") {
+		contentType = resp.Header.Get("Content-Type")
+		if !strings.Contains(contentType, "image") {
 			return iconHash, errors.New("icon Not Found")
 		}
 		if resp.ContentLength == 0 {
@@ -304,10 +311,10 @@ func readICON(client *http.Client, banner *Banner) (iconHash int32, err error) {
 		}
 		banner.IconURI = iconURL
 	}
-
 	iconHash = mmh3(body)
 	banner.IconBytes = body
 	banner.IconHash = iconHash
+	banner.IconType = contentType
 	return iconHash, nil
 }
 

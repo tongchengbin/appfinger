@@ -42,6 +42,7 @@ type Banner struct {
 	SSL         bool                 `json:"ssl"`
 	Certificate string               `json:"certificate"`
 	IconHash    int32                `json:"icon_hash"`
+	IconType    string               `json:"icon_type"`
 	Charset     string               `json:"-"`
 	Cert        *tls.ConnectionState `json:"-"`
 	IconURI     string               `json:"icon_uri"`
