@@ -16,6 +16,7 @@ import (
 	"io"
 	"net"
 	"net/http"
+	"net/http/cookiejar"
 	"net/http/httputil"
 	"net/url"
 	"regexp"
@@ -166,12 +167,27 @@ func NewClient(proxy string, timeout time.Duration) (*http.Client, error) {
 	if err != nil {
 		return nil, err
 	}
+	// 创建一个共享的 CookieJar
+	jar, err := cookiejar.New(nil)
+	if err != nil {
+		return nil, err
+	}
 	return &http.Client{
 		Transport: transport,
+		Jar:       jar, // 使用共享的 CookieJar
 		CheckRedirect: func(req *http.Request, via []*http.Request) error {
+			// 手动复制 cookie 到重定向请求中
+			if len(via) > 0 {
+				originURL := via[0].URL
+				cookies := jar.Cookies(originURL)
+				for _, cookie := range cookies {
+					req.AddCookie(cookie)
+				}
+			}
 			if len(via) >= 10 {
 				return http.ErrUseLastResponse
 			}
+
 			//if via[0].URL.Hostname() != req.URL.Hostname() {
 			//	return http.ErrUseLastResponse
 			//}
