@@ -2540,3 +2540,15 @@
       type: word
       words:
         - "Cloudreve"
+- name: One-API
+  matchers:
+    - part: body
+      type: word
+      regex:
+        - "OpenAI 接口聚合管理，支持多种渠道包括"
+- name: AList
+  matchers:
+    - part: body
+      type: word
+      words:
+        - content="AList"
