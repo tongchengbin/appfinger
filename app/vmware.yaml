@@ -4,6 +4,10 @@
       type: word
       words:
         - "VMware"
+    - part: cert
+      type: word
+      words:
+        - "CN=*.vmware.com"
 - name: vRealize Network Insight
   matchers:
     - part: title
@@ -125,3 +129,10 @@
       words:
         - OU=VMware ESX Server
   name: vmware-ESXi
+- name: VMWARE Secure FTP Server
+  matchers:
+    - part: title
+      type: word
+      case-insensitive: true
+      words:
+        - "VMWARE Secure FTP Server"
