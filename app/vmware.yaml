@@ -136,3 +136,4 @@
       case-insensitive: true
       words:
         - "VMWARE Secure FTP Server"
+        - "VMWARE Secure Data Transfer"
