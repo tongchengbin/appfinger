@@ -2552,3 +2552,10 @@
       type: word
       words:
         - content="AList"
+
+- matchers:
+    - part: headers.server
+      words:
+        - HFS
+      type: word
+  name: Rejetto-HttpFileServer

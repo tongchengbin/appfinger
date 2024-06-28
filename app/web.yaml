@@ -7827,23 +7827,6 @@
     type: regex
   name: http_explorer
 - matchers:
-  - name: version
-    part: body
-    regex:
-    - (<div id=footer>[\s]+<a href="finger:\/\/www\.rejetto\.com\/hfs\/">HttpFileServer
-      ([^<]+)<\/a>[\s]+<br \/>Servertime)
-    type: regex
-  - name: version
-    part: headers.server
-    regex:
-    - (^HFS (\d\.\d.+)$)
-    type: regex
-  - part: headers.server
-    regex:
-    - (^HFS )
-    type: regex
-  name: httpfileserver
-- matchers:
   - part: body
     type: word
     words:

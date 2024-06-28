@@ -636,3 +636,10 @@
       type: word
       words:
         - squid
+- name: WAGO-Web-Based-Management
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "851034826"
+        - "-1405725126"
