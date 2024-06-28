@@ -2558,4 +2558,8 @@
       words:
         - HFS
       type: word
+    - part: header.set-cookie
+      words:
+        - "HFS_SID_"
+      type: word
   name: Rejetto-HttpFileServer

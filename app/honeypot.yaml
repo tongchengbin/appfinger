@@ -52,3 +52,10 @@
       words:
         - "Server: Server"
         - "Server: Web Server"
+    - part: header
+      type: word
+      condition: and
+      case-insensitive: true
+      words:
+        - "BigIP"
+        - "lighttpd"
