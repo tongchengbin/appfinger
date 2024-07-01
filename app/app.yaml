@@ -1987,8 +1987,21 @@
   matchers:
     - part: title
       type: word
+      case-sensitive: true
       words:
-        - "icewarp"
+        - "IceWARP"
+    - part: headers.server
+      words:
+        - IceWarp
+      type: word
+    - name: version
+      part: headers.server
+      regex:
+        - ^IceWarp\/(.+)$
+      type: regex
+
+
+
 - name: Car-Rental-Management-System
   matchers:
     - part: body

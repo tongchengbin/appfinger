@@ -8169,22 +8169,6 @@
     - <dl class="box boxLogo  box02 iceshop">
   name: iceshop
 - matchers:
-  - part: headers.server
-    regex:
-    - (^IceWarp)
-    type: regex
-  - name: version
-    part: headers.server
-    regex:
-    - (^IceWarp\/(.+)$)
-    type: regex
-  - name: version
-    part: headers.server
-    regex:
-    - (^IceWarp WebSrv\/(.+)$)
-    type: regex
-  name: icewarp_server
-- matchers:
   - part: body
     type: word
     words:
