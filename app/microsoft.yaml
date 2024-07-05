@@ -52,15 +52,6 @@
       type: word
       words:
         - Skype for Business
-- matchers:
-    - group: 1
-      name: version
-      part: headers.Microsoftsharepointteamservices
-      regex:
-        - (.+)$
-      type: regex
-  name: Microsoft-SharePoint
-
 - name: Remote-Desktop
   matchers:
     - part: body

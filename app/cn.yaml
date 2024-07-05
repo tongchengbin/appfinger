@@ -61,7 +61,7 @@
       type: word
       words:
         - "金蝶云星空"
-- name: 爱数-云网盘
+- name: 爱数云网盘
   matchers:
     - part: body
       type: word

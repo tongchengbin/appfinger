@@ -175,23 +175,6 @@
       type: word
       words:
         - "doc/page/login.html"
-
-- name: Canon Camera
-  matchers:
-    - part: body
-      type: word
-      condition: and
-      words:
-        - canon
-        - "<title>Network Camera</title>"
-    - part: title
-      type: word
-      words:
-        - LiveApplet
-    - part: title
-      type: word
-      words:
-        - Network Camera VB-C60
 - name: ACTi Camera
   matchers:
     - part: body

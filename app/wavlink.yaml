@@ -26,3 +26,9 @@
       type: word
       words:
         - 'var Model="WN535G3";'
+- name: WN530H4
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'var Model="WN530H4";'

@@ -161,4 +161,9 @@
       part: body
       words:
         - "DAP-1360"
-
+- name: DIR-600
+  matchers:
+    - type: word
+      part: headers.server
+      words:
+        - "DIR-600"

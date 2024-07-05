@@ -1,21 +1,4 @@
-- matchers:
-  - part: body
-    type: word
-    words:
-    - '<title>RoundCube Webmail :: Welcome to RoundCube Webmail</title>'
-  - part: body
-    type: word
-    words:
-    - var rcmail = new rcube_webmail();
-  - part: body
-    type: word
-    words:
-    - <input name="_user" id="rcmloginuser"
-  - part: body
-    type: word
-    words:
-    - $(document).ready(function(){ rcmail.init(); });
-  name: roundcube
+
 - matchers:
   - part: body
     type: word
@@ -388,12 +371,6 @@
     words:
     - <p class="post-info-co">
   name: dotclear
-- matchers:
-  - part: body
-    regex:
-    - <[^>]+(?:id="block[_-]commerce[_-]cart[_-]cart|class="commerce[_-]product[_-]field)
-    type: regex
-  name: drupal_commerce
 - matchers:
   - part: body
     regex:
@@ -2685,37 +2662,6 @@
   - part: body
     type: word
     words:
-    - <title>Default BEA WebLogic Server Web Server Index Page</title>
-  - part: body
-    type: word
-    words:
-    - <TITLE>Default BEA WebLogic Server Web Server Index Page</TITLE>
-  - name: version
-    part: body
-    regex:
-    - (<h1>BEA WebLogic Server ([^\s]+)&#153;<\/h1>)
-    type: regex
-  - group: 2
-    name: version
-    part: headers.server
-    regex:
-    - (^WebLogic( WebLogic)?( Server)? (.+)  [\d]{2}\/[\d]{2}\/[\d]{4})
-    type: regex
-  - name: version
-    part: headers.server
-    regex:
-    - (^WebLogic WebLogic (Temporary .+) [\d]{2}\/[\d]{2}\/[\d]{4})
-    type: regex
-  - name: version
-    part: headers.server
-    regex:
-    - (^WebLogic Server (.+) [A-Z][a-z]{2} [A-Z][a-z]{2} [\d]{1,2} [\d]{2}:[\d]{2}:[\d]{2})
-    type: regex
-  name: bea_weblogic_server
-- matchers:
-  - part: body
-    type: word
-    words:
     - <img src="../images/beef.gif" onclick="new Effect.Shake('sidebar');"></div>
       BeEF</h1>
   - name: version
@@ -3664,43 +3610,7 @@
     - (<meta name="generator" content="Campsite ([\d\.a-z]+)" \/>)
     type: regex
   name: campsite
-- matchers:
-  - name: version
-    part: body
-    regex:
-    - VB-C50i
-    type: regex
-    words:
-    - <TITLE>Network Camera VB-C50i/VB-C50iR</TITLE>
-  - name: version
-    part: body
-    regex:
-    - VB-C50i
-    type: regex
-    words:
-    - function L(n,g) {var i=document.images[n]; if (i)I[n]=new H(i,i.src,"/v/"+g+".gif")}
-  - name: version
-    part: body
-    regex:
-    - VB-C50i
-    type: regex
-    words:
-    - function L(n,g) {var i=document.images[n];if (i)I[n]=new H(i,i.src,"/v/"+g+".gif")}
-  - name: version
-    part: body
-    regex:
-    - WebView
-    type: regex
-    words:
-    - "<param name=cabbase\tvalue=\"LiveApplet.cab\">"
-  - name: version
-    part: body
-    regex:
-    - WebView
-    type: regex
-    words:
-    - <title>LiveApplet</title>
-  name: canon_network_camera
+
 - matchers:
   - part: body
     type: word
@@ -3714,18 +3624,6 @@
     - <a href="tcp_ip.htm">[TCP/IP]</a> <a href="netware.htm">[NetWare]</a> <a href="apple.htm">[AppleTalk]</a>
       <a href="smb.htm">[SMB]</a>
   name: canon_print_server
-- matchers:
-  - part: headers.server
-    regex:
-    - (^Canon Http Server)
-    type: regex
-  - group: 1
-    name: version
-    part: headers.server
-    regex:
-    - (^Canon Http Server (Ver)?(.*))
-    type: regex
-  name: canon_printer
 - matchers:
   - part: body
     type: word
@@ -9854,30 +9752,6 @@
     - "\t<td nowrap colspan=\"3\"><img src=\"Admin_top.JPG\" width=\"750\" height=\"\
       52\" alt=\"\" border=\"0\" hspace=\"0\" vspace=\"0\"></td>"
   name: linksys_nas
-- matchers:
-  - name: model:WVC54GCA
-    part: body
-    type: word
-    words:
-    - <meta name="description" content="WVC54GCA">
-  - name: model:WVC54GCA
-    part: body
-    type: word
-    words:
-    - <td bgcolor="#6766CC" align="right" valign="top"><span class="model" style="position:relative;top:-12px">WVC54GCA</span><img
-      src="../blue_top_right.gif" alt="" border="0">
-  - name: model:WVC80N
-    part: body
-    type: word
-    words:
-    - <meta name="description" content="WVC80N">
-  - name: model:WVC80N
-    part: body
-    type: word
-    words:
-    - <td bgcolor="#6766CC" align="right" valign="top"><span class="model" style="position:relative;top:-12px">WVC80N</span><img
-      src="../blue_top_right.gif" alt="" border="0">
-  name: linksys_network_camera
 - matchers:
   - name: model:PSUS4
     part: body
@@ -23134,12 +23008,6 @@
   name: fast_esp
 - matchers:
   - part: body
-    regex:
-    - <input[^>]+ name="parametricsearch
-    type: regex
-  name: fast_search_for_sharepoint
-- matchers:
-  - part: body
     type: word
     words:
     - <!-- factfinder
@@ -25445,12 +25313,6 @@
     - <span class="versiontag"><span class="vword">version</span> ([\d\.]+)
     type: regex
   name: teamcity
-- matchers:
-  - part: body
-    regex:
-    - <!--[^>]+the seo framework by sybre waaijer
-    type: regex
-  name: the_seo_framewor
 - matchers:
   - part: headers.Set-Cookie
     type: word

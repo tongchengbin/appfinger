@@ -1,0 +1,6 @@
+- name: WVC54GCA
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'content="WVC54GCA"'

@@ -61,7 +61,7 @@
       words:
         - "ER3200G2系统管理"
         - "ER3200系统管理"
-- name: ER3260
+- name: ER3260G2
   matchers:
     - part: title
       type: word

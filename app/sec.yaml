@@ -171,3 +171,9 @@
       type: word
       words:
         - 明御WEB应用防火墙
+- name: 齐治堡垒机
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "536903663"

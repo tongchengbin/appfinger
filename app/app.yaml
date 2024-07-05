@@ -540,7 +540,7 @@
       words:
         - "zeroShell"
         - "ZeroShell"
-- name: Struts
+- name: Struts2
   matchers:
     - type: word
       part: header
@@ -701,8 +701,13 @@
       words:
         - "-754147112"
   name: gitea
-- name: roundcube
+
+- name: Roundcube-WebMail
   matchers:
+    - part: title
+      type: word
+      words:
+        - "Roundcube Webmail"
     - part: icon_hash
       type: word
       words:
@@ -1434,12 +1439,6 @@
       type: word
       words:
         - "SoftEther VPN Server"
-- name: Roundcube-Webmail
-  matchers:
-    - part: title
-      type: word
-      words:
-        - "Roundcube Webmail"
 - name: Jellyfin
   matchers:
     - part: title
@@ -2559,3 +2558,21 @@
       type: word
       words:
         - "Plastic SCM"
+- name: ZenML
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ZenML"
+- name: Progress-Kemp-Flowmon
+  matchers:
+    - part: headers.server
+      type: word
+      words:
+        - "Flowmon"
+- name: Crawlab
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Crawlab"

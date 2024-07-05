@@ -22,7 +22,7 @@
       regex:
         - (^cisco-IOS)
       type: regex
-  name: cisco_ios
+  name: Cisco-IOS
 - name: Cisco CloudCenter Suite
   matchers:
     - part: title

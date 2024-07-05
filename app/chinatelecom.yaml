@@ -1,0 +1,8 @@
+- name: 电信网关
+  matchers:
+    - part: body
+      type: word
+      condition: and
+      words:
+        - "img/login_bg3.png"
+        - "系统登录"
