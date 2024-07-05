@@ -2576,3 +2576,90 @@
       type: word
       words:
         - "Crawlab"
+- name: Altenergy-Power-Control-Software
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Altenergy Power Control Software"
+- name: Casdoor
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Casdoor"
+- name: Clickhouse
+  matchers:
+    - part: header
+      type: word
+      words:
+        - "X-Clickhouse-Summary"
+- name: Genieacs
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "-2098066288"
+    - part: title
+      type: word
+      words:
+        - "GenieACS"
+- name: MobSF
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "MobSF"
+- name: Selenium
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "/wd/hub"
+
+- name: Axyom-Network-Manager
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Axyom Network Manager"
+- name: Mautic
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Mautic"
+- name: Temporal
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "557327884"
+- name: Alertmanager
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Alertmanager"
+- name: Zeppelin
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Zeppelin"
+- name: OpenBMCS
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "1550906681"
+- name: Appwrite
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Appwrite"
+    - part: icon_hash
+      type: word
+      words:
+        - "-633108100"
