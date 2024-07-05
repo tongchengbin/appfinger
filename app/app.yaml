@@ -2576,3 +2576,10 @@
         - "HFS_SID_"
       type: word
   name: Rejetto-HttpFileServer
+
+- name: Plastic-SCM
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Plastic SCM"
