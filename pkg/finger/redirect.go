@@ -9,6 +9,35 @@ import (
 	"strings"
 )
 
+const JSExecuteTemplate = `
+		var navigator = {language:"en",
+						appVersion:"5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0",
+						appCodeName: "Mozilla",
+						appName:"Netscape",
+						userAgent:"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0",
+						vendor:"Google Inc.",
+						};
+		var location = {href:"%s",hostname:"%s","protocol":"%s",pathname:"%s",search:""};
+		var window = {
+			location: location,
+			open: function(url, target) {
+				window.location.href =url;
+			}
+		};
+		var top = {
+			window: window,
+			location: location,
+			document: {
+				location: window.location		
+			}
+		}
+		var document = {
+			location: window.location,	
+		};
+		window.top = top;
+		self = window;
+`
+
 func extractUri(n *html.Node) string {
 	// 处理 <meta http-equiv="Refresh" content="0;url=/yyoa/index.jsp"> 标签
 	for _, attr := range n.Attr {
@@ -53,27 +82,7 @@ func findRefresh(n *html.Node) string {
 func getExecRedirect(uri string, jsCodes []string, onload string) string {
 	vm := otto.New()
 	parsed, _ := url.Parse(url.PathEscape(uri))
-	initWindowsCode := fmt.Sprintf(`
-		var location = {href:"%s",hostname:"%s","protocol":"%s",pathname:"%s",search:""};
-		var window = {
-			location: location,
-			open: function(url, target) {
-				window.location.href =url;
-			}
-		};
-		var top = {
-			window: window,
-			location: location,
-			document: {
-				location: window.location		
-			}
-		}
-		var document = {
-			location: window.location,	
-		};
-		window.top = top;
-		self = window;
-`, uri, parsed.Hostname(), parsed.Scheme, parsed.Path)
+	initWindowsCode := fmt.Sprintf(JSExecuteTemplate, uri, parsed.Hostname(), parsed.Scheme, parsed.Path)
 	_, err := vm.Run(initWindowsCode)
 	if err != nil {
 		fmt.Printf("JavaScript execution error:%s %v\n", uri, err)
@@ -99,7 +108,6 @@ func getExecRedirect(uri string, jsCodes []string, onload string) string {
 	}
 	code := fmt.Sprintf(`
 		%s
-	
 		function isString(s) {
 			return typeof(s) ==="string";
 		}
@@ -128,7 +136,7 @@ func getExecRedirect(uri string, jsCodes []string, onload string) string {
 	`, onload)
 	_, err = vm.Run(code)
 	for _, log := range consoleLogs {
-		fmt.Println(">>|", log)
+		fmt.Println("console:", log)
 	}
 	if err != nil {
 		gologger.Debug().Msgf("Error getting result:%v", err)
@@ -238,7 +246,7 @@ func parseJavaScript(url string, htmlContent string) string {
 		if strings.HasPrefix(onload, "javascript:") {
 			return getExecRedirect(url, scripts, strings.Split(onload, ":")[1])
 		} else {
-			return getExecRedirect(url, scripts, "")
+			return getExecRedirect(url, scripts, onload)
 		}
 	}
 }
