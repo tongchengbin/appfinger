@@ -55,10 +55,22 @@
       type: word
       words:
         - HG658d
-
+- name: DG8045
+  matchers:
+    - part: title
+      type: word
+      words:
+        - DG8045
 - name: HuaWei-IPC
   matchers:
     - part: title
       type: word
       words:
         - HUAWEI IPC
+- name: HuaWei-Router
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'id="huaweilogo"'
+        - "/html/route_view.js"

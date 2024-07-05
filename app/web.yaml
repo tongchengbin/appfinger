@@ -1729,13 +1729,6 @@
     type: regex
   name: apache_cocoon
 - matchers:
-  - name: Apache Flink in title
-    part: body
-    regex:
-    - (<title>Apache Flink Web Dashboard<\/title>)
-    type: regex
-  name: flink
-- matchers:
   - part: body
     type: word
     words:
@@ -13236,7 +13229,7 @@
     type: word
     words:
     - (^(.*)$)
-  - part: headers
+  - part: header
     regex:
     - (HTTP\/1\.[01] 404 Unknown site\!)
     type: regex
@@ -17465,7 +17458,7 @@
     regex:
     - (^Sophos Email Appliance$)
     type: regex
-  - part: headers
+  - part: header
     type: word
     words:
     - '([Ss]erver: Sophos Email Appliance\r?\n.+Location: https?:\/\/([^\/]+))'
@@ -25457,17 +25450,7 @@
     regex:
     - <!--[^>]+the seo framework by sybre waaijer
     type: regex
-  name: the_seo_framework
-- matchers:
-  - part: headers.x-powered-by
-    type: word
-    words:
-    - thinkphp
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - thinkphp_show_page_trace
-  name: thinkphp
+  name: the_seo_framewor
 - matchers:
   - part: headers.Set-Cookie
     type: word

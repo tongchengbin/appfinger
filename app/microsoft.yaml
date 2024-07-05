@@ -67,3 +67,22 @@
       type: word
       words:
         - "RD Web Access"
+
+- name: Sharepoint-Server
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "sprequestduration"
+        - sharepointerror
+        - x-sharepointhealthscore
+        - microsoftsharepointteamservices
+        - msowebpartpage_postbacksource
+        - sharepoint team
+        - microsoft sharepoint
+    - part: header
+      type: word
+      words:
+        - sharepointerror
+        - microsoftsharepointteamservices
+        - x-sharepointhealthscore

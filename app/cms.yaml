@@ -1117,7 +1117,7 @@
   name: Subrion-CMS
 - matchers:
     - part: body
-      wods:
+      words:
         - finger://www.syndeocms.org
       type: word
   name: syndeocms
@@ -1135,7 +1135,7 @@
   name: synType-CMS
 - matchers:
     - part: body
-      word:
+      words:
         - TangoCMS
       type: word
   name: TangoCMS
@@ -1244,7 +1244,7 @@
   name: instantcms
 - matchers:
     - part: header
-      word:
+      words:
         - x-kooboocms-version
       type: word
   name: kooboo_cms
@@ -1458,7 +1458,7 @@
 
 - name: lin-cms-spring-boot
   matchers:
-    - part: headers
+    - part: header
       type: word
       words:
         - "心上无垢，林间有风。"
@@ -1496,3 +1496,10 @@
         - ^[dD]rupal(?:\s([\d.]+))?
       type: regex
   name: Drupal
+
+- name: nonecms
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "-761169433"

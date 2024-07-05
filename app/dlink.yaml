@@ -155,3 +155,10 @@
       part: headers.www-authenticate
       words:
         - "DCS-2530L"
+- name: DAP-2020
+  matchers:
+    - type: word
+      part: body
+      words:
+        - "DAP-1360"
+

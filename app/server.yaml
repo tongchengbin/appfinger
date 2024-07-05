@@ -38,7 +38,7 @@
 
 - name: App-webs
   matchers:
-    - part: header.server
+    - part: headers.server
       words:
         - App-webs
       type: word
@@ -94,24 +94,6 @@
       type: word
       words:
         - "SiteServer"
-- name: sharepoint Server
-  matchers:
-    - part: body
-      type: word
-      words:
-        - "sprequestduration"
-        - sharepointerror
-        - x-sharepointhealthscore
-        - microsoftsharepointteamservices
-        - msowebpartpage_postbacksource
-        - sharepoint team
-        - microsoft sharepoint
-    - part: headers
-      type: word
-      words:
-        - sharepointerror
-        - microsoftsharepointteamservices
-        - x-sharepointhealthscore
 - name: Nagios-XI
   matchers:
     - part: body
@@ -151,7 +133,7 @@
         - aurahttpd
 - name: proftpd
   matchers:
-    - part: headers
+    - part: header
       type: word
       words:
         - proftpd

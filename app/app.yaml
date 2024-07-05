@@ -228,6 +228,11 @@
       type: word
       words:
         - ef="http://www.thinkphp.cn">thinkphp</a><sup>
+    - part: headers.Set-Cookie
+      type: word
+      words:
+        - thinkphp_show_page_trace
+
 - name: UEditor
   matchers:
     - part: body
@@ -316,12 +321,6 @@
       part: body
       words:
         - "Alumni Management System"
-- name: Applezeed
-  matchers:
-    - type: word
-      part: body
-      words:
-        - "Power BY applezeed.com"
 - name: ASP-Nuke
   matchers:
     - type: word
@@ -552,12 +551,7 @@
 - name: EYou
   matchers:
     - type: word
-      part: title
-      words:
-        - "eYouWS"
-      condition: and
-    - type: word
-      part: title
+      part: header
       words:
         - "EMPHPSID"
 - name: rConfig
@@ -675,12 +669,6 @@
       type: word
       words:
         - <h4>欢迎登录natshell</h4
-- name: clusterengine
-  matchers:
-    - part: title
-      type: word
-      words:
-        - clusterengine
 - name: MinIO-Console
   matchers:
     - part: title
@@ -916,19 +904,6 @@
         - recaptcha_ajax.js
       type: word
   name: recaptcha
-- matchers:
-    - part: body
-      regex:
-        - (<a href="finger:\/\/(sendcard.sf.net|www.sendcard.org)\/"( title="download your
-          own PHP e-card script")?><img src="poweredbysendcard102x47.gif"[^>]+alt="Powered
-          by sendcard - an advanced PHP e-card program"[^>]*><\/a>)
-      type: regex
-    - part: body
-      type: word
-      words:
-        - '<div style="display: none; color: White;">scscsc320</div>'
-        - "<!-- The following line should allow me to search on google and find sendcard installations -->"
-  name: sendcard
 - name: yealink
   matchers:
     - part: title
@@ -1127,10 +1102,11 @@
         - Supershell
 - name: ClusterEngine
   matchers:
-    - part: title
+    - part: body
       type: word
       words:
-        - ClusterEngine
+        - ClusterEngine HPC云服务平台使用说明
+        - ClusterEngine V4.0
 - name: 中新金盾信息安全管理系统
   matchers:
     - part: title
@@ -1212,7 +1188,7 @@
       words:
         - "JupyterHub"
 - matchers:
-    - part: headers
+    - part: header
       words:
         - X-Jenkins
       type: word
@@ -2101,7 +2077,7 @@
       type: word
       case-insensitive: true
       words:
-          - "osCsid="
+        - "osCsid="
 - name: Everything
   matchers:
     - type: word
@@ -2119,26 +2095,26 @@
     - type: word
       part: headers.pragma
       words:
-          - "akamai-x-cache-on"
-          - "akamai-x-cache-remote"
+        - "akamai-x-cache-on"
+        - "akamai-x-cache-remote"
 - name: Cobub-Razor
   matchers:
     - type: word
       part: title
       words:
-          - "Cobub Razor"
+        - "Cobub Razor"
 - name: SearchBlox
   matchers:
     - type: word
       part: title
       words:
-          - "Search Results"
+        - "Search Results"
 - name: Easy-Appointments
   matchers:
     - type: word
       part: body
       words:
-          - "Easy!Appointments"
+        - "Easy!Appointments"
 - name: Opcache
   matchers:
     - type: word
@@ -2168,7 +2144,7 @@
     - type: word
       part: title
       words:
-          - "Reprise License"
+        - "Reprise License"
 - name: DomainMOD
   matchers:
     - part: title
@@ -2183,7 +2159,7 @@
         - "1469328760"
 - name: mooDating
   matchers:
-    - part: word
+    - part: body
       type: word
       words:
         - content="mooDating
@@ -2192,13 +2168,13 @@
     - part: title
       type: word
       words:
-          - "酒店宽带运营系统"
+        - "酒店宽带运营系统"
 - name: AtMail
   matchers:
     - part: headers.set-cookie
       type: word
       words:
-          - "atmail"
+        - "atmail"
 - name: OpsView
   matchers:
     - part: body
@@ -2240,7 +2216,7 @@
     - part: body
       type: word
       words:
-          - 'content="Discourse'
+        - 'content="Discourse'
 - name: Lucee
   matchers:
     - part: body
@@ -2253,7 +2229,7 @@
     - part: title
       type: word
       words:
-          - "Vehicle Management System"
+        - "Vehicle Management System"
 - name: CandidATS
   matchers:
     - part: body
@@ -2557,7 +2533,7 @@
   matchers:
     - part: body
       type: word
-      regex:
+      words:
         - "OpenAI 接口聚合管理，支持多种渠道包括"
 - name: AList
   matchers:
@@ -2571,7 +2547,7 @@
       words:
         - HFS
       type: word
-    - part: header.set-cookie
+    - part: headers.set-cookie
       words:
         - "HFS_SID_"
       type: word

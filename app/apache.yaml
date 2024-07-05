@@ -74,7 +74,7 @@
     - part: headers.Www-Authenticate
       type: word
       words:
-        - 'realm="dubbo"'
+        - 'Basic realm="dubbo"'
 - name: APISIX
   matchers:
     - part: title
@@ -121,3 +121,18 @@
       type: word
       words:
         - "HugeGraph"
+- matchers:
+    - name: Apache Flink in title
+      part: body
+      words:
+        - Apache Flink Web Dashboard
+      type: word
+  name: Flink
+- name: AXis2
+  matchers:
+    - part: body
+      type: word
+      contains: and
+      words:
+        - "Apache Axis"
+        - "deployed"
