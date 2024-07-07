@@ -241,5 +241,5 @@
     - part: headers.server
       words:
         - SonicWALL SSL-VPN Web Server
-      type: worrd
+      type: word
   name: SonicWALL-SSL-VPN
