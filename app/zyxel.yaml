@@ -186,3 +186,34 @@
       type: word
       words:
         - "ATP700"
+- name: ZyXEL-Firewall
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "USG FLEX"
+        - "ATP"
+- name: ZyXEL-USG-Series
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "USG FLEX"
+- name: ZyXEL-APT-Series
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ATP"
+- name: ZyXEL-NSG-Series
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "NSG"
+- name: ZyXEL-VPN
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "VPN Authorize"

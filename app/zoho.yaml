@@ -18,3 +18,9 @@
       type: word
       words:
         - "ManageEngine PasswordManager Pro"
+- name: ManageEngine-OpManager-Plus
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "OpManager Plus"

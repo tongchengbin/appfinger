@@ -67,3 +67,9 @@
       type: word
       words:
         - "/anyshare/favicon.ico"
+- name: 汇文软件-书目检索系统
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "图书馆书目检索系统"

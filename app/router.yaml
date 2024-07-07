@@ -66,8 +66,9 @@
   matchers:
     - part: title
       type: word
+      case-insensitive: true
       words:
-        - "Tenda 11N Wireless Router Login Screen"
+        - "Tenda 11N"
 - name: Vodafone-Router
   matchers:
     - part: title
@@ -345,3 +346,29 @@
       words:
         - B-LINK
   name: LB-Link-Router
+
+- name: LGATE-902
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "LGATE-902"
+- matchers:
+    - part: title
+      type: word
+      words:
+        - RouterOS
+  name: mikrotik RouterOS
+
+- name: colibri_firmware
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Franklin Fueling Systems"
+- name: HWL-2511-SS
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "app/feature/portForwarding.js"

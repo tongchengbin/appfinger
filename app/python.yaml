@@ -61,3 +61,9 @@
       part: title
       words:
         - Tautulli
+- name: Supervisor
+  matchers:
+    - type: word
+      part: title
+      words:
+        - "Supervisor Status"

@@ -19,9 +19,9 @@
 
 - matchers:
     - part: headers.server
-      regex:
-        - (^cisco-IOS)
-      type: regex
+      words:
+        - cisco-IOS
+      type: word
   name: Cisco-IOS
 - name: Cisco CloudCenter Suite
   matchers:

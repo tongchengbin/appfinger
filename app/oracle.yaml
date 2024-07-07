@@ -68,7 +68,7 @@
       regex:
         - Oracle-iPlanet-Web-Server\/([\d\.]+)
       type: regex
-  name: Oracle-iPlanet-Web-Server
+  name: iPlanet-Web-Server
 - matchers:
     - part: headers.server
       regex:
@@ -193,3 +193,9 @@
       name: version
       regex:
         - Servlet(?:/([\d\.]+))
+- name: E-Business-Suite
+  matchers:
+    - part: header
+      type: word
+      words:
+        - "X-Oracle-Dms-Ecid"

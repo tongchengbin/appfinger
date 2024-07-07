@@ -10,3 +10,9 @@
       type: word
       words:
         - "Vigor"
+- name: VigorConnect
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "VigorConnect"

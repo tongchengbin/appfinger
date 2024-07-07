@@ -177,3 +177,69 @@
       type: word
       words:
         - "536903663"
+- name: 汉塔科技上网行为管理系统
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "汉塔科技 - 上网行为管理系统"
+- name: SangFor-应用交付报表系统
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "ad.sangfor.com | AD Report"
+- name: SangFor-应用交付管理系统
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "1805953451"
+- name: pm43_firmware
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "/main/login.lua?pageid="
+- name: ip-he950e_firmware
+  matchers:
+    - part: headers.server
+      type: word
+      words:
+        - "thttpd/2.25b 29dec2003"
+- name: vitogate_300_firmware
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Vitogate 300"
+- name: SSL-VPN
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "/webui/images/default/default/alert_close.jpg"
+- name: WApples-Firewall
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Intelligent WAPPLES"
+- name: drawio
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Flowchart Maker"
+- name: 网康NS-ASG应用安全网关
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "NS-ASG"
+- matchers:
+    - part: headers.server
+      words:
+        - SonicWALL SSL-VPN Web Server
+      type: worrd
+  name: SonicWALL-SSL-VPN

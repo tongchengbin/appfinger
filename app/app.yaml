@@ -487,7 +487,7 @@
       type: word
       words:
         - Welcome to Modoboa
-- name: Jeecg Boot
+- name: Jeecg-Boot
   matchers:
     - type: word
       part: title
@@ -690,12 +690,10 @@
       type: regex
   name: TwistedWeb
 - matchers:
-    - group: 1
-      name: version
-      part: body
-      regex:
-        - "encodeURIComponent\\('([0-9.]*)'\\)"
-      type: regex
+    - part: body
+      words:
+        - "Gitea - Git"
+      type: word
     - part: icon_hash
       type: word
       words:
@@ -2663,3 +2661,252 @@
       type: word
       words:
         - "-633108100"
+- name: WebPageTest
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "WebPageTest"
+- name: TamronOS-IPTV
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "TamronOS IPTV"
+- name: httpbin
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "https://github.com/requests/httpbin"
+
+- name: applezeed
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "applezeed.com"
+- name: 3ware
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "3ware"
+- name: Sidekiq
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Sidekiq"
+- name: QloApps
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "QloApps"
+- name: Mirth-Connect
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Mirth Connect Administrator"
+- name: SoPlanning
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "SoPlanning"
+- name: MoniTorr
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "-211006074"
+- name: majordomo
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "1903390397"
+- name: 云安宝-云匣子
+  matchers:
+    - part: cert
+      type: word
+      words:
+        - "云匣子"
+- name: Businesso
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "2133201205"
+- name: searchreplacedb2
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "searchreplacedb2"
+- name: Multilaser
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "2055322029"
+- name: FreeIPA
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "FreeIPA"
+- name: traggo
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "traggo"
+- name: NocoDB
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "-2017596142"
+- name: Lightdash
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "Lightdash"
+- name: Document-Locator
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Document Locator"
+- name: webCalendar
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "1694647202"
+- name: Ruckus-Wireless
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Ruckus"
+- name: Ruckus-Unleashed
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Unleashed"
+- name: Ruckus-SmartZone
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "SmartZone"
+- name: OpenTSDB
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "OpenTSDB"
+- name: phpgedview
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "/phpgedview.db"
+- name: fusionauth
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "1860926370"
+        - "-673286958"
+- name: auth-json
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "auth.json"
+- name: JBoss-jBPM
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "JBossWS"
+- name: sysaid_on-premises
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "1540720428"
+- name: magnusbilling
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "magnusbilling"
+- name: Roxy-WI
+  matchers:
+    - part: body
+      type: word
+      case-insensitive: true
+      words:
+        - "Roxy-WI"
+- name: gitblit
+  matchers:
+    - part: body
+      type: word
+      case-insensitive: true
+      words:
+        - "gitblit"
+- name: emerge_e3_firmware
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "emerge"
+- name: Datataker
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Datataker"
+- name: SysAid
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "1540720428"
+- name: RaspAP
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "-1465760059"
+- name: Omnia-MPX
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Omnia MPX"
+
+- matchers:
+    - part: headers.set-cookie
+      words:
+        - dnn_IsMobile
+      type: word
+  name: DotNetNuke
+- matchers:
+    - part: headers.Set-Cookie
+      type: word
+      words:
+        - mage-cache-storage
+        - mage-cache-storage-section-invalidation
+        - mage-translation-file-version
+        - mage-translation-storage
+        - x-magento-vary
+  name: Magento

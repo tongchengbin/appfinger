@@ -119,14 +119,12 @@
       part: body
       words:
         - "http://www.cmseasy.cn/service_1.html"
-- name: KingDee OA
+- name: KingDee-OA
   matchers:
     - type: word
       part: body
       words:
-        - "location.href=\"/kingdee/index.jsp\""
         - "logo-kingdee.png"
-      condition: and
 - name: LanDray OA
   matchers:
     - type: word
@@ -161,3 +159,16 @@
       type: word
       words:
         - "/Services/Identification/"
+
+- name: 易宝OA
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "易宝OA系统"
+- name: 红帆-iofficeOA
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "iOffice"

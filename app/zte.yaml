@@ -1,3 +1,9 @@
+- name: ZTE-Router
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "ZTE Corporation"
 - name: F460
   matchers-condition: and
   matchers:

@@ -43,3 +43,9 @@
       type: word
       words:
         - "CasaOS"
+- name: Seagate-NAS
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Seagate-NAS"

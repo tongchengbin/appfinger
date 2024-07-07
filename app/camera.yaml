@@ -8,6 +8,12 @@
 #      type: word
 #  name: Hikvision
 
+- name: DaHua-Camera
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "2019488876"
 
 - matchers:
     - part: headers.server
@@ -317,7 +323,6 @@
       type: word
       words:
         - "Amcrest Technologies"
-        -
 
 - name: Milesight-Camera
   matchers:
@@ -367,3 +372,9 @@
       type: word
       words:
         - "GNU rsp/1.0"
+- name: intel-AMT
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Active Management Technology"

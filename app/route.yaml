@@ -1,8 +1,0 @@
-#router
-
-- matchers:
-    - part: title
-      type: word
-      words:
-        - RouterOS
-  name: mikrotik RouterOS

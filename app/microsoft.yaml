@@ -77,3 +77,9 @@
         - sharepointerror
         - microsoftsharepointteamservices
         - x-sharepointhealthscore
+- name: Office-WebApps
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "Provide a link that opens Word,"

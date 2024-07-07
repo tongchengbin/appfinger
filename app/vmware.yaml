@@ -137,3 +137,22 @@
       words:
         - "VMWARE Secure FTP Server"
         - "VMWARE Secure Data Transfer"
+- name: VMware-Site_Recovery
+  matchers:
+    - part: title
+      type: word
+      case-insensitive: true
+      words:
+        - "VMware Site Recovery"
+- name: workspace-one-uem-console
+  matchers:
+    - part: body
+      type: word
+      case-insensitive: true
+      words:
+        - "/AirWatch/default.aspx"
+    - part: header
+      type: word
+      case-insensitive: true
+      words:
+        - "/AirWatch/default.aspx"

@@ -74,22 +74,6 @@
       part: body
       name: "ASPCMS"
       words:
-        - "content=\"aspcms"
-        - "/inc/aspcms_advjs.asp"
-    - type: word
-      part: body
-      name: "ASPCMS"
-      words:
-        - "content=\"ASPCMS"
-    - type: word
-      part: body
-      name: "ASPCMS"
-      words:
-        - "/inc/AspCms_AdvJs.asp"
-    - type: word
-      part: body
-      name: "ASPCMS"
-      words:
         - "AspCMS"
 - name: jsh ERP
   matchers:
@@ -1503,3 +1487,15 @@
       type: word
       words:
         - "-761169433"
+- name: phpOK
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "admin@phpok.com"
+- name: webtrees
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'content="webtrees'

@@ -517,7 +517,7 @@
       words:
         - AfterlogicDAVServer
       type: word
-  name: Afterlogic
+  name: Aurora
 - name: Airtame
   matchers:
     - part: body

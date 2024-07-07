@@ -4,3 +4,9 @@
       type: word
       words:
         - 'content="WVC54GCA"'
+- name: LinkSys-E2000
+  matchers:
+    - part: headers.Www-Authenticate
+      type: word
+      words:
+        - 'Basic realm="Linksys E2000"'

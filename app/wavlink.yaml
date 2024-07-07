@@ -1,3 +1,10 @@
+- name: Wavlink
+  matchers:
+    - part: body
+      type: word
+      case-insensitive: true
+      words:
+        - "Wavlink"
 - name: Wavlink-WiFi-APP
   matchers:
     - part: title

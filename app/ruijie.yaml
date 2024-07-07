@@ -11,6 +11,12 @@
       part: title
       words:
         - "无线smartWeb--登录页面"
+    - type: word
+      part: body
+      condition: and
+      words:
+        - "img/free_login_ge.gif"
+        - "./img/login_bg.gif"
 - name: RuiJie-NBR-Router
   matchers:
     - type: word

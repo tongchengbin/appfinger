@@ -167,3 +167,9 @@
       part: headers.server
       words:
         - "DIR-600"
+- name: DNS320
+  matchers:
+    - type: word
+      part: headers.server
+      words:
+        - "DNS320"
