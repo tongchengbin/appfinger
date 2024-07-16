@@ -1,3 +1,9 @@
+- name: H3C-SecPath-Firewall
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "H3C SecPath Firewall System"
 - name: H3C-SecPath-运维审计系统
   matchers:
     - part: body

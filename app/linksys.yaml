@@ -10,3 +10,16 @@
       type: word
       words:
         - 'Basic realm="Linksys E2000"'
+
+- name: LinkSys-X1000
+  matchers:
+    - part: headers.www-authenticate
+      type: word
+      words:
+        - "X1000"
+- name: LinkSys-X3500
+  matchers:
+    - part: headers.www-authenticate
+      type: word
+      words:
+        - "X3500"

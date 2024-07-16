@@ -6,7 +6,7 @@ import (
 	"github.com/projectdiscovery/gologger"
 	"github.com/tongchengbin/appfinger"
 	"github.com/tongchengbin/appfinger/pkg/matchers"
-	"gopkg.in/yaml.v3"
+	_ "gopkg.in/yaml.v3"
 	"net/url"
 	"os"
 	"strings"
@@ -133,7 +133,7 @@ func (r *Rule) Match(banner *Banner) (bool, map[string]string) {
 			return false, nil
 		}
 	}
-	if matched && r.MatchersCondition == "and" {
+	if matched && r.MatchersCondition == "or" {
 		return true, matchedMapString
 	}
 	return ok, matchedMapString

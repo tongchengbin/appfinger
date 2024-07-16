@@ -59,20 +59,16 @@
   matchers:
     - part: title
       type: word
+      case-insensitive: true
       words:
-        - 'Flexnet'
+        - 'FlexNet'
 - name: Jamf
   matchers:
     - part: title
       type: word
       words:
         - 'Jamf Pro'
-- name: FortiPortal
-  matchers:
-    - part: body
-      type: word
-      words:
-        - 'FortiPortal'
+
 - name: Okta
   matchers:
     - part: title
@@ -85,12 +81,6 @@
       type: word
       words:
         - 'logstash'
-- name: vmanage
-  matchers:
-    - part: title
-      type: word
-      words:
-        - 'vManage'
 - name: OpenShift
   matchers:
     - part: title
@@ -128,7 +118,7 @@
       type: word
       words:
         - 'Cisco BroadWorks'
-- name: Cisco WebEx
+- name: Cisco-WebEx
   matchers:
     - part: title
       type: word
@@ -146,12 +136,14 @@
       type: word
       words:
         - 'Jitsi Meet'
-- name: goAnywhere
+- name: GoAnywhere
   matchers:
-    - part: body
+    - part: title
       type: word
       words:
-        - "GoAnywhere Managed File Transfer"
+        - "GoAnywhere"
+
+
 - name: OpenNMS
   matchers:
     - part: title
@@ -427,12 +419,7 @@
       type: word
       words:
         - MLflow
-- name: Home-Assistant
-  matchers:
-    - part: title
-      type: word
-      words:
-        - Home-Assistant
+
 - name: Avalanche
   matchers:
     - part: title
@@ -2264,12 +2251,7 @@
         - "datacube3"
   name: DataCube3
 
-- name: GoAnywhere-MFT
-  matchers:
-    - part: title
-      type: word
-      words:
-        - "GoAnywhere Web Client"
+
 - name: Progress-Kemp-LoadMaster
   matchers:
     - part: body
@@ -2426,6 +2408,7 @@
         - Liferay Portal (.*)
   name: Liferay-Portal
 - name: ADGuard
+  matchers-condition: and
   matchers:
     - part: title
       type: word
@@ -2910,3 +2893,15 @@
         - mage-translation-storage
         - x-magento-vary
   name: Magento
+- name: F-Secure-PolicyManager
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Policy Manager"
+- name: FreeBoxOS
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Freebox OS"

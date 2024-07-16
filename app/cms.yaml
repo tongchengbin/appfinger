@@ -1499,3 +1499,12 @@
       type: word
       words:
         - 'content="webtrees'
+- name: BillQuick
+  matchers:
+    - part: body
+      type: word
+      condition: and
+      words:
+        - 'VIEWSTATE'
+        - '__VIEWSTATEGENERATOR'
+        - '__EVENTVALIDATION'

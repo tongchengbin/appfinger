@@ -149,15 +149,11 @@
       type: word
       words:
         - 'Cisco Unified Communications Manager'
-- name: LinkSys-X1000
+
+
+- name: Cisco-vManage
   matchers:
-    - part: headers.www-authenticate
+    - part: title
       type: word
       words:
-        - "X1000"
-- name: LinkSys-X3500
-  matchers:
-    - part: headers.www-authenticate
-      type: word
-      words:
-        - "X3500"
+        - 'Cisco vManage'

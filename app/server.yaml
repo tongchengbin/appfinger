@@ -625,3 +625,10 @@
       words:
         - "851034826"
         - "-1405725126"
+- matchers:
+    - name: version
+      part: headers.server
+      regex:
+        - (^[\s]*Boa\/([^\s]+))
+      type: regex
+  name: Boa-WebServer

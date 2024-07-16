@@ -22,3 +22,9 @@
       type: word
       words:
         - "CN=FortiMail"
+- name: FortiPortal
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'FortiPortal'

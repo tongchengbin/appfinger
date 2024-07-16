@@ -3135,13 +3135,6 @@
   name: bmc_remedy
 - matchers:
   - name: version
-    part: headers.server
-    regex:
-    - (^[\s]*Boa\/([^\s]+))
-    type: regex
-  name: boa_webserver
-- matchers:
-  - name: version
     part: body
     regex:
     - (Powered by <a href="finger:\/\/boastology.com">boastMachine v([\d\.]+)<\/a>)
@@ -23117,12 +23110,6 @@
     words:
     - goahead
   name: goahead
-- matchers:
-  - part: headers.server
-    type: word
-    words:
-    - goanywhere
-  name: goanywhere
 - matchers:
   - part: headers.server
     regex:

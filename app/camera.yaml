@@ -378,3 +378,9 @@
       type: word
       words:
         - "Active Management Technology"
+- name: Wisenet-NVR
+  matchers:
+    - part: header
+      type: word
+      words:
+        - "Wisenet NVR"

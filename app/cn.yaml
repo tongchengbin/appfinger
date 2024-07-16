@@ -73,3 +73,9 @@
       type: word
       words:
         - "图书馆书目检索系统"
+- name: 鲸发卡
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "/static/theme/maowang51/css/style.css"

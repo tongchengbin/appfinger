@@ -56,12 +56,12 @@
       type: word
       words:
         - "VMware vRealize Operations"
-- name: Vmware vCenter
+- name: Vmware-vCenter
   matchers:
-    - part: title
+    - part: body
       type: word
       words:
-        - "VMware vCenter"
+        - "VMware vCenter Converter Standalone"
 - name: Vmware-ESXi
   matchers:
     - part: title
