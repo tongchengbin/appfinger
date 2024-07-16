@@ -6,7 +6,7 @@ import (
 	"github.com/projectdiscovery/gologger"
 	"github.com/tongchengbin/appfinger"
 	"github.com/tongchengbin/appfinger/pkg/matchers"
-	_ "gopkg.in/yaml.v3"
+	"gopkg.in/yaml.v3"
 	"net/url"
 	"os"
 	"strings"
