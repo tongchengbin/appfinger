@@ -2905,3 +2905,9 @@
       type: word
       words:
         - "Freebox OS"
+- name: Pexip
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Pexip"

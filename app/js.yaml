@@ -64,3 +64,39 @@
       words:
         - /dwr/engine.js
   name: DWR
+- name: handlebars.js
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "text/x-handlebars-template"
+- name: Vue.js
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "vue.min.js"
+        - "vue.js"
+- name: React.js
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "react.min.js"
+        - "react.js"
+- name: Backbone.js
+  matchers:
+    - part: body
+      type: word
+      case-insensitive: true
+      words:
+        - "backbone.min.js"
+        - "backbone.js"
+- name: Alpine.js
+  matchers:
+    - part: body
+      type: word
+      case-insensitive: true
+      words:
+        - "alpine.min.js"
+        - "alpine.js"

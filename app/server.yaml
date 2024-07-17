@@ -632,3 +632,16 @@
         - (^[\s]*Boa\/([^\s]+))
       type: regex
   name: Boa-WebServer
+- name: Embedthis-http
+  matchers:
+    - part: headers.server
+      type: word
+      words:
+        - "Embedthis-http"
+- name: Cassini
+  matchers:
+    - part: headers.server
+      type: regex
+      name: version
+      regex:
+        - "Cassini/([0-9.]*)"

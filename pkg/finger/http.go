@@ -328,7 +328,6 @@ func readICON(client *http.Client, banner *Banner) (iconHash int32, err error) {
 		banner.IconURI = iconURL
 	}
 	iconHash = mmh3(body)
-	println(iconHash)
 	banner.IconBytes = body
 	banner.IconHash = iconHash
 	banner.IconType = contentType

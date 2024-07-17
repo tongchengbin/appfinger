@@ -6246,38 +6246,7 @@
     - (<param name="archive" value="evocam.jar">)
     type: regex
   name: evo_cam
-- matchers:
-  - part: body
-    regex:
-    - (owered by <a href="finger:\/\/expressionengine.com\/">ExpressionEngine<\/a>)
-    type: regex
-  - name: exp_last_visit cookie
-    part: headers.set-cookie
-    regex:
-    - (^exp_last_visit)
-    type: regex
-  - name: exp_last_activity cookie
-    part: headers.set-cookie
-    regex:
-    - (^exp_last_activity)
-    type: regex
-  - name: exp_tracker cookie
-    part: headers.set-cookie
-    regex:
-    - (^exp_tracker)
-    type: regex
-  - name: exp_csrf_token cookie
-    part: headers.set-cookie
-    regex:
-    - (^exp_csrf_token)
-    type: regex
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - exp_csrf_token
-    - exp_last_activity
-    - exp_tracker
-  name: expressionengine
+
 - matchers:
   - part: body
     type: word
@@ -17193,21 +17162,6 @@
     - <TITLE>SONY Video Network Station</TITLE>
   name: sony_video_network_station
 - matchers:
-  - part: headers.server
-    regex:
-    - (^Sophos Email Appliance$)
-    type: regex
-  - part: header
-    type: word
-    words:
-    - '([Ss]erver: Sophos Email Appliance\r?\n.+Location: https?:\/\/([^\/]+))'
-  - part: body
-    type: word
-    words:
-    - <td class="logincontent" valign="top"><a href="finger://www.sophos.com"><img src="images/logo_sophos.gif"
-      border="0" alt="Email Appliance"></a></td>
-  name: sophos_email_appliance
-- matchers:
   - name: version
     part: body
     regex:
@@ -21949,12 +21903,6 @@
     - ^netlify
     type: regex
   name: netlify
-- matchers:
-  - part: body
-    regex:
-    - <[^>]+data-react
-    type: regex
-  name: react
 - matchers:
   - group: 1
     name: version

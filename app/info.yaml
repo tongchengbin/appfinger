@@ -5,6 +5,13 @@
       words:
         - <title>Index of /
   name: IndexOf
+- name: Login
+  matchers:
+    - part: title
+      type: word
+      case-insensitive: true
+      words:
+        - "登录"
 - name: 色情网站
   matchers:
     - part: title

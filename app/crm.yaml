@@ -1,0 +1,6 @@
+- name: 管家婆CRM
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+          - "-79854140"

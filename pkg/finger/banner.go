@@ -124,17 +124,13 @@ func (r *Rule) Match(banner *Banner) (bool, map[string]string) {
 		if matcher.Name != "" && len(matchedString) > 0 {
 			matchedMapString[matcher.Name] = matchedString[0]
 		}
-
-		if (r.MatchersCondition == "" || r.MatchersCondition == "or") && matched {
+		if matched {
 			ok = true
 			continue
 		}
 		if r.MatchersCondition == "and" && !matched {
 			return false, nil
 		}
-	}
-	if matched && r.MatchersCondition == "or" {
-		return true, matchedMapString
 	}
 	return ok, matchedMapString
 }

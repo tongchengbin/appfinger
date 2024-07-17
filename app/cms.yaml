@@ -1508,3 +1508,16 @@
         - 'VIEWSTATE'
         - '__VIEWSTATEGENERATOR'
         - '__EVENTVALIDATION'
+- matchers:
+    - part: headers.Set-Cookie
+      type: word
+      words:
+        - exp_last_activity
+        - exp_tracker
+  name: ExpressionEngine
+- name: Varbase
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'content="Varbase"'
