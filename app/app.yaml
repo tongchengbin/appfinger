@@ -2911,3 +2911,9 @@
       type: word
       words:
         - "Pexip"
+- name: DbGate
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "1198579728"
