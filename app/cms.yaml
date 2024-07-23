@@ -1521,3 +1521,13 @@
       type: word
       words:
         - 'content="Varbase"'
+- name: EduSoho
+  matchers:
+    - part: title
+      type: word
+      words:
+        - 'Powered By EduSoho'
+    - part: body
+      type: word
+      words:
+        - 'Powered by <a href="http://www.edusoho.com/"'
