@@ -176,25 +176,27 @@ func NewClient(proxy string, timeout time.Duration) (*http.Client, error) {
 		Transport: transport,
 		Jar:       jar, // 使用共享的 CookieJar
 		CheckRedirect: func(req *http.Request, via []*http.Request) error {
-			// 手动复制 cookie 到重定向请求中
-			if len(via) > 0 {
-				originURL := via[0].URL
-				cookies := jar.Cookies(originURL)
-				for _, cookie := range cookies {
-					req.AddCookie(cookie)
-				}
-			}
-			if len(via) >= 10 {
-				return http.ErrUseLastResponse
-			}
-
-			//if via[0].URL.Hostname() != req.URL.Hostname() {
+			// 有些错误的重定向导致无法获取响应
+			return http.ErrUseLastResponse
+			//// 手动复制 cookie 到重定向请求中
+			//if len(via) > 0 {
+			//	originURL := via[0].URL
+			//	cookies := jar.Cookies(originURL)
+			//	for _, cookie := range cookies {
+			//		req.AddCookie(cookie)
+			//	}
+			//}
+			//if len(via) >= 10 {
 			//	return http.ErrUseLastResponse
 			//}
-			// 在这里可以自定义重定向策略
-			// 例如，你可以修改请求头，记录重定向次数等
-			// 默认行为是跟随重定向
-			return nil
+			//
+			////if via[0].URL.Hostname() != req.URL.Hostname() {
+			////	return http.ErrUseLastResponse
+			////}
+			//// 在这里可以自定义重定向策略
+			//// 例如，你可以修改请求头，记录重定向次数等
+			//// 默认行为是跟随重定向
+			//return nil
 		},
 		Timeout: timeout,
 	}, nil
@@ -219,8 +221,36 @@ func RequestOnce(client *http.Client, uri string) (banner *Banner, redirectURL s
 	}
 	req.Header.Set("Accept", "*/*")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.58")
-	resp, err = client.Do(req)
-	if err != nil && err.Error() != http.ErrUseLastResponse.Error() {
+	maxRedirect := 3
+	for i := 0; i < maxRedirect; i++ {
+		var r2 *http.Response
+		r2, err = client.Do(req)
+		if err != nil {
+			break
+		}
+		if r2 != nil {
+			resp = r2
+		}
+		if resp.StatusCode == http.StatusMovedPermanently || resp.StatusCode == http.StatusFound {
+			location := resp.Header.Get("Location")
+			if location != "" {
+				var newURL *url.URL
+				newURL, err = url.Parse(location)
+				if err != nil {
+					break
+				}
+				// 如果 location 是相对路径，将其转换为绝对路径
+				if !newURL.IsAbs() {
+					newURL = resp.Request.URL.ResolveReference(newURL)
+				}
+				req.URL = newURL
+			}
+			continue
+		} else {
+			break
+		}
+	}
+	if err != nil && err.Error() != http.ErrUseLastResponse.Error() && resp == nil {
 		return banner, redirectURL, err
 	}
 	// get raw headers
