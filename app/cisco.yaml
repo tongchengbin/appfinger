@@ -157,3 +157,11 @@
       type: word
       words:
         - 'Cisco vManage'
+- name: Cisco-Router
+  matchers:
+    - part: headers.server
+      type: word
+      case-insensitive: true
+      words:
+        - 'cisco-IOS'
+        - 'mpd web server'

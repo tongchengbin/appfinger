@@ -80,3 +80,16 @@
       words:
         - 'id="huaweilogo"'
         - "/html/route_view.js"
+
+- name: Huawei-Router
+  matchers-condition: and
+  matchers:
+    - part: body
+      type: word
+      words:
+        - 'Huawei Technologies Co., Ltd'
+    - part: body
+      type: regex
+      name: mode
+      regex:
+        - "var ProductName = '(.*)';"
