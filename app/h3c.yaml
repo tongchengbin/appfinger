@@ -98,3 +98,11 @@
       words:
         - "ER8300G2系统管理"
         - "ER8300G2-X系统管理"
+
+- name: H3C-Router
+  matchers:
+    - part: title
+      type: regex
+      name: model
+      regex:
+        - "H3C&nbsp;(.*)&nbsp路由器登录"
