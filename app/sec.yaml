@@ -210,3 +210,28 @@
         - SonicWALL SSL-VPN Web Server
       type: word
   name: SonicWALL-SSL-VPN
+
+- name: 启明星辰-防火墙
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "/php/common/checknum_creat.php?module=config_authnum"
+- name: 启明星辰-天清汉马USG
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "/cgi-bin/webui?op=del_security_code&path="
+- name: SangFor-防火墙
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "-885859535"
+- name: LeadSec-Firewall
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "/webauthd?op=sslvpn_get_pagetxt&ip_and_port="

@@ -80,3 +80,9 @@
       words:
         - 'id="huaweilogo"'
         - "/html/route_view.js"
+- name: Huawei-USG-Firewall
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "UI_component/css/xtheme-black.css"

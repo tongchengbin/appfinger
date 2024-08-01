@@ -215,12 +215,6 @@
         - Icecast
       type: word
   name: Icecast
-- name: XAMPP
-  matchers:
-    - part: title
-      type: word
-      words:
-        - "XAMPP"
 - name: Tengine
   matchers:
     - part: headers.server
@@ -358,23 +352,7 @@
       words:
         - CrushFTP
       type: word
-    - group: 1
-      name: version
-      part: headers.server
-      regex:
-        - ^CrushFTP (HTTP[\d]? Server )?Version ([\d\.]+)$
-      type: regex
-    - name: CrushAuth Cookie
-      part: headers.set-cookie
-      regex:
-        - (^CrushAuth=)
-      type: regex
-    - name: version
-      part: headers.www-authenticate
-      regex:
-        - ^Basic realm="CrushFTP Server Version ([\d\.]+)"$
-      type: regex
-  name: crushftp
+  name: CrushFTP
 - matchers:
     - group: 1
       name: version

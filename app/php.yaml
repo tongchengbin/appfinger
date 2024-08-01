@@ -30,3 +30,9 @@
       type: word
       words:
         - content="OURPHP"
+- name: XAMPP
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "XAMPP"
