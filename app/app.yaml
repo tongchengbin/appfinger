@@ -2921,3 +2921,9 @@
       type: word
       words:
         - "DbGate"
+- name: ArgoCD
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Argo CD"
