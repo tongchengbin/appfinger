@@ -2927,3 +2927,9 @@
       type: word
       words:
         - "Argo CD"
+- name: Flowise
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "-2051052918"
