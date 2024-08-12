@@ -7,8 +7,6 @@ jobs:
   run-code:
     runs-on: self-hosted
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
       - name: Run a script
         run: |
           echo "Running script..."
