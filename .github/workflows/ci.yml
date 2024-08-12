@@ -1,0 +1,15 @@
+name: Run code on push
+on:
+  push:
+    branches:
+      - main  # 你可以指定特定的分支，或者使用 `*` 来表示所有分支
+jobs:
+  run-code:
+    runs-on: ubuntu-latest  # 使用最新的 Ubuntu 环境
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3  # 检出你的代码
+
+      - name: Run a script
+        run: |
+          echo "Running script..."
