@@ -372,3 +372,9 @@
       type: word
       words:
         - "app/feature/portForwarding.js"
+- name: Seowon-SLC130
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "SEOWON-SLC130-help.pdf"

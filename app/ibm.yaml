@@ -27,3 +27,9 @@
       type: word
       words:
         - "IBM ODM"
+- matchers:
+    - part: headers.server
+      words:
+        - IBM_HTTP_Server
+      type: word
+  name: IBM HTTP Server

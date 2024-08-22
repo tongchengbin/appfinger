@@ -12,6 +12,10 @@
       words:
         - "logo/images/ufida_nc.png"
         - "用友NC"
+    - part: title
+      type: word
+      words:
+        - "YONYOU NC"
 - name: U8
   matchers:
     - part: body

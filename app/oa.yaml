@@ -125,14 +125,13 @@
       part: body
       words:
         - "logo-kingdee.png"
-- name: LanDray OA
+- name: LanDray-OA
   matchers:
     - type: word
       part: body
       words:
-        - "lui_login_message_td"
         - "蓝凌软件 版权所有"
-        - "url : Com_Parameter.ResPath+\"jsp/clearSsoCookie.jsp\""
+        - "jsp/clearSsoCookie.jsp"
       condition: and
 - name: O2OA
   matchers:
