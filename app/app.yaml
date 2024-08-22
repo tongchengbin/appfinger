@@ -2933,3 +2933,13 @@
       type: word
       words:
         - "-2051052918"
+- name: Docker-API
+  matchers:
+    - part: header
+      type: word
+      words:
+        - "content-length: 29"
+    - part: body
+      type: word
+      words:
+        - '{"message":"page not found"}'

@@ -83,6 +83,10 @@
       type: word
       words:
         - "TL-WR840N"
+    - part: body
+      type: word
+      words:
+        - 'modelName="TL-WR840N"'
 - name: TL-WR740N
   matchers:
     - part: title
