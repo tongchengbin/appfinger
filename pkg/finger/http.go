@@ -219,6 +219,7 @@ func RequestOnce(client *http.Client, uri string) (banner *Banner, redirectURL s
 	if err != nil {
 		return banner, redirectURL, err
 	}
+	req.Header.Set("accept-language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Accept", "*/*")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.58")
 	maxRedirect := 3
@@ -228,9 +229,7 @@ func RequestOnce(client *http.Client, uri string) (banner *Banner, redirectURL s
 		if err != nil {
 			break
 		}
-		if r2 != nil {
-			resp = r2
-		}
+		resp = r2
 		if resp.StatusCode == http.StatusMovedPermanently || resp.StatusCode == http.StatusFound {
 			location := resp.Header.Get("Location")
 			if location != "" {

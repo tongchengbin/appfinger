@@ -130,7 +130,7 @@
       type: word
       words:
         - '/citrix/xenapp'
-- name: Jitsi Meet
+- name: Jitsi-Meet
   matchers:
     - part: title
       type: word
@@ -199,31 +199,6 @@
         - SquirrelMail version ([0-9.]+)
       type: regex
 
-- name: ThinkCMF
-  matchers:
-    - part: headers.x-powered-by
-      type: word
-      words:
-        - ThinkCMF
-    - part: body
-      type: word
-      words:
-        - content="ThinkCMF
-        - made by <a href="http://www.thinkcmf.com" target="_blank">thinkcmf</a>
-- name: ThinkPHP
-  matchers:
-    - part: headers.x-powered-by
-      type: word
-      words:
-        - ThinkPHP
-    - part: body
-      type: word
-      words:
-        - ef="http://www.thinkphp.cn">thinkphp</a><sup>
-    - part: headers.Set-Cookie
-      type: word
-      words:
-        - thinkphp_show_page_trace
 
 - name: UEditor
   matchers:

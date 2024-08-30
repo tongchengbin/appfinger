@@ -7886,27 +7886,7 @@
       the IBM logo, and Cognos are trademarks of IBM Corp., registered in many jurisdictions
       worldwide.</td>
   name: ibm_cognos
-- matchers:
-  - name: version
-    part: headers.server
-    regex:
-    - ([\s]*IBM-HTTP-Server\/([\d\.]+))
-    type: regex
-  - name: version
-    part: headers.server
-    regex:
-    - ([\s]*IBM_HTTP_Server\/([\d\.]+))
-    type: regex
-  - name: IBM_HTTP_Server
-    part: headers.server
-    regex:
-    - (^[\s]*IBM_HTTP_Server)
-    type: regex
-  - part: headers.srvrname
-    type: word
-    words:
-    - (^(.*)$)
-  name: ibm_http_server
+
 - matchers:
   - name: version
     part: headers.server
