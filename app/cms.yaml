@@ -959,7 +959,7 @@
     - part: body
       type: word
       words:
-        - finger://www.lotuscms.org">LotusCMS
+        - "LOTUSCMS - LOAD PAGE LEVEL CSS"
   name: LotusCMS
 - matchers:
     - part: title

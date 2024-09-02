@@ -79,3 +79,11 @@
       type: word
       words:
         - "/static/theme/maowang51/css/style.css"
+- name: 宝塔面板
+  matchers:
+    - part: title
+      type: word
+      condition: and
+      words:
+        - "宝塔"
+        - "面板"

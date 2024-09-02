@@ -65,3 +65,10 @@
       words:
         - thinkphp_show_page_trace
         - think_language
+
+- name: DolphinPHP
+  matchers:
+    - part: title
+      type: word
+      words:
+        - DolphinPHP

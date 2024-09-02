@@ -222,7 +222,7 @@ func RequestOnce(client *http.Client, uri string) (banner *Banner, redirectURL s
 	req.Header.Set("accept-language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Accept", "*/*")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.58")
-	maxRedirect := 3
+	maxRedirect := 6
 	for i := 0; i < maxRedirect; i++ {
 		var r2 *http.Response
 		r2, err = client.Do(req)
