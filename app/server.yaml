@@ -131,12 +131,6 @@
       type: word
       words:
         - aurahttpd
-- name: proftpd
-  matchers:
-    - part: header
-      type: word
-      words:
-        - proftpd
 - matchers:
     - name: version
       part: headers.server

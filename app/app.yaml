@@ -2918,3 +2918,20 @@
       type: word
       words:
         - '{"message":"page not found"}'
+- name: SpiderFlow
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "SpiderFlow"
+    - part: icon_hash
+      type: word
+      words:
+        - "-528044181"
+- name: WorldServer
+  matchers:
+    - part: title
+      type: regex
+      name: version
+      regex:
+        - WorldServer ([\d\.]+) -
