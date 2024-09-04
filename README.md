@@ -27,6 +27,12 @@ AppFinger is an open-source web application fingerprint scanner designed to iden
 
 AppFinger scans web applications by analyzing their unique fingerprints, providing valuable insights into the technologies used.
 
+- Deep Detection Comparison
+
+![Deep Detection Comparison](docs/img.png)
+*Figure: Comparison of standard detection vs deep detection*
+
+
 ## Contributing
 Feel free to contribute to AppFinger by opening issues or submitting pull requests on GitHub.
 
