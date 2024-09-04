@@ -252,6 +252,9 @@ func RequestOnce(client *http.Client, uri string) (banner *Banner, redirectURL s
 	if err != nil && err.Error() != http.ErrUseLastResponse.Error() && resp == nil {
 		return banner, redirectURL, err
 	}
+	if resp == nil {
+		return nil, redirectURL, errors.New("响应为空")
+	}
 	// get raw headers
 	headers, _ := httputil.DumpResponse(resp, false)
 	// get body

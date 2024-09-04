@@ -1,0 +1,8 @@
+- name: ETCD-plugin
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "404 page not found"
+  plugins:
+    - path: /version
