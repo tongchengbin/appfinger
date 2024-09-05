@@ -2935,3 +2935,11 @@
       name: version
       regex:
         - WorldServer ([\d\.]+) -
+
+- matchers:
+  - part: title
+    type: word
+    case-insensitive: true
+    words:
+    - gogs
+  name: Gogs

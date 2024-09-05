@@ -879,16 +879,6 @@
   name: nodebb
 
 - matchers:
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - i_like_gogits
-  - part: body
-    type: word
-    words:
-    - <button class="ui basic clone button" id="repo-clone-ssh" data-link="gogs@
-  name: gogs
-- matchers:
   - part: body
     type: word
     words:
