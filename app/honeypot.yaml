@@ -4,6 +4,14 @@
       type: word
       condition: and
       words:
+        - "root:x:0:0:root:/root:"
+        - "lost+found"
+- name: honeypot
+  matchers:
+    - part: body
+      type: word
+      condition: and
+      words:
         - Panasonic network device
         - MOBOTIX Camera User
     - part: body
