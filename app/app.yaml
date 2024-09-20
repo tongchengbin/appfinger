@@ -2355,6 +2355,12 @@
       type: word
       words:
         - "1300107149"
+    - part: body
+      type: word
+      conditon: and
+      words:
+        - "first-loading-wrap"
+        - "loading..."
 - name: OpenSpeedTest
   matchers:
     - part: title
