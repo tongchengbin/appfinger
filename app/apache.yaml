@@ -132,7 +132,7 @@
   matchers:
     - part: body
       type: word
-      contains: and
+      condition: and
       words:
         - "Apache Axis"
         - "deployed"
