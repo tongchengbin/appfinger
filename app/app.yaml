@@ -2357,7 +2357,7 @@
         - "1300107149"
     - part: body
       type: word
-      conditon: and
+      condition: and
       words:
         - "first-loading-wrap"
         - "loading..."

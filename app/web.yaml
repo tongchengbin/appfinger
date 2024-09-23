@@ -3946,28 +3946,6 @@
     - '(FW-1 at ([^\s]+): Unauthorized to access the document\.)'
   name: checkpoint_firewall
 - matchers:
-  - part: headers.server
-    regex:
-    - (^Check Point SVN foundation$)
-    type: regex
-  - part: body
-    regex:
-    - (<script src="cookies\.js"><\/script>[\s]+<script>document\.write\(conn_html\)<\/script>[\s]+<HEAD>)
-    type: regex
-  - part: body
-    type: word
-    words:
-    - Security Gateway
-  - name: version
-    part: body
-    regex:
-    - (<form autocomplete="off" method="post" action="\/platform\.cgi\?" target="_top">[\s]+<input
-      type="hidden" name="thispage" value="index\.htm">[\s]+<div class="version_div">([^<]+)<\/div>)
-    type: word
-    words:
-    - Security Gateway
-  name: check_point_ssl_network_extender
-- matchers:
   - part: body
     type: word
     words:
