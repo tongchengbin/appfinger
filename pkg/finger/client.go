@@ -4,6 +4,7 @@ import (
 	"crypto/tls"
 	"net/http"
 	"net/http/cookiejar"
+	"net/url"
 	"time"
 )
 
@@ -31,9 +32,20 @@ func WithTimeout(timeout time.Duration) ClientOption {
 		return nil
 	}
 }
-func NewTransport(proxy string) (*http.Transport, error) {
-	// 实现代理的 Transport
-	return &http.Transport{}, nil
+func NewTransport(uri string) (*http.Transport, error) {
+	urlProxy, err := url.Parse(uri)
+	if err != nil {
+		return nil, err
+	}
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{
+			MinVersion:           tls.VersionTLS10,
+			InsecureSkipVerify:   true,
+			GetClientCertificate: nil,
+		},
+		Proxy: http.ProxyURL(urlProxy),
+	}
+	return tr, nil
 }
 
 // WithRedirectPolicy 自定义重定向策略

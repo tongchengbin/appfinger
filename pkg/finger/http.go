@@ -312,7 +312,6 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 	var nextURI = uri
 
 	for ret := 0; ret < 3; ret++ {
-		println("Request: " + nextURI)
 		banner, nextURI, err = RequestOnce(client, nextURI)
 		if err != nil {
 			break
