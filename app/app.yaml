@@ -2827,12 +2827,6 @@
       case-insensitive: true
       words:
         - "gitblit"
-- name: emerge_e3_firmware
-  matchers:
-    - part: body
-      type: word
-      words:
-        - "emerge"
 - name: Datataker
   matchers:
     - part: title

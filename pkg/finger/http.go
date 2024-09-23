@@ -211,7 +211,6 @@ func RequestOnce(client *http.Client, uri string) (banner *Banner, redirectURL s
 	}
 	//解析JavaScript跳转
 	jsRedirectUri := parseJavaScript(uri, string(body))
-	println(jsRedirectUri)
 	if jsRedirectUri != "" {
 		if jsRedirectUri[0] == '/' {
 			u, _ := url.Parse(banner.Uri)
