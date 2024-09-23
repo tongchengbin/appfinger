@@ -1,15 +1,18 @@
 package finger
 
 import (
+	"crypto/tls"
 	"fmt"
 	"github.com/projectdiscovery/gologger"
 	"github.com/projectdiscovery/gologger/levels"
 	"github.com/stretchr/testify/assert"
 	"golang.org/x/net/html/charset"
 	"io"
+	"io/ioutil"
 	"log"
 	"net"
 	"net/http"
+	"net/http/cookiejar"
 	"os"
 	"regexp"
 	"strings"
@@ -44,7 +47,7 @@ Location: https:///
 Content-Length: 0
 Connection: close
 Content-Type: text/html; charset=UTF-8`}
-	appFinger.Match(banner)
+	appFinger.Match(banner, appFinger.Rules)
 
 }
 
@@ -70,8 +73,8 @@ Last-Modified: Mon, 28 Feb 2022 02:39:55 GMT
 Server: WSGIServer/0.2 CPython/3.8.0
 Vary: Accept-Encoding
 `}
-	m := appFinger.Match(banner)
-	println(len(m))
+	m := appFinger.Match(banner, appFinger.Rules)
+	println(m.Extract)
 }
 
 func TestAppFingerMatchRegex(t *testing.T) {
@@ -249,14 +252,77 @@ func TestCharset(t *testing.T) {
 }
 
 func TestReqOnce(t *testing.T) {
-	client, err := NewClient("", time.Second*time.Duration(2))
+	client, err := NewClient(WithTimeout(time.Second * time.Duration(2)))
 	assert.Nil(t, err)
 	_, _, err = RequestOnce(client, "http://finger.lostpeach.cn")
 	assert.Nil(t, err)
 }
 
 func TestRequest(t *testing.T) {
-	_, err := Request("https://google.com/", time.Second*time.Duration(2), "", true, false)
+	_, err := Request("https://91.208.57.30:443", time.Second*time.Duration(2), "", true, false)
 	assert.Nil(t, err)
 
+}
+
+func TestClient(t *testing.T) {
+	client, err := NewClient(WithTimeout(time.Second * time.Duration(2)))
+	assert.Nil(t, err)
+	response, err := client.Get("https://91.208.57.30:443")
+	assert.Nil(t, err)
+	defer response.Body.Close()
+	body, _ := io.ReadAll(response.Body)
+	fmt.Println(string(body))
+}
+
+func TestRequestOnce(t *testing.T) {
+	gologger.DefaultLogger.SetMaxLevel(levels.LevelDebug)
+	client, err := NewClient(WithTimeout(time.Second * time.Duration(2)))
+	assert.Nil(t, err)
+	_, _, err = RequestOnce(client, "https://91.208.57.30:443")
+	assert.Nil(t, err)
+}
+
+func TestHTTP(t *testing.T) {
+	// 创建一个 HTTP 客户端
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{
+			MinVersion:           tls.VersionTLS10,
+			InsecureSkipVerify:   true,
+			GetClientCertificate: nil,
+		},
+	}
+	// 创建一个共享的 CookieJar
+	jar, err := cookiejar.New(nil)
+	if err != nil {
+		return
+	}
+	client := &http.Client{
+		Transport: tr,
+		Jar:       jar,
+		CheckRedirect: func(req *http.Request, via []*http.Request) error {
+			return http.ErrUseLastResponse
+		}}
+
+	// 创建一个 GET 请求
+	req, err := http.NewRequest("GET", "https://91.208.57.30:443", nil)
+	if err != nil {
+		log.Fatalf("创建请求失败: %v", err)
+	}
+
+	// 发送请求
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Fatalf("发送请求失败: %v", err)
+	}
+	defer resp.Body.Close()
+
+	// 读取响应
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatalf("读取响应失败: %v", err)
+	}
+
+	// 输出响应内容
+	fmt.Println("响应状态:", resp.Status)
+	fmt.Println("响应体:", string(body))
 }

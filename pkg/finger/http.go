@@ -1,7 +1,6 @@
 package finger
 
 import (
-	"context"
 	"crypto/tls"
 	"encoding/base64"
 	"errors"
@@ -9,14 +8,11 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"github.com/projectdiscovery/gologger"
 	"golang.org/x/net/html/charset"
-	"golang.org/x/net/proxy"
 	"golang.org/x/text/encoding/charmap"
 	"golang.org/x/text/encoding/simplifiedchinese"
 	"golang.org/x/text/transform"
 	"io"
-	"net"
 	"net/http"
-	"net/http/cookiejar"
 	"net/http/httputil"
 	"net/url"
 	"regexp"
@@ -131,77 +127,6 @@ func isAbsoluteURL(url string) bool {
 	return !(strings.HasPrefix(url, "http://") || strings.HasPrefix(url, "https://"))
 }
 
-func NewTransport(proxyURL string) (transport *http.Transport, err error) {
-	// proxy
-	transport = &http.Transport{
-		TLSClientConfig: &tls.Config{
-			MinVersion:           tls.VersionTLS10,
-			InsecureSkipVerify:   true,
-			GetClientCertificate: nil}}
-	if proxyURL != "" {
-		proxyURl, err := url.Parse(proxyURL)
-		if err != nil {
-			return nil, err
-		}
-		if strings.HasPrefix(proxyURL, "http://") || strings.HasPrefix(proxyURL, "https://") {
-			transport.Proxy = http.ProxyURL(proxyURl)
-		} else {
-			socksURL, proxyErr := url.Parse(proxyURL)
-			if proxyErr != nil {
-				return nil, err
-			}
-			dialer, err := proxy.FromURL(socksURL, proxy.Direct)
-			if err != nil {
-				return nil, err
-			}
-			dc := dialer.(interface {
-				DialContext(ctx context.Context, network, addr string) (net.Conn, error)
-			})
-			transport.DialContext = dc.DialContext
-		}
-	}
-	return transport, nil
-}
-func NewClient(proxy string, timeout time.Duration) (*http.Client, error) {
-	transport, err := NewTransport(proxy)
-	if err != nil {
-		return nil, err
-	}
-	// 创建一个共享的 CookieJar
-	jar, err := cookiejar.New(nil)
-	if err != nil {
-		return nil, err
-	}
-	return &http.Client{
-		Transport: transport,
-		Jar:       jar, // 使用共享的 CookieJar
-		CheckRedirect: func(req *http.Request, via []*http.Request) error {
-			// 有些错误的重定向导致无法获取响应
-			return http.ErrUseLastResponse
-			//// 手动复制 cookie 到重定向请求中
-			//if len(via) > 0 {
-			//	originURL := via[0].URL
-			//	cookies := jar.Cookies(originURL)
-			//	for _, cookie := range cookies {
-			//		req.AddCookie(cookie)
-			//	}
-			//}
-			//if len(via) >= 10 {
-			//	return http.ErrUseLastResponse
-			//}
-			//
-			////if via[0].URL.Hostname() != req.URL.Hostname() {
-			////	return http.ErrUseLastResponse
-			////}
-			//// 在这里可以自定义重定向策略
-			//// 例如，你可以修改请求头，记录重定向次数等
-			//// 默认行为是跟随重定向
-			//return nil
-		},
-		Timeout: timeout,
-	}, nil
-}
-
 func ExtractContentTypeCharset(contentType string) (charset string) {
 	//	 从content-type 中提取Charset
 	re := regexp.MustCompile(`(?i)charset=([\w-]+)`)
@@ -264,6 +189,7 @@ func RequestOnce(client *http.Client, uri string) (banner *Banner, redirectURL s
 		label = ExtractCharset(string(body))
 	}
 	bodyString := ResponseDecoding(body, label)
+
 	banner = &Banner{
 		Uri:        resp.Request.URL.String(),
 		Body:       bodyString,
@@ -285,6 +211,7 @@ func RequestOnce(client *http.Client, uri string) (banner *Banner, redirectURL s
 	}
 	//解析JavaScript跳转
 	jsRedirectUri := parseJavaScript(uri, string(body))
+	println(jsRedirectUri)
 	if jsRedirectUri != "" {
 		if jsRedirectUri[0] == '/' {
 			u, _ := url.Parse(banner.Uri)
@@ -368,7 +295,14 @@ func readICON(client *http.Client, banner *Banner) (iconHash int32, err error) {
 
 func Request(uri string, timeout time.Duration, proxyURL string, disableIcon bool, debugResp bool) ([]*Banner, error) {
 	var err error
-	client, err := NewClient(proxyURL, timeout)
+	var clientOptions []ClientOption
+	// 根据是否提供 proxyURL 动态设置 WithProxy
+	if proxyURL != "" {
+		clientOptions = append(clientOptions, WithProxy(proxyURL))
+	}
+	// 设置超时
+	clientOptions = append(clientOptions, WithTimeout(timeout))
+	client, err := NewClient(clientOptions...)
 	if err != nil {
 		return nil, err
 	}
@@ -378,6 +312,7 @@ func Request(uri string, timeout time.Duration, proxyURL string, disableIcon boo
 	var nextURI = uri
 
 	for ret := 0; ret < 3; ret++ {
+		println("Request: " + nextURI)
 		banner, nextURI, err = RequestOnce(client, nextURI)
 		if err != nil {
 			break

@@ -7,6 +7,7 @@ import (
 	"golang.org/x/net/html"
 	"net/url"
 	"strings"
+	"time"
 )
 
 const JSExecuteTemplate = `
@@ -82,12 +83,9 @@ func findRefresh(n *html.Node) string {
 func getExecRedirect(uri string, jsCodes []string, onload string) string {
 	vm := otto.New()
 	parsed, _ := url.Parse(url.PathEscape(uri))
+	var scripts []string
 	initWindowsCode := fmt.Sprintf(JSExecuteTemplate, uri, parsed.Hostname(), parsed.Scheme, parsed.Path)
-	_, err := vm.Run(initWindowsCode)
-	if err != nil {
-		fmt.Printf("JavaScript execution error:%s %v\n", uri, err)
-		return ""
-	}
+	scripts = append(scripts, initWindowsCode)
 	var consoleLogs []string
 	_ = vm.Set("console", map[string]interface{}{
 		"log": func(call otto.FunctionCall) otto.Value {
@@ -98,13 +96,8 @@ func getExecRedirect(uri string, jsCodes []string, onload string) string {
 			return otto.Value{}
 		},
 	})
-
 	for _, code := range jsCodes {
-		_, err = vm.Run(code)
-		if err != nil {
-			gologger.Debug().Msgf("Error getting result:%v", err)
-			return ""
-		}
+		scripts = append(scripts, code)
 	}
 	code := fmt.Sprintf(`
 		%s
@@ -134,15 +127,14 @@ func getExecRedirect(uri string, jsCodes []string, onload string) string {
 			finalHref = window.location;
 		}
 	`, onload)
-	_, err = vm.Run(code)
-	for _, log := range consoleLogs {
-		fmt.Println("console:", log)
+	scripts = append(scripts, code)
+	for _, script := range scripts {
+		err := runScriptWithTimeout(vm, script, 2*time.Second)
+		if err != nil {
+			gologger.Debug().Msgf("Error running script:%v", err)
+			return ""
+		}
 	}
-	if err != nil {
-		gologger.Debug().Msgf("Error getting result:%v", err)
-		return ""
-	}
-
 	// 获取执行后的地址
 	result, err := vm.Get("finalHref")
 	if err != nil {
