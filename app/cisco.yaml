@@ -165,3 +165,9 @@
       words:
         - 'cisco-IOS'
         - 'mpd web server'
+- name: Cisco-Broadband-Access-Center
+  matchers:
+    - part: headers.www-authenticate
+      type: word
+      words:
+        - 'Cisco_CCSP_CWMP_TCPCR'
