@@ -617,3 +617,9 @@
       name: version
       regex:
         - "Cassini/([0-9.]*)"
+- name: CPE-Server
+  matchers:
+    - part: headers.server
+      type: word
+      words:
+        - CPE-SERVER
