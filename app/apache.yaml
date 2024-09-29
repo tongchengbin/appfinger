@@ -122,8 +122,7 @@
       words:
         - "HugeGraph"
 - matchers:
-    - name: Apache Flink in title
-      part: body
+    - part: body
       words:
         - Apache Flink Web Dashboard
       type: word
