@@ -74,3 +74,9 @@
       words:
         - "Wireless Router"
         - "WWW-Authenticate:"
+    - part: body
+      type: word
+      condition: and
+      words:
+        - "D-Link"
+        - "You Know, for Search"

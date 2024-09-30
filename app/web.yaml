@@ -9082,32 +9082,6 @@
     type: regex
   name: keyfocus_webserver
 - matchers:
-  - part: headers.x-app-name
-    regex:
-    - (^kibana$)
-    type: regex
-  - part: body
-    type: word
-    words:
-    - <body kibana ng-class
-  - name: version
-    part: body
-    regex:
-    - (<script>\s+window\.KIBANA_VERSION='([\d\.]+)';\s+window\.KIBANA_BUILD_NUM='[\d]+';)
-    type: regex
-  - name: version
-    part: body
-    regex:
-    - (<kbn-injected-metadata data="{&quot;version&quot;:&quot;([0-9\.]+))
-    type: regex
-  - group: 1
-    name: version
-    part: headers.kbn-version
-    regex:
-    - ^([\d.]+)$
-    type: regex
-  name: kibana
-- matchers:
   - name: X-Kinja Header
     part: headers.x-kinja
     regex:

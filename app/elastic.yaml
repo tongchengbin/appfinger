@@ -4,7 +4,6 @@
       type: word
       words:
         - "You Know, for Search"
-        - "missing authentication credentials for REST"
 - name: Kibana
   matchers:
     - part: header
@@ -13,3 +12,21 @@
       words:
         - "kbn-name"
         - "kibana"
+
+- matchers:
+    - part: headers.x-app-name
+      words:
+        - kibana
+      type: regex
+    - name: version
+      part: body
+      regex:
+        - <kbn-injected-metadata data="{&quot;version&quot;:&quot;([0-9\.]+)
+      type: regex
+    - group: 1
+      name: version
+      part: headers.kbn-version
+      regex:
+        - ^([\d.]+)$
+      type: regex
+  name: kibana
