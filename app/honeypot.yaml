@@ -67,3 +67,10 @@
       words:
         - "BigIP"
         - "lighttpd"
+
+    - part: body
+      type: word
+      condition: and
+      words:
+        - "Wireless Router"
+        - "WWW-Authenticate:"
