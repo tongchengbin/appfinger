@@ -4,6 +4,7 @@
       type: word
       words:
         - "You Know, for Search"
+
 - name: Kibana
   matchers:
     - part: header
@@ -12,8 +13,6 @@
       words:
         - "kbn-name"
         - "kibana"
-
-- matchers:
     - part: headers.x-app-name
       words:
         - kibana
@@ -29,4 +28,3 @@
       regex:
         - ^([\d.]+)$
       type: regex
-  name: kibana
