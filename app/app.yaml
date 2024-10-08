@@ -2957,3 +2957,9 @@
         - moodleid_
         - moodlesession
   name: Moodle
+- name: ServiceNow
+  matchers:
+    - part: title
+      type: word
+      words:
+        - ServiceNow
