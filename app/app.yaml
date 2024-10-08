@@ -2943,3 +2943,17 @@
     words:
     - gogs
   name: Gogs
+
+- matchers:
+    - part: title
+      type: word
+      case-insensitive: true
+      words:
+        - moodle
+    - part: headers.Set-Cookie
+      type: word
+      case-insensitive: true
+      words:
+        - moodleid_
+        - moodlesession
+  name: Moodle

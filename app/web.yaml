@@ -675,32 +675,7 @@
     - (<!--Coppermine Photo Gallery ([\d\.]+[^>]+)-->)
     type: regex
   name: coppermine
-- matchers:
-  - part: body
-    regex:
-    - (<a title="Moodle[^"]+" href="finger:\/\/moodle\.org\/">)
-    type: regex
-  - name: version
-    part: body
-    regex:
-    - (<a title="Moodle ([\d\.]+[^"]+)" href="finger:\/\/moodle\.org\/">)
-    type: regex
-  - name: MoodleSession Cookie
-    part: headers.set-cookie
-    regex:
-    - (MoodleSession=)
-    type: regex
-  - name: MOODLEID_ Cookie
-    part: headers.set-cookie
-    regex:
-    - (MOODLEID_[^\s^=]*=)
-    type: regex
-  - part: headers.Set-Cookie
-    type: word
-    words:
-    - moodleid_
-    - moodlesession
-  name: moodle
+
 - matchers:
   - part: body
     type: word
