@@ -2969,3 +2969,9 @@
       type: word
       words:
         - pga4_session=
+- name: AJ-Report
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "AJ-Report"

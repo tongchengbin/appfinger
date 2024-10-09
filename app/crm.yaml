@@ -4,3 +4,13 @@
       type: word
       words:
           - "-79854140"
+- name: 灵当CRM
+  matchers:
+    - part: body
+      type: word
+      words:
+          - "crmcommon/js/jquery/jquery-1.10.1.min.js"
+    - part: title
+      type: word
+      words:
+          - "灵当CRM"
