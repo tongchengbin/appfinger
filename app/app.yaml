@@ -2981,3 +2981,45 @@
       type: word
       words:
         - "TurboMeeting"
+- name: CData
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "CData"
+- name: Telerik-Report-Server
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Telerik Report Server"
+- name: SecurEnvoy
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "SecurEnvoy"
+- name: WhatsUp-Gold
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "WhatsUp Gold"
+- name: Fortra
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "FileCatalyst file transfer solution, easily transfer large files"
+- name: Smart管理平台
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Smart管理平台"
+- name: Sunflower
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Sunflower"

@@ -135,3 +135,15 @@
       words:
         - "Apache Axis"
         - "deployed"
+- name: Apache-CloudStack
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "Apache CloudStack"
+- name: Devika
+  matchers:
+    - part: icon_hash
+      type: word
+      words:
+        - "-1429839495"

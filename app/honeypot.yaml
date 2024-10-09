@@ -80,3 +80,10 @@
       words:
         - "D-Link"
         - "You Know, for Search"
+    - part: header
+      type: word
+      condition: and
+      case-insensitive: true
+      words:
+        - "zbx_session"
+        - "xxj"

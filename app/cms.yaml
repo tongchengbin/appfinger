@@ -242,12 +242,13 @@
       words:
         - wdjaCMS
 
-- name: masaCMS
+- name: MasaCMS
   matchers:
     - type: word
       part: body
+      case-sensitive: true
       words:
-        - masacms
+        - 'generator: masa cms'
 - name: pbootCMS
   matchers:
     - type: word
