@@ -96,6 +96,10 @@
       part: headers.set-cookie
       words:
         - "zentaosid"
+    - type: word
+      part: body
+      words:
+        - "zentao/js/all.js"
 - name: 宏景人力资源信息管理系统
   matchers:
     - type: word
