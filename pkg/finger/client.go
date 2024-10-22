@@ -1,7 +1,10 @@
 package finger
 
 import (
+	"context"
 	"crypto/tls"
+	"golang.org/x/net/proxy"
+	"net"
 	"net/http"
 	"net/http/cookiejar"
 	"net/url"
@@ -32,20 +35,45 @@ func WithTimeout(timeout time.Duration) ClientOption {
 		return nil
 	}
 }
+
+// NewTransport 创建一个带有 SOCKS5 代理的 http.Transport
 func NewTransport(uri string) (*http.Transport, error) {
+	// 这里需要判断是否是http 代理
 	urlProxy, err := url.Parse(uri)
 	if err != nil {
 		return nil, err
 	}
-	tr := &http.Transport{
-		TLSClientConfig: &tls.Config{
-			MinVersion:           tls.VersionTLS10,
-			InsecureSkipVerify:   true,
-			GetClientCertificate: nil,
-		},
-		Proxy: http.ProxyURL(urlProxy),
+	// Set the base TLS configuration definition
+	tlsConfig := &tls.Config{
+		Renegotiation:      tls.RenegotiateOnceAsClient,
+		InsecureSkipVerify: true,
+		MinVersion:         tls.VersionTLS10,
 	}
-	return tr, nil
+	transport := &http.Transport{
+		TLSClientConfig: tlsConfig,
+	}
+	// 如果是 SOCKS5 代理，手动创建拨号器
+	dialer, err := proxy.FromURL(urlProxy, proxy.Direct)
+	if err != nil {
+		return nil, err
+	}
+	if urlProxy.Scheme == "http" || urlProxy.Scheme == "https" {
+		transport.Proxy = http.ProxyURL(urlProxy)
+		return transport, nil
+	}
+	dc := dialer.(interface {
+		DialContext(ctx context.Context, network, addr string) (net.Conn, error)
+	})
+	transport.DialContext = dc.DialContext
+	transport.DialTLSContext = func(ctx context.Context, network, addr string) (net.Conn, error) {
+		// upgrade proxy connection to tls
+		conn, err := dc.DialContext(ctx, network, addr)
+		if err != nil {
+			return nil, err
+		}
+		return tls.Client(conn, tlsConfig), nil
+	}
+	return transport, nil
 }
 
 // WithRedirectPolicy 自定义重定向策略
