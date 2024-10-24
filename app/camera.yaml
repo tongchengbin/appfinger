@@ -390,3 +390,18 @@
       type: word
       words:
         - "Active WebCam Page"
+- name: Flir-Dvtel-Camera
+  matchers:
+    - part: body
+      type: word
+      condition: and
+      words:
+        - "doc/page/login.asp"
+        - "arSysLan[1].toUpperCase()"
+- matchers:
+    - name: version
+      part: headers.server
+      regex:
+        - (^Techno Vision Security System Ver. ([\d\.]+)$)
+      type: regex
+  name: Divis-DVR

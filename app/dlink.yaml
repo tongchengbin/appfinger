@@ -42,7 +42,7 @@
       words:
         - "D-Link"
         - "WIRELESS ACCESS POINT"
-- name: DLink-Wireless-Camera
+- name: DLink-Network-Camera
   matchers:
     - part: title
       type: word

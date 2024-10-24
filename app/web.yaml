@@ -3903,13 +3903,6 @@
     type: regex
   name: cgiproxy
 - matchers:
-  - name: version
-    part: headers.server
-    regex:
-    - (^Techno Vision Security System Ver. ([\d\.]+)$)
-    type: regex
-  name: chance_i_divis_dvr
-- matchers:
   - part: headers.location
     regex:
     - (\/fwauthredirect[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}id[\d]+$)
