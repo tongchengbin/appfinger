@@ -58,3 +58,9 @@
       part: title
       words:
         - "Ubiquiti Networks"
+- name: Unifi-AirOs
+  matchers:
+    - type: word
+      part: body
+      words:
+        - "images/airos_logo.png"

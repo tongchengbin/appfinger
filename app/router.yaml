@@ -378,3 +378,9 @@
       type: word
       words:
         - "SEOWON-SLC130-help.pdf"
+- name: MERCUSYS-Router
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "themes/mercury/css/base.css"
