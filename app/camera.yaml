@@ -113,12 +113,7 @@
       words:
         - "Netwave IP Camera"
 
-- name: Foscam-Camera
-  matchers:
-    - part: body
-      type: word
-      words:
-        - "FOSCAM"
+
 
 - name: DVR httpd
   matchers:
@@ -405,3 +400,15 @@
         - (^Techno Vision Security System Ver. ([\d\.]+)$)
       type: regex
   name: Divis-DVR
+- name: IPCam-Client
+  matchers:
+    - part: title
+      type: word
+      words:
+        - "IPCam Client"
+- name: Foscam-Camera
+  matchers:
+    - part: body
+      type: word
+      words:
+        - "plugin/FoscamFlashPlayer.swf"
