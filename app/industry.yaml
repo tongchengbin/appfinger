@@ -1,6 +1,0 @@
-- name: Janitza
-  matchers:
-    - part: icon_hash
-      type: word
-      words:
-        - "61401087"

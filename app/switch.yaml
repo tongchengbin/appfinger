@@ -1,6 +1,0 @@
-- name: OmniPCX
-  matchers:
-    - part: title
-      type: word
-      words:
-          - "OmniPCX for Enterprise"

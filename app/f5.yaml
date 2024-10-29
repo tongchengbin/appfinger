@@ -1,8 +1,0 @@
-- matchers:
-    - part: title
-      type: word
-      condition: and
-      words:
-        - "BIG-IP"
-        - "Redirect"
-  name: F5-BigIP
