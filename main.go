@@ -10,7 +10,7 @@ import (
 	_ "net/http/pprof"
 )
 
-const Version = "v1.0.41"
+const Version = "v2.0.0"
 
 var Banner = fmt.Sprintf(`
 ______          %s             ________  __                                         

@@ -9,6 +9,7 @@ import (
 	"github.com/logrusorgru/aurora"
 	"github.com/projectdiscovery/gologger"
 	"github.com/tongchengbin/appfinger/pkg/crawl"
+	"github.com/tongchengbin/appfinger/pkg/external/customrules"
 	"github.com/tongchengbin/appfinger/pkg/rule"
 	"io"
 	"os"
@@ -49,6 +50,10 @@ func StringTerms(s string) string {
 }
 func NewRunner(options *Options) (*Runner, error) {
 	var err error
+	// check if finger home is set
+	if _, err := os.Stat(options.FingerHome); os.IsNotExist(err) {
+		customrules.DefaultProvider.Update(context.Background(), options.FingerHome)
+	}
 	finger, err = rule.ScanRuleDirectory(options.FingerHome)
 	if err != nil {
 		return nil, err
@@ -56,8 +61,9 @@ func NewRunner(options *Options) (*Runner, error) {
 	runner := &Runner{
 		options: options,
 		crawl: crawl.NewCrawl(&crawl.Options{
-			Timeout: time.Duration(options.Timeout) * time.Second,
-			Proxy:   options.Proxy,
+			Timeout:   time.Duration(options.Timeout) * time.Second,
+			Proxy:     options.Proxy,
+			DebugResp: options.DebugResp,
 		}, finger),
 		callback: func(r *Runner, url string, banner *rule.Banner, extract map[string]map[string]string) {
 			for _, output := range r.outputs {
