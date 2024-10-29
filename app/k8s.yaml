@@ -1,7 +1,0 @@
-- name: ETCD
-  matchers:
-    - part: body
-      type: regex
-      name: version
-      regex:
-          - etcdserver":"([\d\.]+)"

@@ -1,6 +1,5 @@
-# AppFinger - Web Application Fingerprint Scanner
+# AppFinger - 全协议指纹规则匹配库
 
-AppFinger is an open-source web application fingerprint scanner designed to identify and analyze web applications based on their unique characteristics.
 
 ## Usage
 

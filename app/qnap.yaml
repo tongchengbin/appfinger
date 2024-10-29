@@ -1,6 +1,0 @@
-- name: QNAP-NAS
-  matchers:
-    - part: title
-      type: word
-      words:
-        - "QNAP Turbo NAS"

@@ -1,7 +1,0 @@
-# 各类设备 打印机。。
-- name: Kyocera-Printer
-  matchers:
-    - part: icon_hash
-      type: word
-      words:
-        - "-50306417"

@@ -1,6 +1,0 @@
-- name: DigiCert-Cert
-  matchers:
-    - part: cert
-      type: word
-      words:
-        - "DigiCert"

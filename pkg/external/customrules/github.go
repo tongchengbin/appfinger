@@ -11,8 +11,8 @@ import (
 
 var DefaultProvider = &customTemplateGitHubRepo{
 	owner:       "tongchengbin",
-	repo:        "appfinger",
-	gitCloneURL: "http://github.com/tongchengbin/appfinger",
+	repo:        "finger-rules",
+	gitCloneURL: "http://github.com/tongchengbin/finger-rules",
 	githubToken: "",
 }
 

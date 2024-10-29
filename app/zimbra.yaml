@@ -1,6 +1,0 @@
-- name: Zimbra-Collaboration-Suite
-  matchers:
-    - part: icon_hash
-      type: word
-      words:
-        - "475145467"

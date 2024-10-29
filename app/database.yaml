@@ -1,6 +1,0 @@
-- name: Metabase
-  matchers:
-    - part: title
-      type: word
-      words:
-        - Metabase
