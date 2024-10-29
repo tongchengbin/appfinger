@@ -6,3 +6,5 @@ output.json
 productrelation.txt
 cmd/sample
 Makefile
+go.sum
+go.work.sum
