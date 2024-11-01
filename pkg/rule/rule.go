@@ -16,9 +16,10 @@ type Rule struct {
 	Service           string `yaml:"service" json:"service,omitempty"`
 	MatchersCondition string `yaml:"matchers-condition" json:"matchers_condition,omitempty"`
 	// 组件太多  采用层级匹配 优化匹配速度
-	Require  []string            `json:"require,omitempty"`
-	Matchers []*matchers.Matcher `json:"matchers,omitempty"`
-	Plugins  []*Plugin           `yaml:"plugins"`
+	Require  []string               `json:"require,omitempty"`
+	Matchers []*matchers.Matcher    `json:"matchers,omitempty"`
+	Plugins  []*Plugin              `yaml:"plugins"`
+	Cpe      map[string]interface{} `yaml:"cpe" json:"cpe,omitempty"`
 }
 
 // Finger 根据协议分组
@@ -86,6 +87,15 @@ func (r *Rule) Match(banner *Banner) (bool, map[string]string) {
 		}
 		if matcher.Name != "" && len(matchedString) > 0 {
 			matchedMapString[matcher.Name] = matchedString[0]
+		}
+		if matcher.Cpe != nil {
+			// merge
+			for k, v := range matcher.Cpe {
+				// 判断是否存在
+				if _, ex := matchedMapString[k]; !ex {
+					matchedMapString[k] = v
+				}
+			}
 		}
 		if matched {
 			ok = true

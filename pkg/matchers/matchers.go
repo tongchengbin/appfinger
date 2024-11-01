@@ -25,6 +25,7 @@ type Matcher struct {
 	condition       ConditionType
 	matcherType     MatcherType
 	HasExtra        bool
+	Cpe             map[string]string `yaml:"cpe" json:"cpe,omitempty"`
 }
 
 var ConditionTypes = map[string]ConditionType{
