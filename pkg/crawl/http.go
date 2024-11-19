@@ -5,6 +5,7 @@ import (
 	"crypto/tls"
 	"encoding/base64"
 	"fmt"
+	"github.com/PuerkitoBio/goquery"
 	"github.com/pkg/errors"
 	"github.com/projectdiscovery/gologger"
 	"github.com/spaolacci/murmur3"
@@ -21,6 +22,95 @@ import (
 	"strings"
 )
 
+func parseIconFile(body string) string {
+	// 解析HTML
+	reader := strings.NewReader(body)
+	doc, err := goquery.NewDocumentFromReader(reader)
+	if err != nil {
+		return ""
+	}
+	iconURL := ""
+	doc.Find("link[rel*='icon']").Each(func(i int, s *goquery.Selection) {
+		href, exists := s.Attr("href")
+		if exists {
+			iconURL = href
+		}
+	})
+	// 如果找不到图标标签，使用默认路径
+	if iconURL == "" {
+		iconURL = "/favicon.ico"
+	}
+	return strings.Replace(iconURL, "./", "/", 1)
+
+}
+func isAbsoluteURL(url string) bool {
+	return !(strings.HasPrefix(url, "http://") || strings.HasPrefix(url, "https://"))
+}
+
+func readICON(client *http.Client, banner *rule.Banner) (iconHash int32, err error) {
+	var body []byte
+	var req *http.Request
+	var resp *http.Response
+	iconURL := parseIconFile(banner.Body)
+	if iconURL == "" {
+		iconURL = "/favicon.ico"
+	}
+	var contentType string
+	if strings.HasPrefix(iconURL, "data:") {
+		iconData := iconURL[5:]
+		contentTypeSeps := strings.Split(iconData, ";")
+		if len(contentTypeSeps) == 2 {
+			contentType = contentTypeSeps[0]
+			content := contentTypeSeps[1]
+			base64Seps := strings.Split(content, ",")
+			if len(base64Seps) == 2 {
+				body, err = base64.StdEncoding.DecodeString(base64Seps[1])
+				if err != nil {
+					return iconHash, err
+				}
+			} else {
+				return iconHash, errors.New("ICON 无法解析")
+			}
+		}
+	} else {
+		if isAbsoluteURL(iconURL) {
+			iconURL = joinURL(banner.Uri, iconURL)
+		}
+		req, err = http.NewRequest("GET", iconURL, nil)
+		if err != nil {
+			// 图片异常不影响
+			return iconHash, err
+		}
+		req.Header.Set("Referer", banner.Uri)
+		resp, err = client.Do(req)
+		if err != nil {
+			return iconHash, err
+		}
+		if resp.StatusCode != 200 {
+			return iconHash, err
+		}
+		defer func(Body io.ReadCloser) {
+			_ = Body.Close()
+		}(resp.Body)
+		contentType = resp.Header.Get("Content-Type")
+		if !strings.Contains(contentType, "image") {
+			return iconHash, errors.New("icon Not Found")
+		}
+		if resp.ContentLength == 0 {
+			return iconHash, errors.New("icon Not Found")
+		}
+		body, err = io.ReadAll(resp.Body)
+		if err != nil {
+			return iconHash, err
+		}
+		banner.IconURI = iconURL
+	}
+	iconHash = mmh3(body)
+	banner.IconBytes = body
+	banner.IconHash = iconHash
+	banner.IconType = contentType
+	return iconHash, nil
+}
 func parseCertificateInfo(ts *tls.ConnectionState) string {
 	cert := ts.PeerCertificates[0]
 	ss := fmt.Sprintf("SSL Certificate\nVersion: TLS 1.%d\nCipherSuit:%s\nCertificate:\n\tSignature Algorithm: %s\n",

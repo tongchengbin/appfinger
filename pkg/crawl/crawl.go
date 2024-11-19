@@ -64,6 +64,11 @@ func (c *Crawl) Match(uri string) (banner *rule.Banner, m map[string]map[string]
 	if banner == nil {
 		return nil, nil, errors.New(fmt.Sprintf("Get %s Error!", uri))
 	}
+	// fetch icon
+	_, err = readICON(client, banners[len(banners)-1])
+	if err != nil {
+		gologger.Debug().Msg(err.Error())
+	}
 	// 匹配插件
 	fingerprints := map[string]map[string]string{}
 	for index, b := range banners {
