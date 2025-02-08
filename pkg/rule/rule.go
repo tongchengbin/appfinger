@@ -116,6 +116,8 @@ func getMatchPart(part string, banner *Banner) string {
 		return banner.Headers[strings.ToLower(strings.TrimPrefix(part, "headers."))]
 	}
 	switch part {
+	case "url":
+		return banner.Uri
 	case "body":
 		return banner.Body
 	case "header":
