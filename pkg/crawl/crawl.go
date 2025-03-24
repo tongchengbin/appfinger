@@ -14,7 +14,32 @@ type Crawl struct {
 	finger  *rule.Finger
 }
 
+// NewCrawl 创建新的爬虫实例
+// 如果提供了finger参数，则使用提供的finger
+// 如果finger为nil，则尝试从RuleManager获取
 func NewCrawl(options *Options, finger *rule.Finger) *Crawl {
+	if finger == nil {
+		// 尝试从RuleManager获取finger
+		ruleManager := rule.GetRuleManager()
+		if ruleManager != nil {
+			finger = ruleManager.GetFinger()
+		}
+	}
+	
+	return &Crawl{
+		finger:  finger,
+		options: options,
+	}
+}
+
+// NewCrawlWithManager 使用RuleManager创建爬虫实例
+func NewCrawlWithManager(options *Options) *Crawl {
+	ruleManager := rule.GetRuleManager()
+	var finger *rule.Finger
+	if ruleManager != nil {
+		finger = ruleManager.GetFinger()
+	}
+	
 	return &Crawl{
 		finger:  finger,
 		options: options,
