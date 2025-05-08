@@ -1,13 +1,15 @@
-package rule
+package runner
 
 import (
 	"regexp"
+	"github.com/tongchengbin/appfinger/pkg/crawl"
 )
 
 // 单独匹配wordpress 插件
 var pluginReg = regexp.MustCompile(`/wp-content/(plugins|themes)/([\w-]+)/(?:.*\?ver=([\d.]+))?`)
 
-func MatchWpPlugin(banner *Banner) map[string]map[string]string {
+// MatchWpPlugin 匹配WordPress插件
+func MatchWpPlugin(banner *crawl.Banner) map[string]map[string]string {
 	matchedPaths := pluginReg.FindAllStringSubmatch(banner.Body, -1)
 	pluginInfo := make(map[string]map[string]string)
 	for _, matches := range matchedPaths {

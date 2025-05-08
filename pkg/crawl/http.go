@@ -8,8 +8,8 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"github.com/pkg/errors"
 	"github.com/projectdiscovery/gologger"
+	"github.com/projectdiscovery/retryablehttp-go"
 	"github.com/spaolacci/murmur3"
-	"github.com/tongchengbin/appfinger/pkg/rule"
 	"golang.org/x/net/html/charset"
 	"golang.org/x/text/encoding/charmap"
 	"golang.org/x/text/encoding/simplifiedchinese"
@@ -47,9 +47,9 @@ func isAbsoluteURL(url string) bool {
 	return !(strings.HasPrefix(url, "http://") || strings.HasPrefix(url, "https://"))
 }
 
-func readICON(client *http.Client, banner *rule.Banner) (iconHash int32, err error) {
+func readICON(client *retryablehttp.Client, banner *Banner) (iconHash int32, err error) {
 	var body []byte
-	var req *http.Request
+	var req *retryablehttp.Request
 	var resp *http.Response
 	iconURL := parseIconFile(banner.Body)
 	if iconURL == "" {
@@ -76,7 +76,7 @@ func readICON(client *http.Client, banner *rule.Banner) (iconHash int32, err err
 		if isAbsoluteURL(iconURL) {
 			iconURL = joinURL(banner.Uri, iconURL)
 		}
-		req, err = http.NewRequest("GET", iconURL, nil)
+		req, err = retryablehttp.NewRequest("GET", iconURL, nil)
 		if err != nil {
 			// 图片异常不影响
 			return iconHash, err
@@ -199,10 +199,10 @@ func getTitle(body []byte) []byte {
 	}
 	return nil
 }
-func RequestOnce(client *http.Client, uri string) (banner *rule.Banner, redirectURL string, err error) {
+func RequestOnce(client *retryablehttp.Client, uri string) (banner *Banner, redirectURL string, err error) {
 	// 开始请求数据
 	var resp *http.Response
-	req, err := http.NewRequest("GET", uri, nil)
+	req, err := retryablehttp.NewRequest("GET", uri, nil)
 	if err != nil {
 		return banner, redirectURL, err
 	}
@@ -229,7 +229,7 @@ func RequestOnce(client *http.Client, uri string) (banner *rule.Banner, redirect
 				if !newURL.IsAbs() {
 					newURL = resp.Request.URL.ResolveReference(newURL)
 				}
-				req.URL = newURL
+				req, _ = retryablehttp.NewRequest("GET", newURL.String(), nil)
 			}
 			continue
 		} else {
@@ -252,7 +252,7 @@ func RequestOnce(client *http.Client, uri string) (banner *rule.Banner, redirect
 	}
 	bodyString := ResponseDecoding(body, label)
 
-	banner = &rule.Banner{
+	banner = &Banner{
 		Uri:        resp.Request.URL.String(),
 		Body:       bodyString,
 		BodyHash:   mmh3(body),

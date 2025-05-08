@@ -1,7 +1,8 @@
-package rule
+package crawl
 
 import "crypto/tls"
 
+// Banner 表示爬取的网站信息
 type Banner struct {
 	Uri         string               `json:"uri"`
 	BodyHash    int32                `json:"body_hash"`

@@ -1,27 +1,18 @@
 package crawl
 
 import (
+	"context"
 	"github.com/projectdiscovery/gologger"
 	"github.com/projectdiscovery/gologger/levels"
-	"github.com/tongchengbin/appfinger/pkg/rule"
+	"github.com/stretchr/testify/assert"
 	"testing"
-	"time"
 )
 
 func TestCrawl(t *testing.T) {
-	gologger.DefaultLogger.SetMaxLevel(levels.LevelDebug)
-	finger, err := rule.ScanRuleDirectory("D:\\code\\github.com\\whatapp-rules")
-	if err != nil {
-		t.Fatal(err.Error())
-	}
-	crawl := NewCrawl(&Options{
-		Timeout: 6 * time.Second,
-	}, finger)
-
-	banner, fingerPrint, err := crawl.Match("http://192.168.2.22")
-	if err != nil {
-		t.Fatal(err.Error())
-	}
-	t.Log(banner)
-	t.Log(fingerPrint)
+	gologger.DefaultLogger.SetMaxLevel(levels.LevelInfo)
+	crawl := NewCrawler(DefaultOption())
+	banner, err := crawl.GetBanner(context.Background(), "https://www.hackerone.com")
+	assert.NoError(t, err)
+	assert.NotNil(t, banner)
+	assert.Equal(t, banner.StatusCode, 200)
 }

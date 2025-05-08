@@ -43,7 +43,7 @@ func (f Finger) Match(service string, getMatchPart MatchPartGetter) map[string]m
 	}
 	results := map[string]map[string]string{}
 	for _, rule := range rules {
-		ok, extract := rule.Match(getMatchPart)
+		ok, extract := rule.Match(func(part string) string { return "" })
 		if ok {
 			if results[rule.Name] == nil {
 				results[rule.Name] = extract
