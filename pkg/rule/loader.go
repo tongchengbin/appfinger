@@ -28,7 +28,6 @@ func ScanRuleDirectory(directory string) (*Finger, error) {
 					return err
 				}
 				group.AddRules(rules)
-
 			}
 			return nil
 		})

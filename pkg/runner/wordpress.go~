@@ -2,6 +2,7 @@ package runner
 
 import (
 	"regexp"
+	"github.com/tongchengbin/appfinger/pkg/crawl"
 )
 
 // 单独匹配wordpress 插件

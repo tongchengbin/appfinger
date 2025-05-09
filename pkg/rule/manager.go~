@@ -70,10 +70,12 @@ func (m *Manager) LoadRules(path string) error {
 	if err != nil {
 		return fmt.Errorf("加载规则库失败: %v", err)
 	}
+
 	// 更新规则和路径
 	m.finger = finger
 	m.rulePath = path
 	m.lastLoadTime = time.Now()
+
 	gologger.Info().Msgf("Loaded rules from: %s，rules: %d", path, len(m.finger.Rules))
 	return nil
 }

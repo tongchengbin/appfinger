@@ -46,7 +46,7 @@ func TestRunnerPlugin(t *testing.T) {
 		case "/":
 			// 返回404 not found
 			w.WriteHeader(http.StatusNotFound)
-			_, _ = w.Write([]byte(`404 page not found`))
+			_,_ = w.Write([]byte(`404 page not found`))
 		case "/version":
 			// 返回版本信息
 			w.WriteHeader(http.StatusOK)

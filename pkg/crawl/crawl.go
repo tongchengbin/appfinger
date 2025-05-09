@@ -49,8 +49,8 @@ func (c *Crawler) GetClient() *retryablehttp.Client {
 	return c.httpClient
 }
 
-// GetBanner 实现BannerProvider接口
-func (c *Crawler) GetBanner(ctx context.Context, uri string) (*Banner, error) {
+// GetBanners 实现BannerProvider接口
+func (c *Crawler) GetBanners(ctx context.Context, uri string) ([]*Banner, error) {
 	var banners []*Banner
 	var nextURI = uri
 	var banner *Banner
@@ -97,5 +97,13 @@ RedirectLoop:
 			gologger.Debug().Msg(err.Error())
 		}
 	}
-	return finalBanner, nil
+	return banners, nil
+}
+
+func (c *Crawler) GetBanner(ctx context.Context, uri string) (*Banner, error) {
+	banners, err := c.GetBanners(ctx, uri)
+	if err != nil {
+		return nil, err
+	}
+	return banners[0], nil
 }

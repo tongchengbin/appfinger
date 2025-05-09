@@ -21,8 +21,8 @@ func TestRuleMatch(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	results := group.Match("http", func(part string) string {
-		return "Adobe Media Server"
+	results := group.Match("http", &Banner{
+		Title: "Adobe Media Server",
 	})
 	t.Log(results)
 

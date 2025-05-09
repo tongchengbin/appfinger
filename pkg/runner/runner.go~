@@ -97,6 +97,7 @@ func (r *Runner) ScanWithContext(ctx context.Context, uri string) (*Result, erro
 	if _, ok := results["Wordpress"]; ok {
 		results = MergeMaps(MatchWpPlugin(lastBanner.Body), results)
 	}
+	\
 	fmt.Printf("%v\n", results)
 	return &Result{
 		Banner:      lastBanner,
