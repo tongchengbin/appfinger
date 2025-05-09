@@ -3,6 +3,7 @@ package internal
 import (
 	"fmt"
 	"github.com/projectdiscovery/goflags"
+	"github.com/projectdiscovery/gologger"
 	"github.com/tongchengbin/appfinger/pkg/external/customrules"
 	"io"
 	"os"
@@ -55,6 +56,9 @@ func ParseOptions() *Options {
 	if err := flagSet.Parse(); err != nil {
 		fmt.Println(err.Error())
 		os.Exit(1)
+	}
+	if len(options.URL) == 0 && options.UrlFile == "" && !options.Stdin {
+		gologger.Error().Msgf("Not Set Target")
 	}
 	return options
 }

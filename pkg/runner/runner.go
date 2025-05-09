@@ -1,18 +1,25 @@
 package runner
 
 import (
+	"bufio"
 	"context"
+	"encoding/json"
 	"fmt"
+	"io"
+	"net/url"
+	"os"
+	"path"
+	"strings"
+	"time"
+
 	"github.com/projectdiscovery/gologger"
 	"github.com/tongchengbin/appfinger/pkg/crawl"
 	"github.com/tongchengbin/appfinger/pkg/rule"
-	"net/url"
-	"path"
 )
 
 // Result 表示指纹识别结果
 type Result struct {
-	Banner      interface{}
+	Banner      *crawl.Banner
 	Fingerprint map[string]map[string]string
 }
 
@@ -21,18 +28,143 @@ type ExecutorsPlugin struct {
 	Banner *crawl.Banner
 }
 
+// OutputFields 输出字段
+type OutputFields struct {
+	URL     string                       `json:"url"`
+	Extract map[string]map[string]string `json:"extract,omitempty"`
+}
+
 // Runner 负责协调爬虫和规则匹配的执行流程
 type Runner struct {
 	crawler     *crawl.Crawler
 	ruleManager *rule.Manager
+	options     *Options    // 运行时配置选项
+	outputs     []io.Writer // 输出写入器
 }
 
-// NewRunner 创建新的Runner实例
-func NewRunner(crawler *crawl.Crawler, ruleManager *rule.Manager) *Runner {
-	return &Runner{
+// NewRunnerWithOptions 从选项创建Runner实例
+func NewRunnerWithOptions(options *Options) (*Runner, error) {
+	// 如果没有提供选项，使用默认选项
+	if options == nil {
+		options = &DefaultOptions
+	}
+
+	// 初始化爬虫
+	crawlerOptions := &crawl.Options{
+		Timeout: time.Duration(options.Timeout) * time.Second,
+	}
+	crawler := crawl.NewCrawler(crawlerOptions)
+
+	// 初始化规则管理器
+	var ruleManager *rule.Manager
+	if options.RulePath != "" {
+		// 如果指定了规则库路径，使用指定路径创建规则管理器
+		var err error
+		ruleManager, err = rule.NewManagerWithPath(options.RulePath)
+		if err != nil {
+			return nil, fmt.Errorf("加载规则库失败: %v", err)
+		}
+	} else {
+		// 否则使用默认规则管理器
+		ruleManager = rule.GetRuleManager()
+	}
+
+	// 使用初始化后的crawler和ruleManager创建Runner
+	return NewRunner(crawler, ruleManager, options)
+}
+
+// NewRunner 从现有的crawler和ruleManager创建Runner实例
+func NewRunner(crawler *crawl.Crawler, ruleManager *rule.Manager, options *Options) (*Runner, error) {
+	// 如果没有提供选项，使用默认选项
+	if options == nil {
+		options = &DefaultOptions
+	}
+	// 初始化Runner
+	runner := &Runner{
 		crawler:     crawler,
 		ruleManager: ruleManager,
+		options:     options,
+		outputs:     []io.Writer{},
 	}
+
+	// 如果指定了输出文件，初始化输出写入器
+	if options.Output != "" {
+		outputFile, err := os.OpenFile(options.Output, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+		if err != nil {
+			return nil, fmt.Errorf("无法创建输出文件: %v", err)
+		}
+		runner.outputs = append(runner.outputs, outputFile)
+	}
+	// 如果没有设置回调函数，使用默认的控制台输出
+	if options.Callback == nil {
+		options.Callback = func(target string, result *Result) {
+			fmt.Printf("%v", result.Fingerprint)
+			// 如果没有识别到指纹且不输出所有结果，则跳过
+			if len(result.Fingerprint) == 0 && !options.OutputAll {
+				return
+			}
+			// 如果不是静默模式，则输出到控制台
+			if !options.Silent {
+				if len(result.Fingerprint) > 0 {
+					for name, values := range result.Fingerprint {
+						details := ""
+						for k, v := range values {
+							if details != "" {
+								details += ", "
+							}
+							details += fmt.Sprintf("%s: %s", k, v)
+						}
+						gologger.Info().Msgf("  - %s: %s", name, details)
+					}
+				} else if options.OutputAll {
+					gologger.Info().Msgf("目标: %s - 未识别到指纹", target)
+				}
+			}
+			// 如果有输出文件，则写入文件
+			for _, output := range runner.outputs {
+				outFields := &OutputFields{
+					URL:     target,
+					Extract: result.Fingerprint,
+				}
+				var data []byte
+				var err error
+				if options.JSON {
+					data, err = json.Marshal(outFields)
+					if err != nil {
+						gologger.Warning().Msgf("序列化输出失败: %v", err)
+						continue
+					}
+				} else {
+					// 简单文本格式
+					data = []byte(fmt.Sprintf("%s\t%v\n", target, result.Fingerprint))
+				}
+
+				_, err = output.Write(append(data, '\n'))
+				if err != nil {
+					gologger.Warning().Msgf("写入输出文件失败: %v", err)
+				}
+			}
+		}
+	}
+
+	return runner, nil
+}
+
+// NewRunnerCompat 向后兼容的NewRunner函数，用于支持现有代码
+func NewRunnerCompat(crawler *crawl.Crawler, ruleManager *rule.Manager) *Runner {
+	// 使用默认选项创建Runner
+	runner, err := NewRunner(crawler, ruleManager, nil)
+	if err != nil {
+		// 在兼容模式下，如果出错，记录日志并返回一个空的Runner
+		gologger.Warning().Msgf("创建Runner失败: %v", err)
+		return &Runner{
+			crawler:     crawler,
+			ruleManager: ruleManager,
+			options:     &DefaultOptions,
+			outputs:     []io.Writer{},
+		}
+	}
+	return runner
 }
 
 // NewDefaultRunner 创建默认的Runner实例
@@ -167,6 +299,9 @@ func (r *Runner) matchBanners(finger *rule.Finger, banners []*crawl.Banner) (map
 // createMatchPartGetter 创建一个从banner中提取匹配部分的函数
 func createMatchPartGetter(banner *crawl.Banner) rule.MatchPartGetter {
 	return func(part string) string {
+		if strings.Contains(part, "headers.") {
+			return banner.Headers[part[8:]]
+		}
 		switch part {
 		case "url":
 			return banner.Uri
@@ -189,6 +324,84 @@ func createMatchPartGetter(banner *crawl.Banner) rule.MatchPartGetter {
 		}
 		return ""
 	}
+}
+
+// Enumerate 执行指纹识别任务
+func (r *Runner) Enumerate() error {
+	ctx := context.Background()
+	if r.ruleManager == nil {
+		return fmt.Errorf("rule Not Configuration")
+	}
+	// 获取指纹库
+	finger := r.ruleManager.GetFinger()
+	if finger == nil {
+		return fmt.Errorf("finger Not Load")
+	}
+	// 如果有单个目标URL
+	if r.options.Target != "" {
+		// 直接扫描单个目标
+		result, err := r.Scan(r.options.Target)
+		if err != nil {
+			return fmt.Errorf("scan %s Failed: %v", r.options.Target, err)
+		}
+		// 调用回调函数处理结果
+		if r.options.Callback != nil {
+			r.options.Callback(r.options.Target, result)
+		}
+		return nil
+	}
+	// 如果有多个目标URL列表
+	if len(r.options.Targets) > 0 {
+		reader := strings.NewReader(strings.Join(r.options.Targets, "\n"))
+		return r.enumerateMultipleTargets(ctx, reader)
+	}
+	// 如果有目标文件
+	if r.options.File != "" {
+		f, err := os.Open(r.options.File)
+		if err != nil {
+			return fmt.Errorf("open Target File Error: %v", err)
+		}
+		defer f.Close()
+		return r.enumerateMultipleTargets(ctx, f)
+	}
+
+	// 如果使用标准输入
+	if r.options.Stdin {
+		gologger.Info().Msgf("loading target from stdin...")
+		return r.enumerateMultipleTargets(ctx, os.Stdin)
+	}
+
+	return fmt.Errorf("not set targets")
+}
+
+// enumerateMultipleTargets 扫描多个目标
+func (r *Runner) enumerateMultipleTargets(ctx context.Context, reader io.Reader) error {
+	scanner := bufio.NewScanner(reader)
+	for scanner.Scan() {
+		// 检查上下文是否已经被取消
+		select {
+		case <-ctx.Done():
+			return ctx.Err() // 返回上下文取消的错误
+		default:
+			// 继续执行
+		}
+
+		target := scanner.Text()
+		// 使用传入的上下文调用ScanWithContext方法
+		result, err := r.ScanWithContext(ctx, target)
+		if err != nil {
+			gologger.Warning().Msgf("scan target %s failed: %v", target, err)
+			continue
+		}
+		// 调用回调函数处理结果
+		if r.options.Callback != nil {
+			r.options.Callback(target, result)
+		}
+	}
+	if err := scanner.Err(); err != nil {
+		return fmt.Errorf("read targets failed: %v", err)
+	}
+	return nil
 }
 
 // MergeMaps 合并两个map

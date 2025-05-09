@@ -16,7 +16,7 @@ func TestLoadRule(t *testing.T) {
 	}
 }
 
-func TestRuleMatch(t *testing.T) {
+func TestRuleMatchFtp(t *testing.T) {
 	group, err := ScanRuleDirectory("D:\\code\\github.com\\finger-rules")
 	if err != nil {
 		t.Error(err)

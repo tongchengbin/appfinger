@@ -19,7 +19,7 @@ func TestRunnerSSL(t *testing.T) {
 	spider := crawl.NewCrawler(crawl.DefaultOption())
 	ruleManager := rule.GetRuleManager()
 	_ = ruleManager.LoadRules(customrules.GetDefaultDirectory())
-	runner := NewRunner(spider, ruleManager)
+	runner := NewRunnerCompat(spider, ruleManager)
 	result, err := runner.Scan("https://www.hackerone.com")
 	assert.NoError(t, err)
 	assert.True(t, len(result.Fingerprint) > 0)
@@ -30,7 +30,7 @@ func TestRunnerWordPress(t *testing.T) {
 	spider := crawl.NewCrawler(crawl.DefaultOption())
 	ruleManager := rule.GetRuleManager()
 	_ = ruleManager.LoadRules(customrules.GetDefaultDirectory())
-	runner := NewRunner(spider, ruleManager)
+	runner := NewRunnerCompat(spider, ruleManager)
 	result, err := runner.Scan("https://cn.wordpress.org/")
 	assert.NoError(t, err)
 	assert.True(t, len(result.Fingerprint) > 2)
@@ -68,7 +68,7 @@ func TestRunnerPlugin(t *testing.T) {
 	// 创建爬虫
 	spider := crawl.NewCrawler(crawl.DefaultOption())
 	// 创建Runner
-	runner := NewRunner(spider, ruleManager)
+	runner := NewRunnerCompat(spider, ruleManager)
 	// 执行扫描
 	//time.Sleep(100 * time.Second)
 	result, err := runner.Scan(ts.URL)

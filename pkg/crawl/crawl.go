@@ -67,18 +67,18 @@ RedirectLoop:
 				gologger.Debug().Msgf("Req Error:%v", err)
 				break RedirectLoop
 			}
-
-			// 如果nextURI为空，则不再继续请求
-			if nextURI == "" {
-				banners = append(banners, banner)
-				break RedirectLoop
-			}
 			if c.options.DebugResp {
 				if banner.Certificate != "" {
 					fmt.Println("Dump Cert For " + banner.Uri + "\r\n" + banner.Certificate)
 				}
 				fmt.Println("Dump Response For " + banner.Uri + "\r\n" + banner.Response)
 			}
+			// 如果nextURI为空，则不再继续请求
+			if nextURI == "" {
+				banners = append(banners, banner)
+				break RedirectLoop
+			}
+
 			banners = append(banners, banner)
 			if nextURI == "" {
 				break

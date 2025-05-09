@@ -3,6 +3,9 @@ package main
 import (
 	"context"
 	"fmt"
+	_ "net/http/pprof"
+	"time"
+
 	"github.com/projectdiscovery/gologger"
 	"github.com/projectdiscovery/gologger/levels"
 	"github.com/tongchengbin/appfinger/internal"
@@ -10,7 +13,6 @@ import (
 	"github.com/tongchengbin/appfinger/pkg/external/customrules"
 	"github.com/tongchengbin/appfinger/pkg/rule"
 	"github.com/tongchengbin/appfinger/pkg/runner"
-	_ "net/http/pprof"
 )
 
 const Version = "v0.3.4"
@@ -45,10 +47,48 @@ func main() {
 		return
 	}
 	crawlOptions := crawl.DefaultOption()
+	crawlOptions.DebugResp = options.DebugResp
+	crawlOptions.Timeout = time.Duration(options.Timeout) * time.Second
+	crawlOptions.Proxy = options.Proxy
 	spider := crawl.NewCrawler(crawlOptions)
 	manager := rule.GetRuleManager()
-	appRunner := runner.NewRunner(spider, manager)
-	err := appRunner.Enumerate()
+	err := manager.LoadRules(options.FingerHome)
+	if err != nil {
+		gologger.Print().Msgf(err.Error())
+		return
+	}
+	// 计算规则总数
+	totalRules := 0
+	for _, rules := range manager.GetFinger().Rules {
+		totalRules += len(rules)
+	}
+	gologger.Info().Msgf("Loaded %d rule categories with %d total rules", len(manager.GetFinger().Rules), totalRules)
+	// 将internal.Options转换为runner.Options
+	runnerOptions := &runner.Options{
+		// 输入相关
+		Targets: options.URL,
+		File:    options.UrlFile,
+		Stdin:   options.Stdin,
+		// 运行相关
+		Threads:  options.Threads,
+		Timeout:  options.Timeout,
+		Verbose:  options.Debug,
+		Silent:   false,
+		RulePath: options.FingerHome,
+
+		// 输出相关
+		Output:    options.OutputFile,
+		JSON:      options.OutputType == "json",
+		NoColor:   false,
+		OutputAll: true,
+	}
+
+	appRunner, err := runner.NewRunner(spider, manager, runnerOptions)
+	if err != nil {
+		gologger.Print().Msgf(err.Error())
+		return
+	}
+	err = appRunner.Enumerate()
 	if err != nil {
 		gologger.Error().Msgf(err.Error())
 		return
