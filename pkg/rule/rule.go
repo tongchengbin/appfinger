@@ -6,6 +6,16 @@ import (
 	"strconv"
 )
 
+// MatchResult 表示匹配结果
+type MatchResult struct {
+	Rule      *Rule             // 匹配到的规则
+	Extracted map[string]string // 提取的字段值
+}
+
+func (m MatchResult) IsPlugin() bool {
+	return len(m.Rule.Plugins) > 0
+}
+
 type Plugin struct {
 	Path string `yaml:"path" json:"path,omitempty"`
 }
@@ -35,27 +45,25 @@ func (f Finger) AddRules(rules []*Rule) {
 	}
 }
 
-func (f Finger) Match(service string, getMatchPart MatchPartGetter) map[string]map[string]string {
+// Match 执行指纹匹配并返回包含规则的匹配结果
+func (f Finger) Match(service string, getMatchPart MatchPartGetter) []*MatchResult {
+	var results = make([]*MatchResult, 0)
 	rules, ok := f.Rules[service]
 	if !ok {
 		gologger.Debug().Msgf("No rules found for %s", service)
-		return nil
+		return results
 	}
-	results := map[string]map[string]string{}
+	// 对每个规则进行匹配
 	for _, rule := range rules {
 		ok, extract := rule.Match(getMatchPart)
 		if ok {
-			if results[rule.Name] == nil {
-				results[rule.Name] = extract
-			} else {
-				for k, v := range extract {
-					results[rule.Name][k] = v
-				}
-			}
+			results = append(results, &MatchResult{
+				Rule:      rule,
+				Extracted: extract,
+			})
 		}
 	}
 	return results
-
 }
 
 func NewFinger() *Finger {

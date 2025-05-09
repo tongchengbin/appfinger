@@ -6,7 +6,10 @@ import (
 	"github.com/projectdiscovery/gologger"
 	"github.com/projectdiscovery/gologger/levels"
 	"github.com/tongchengbin/appfinger/internal"
+	"github.com/tongchengbin/appfinger/pkg/crawl"
 	"github.com/tongchengbin/appfinger/pkg/external/customrules"
+	"github.com/tongchengbin/appfinger/pkg/rule"
+	"github.com/tongchengbin/appfinger/pkg/runner"
 	_ "net/http/pprof"
 )
 
@@ -41,13 +44,11 @@ func main() {
 		customrules.DefaultProvider.Update(context.Background(), options.FingerHome)
 		return
 	}
-	appRunner, err := internal.NewRunner(options)
-	if err != nil {
-		gologger.Error().Msgf(err.Error())
-		return
-	}
-	fmt.Printf(Banner)
-	err = appRunner.Enumerate()
+	crawlOptions := crawl.DefaultOption()
+	spider := crawl.NewCrawler(crawlOptions)
+	manager := rule.GetRuleManager()
+	appRunner := runner.NewRunner(spider, manager)
+	err := appRunner.Enumerate()
 	if err != nil {
 		gologger.Error().Msgf(err.Error())
 		return

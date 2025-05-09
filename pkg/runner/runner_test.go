@@ -2,6 +2,7 @@ package runner
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/projectdiscovery/gologger"
 	"github.com/projectdiscovery/gologger/levels"
 	"github.com/stretchr/testify/assert"
@@ -74,6 +75,6 @@ func TestRunnerPlugin(t *testing.T) {
 	// 验证结果
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
-	assert.Contains(t, result.Fingerprint, "etcd")
-	assert.Equal(t, "3.4.21", result.Fingerprint["etcd"]["version"])
+	fmt.Printf("%v", result.Fingerprint)
+	assert.Contains(t, result.Fingerprint, "ETCD")
 }

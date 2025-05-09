@@ -16,6 +16,11 @@ type Result struct {
 	Fingerprint map[string]map[string]string
 }
 
+type ExecutorsPlugin struct {
+	Plugin *rule.Plugin
+	Banner *crawl.Banner
+}
+
 // Runner 负责协调爬虫和规则匹配的执行流程
 type Runner struct {
 	crawler     *crawl.Crawler
@@ -56,121 +61,44 @@ func (r *Runner) ScanWithContext(ctx context.Context, uri string) (*Result, erro
 	if err != nil {
 		return nil, err
 	}
-	// get matcher
+	// 获取指纹库
 	finger := r.ruleManager.GetFinger()
+	// 最终结果
 	results := make(map[string]map[string]string)
-	for _, banner := range banners {
-		// 创建Banner适配器
-		getMatchPart := func(part string) string {
-			switch part {
-			case "url":
-				return banner.Uri
-			case "body":
-				return banner.Body
-			case "header":
-				return banner.Header
-			case "cert":
-				return banner.Certificate
-			case "title":
-				return banner.Title
-			case "response":
-				return banner.Response
-			case "icon_hash":
-				return fmt.Sprintf("%v", banner.IconHash)
-			case "body_hash":
-				return fmt.Sprintf("%v", banner.BodyHash)
-			case "server":
-				return banner.Headers["Server"]
-			}
-			return ""
-		}
-		result := finger.Match("http", getMatchPart)
-		// 合并结果
-		results = MergeMaps(results, result)
-	}
+	// 对每个banner进行匹配
+	matchResults, matchPlugins := r.matchBanners(finger, banners)
+	results = MergeMaps(results, matchResults)
 	// 特殊处理
 	if _, ok := results["honeypot"]; ok {
 		results = map[string]map[string]string{"honeypot": make(map[string]string)}
 	}
+	// 获取最后一个banner作为默认banner
 	lastBanner := banners[len(banners)-1]
-	// WordPress插件匹配 - 这里需要修改为使用适当的方法
+	// WordPress插件匹配
 	if _, ok := results["Wordpress"]; ok {
-		results = MergeMaps(MatchWpPlugin(lastBanner.Body), results)
+		// 如果匹配到Wordpress，使用最后一个banner来匹配WordPress插件
+		wpPlugins := MatchWpPlugin(lastBanner.Body)
+		results = MergeMaps(wpPlugins, results)
 	}
-	fmt.Printf("%v\n", results)
+	// 最后再匹配插件
+	if len(matchPlugins) > 0 {
+		for _, executePlugin := range matchPlugins {
+			pluginBanners, err := r.ExecuteWithPlugin(ctx, executePlugin.Banner.Uri, executePlugin.Plugin)
+			if err != nil {
+				gologger.Debug().Msgf("Execute With Plugin Error: %v", err)
+				continue
+			}
+			// 对插件返回的banners进行匹配
+			matchResults, _ = r.matchBanners(finger, pluginBanners)
+			results = MergeMaps(results, matchResults)
+			lastBanner = pluginBanners[len(pluginBanners)-1]
+		}
+	}
 	return &Result{
 		Banner:      lastBanner,
 		Fingerprint: results,
 	}, nil
 }
-
-// RunWithPlugins 执行带插件的指纹识别流程
-//func (r *Runner) RunWithPlugins(ctx context.Context, uri string) (*Result, error) {
-//	// 获取网站信息
-//	banner, err := r.crawler.GetBanner(ctx, uri)
-//	if err != nil {
-//		return nil, err
-//	}
-//
-//	// 匹配规则并处理插件
-//	var banners []*common.Banner
-//	banners = append(banners, banner)
-//
-//	// 匹配指纹
-//	fingerprints := map[string]map[string]string{}
-//
-//	// 最多处理10个Banner（包括插件生成的）
-//	for index, b := range banners {
-//		if index > 10 {
-//			break
-//		}
-//
-//		// 匹配规则
-//		matched, err := r.matcher.Match(b)
-//		if err != nil {
-//			gologger.Debug().Msgf("Error matching rules: %v", err)
-//			continue
-//		}
-//
-//		// 合并结果
-//		for name, values := range matched {
-//			if fingerprints[name] == nil {
-//				fingerprints[name] = values
-//			} else {
-//				for k, v := range values {
-//					fingerprints[name][k] = v
-//				}
-//			}
-//
-//			// 处理插件
-//			if r.ruleManager != nil {
-//				rule := r.ruleManager.FindRuleByName(name)
-//				if rule != nil && len(rule.Plugins) > 0 {
-//					for _, plugin := range rule.Plugins {
-//						pluginBanners, err := r.crawler.ExecuteWithPlugin(ctx, b.Uri, plugin)
-//						if err != nil {
-//							gologger.Debug().Msgf("Plugin execution error: %s", err.Error())
-//							continue
-//						}
-//						banners = append(banners, pluginBanners...)
-//					}
-//				}
-//			}
-//		}
-//	}
-//
-//	// WordPress插件匹配 - 这里需要修改为使用适当的方法
-//	if _, ok := fingerprints["Wordpress"]; ok {
-//		// 使用公共合并方法，但需要处理WordPress插件匹配
-//		// 在实际实现中，可以将这部分逻辑移到专门的WordPress处理模块
-//		// 这里暂时不处理
-//	}
-//
-//	return &Result{
-//		Banner:      banner,
-//		Fingerprint: fingerprints,
-//	}, nil
-//}
 
 // urlJoin 连接基础URL和路径
 func urlJoin(baseURL, urlPath string) string {
@@ -187,30 +115,8 @@ func urlJoin(baseURL, urlPath string) string {
 func (r *Runner) ExecuteWithPlugin(ctx context.Context, baseURL string, plugin *rule.Plugin) ([]*crawl.Banner, error) {
 	gologger.Debug().Msgf("Execute with Plugin: %s", plugin.Path)
 	newURL := urlJoin(baseURL, plugin.Path)
-
-	var banners []*crawl.Banner
-	var nextURI = newURL
-	var banner *crawl.Banner
-	var err error
-
-	for ret := 0; ret < 3; ret++ {
-		select {
-		case <-ctx.Done():
-			return nil, ctx.Err()
-		default:
-			banner, nextURI, err = crawl.RequestOnce(r.crawler.GetClient(), nextURI)
-			if err != nil {
-				break
-			}
-			banners = append(banners, banner)
-
-			if nextURI == "" {
-				break
-			}
-		}
-	}
-
-	return banners, nil
+	banners, err := r.crawler.GetBanners(ctx, newURL)
+	return banners, err
 }
 
 // Match 兼容旧版API的匹配方法
@@ -233,17 +139,69 @@ func (r *Runner) Match(uri string) (banner *crawl.Banner, m map[string]map[strin
 	return banner, result.Fingerprint, nil
 }
 
-// MergeMaps 合并两个指纹映射
-func MergeMaps(map1, map2 map[string]map[string]string) map[string]map[string]string {
+// matchBanners 对一组banner进行匹配并返回结果和插件
+func (r *Runner) matchBanners(finger *rule.Finger, banners []*crawl.Banner) (map[string]map[string]string, []ExecutorsPlugin) {
+	var plugins = make([]ExecutorsPlugin, 0)
+	var results = make(map[string]map[string]string)
+	// 对每个banner进行匹配
+	for _, banner := range banners {
+		// 创建banner适配器
+		getMatchPart := createMatchPartGetter(banner)
+		// 执行匹配
+		matchResults := finger.Match("http", getMatchPart)
+		// 记录每个规则匹配到的banner和插件
+		for _, matchResult := range matchResults {
+			//	提取结果
+			if matchResult.IsPlugin() {
+				for _, plugin := range matchResult.Rule.Plugins {
+					plugins = append(plugins, ExecutorsPlugin{Plugin: plugin, Banner: banner})
+				}
+			} else {
+				results = MergeMaps(map[string]map[string]string{matchResult.Rule.Name: matchResult.Extracted}, results)
+			}
+		}
+	}
+	return results, plugins
+}
+
+// createMatchPartGetter 创建一个从banner中提取匹配部分的函数
+func createMatchPartGetter(banner *crawl.Banner) rule.MatchPartGetter {
+	return func(part string) string {
+		switch part {
+		case "url":
+			return banner.Uri
+		case "body":
+			return banner.Body
+		case "header":
+			return banner.Header
+		case "cert":
+			return banner.Certificate
+		case "title":
+			return banner.Title
+		case "response":
+			return banner.Response
+		case "icon_hash":
+			return fmt.Sprintf("%v", banner.IconHash)
+		case "body_hash":
+			return fmt.Sprintf("%v", banner.BodyHash)
+		case "server":
+			return banner.Headers["server"]
+		}
+		return ""
+	}
+}
+
+// MergeMaps 合并两个map
+func MergeMaps(m1, m2 map[string]map[string]string) map[string]map[string]string {
 	result := make(map[string]map[string]string)
 
 	// 遍历第一个 map
-	for key, value := range map1 {
+	for key, value := range m1 {
 		result[key] = value
 	}
 
 	// 遍历第二个 map
-	for key, value := range map2 {
+	for key, value := range m2 {
 		// 如果键已存在，则根据需求选择合并或覆盖值
 		// 这里选择覆盖
 		result[key] = value
