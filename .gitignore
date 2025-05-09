@@ -8,3 +8,4 @@ cmd/sample
 Makefile
 go.sum
 go.work.sum
+*.go~

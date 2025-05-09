@@ -1,11 +1,20 @@
 package rule
 
 import (
-	"fmt"
 	"github.com/projectdiscovery/gologger"
 	"github.com/tongchengbin/appfinger/pkg/matchers"
-	"strings"
+	"strconv"
 )
+
+// MatchResult 表示匹配结果
+type MatchResult struct {
+	Rule      *Rule             // 匹配到的规则
+	Extracted map[string]string // 提取的字段值
+}
+
+func (m MatchResult) IsPlugin() bool {
+	return len(m.Rule.Plugins) > 0
+}
 
 type Plugin struct {
 	Path string `yaml:"path" json:"path,omitempty"`
@@ -36,34 +45,32 @@ func (f Finger) AddRules(rules []*Rule) {
 	}
 }
 
-func (f Finger) Match(service string, banner *Banner) map[string]map[string]string {
+// Match 执行指纹匹配并返回包含规则的匹配结果
+func (f Finger) Match(service string, getMatchPart MatchPartGetter) []*MatchResult {
+	var results = make([]*MatchResult, 0)
 	rules, ok := f.Rules[service]
 	if !ok {
 		gologger.Debug().Msgf("No rules found for %s", service)
-		return nil
+		return results
 	}
-	results := map[string]map[string]string{}
+	// 对每个规则进行匹配
 	for _, rule := range rules {
-		ok, extract := rule.Match(banner)
+		ok, extract := rule.Match(getMatchPart)
 		if ok {
-			if results[rule.Name] == nil {
-				results[rule.Name] = extract
-			} else {
-				for k, v := range extract {
-					results[rule.Name][k] = v
-				}
-			}
+			results = append(results, &MatchResult{
+				Rule:      rule,
+				Extracted: extract,
+			})
 		}
 	}
 	return results
-
 }
 
 func NewFinger() *Finger {
 	return &Finger{Rules: make(map[string][]*Rule)}
 }
 
-func (r *Rule) Match(banner *Banner) (bool, map[string]string) {
+func (r *Rule) Match(getMatchPart MatchPartGetter) (bool, map[string]string) {
 	var matchedString []string
 	matchedMapString := make(map[string]string)
 	// 为了保证数据都被提取到 所以需要匹配所有的规则
@@ -75,13 +82,15 @@ func (r *Rule) Match(banner *Banner) (bool, map[string]string) {
 		}
 		switch matcher.GetType() {
 		case matchers.StatusMatcher:
-			matched = matcher.MatchStatusCode(banner.StatusCode)
+			code := getMatchPart(matcher.Part)
+			statusCode, _ := strconv.Atoi(code)
+			matched = matcher.MatchStatusCode(statusCode)
 		case matchers.SizeMatcher:
 			matched = false
 		case matchers.WordsMatcher:
-			matched, matchedString = matcher.MatchWords(getMatchPart(matcher.Part, banner))
+			matched, matchedString = matcher.MatchWords(getMatchPart(matcher.Part))
 		case matchers.RegexMatcher:
-			matched, matchedString = matcher.MatchRegex(getMatchPart(matcher.Part, banner))
+			matched, matchedString = matcher.MatchRegex(getMatchPart(matcher.Part))
 		default:
 			panic("unhandled default case")
 		}
@@ -106,32 +115,4 @@ func (r *Rule) Match(banner *Banner) (bool, map[string]string) {
 		}
 	}
 	return ok, matchedMapString
-}
-
-func getMatchPart(part string, banner *Banner) string {
-	if part == "" {
-		part = "body"
-	}
-	if strings.HasPrefix(part, "headers.") {
-		return banner.Headers[strings.ToLower(strings.TrimPrefix(part, "headers."))]
-	}
-	switch part {
-	case "url":
-		return banner.Uri
-	case "body":
-		return banner.Body
-	case "header":
-		return banner.Header
-	case "cert":
-		return banner.Certificate
-	case "title":
-		return banner.Title
-	case "response":
-		return banner.Response
-	case "icon_hash":
-		return fmt.Sprintf("%v", banner.IconHash)
-	case "body_hash":
-		return fmt.Sprintf("%v", banner.BodyHash)
-	}
-	return ""
 }

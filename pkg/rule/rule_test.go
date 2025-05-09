@@ -16,18 +16,18 @@ func TestLoadRule(t *testing.T) {
 	}
 }
 
-func TestRuleMatch(t *testing.T) {
+func TestRuleMatchFtp(t *testing.T) {
 	group, err := ScanRuleDirectory("D:\\code\\github.com\\finger-rules")
 	if err != nil {
 		t.Error(err)
 	}
-	results := group.Match("http", &Banner{
-		Title: "Adobe Media Server",
+	results := group.Match("http", func(part string) string {
+		return "Adobe Media Server"
 	})
 	t.Log(results)
 
-	results = group.Match("ftp", &Banner{
-		Body: "220 Microsoft FTP Service\n214-The following commands are recognized (* ==>'s unimplemented).\nABOR\nACCT",
+	results = group.Match("ftp", func(part string) string {
+		return "220 Microsoft FTP Service\n214-The following commands are recognized (* ==>'s unimplemented).\nABOR\nACCT"
 	})
 	t.Log(results)
 }
@@ -39,8 +39,6 @@ func TestRuleMatchCpe(t *testing.T) {
 		t.Error(err)
 		return
 	}
-	results := group.Match("ssh", &Banner{
-		Body: "SSH-2.0-OpenSSH_7.2p2 Ubuntu-4kord2.8",
-	})
+	results := group.Match("ssh", func(part string) string { return "SSH-2.0-OpenSSH_7.2p2 Ubuntu-4kord2.8" })
 	t.Log(results)
 }

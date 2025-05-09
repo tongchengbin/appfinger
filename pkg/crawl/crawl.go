@@ -1,180 +1,109 @@
 package crawl
 
 import (
+	"context"
+	"errors"
 	"fmt"
-	"github.com/pkg/errors"
 	"github.com/projectdiscovery/gologger"
-	"github.com/tongchengbin/appfinger/pkg/rule"
+	"github.com/projectdiscovery/retryablehttp-go"
 	"net/http"
 	"net/url"
+	"sync"
 )
 
-type Crawl struct {
-	options *Options
-	finger  *rule.Finger
+// Crawler 定义爬虫的核心结构
+type Crawler struct {
+	options      *Options
+	httpClient   *retryablehttp.Client
+	clientInitMu sync.Once
 }
 
-// NewCrawl 创建新的爬虫实例
-// 如果提供了finger参数，则使用提供的finger
-// 如果finger为nil，则尝试从RuleManager获取
-func NewCrawl(options *Options, finger *rule.Finger) *Crawl {
-	if finger == nil {
-		// 尝试从RuleManager获取finger
-		ruleManager := rule.GetRuleManager()
-		if ruleManager != nil {
-			finger = ruleManager.GetFinger()
-		}
-	}
-	
-	return &Crawl{
-		finger:  finger,
-		options: options,
-	}
+// NewCrawler 创建新的爬虫实例
+func NewCrawler(options *Options) *Crawler {
+	c := &Crawler{options: options}
+	c.initClient()
+	return c
 }
 
-// NewCrawlWithManager 使用RuleManager创建爬虫实例
-func NewCrawlWithManager(options *Options) *Crawl {
-	ruleManager := rule.GetRuleManager()
-	var finger *rule.Finger
-	if ruleManager != nil {
-		finger = ruleManager.GetFinger()
-	}
-	
-	return &Crawl{
-		finger:  finger,
-		options: options,
-	}
-}
-
-func (c *Crawl) Match(uri string) (banner *rule.Banner, m map[string]map[string]string, err error) {
-	// fix url
-	u, err := url.Parse(uri)
-	if err != nil {
-		return nil, m, err
-	}
-	if (u.Scheme == "http" && u.Port() == "80") || (u.Scheme == "https" && u.Port() == "443") {
-		u.Host = u.Hostname()
-	}
-	uri = u.String()
-	opts := []ClientOption{
-		WithTimeout(c.options.Timeout),
-	}
-	if c.options.Proxy != "" {
-		opts = append(opts, WithProxy(c.options.Proxy))
-	}
-	client, err := NewClient(opts...)
-	if err != nil {
-		return nil, m, err
-	}
-	defer client.CloseIdleConnections()
-	var banners []*rule.Banner
-	var nextURI = uri
-	for ret := 0; ret < 3; ret++ {
-		banner, nextURI, err = RequestOnce(client, nextURI)
-		if err != nil {
-			gologger.Debug().Msgf("Req Error:%v", err)
-			break
-		}
-		if c.options.DebugResp {
-			if banner.Certificate != "" {
-				fmt.Println("Dump Cert For " + banner.Uri + "\r\n" + banner.Certificate)
+// initClient 初始化HTTP客户端
+func (c *Crawler) initClient() {
+	c.clientInitMu.Do(func() {
+		opts := retryablehttp.DefaultOptionsSpraying
+		opts.Timeout = c.options.Timeout
+		opts.KillIdleConn = true
+		transport := retryablehttp.DefaultReusePooledTransport()
+		if c.options.Proxy != "" {
+			transport.Proxy = func(request *http.Request) (*url.URL, error) {
+				return url.Parse(c.options.Proxy)
 			}
-			fmt.Println("Dump Response For " + banner.Uri + "\r\n" + banner.Response)
 		}
-		banners = append(banners, banner)
-		if nextURI == "" {
-			break
-		}
-	}
-	if banner == nil {
-		return nil, nil, errors.New(fmt.Sprintf("Get %s Error!", uri))
-	}
-	// fetch icon
-	_, err = readICON(client, banners[len(banners)-1])
-	if err != nil {
-		gologger.Debug().Msg(err.Error())
-	}
-	// 匹配插件
-	fingerprints := map[string]map[string]string{}
-	for index, b := range banners {
-		if index > 10 {
-			break
-		}
-		for _, r := range c.finger.Rules["http"] {
-			ok, extract := r.Match(b)
-			if ok && len(r.Plugins) > 0 {
-				// 插件匹配
-				for _, plugin := range r.Plugins {
-					pluginBanners, err := c.ExecuteWithPlugin(client, b.Uri, plugin)
-					if err != nil {
-						gologger.Debug().Msgf("Err %s", err.Error())
-					}
-					banners = append(banners, pluginBanners...)
-				}
+		opts.HttpClient = retryablehttp.DefaultClient()
+		opts.HttpClient.Transport = transport
+		c.httpClient = retryablehttp.NewClient(opts)
+	})
+}
 
-			} else if ok {
-				// 规则匹配
-				if fingerprints[r.Name] == nil {
-					fingerprints[r.Name] = extract
-				} else {
-					for k, v := range extract {
-						fingerprints[r.Name][k] = v
-					}
+// GetClient 获取HTTP客户端
+func (c *Crawler) GetClient() *retryablehttp.Client {
+	c.initClient()
+	return c.httpClient
+}
+
+// GetBanners 实现BannerProvider接口
+func (c *Crawler) GetBanners(ctx context.Context, uri string) ([]*Banner, error) {
+	var banners []*Banner
+	var nextURI = uri
+	var banner *Banner
+	var err error
+	// 处理重定向，最多跟踪3次
+RedirectLoop:
+	for ret := 0; ret < 3; ret++ {
+		select {
+		case <-ctx.Done():
+			return nil, ctx.Err()
+		default:
+			banner, nextURI, err = RequestOnce(c.httpClient, nextURI)
+			if err != nil {
+				gologger.Debug().Msgf("Req Error:%v", err)
+				break RedirectLoop
+			}
+			if c.options.DebugResp {
+				if banner.Certificate != "" {
+					fmt.Println("Dump Cert For " + banner.Uri + "\r\n" + banner.Certificate)
 				}
+				fmt.Println("Dump Response For " + banner.Uri + "\r\n" + banner.Response)
+			}
+			// 如果nextURI为空，则不再继续请求
+			if nextURI == "" {
+				banners = append(banners, banner)
+				break RedirectLoop
+			}
+
+			banners = append(banners, banner)
+			if nextURI == "" {
+				break
 			}
 		}
 	}
 	if len(banners) == 0 {
-		return nil, nil, nil
+		return nil, errors.New(fmt.Sprintf("Get %s Error!", uri))
 	}
-	// merge result
-	if _, ok := fingerprints["honeypot"]; ok {
-		return banners[len(banners)-1], map[string]map[string]string{"honeypot": make(map[string]string)}, nil
-	}
-	if _, ok := fingerprints["Wordpress"]; ok {
-		fingerprints = mergeMaps(fingerprints, rule.MatchWpPlugin(banners[len(banners)-1]))
-	}
-	return banners[len(banners)-1], fingerprints, nil
-}
-
-func (c *Crawl) ExecuteWithPlugin(client *http.Client, baseURL string, plugin *rule.Plugin) ([]*rule.Banner, error) {
-	gologger.Debug().Msgf("Execute with Plugin: %s", plugin.Path)
-	newURl := urlJoin(baseURL, plugin.Path)
-	var banners []*rule.Banner
-	var nextURI = newURl
-	var banner *rule.Banner
-	var err error
-	for ret := 0; ret < 3; ret++ {
-		banner, nextURI, err = RequestOnce(client, nextURI)
+	// 获取最后一个Banner（最终页面）
+	finalBanner := banners[len(banners)-1]
+	// 获取网站图标
+	if !c.options.DisableIcon {
+		_, err = readICON(c.httpClient, finalBanner)
 		if err != nil {
-			break
-		}
-		if c.options.DebugResp {
-			if banner.Certificate != "" {
-				fmt.Println("Dump Cert For " + banner.Uri + "\r\n" + banner.Certificate)
-			}
-			fmt.Println("Dump Response For " + banner.Uri + "\r\n" + banner.Response)
-		}
-		banners = append(banners, banner)
-		if nextURI == "" {
-			break
+			gologger.Debug().Msg(err.Error())
 		}
 	}
 	return banners, nil
-
 }
 
-func mergeMaps(map1, map2 map[string]map[string]string) map[string]map[string]string {
-	result := make(map[string]map[string]string)
-	// 遍历第一个 map
-	for key, value := range map1 {
-		result[key] = value
+func (c *Crawler) GetBanner(ctx context.Context, uri string) (*Banner, error) {
+	banners, err := c.GetBanners(ctx, uri)
+	if err != nil {
+		return nil, err
 	}
-	// 遍历第二个 map
-	for key, value := range map2 {
-		// 如果键已存在，则根据需求选择合并或覆盖值
-		// 这里选择覆盖
-		result[key] = value
-	}
-	return result
+	return banners[0], nil
 }
