@@ -22,7 +22,7 @@ func TestRunnerSSL(t *testing.T) {
 	runner := NewRunnerCompat(spider, ruleManager)
 	result, err := runner.Scan("https://www.hackerone.com")
 	assert.NoError(t, err)
-	assert.True(t, len(result.Fingerprint) > 0)
+	assert.True(t, len(result.Components) > 0)
 }
 
 func TestRunnerWordPress(t *testing.T) {
@@ -33,7 +33,7 @@ func TestRunnerWordPress(t *testing.T) {
 	runner := NewRunnerCompat(spider, ruleManager)
 	result, err := runner.Scan("https://cn.wordpress.org/")
 	assert.NoError(t, err)
-	assert.True(t, len(result.Fingerprint) > 2)
+	assert.True(t, len(result.Components) > 2)
 }
 
 func TestRunnerPlugin(t *testing.T) {
@@ -75,6 +75,6 @@ func TestRunnerPlugin(t *testing.T) {
 	// 验证结果
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
-	fmt.Printf("%v", result.Fingerprint)
-	assert.Contains(t, result.Fingerprint, "ETCD")
+	fmt.Printf("%v", result.Components)
+	assert.Contains(t, result.Components, "ETCD")
 }

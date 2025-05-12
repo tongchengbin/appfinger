@@ -19,8 +19,8 @@ import (
 
 // Result 表示指纹识别结果
 type Result struct {
-	Banner      *crawl.Banner
-	Fingerprint map[string]map[string]string
+	Banner     *crawl.Banner
+	Components map[string]map[string]string
 }
 
 type ExecutorsPlugin struct {
@@ -98,33 +98,20 @@ func NewRunner(crawler *crawl.Crawler, ruleManager *rule.Manager, options *Optio
 	// 如果没有设置回调函数，使用默认的控制台输出
 	if options.Callback == nil {
 		options.Callback = func(target string, result *Result) {
-			fmt.Printf("%v", result.Fingerprint)
 			// 如果没有识别到指纹且不输出所有结果，则跳过
-			if len(result.Fingerprint) == 0 && !options.OutputAll {
+			if len(result.Components) == 0 && !options.OutputAll {
 				return
 			}
 			// 如果不是静默模式，则输出到控制台
 			if !options.Silent {
-				if len(result.Fingerprint) > 0 {
-					for name, values := range result.Fingerprint {
-						details := ""
-						for k, v := range values {
-							if details != "" {
-								details += ", "
-							}
-							details += fmt.Sprintf("%s: %s", k, v)
-						}
-						gologger.Info().Msgf("  - %s: %s", name, details)
-					}
-				} else if options.OutputAll {
-					gologger.Info().Msgf("目标: %s - 未识别到指纹", target)
-				}
+				out := formatConsole(result.Banner, result.Components)
+				gologger.Print().Msg(out)
 			}
 			// 如果有输出文件，则写入文件
 			for _, output := range runner.outputs {
 				outFields := &OutputFields{
 					URL:     target,
-					Extract: result.Fingerprint,
+					Extract: result.Components,
 				}
 				var data []byte
 				var err error
@@ -136,7 +123,7 @@ func NewRunner(crawler *crawl.Crawler, ruleManager *rule.Manager, options *Optio
 					}
 				} else {
 					// 简单文本格式
-					data = []byte(fmt.Sprintf("%s\t%v\n", target, result.Fingerprint))
+					data = []byte(fmt.Sprintf("%s\t%v\n", target, result.Components))
 				}
 
 				_, err = output.Write(append(data, '\n'))
@@ -227,8 +214,8 @@ func (r *Runner) ScanWithContext(ctx context.Context, uri string) (*Result, erro
 		}
 	}
 	return &Result{
-		Banner:      lastBanner,
-		Fingerprint: results,
+		Banner:     lastBanner,
+		Components: results,
 	}, nil
 }
 
@@ -268,7 +255,7 @@ func (r *Runner) Match(uri string) (banner *crawl.Banner, m map[string]map[strin
 		return banner, nil, err
 	}
 
-	return banner, result.Fingerprint, nil
+	return banner, result.Components, nil
 }
 
 // matchBanners 对一组banner进行匹配并返回结果和插件

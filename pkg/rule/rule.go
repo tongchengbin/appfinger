@@ -92,7 +92,7 @@ func (r *Rule) Match(getMatchPart MatchPartGetter) (bool, map[string]string) {
 		case matchers.RegexMatcher:
 			matched, matchedString = matcher.MatchRegex(getMatchPart(matcher.Part))
 		default:
-			panic("unhandled default case")
+			panic("unhandled default case:" + matcher.GetType().String() + " for name: " + r.Name)
 		}
 		if matcher.Name != "" && len(matchedString) > 0 {
 			matchedMapString[matcher.Name] = matchedString[0]
