@@ -2,9 +2,12 @@ package rule
 
 import (
 	"github.com/projectdiscovery/gologger"
+	"github.com/remeh/sizedwaitgroup"
 	"github.com/tongchengbin/appfinger/pkg/matchers"
 	"strconv"
 )
+
+var CPULimit sizedwaitgroup.SizedWaitGroup
 
 // MatchResult 表示匹配结果
 type MatchResult struct {
@@ -52,6 +55,10 @@ func (f Finger) Match(service string, getMatchPart MatchPartGetter) []*MatchResu
 	if !ok {
 		gologger.Debug().Msgf("No rules found for %s", service)
 		return results
+	}
+	if &CPULimit != nil {
+		CPULimit.Add()
+		defer CPULimit.Done()
 	}
 	// 对每个规则进行匹配
 	for _, rule := range rules {
