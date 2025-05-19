@@ -4,13 +4,22 @@ import (
 	"fmt"
 	"github.com/logrusorgru/aurora/v4"
 	"github.com/tongchengbin/appfinger/pkg/crawl"
+	"strings"
+	"unicode"
 )
 
-func formatConsole(banner *crawl.Banner, components map[string]map[string]string) string {
+func formatConsole(target string, banner *crawl.Banner, components map[string]map[string]string) string {
 	var s string
-	s += aurora.Cyan(banner.Uri).String()
+	s += aurora.Cyan(target).String()
 	if banner.Title != "" {
-		s += aurora.Blue(banner.Title).String()
+		// 过滤换行
+		cleanTitle := strings.Map(func(r rune) rune {
+			if unicode.IsControl(r) {
+				return -1 // 删除字符
+			}
+			return r
+		}, banner.Title)
+		s += fmt.Sprintf(" [%s]", aurora.Blue(cleanTitle).String())
 	}
 	for name, component := range components {
 		v := name

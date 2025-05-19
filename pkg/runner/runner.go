@@ -98,13 +98,9 @@ func NewRunner(crawler *crawl.Crawler, ruleManager *rule.Manager, options *Optio
 	// 如果没有设置回调函数，使用默认的控制台输出
 	if options.Callback == nil {
 		options.Callback = func(target string, result *Result) {
-			// 如果没有识别到指纹且不输出所有结果，则跳过
-			if len(result.Components) == 0 && !options.OutputAll {
-				return
-			}
 			// 如果不是静默模式，则输出到控制台
 			if !options.Silent {
-				out := formatConsole(result.Banner, result.Components)
+				out := formatConsole(target, result.Banner, result.Components)
 				gologger.Print().Msg(out)
 			}
 			// 如果有输出文件，则写入文件
