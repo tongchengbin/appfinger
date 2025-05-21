@@ -73,6 +73,20 @@ func NewRunnerWithOptions(options *Options) (*Runner, error) {
 	return NewRunner(crawler, ruleManager, options)
 }
 
+// New 使用功能选项模式创建Runner实例
+func New(opts ...OptionFunc) (*Runner, error) {
+	// 创建构建器
+	builder := NewBuilder()
+	
+	// 应用所有选项
+	for _, opt := range opts {
+		opt(builder)
+	}
+	
+	// 构建Runner实例
+	return builder.Build()
+}
+
 // NewRunner 从现有的crawler和ruleManager创建Runner实例
 func NewRunner(crawler *crawl.Crawler, ruleManager *rule.Manager, options *Options) (*Runner, error) {
 	// 如果没有提供选项，使用默认选项
