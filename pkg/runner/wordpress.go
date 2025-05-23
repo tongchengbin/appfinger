@@ -13,11 +13,12 @@ func MatchWpPlugin(body string) map[string]map[string]string {
 	pluginInfo := make(map[string]map[string]string)
 	for _, matches := range matchedPaths {
 		if len(matches) > 2 {
-			pluginInfo[matches[2]] = map[string]string{}
+			name := matches[2]
+			pluginInfo[name] = map[string]string{"framework": "wordpress"}
 			if len(matches) > 2 {
 				pluginVersion := matches[3]
-				pluginInfo[matches[2]]["version"] = pluginVersion
-				pluginInfo[matches[2]]["type"] = matches[1]
+				pluginInfo[name]["version"] = pluginVersion
+				pluginInfo[name]["type"] = matches[1]
 			}
 		}
 	}
