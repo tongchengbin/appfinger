@@ -96,6 +96,9 @@ RedirectLoop:
 		if err != nil {
 			gologger.Debug().Msg(err.Error())
 		}
+		if c.options.DebugResp && finalBanner.IconHash > 0 {
+			gologger.Print().Msgf("Dump Icon For %s -> %d", finalBanner.IconURI, finalBanner.IconHash)
+		}
 	}
 	return banners, nil
 }

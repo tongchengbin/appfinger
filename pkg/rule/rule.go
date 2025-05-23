@@ -55,9 +55,6 @@ func (f Finger) Match(service string, getMatchPart MatchPartGetter) []*MatchResu
 	}
 	// 对每个规则进行匹配
 	for _, rule := range rules {
-		if rule.Name != "Wordpress" {
-			continue
-		}
 		ok, extract := rule.Match(getMatchPart)
 		if ok {
 			results = append(results, &MatchResult{
