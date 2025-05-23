@@ -8,6 +8,13 @@ import (
 )
 import "github.com/projectdiscovery/gologger"
 
+func checkIsRuleFile(filename string) bool {
+	if len(filename) > 0 && filename[0] == '.' {
+		return false
+	}
+	return strings.HasSuffix(filename, ".yaml") || strings.HasSuffix(filename, ".yml")
+}
+
 func ScanRuleDirectory(directory string) (*Finger, error) {
 	group := NewFinger()
 	// 判断是文件名还是目录
@@ -22,9 +29,10 @@ func ScanRuleDirectory(directory string) (*Finger, error) {
 				return err
 			}
 			// 如果是文件，并且扩展名是 .yaml 或 .yml，处理文件
-			if !info.IsDir() && (strings.HasSuffix(info.Name(), ".yaml") || strings.HasSuffix(info.Name(), ".yml")) {
+			if !info.IsDir() && checkIsRuleFile(info.Name()) {
 				rules, err := LoadRule(path)
 				if err != nil {
+					gologger.Warning().Msgf("LoadRule Error: %s -> %v", info.Name(), err.Error())
 					return err
 				}
 				group.AddRules(rules)

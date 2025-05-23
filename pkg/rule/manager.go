@@ -74,7 +74,7 @@ func (m *Manager) LoadRules(path string) error {
 	m.finger = finger
 	m.rulePath = path
 	m.lastLoadTime = time.Now()
-	gologger.Info().Msgf("Loaded rules from: %s，rules: %d", path, len(m.finger.Rules))
+	gologger.Info().Msgf("Loaded rules from: %s rules: %d", path, len(m.finger.Rules))
 	return nil
 }
 
