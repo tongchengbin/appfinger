@@ -199,6 +199,14 @@ func getTitle(body []byte) []byte {
 	}
 	return nil
 }
+func getHttpHostname(uri string) string {
+	u, err := url.Parse(uri)
+	if err != nil {
+		return ""
+	}
+	return u.Hostname()
+}
+
 func RequestOnce(client *retryablehttp.Client, uri string) (banner *Banner, redirectURL string, err error) {
 	// 开始请求数据
 	var resp *http.Response
@@ -206,6 +214,8 @@ func RequestOnce(client *retryablehttp.Client, uri string) (banner *Banner, redi
 	if err != nil {
 		return banner, redirectURL, err
 	}
+	// 手动设置host，部分网站因为http 携带80 端口会被拦截 比如baidu.com
+	req.Host = getHttpHostname(uri)
 	req.Header.Set("accept-language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Accept", "*/*")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.58")

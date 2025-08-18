@@ -47,6 +47,7 @@ func main() {
 		return
 	}
 	crawlOptions := crawl.DefaultOption()
+	crawlOptions.DebugReq = options.DebugReq
 	crawlOptions.DebugResp = options.DebugResp
 	crawlOptions.Timeout = time.Duration(options.Timeout) * time.Second
 	crawlOptions.Proxy = options.Proxy

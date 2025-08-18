@@ -31,6 +31,7 @@ func (c *Crawler) initClient() {
 		opts := retryablehttp.DefaultOptionsSpraying
 		opts.Timeout = c.options.Timeout
 		opts.KillIdleConn = true
+		opts.RetryMax = c.options.RetryMax
 		transport := retryablehttp.DefaultReusePooledTransport()
 		if c.options.Proxy != "" {
 			transport.Proxy = func(request *http.Request) (*url.URL, error) {
