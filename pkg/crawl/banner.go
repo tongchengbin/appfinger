@@ -1,6 +1,9 @@
 package crawl
 
-import "crypto/tls"
+import (
+	"crypto/tls"
+	"strings"
+)
 
 // Banner 表示爬取的网站信息
 type Banner struct {
@@ -20,4 +23,12 @@ type Banner struct {
 	Cert        *tls.ConnectionState `json:"-"`
 	IconURI     string               `json:"icon_uri"`
 	IconBytes   []byte               `json:"-"`
+	Compliance  map[string]string    `json:"-"`
+}
+
+// 缓存小写内容、避免匹配时进行大小写转换出现的性能损耗、虽然会增加内存开销、但是可以显著提高匹配速度
+func (b *Banner) CacheLower() {
+	for k, v := range b.Headers {
+		b.Compliance[strings.ToLower(k)] = v
+	}
 }

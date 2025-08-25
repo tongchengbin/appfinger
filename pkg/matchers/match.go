@@ -7,9 +7,6 @@ import (
 // MatchWords matches a word check against a corpus.
 func (matcher *Matcher) MatchWords(corpus string) (bool, []string) {
 	var matchedWords []string
-	if !matcher.CaseInsensitive {
-		corpus = strings.ToLower(corpus)
-	}
 	// Iterate over all the words accepted as valid
 	for i, word := range matcher.Words {
 		// Continue if the word doesn't match
