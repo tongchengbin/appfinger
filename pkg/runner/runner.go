@@ -77,12 +77,12 @@ func NewRunnerWithOptions(options *Options) (*Runner, error) {
 func New(opts ...OptionFunc) (*Runner, error) {
 	// 创建构建器
 	builder := NewBuilder()
-	
+
 	// 应用所有选项
 	for _, opt := range opts {
 		opt(builder)
 	}
-	
+
 	// 构建Runner实例
 	return builder.Build()
 }
@@ -275,7 +275,7 @@ func (r *Runner) matchBanners(finger *rule.Finger, banners []*crawl.Banner) (map
 	// 对每个banner进行匹配
 	for _, banner := range banners {
 		// 创建banner适配器
-		getMatchPart := createMatchPartGetter(banner)
+		getMatchPart := CreateMatchPartGetter(banner)
 		// 执行匹配
 		matchResults := finger.Match("http", getMatchPart)
 		// 记录每个规则匹配到的banner和插件
@@ -293,8 +293,8 @@ func (r *Runner) matchBanners(finger *rule.Finger, banners []*crawl.Banner) (map
 	return results, plugins
 }
 
-// createMatchPartGetter 创建一个从banner中提取匹配部分的函数
-func createMatchPartGetter(banner *crawl.Banner) rule.MatchPartGetter {
+// CreateMatchPartGetter 创建一个从banner中提取匹配部分的函数
+func CreateMatchPartGetter(banner *crawl.Banner) rule.MatchPartGetter {
 	return func(part string) string {
 		if strings.Contains(part, "headers.") {
 			return banner.Headers[part[8:]]
