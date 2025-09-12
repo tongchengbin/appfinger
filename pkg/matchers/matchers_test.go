@@ -33,7 +33,7 @@ func TestWordsMatcher(t *testing.T) {
 	matched, _ = matcher.MatchWords("this is a test string")
 	assert.False(t, matched, "Should not match when case is different")
 
-	matcher.CaseInsensitive = true
+	matcher.CaseSensitive = true
 	matched, matchedStrings = matcher.MatchWords("this is a test string")
 	assert.True(t, matched, "Should match when case insensitive is enabled")
 	assert.Equal(t, []string{"test"}, matchedStrings, "Should return matched word")
