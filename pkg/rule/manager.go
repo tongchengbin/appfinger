@@ -64,7 +64,6 @@ func GetRuleManager() *Manager {
 func (m *Manager) LoadRules(path string) error {
 	m.mutex.Lock()
 	defer m.mutex.Unlock()
-
 	// 加载规则
 	finger, err := ScanRuleDirectory(path)
 	if err != nil {

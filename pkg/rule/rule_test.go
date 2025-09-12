@@ -25,9 +25,9 @@ func CreateMatchPartGetter(banner *crawl.Banner) MatchPartGetter {
 	for key, value := range banner.Headers {
 		lowerCache[key] = strings.ToLower(value)
 	}
-	// caseInsensitive 为 true 的时候忽略大小写
-	return func(part string, caseInsensitive bool) string {
-		if caseInsensitive {
+	// CaseSensitive 为 true 的时候大小写敏感
+	return func(part string, caseSensitive bool) string {
+		if !caseSensitive {
 			if strings.Contains(part, "headers.") {
 				part = part[8:]
 			}
@@ -77,12 +77,12 @@ func TestRuleMatchFtp(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	results := finger.Match("http", func(part string, caseInsensitive bool) string {
+	results := finger.Match("http", func(part string, caseSensitive bool) string {
 		return "Adobe Media Server"
 	})
 	t.Log(results)
 
-	results = finger.Match("ftp", func(part string, caseInsensitive bool) string {
+	results = finger.Match("ftp", func(part string, caseSensitive bool) string {
 		return "220 Microsoft FTP Service\n214-The following commands are recognized (* ==>'s unimplemented).\nABOR\nACCT"
 	})
 	t.Log(results)
@@ -95,7 +95,7 @@ func TestRuleMatchCpe(t *testing.T) {
 		t.Error(err)
 		return
 	}
-	results := finger.Match("ssh", func(part string, caseInsensitive bool) string { return "SSH-2.0-OpenSSH_7.2p2 Ubuntu-4kord2.8" })
+	results := finger.Match("ssh", func(part string, caseSensitive bool) string { return "SSH-2.0-OpenSSH_7.2p2 Ubuntu-4kord2.8" })
 	t.Log(results)
 }
 

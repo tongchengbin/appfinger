@@ -40,46 +40,62 @@ func (matcher *Matcher) MatchWords(corpus string) (bool, []string) {
 
 // MatchRegex matches a regex check against a corpus
 func (matcher *Matcher) MatchRegex(corpus string) (bool, []string) {
-	var matchedRegexes []string
-	var ok bool
-	// Iterate over all the regexes accepted as valid
+	if corpus == "" {
+		return false, []string{}
+	}
+	// 预分配结果切片，减少内存分配
+	matchedRegexes := make([]string, 0, len(matcher.regexCompiled))
+	
+	// 遍历所有正则表达式
 	for i, regex := range matcher.regexCompiled {
-		var currentMatches []string
-		items := regex.FindStringSubmatch(corpus)
-		if len(items) > 1 && items[0] != "" {
-			ok = true
-		}
-		if matcher.Group > 0 && (len(items) > matcher.Group-1) {
-			currentMatches = []string{items[matcher.Group]}
-		} else if matcher.Name != "" && len(items) > 1 {
-			currentMatches = []string{items[1]}
-		}
-		// Continue if the regex doesn't match
-		if !ok {
-			// If we are in an AND request and a match failed,
-			// return false as the AND condition fails on any single mismatch.
-			switch matcher.condition {
-			case ANDCondition:
+		// 使用 FindAllStringSubmatch 一次性获取所有匹配和捕获组
+		// 这比单独调用 FindStringSubmatch 更高效
+		matches := regex.FindAllStringSubmatch(corpus, -1)
+		
+		// 如果没有匹配
+		if len(matches) == 0 {
+			// 对于 AND 条件，任何一个不匹配就返回失败
+			if matcher.condition == ANDCondition {
 				return false, []string{}
-			case ORCondition:
-				continue
+			}
+			// 对于 OR 条件，继续检查下一个
+			continue
+		}
+		
+		// 提取匹配的内容
+		var currentMatches []string
+		for _, match := range matches {
+			// 根据 Group 参数提取指定捕获组
+			if matcher.Group > 0 && len(match) > matcher.Group {
+				currentMatches = append(currentMatches, match[matcher.Group])
+			} else if matcher.Name != "" && len(match) > 1 {
+				currentMatches = append(currentMatches, match[1])
+			} else if len(match) > 0 {
+				// 如果没有指定捕获组，使用整个匹配
+				currentMatches = append(currentMatches, match[0])
 			}
 		}
-		// If the condition was an OR, return on the first match.
+		
+		// 如果是 OR 条件且不需要匹配所有，第一个匹配就返回
 		if matcher.condition == ORCondition && !matcher.MatchAll {
 			return true, currentMatches
 		}
-
+		
+		// 添加当前匹配到结果集
 		matchedRegexes = append(matchedRegexes, currentMatches...)
-
-		// If we are at the end of the regex, return with true
-		if len(matcher.regexCompiled)-1 == i && !matcher.MatchAll {
+		
+		// 如果不需要匹配所有且已处理完最后一个正则，返回结果
+		if !matcher.MatchAll && i == len(matcher.regexCompiled)-1 {
 			return true, matchedRegexes
 		}
 	}
-	if len(matchedRegexes) > 0 && matcher.MatchAll {
+	
+	// 如果需要匹配所有且有匹配结果，返回成功
+	if matcher.MatchAll && len(matchedRegexes) > 0 {
 		return true, matchedRegexes
 	}
+	
+	// 默认返回失败
 	return false, []string{}
 }
 
