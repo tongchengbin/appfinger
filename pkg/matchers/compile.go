@@ -41,7 +41,7 @@ func (matcher *Matcher) CompileMatchers() error {
 		matcher.regexCompiled = append(matcher.regexCompiled, compiled)
 	}
 	// 默认不区分大小写,如果需要区分就全部转小写
-	if matcher.CaseInsensitive {
+	if !matcher.CaseSensitive {
 		for index, word := range matcher.Words {
 			matcher.Words[index] = strings.ToLower(word)
 		}

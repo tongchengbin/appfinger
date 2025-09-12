@@ -308,8 +308,8 @@ func CreateMatchPartGetter(banner *crawl.Banner) rule.MatchPartGetter {
 	for key, value := range banner.Headers {
 		lowerCache[key] = strings.ToLower(value)
 	}
-	return func(part string, caseInsensitive bool) string {
-		if caseInsensitive {
+	return func(part string, caseSensitive bool) string {
+		if !caseSensitive {
 			if strings.Contains(part, "headers.") {
 				part = part[8:]
 			}

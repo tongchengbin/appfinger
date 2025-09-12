@@ -80,18 +80,18 @@ func (r *Rule) Match(getMatchPart MatchPartGetter) (bool, map[string]string) {
 		if matched && !matcher.HasExtra {
 			continue
 		}
-		caseInsensitive := matcher.CaseInsensitive
+		caseSensitive := !matcher.CaseSensitive
 		switch matcher.GetType() {
 		case matchers.StatusMatcher:
-			code := getMatchPart(matcher.Part, caseInsensitive)
+			code := getMatchPart(matcher.Part, caseSensitive)
 			statusCode, _ := strconv.Atoi(code)
 			matched = matcher.MatchStatusCode(statusCode)
 		case matchers.SizeMatcher:
 			matched = false
 		case matchers.WordsMatcher:
-			matched, matchedString = matcher.MatchWords(getMatchPart(matcher.Part, caseInsensitive))
+			matched, matchedString = matcher.MatchWords(getMatchPart(matcher.Part, caseSensitive))
 		case matchers.RegexMatcher:
-			matched, matchedString = matcher.MatchRegex(getMatchPart(matcher.Part, caseInsensitive))
+			matched, matchedString = matcher.MatchRegex(getMatchPart(matcher.Part, caseSensitive))
 		default:
 			panic("unhandled default case:" + matcher.GetType().String() + " for name: " + r.Name)
 		}

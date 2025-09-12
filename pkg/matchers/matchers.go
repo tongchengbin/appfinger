@@ -20,7 +20,9 @@ type Matcher struct {
 	Condition       string            `yaml:"condition" json:"condition,omitempty"`
 	Group           int               `yaml:"group"`
 	Status          []int             `yaml:"status,omitempty" jsonschema:"title=status to match,description=Status to match for the response" json:"status,omitempty"`
-	CaseInsensitive bool              `yaml:"case-insensitive,omitempty" json:"case-insensitive,omitempty" jsonschema:"title=use case insensitive match,description=use case insensitive match"`
+	// CaseInsensitive bool              `yaml:"case-insensitive,omitempty" json:"case-insensitive,omitempty" jsonschema:"title=use case insensitive match,description=use case insensitive match"`
+	// 指纹匹配中 忽略大小写的概率比较多,所以默认忽略大小写 使用CaseSensitive 更合理
+	CaseSensitive   bool              `yaml:"case-sensitive,omitempty" json:"case-sensitive,omitempty" jsonschema:"title=use case sensitive match,description=use case sensitive match"`
 	regexCompiled   []*regexp.Regexp
 	condition       ConditionType
 	matcherType     MatcherType
