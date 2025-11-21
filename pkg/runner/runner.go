@@ -293,9 +293,6 @@ func (r *Runner) matchBanners(finger *rule.Finger, banners []*crawl.Banner) (map
 	return results, plugins
 }
 
-
-
-
 // CreateMatchPartGetter 创建一个从banner中提取匹配部分的函数
 func CreateMatchPartGetter(banner *crawl.Banner) rule.MatchPartGetter {
 	lowerCache := make(map[string]string)
@@ -308,15 +305,7 @@ func CreateMatchPartGetter(banner *crawl.Banner) rule.MatchPartGetter {
 	for key, value := range banner.Headers {
 		lowerCache[key] = strings.ToLower(value)
 	}
-	return func(part string, caseSensitive bool) string {
-		if !caseSensitive {
-			if strings.Contains(part, "headers.") {
-				part = part[8:]
-			}
-			if value,ok := lowerCache[part]; ok {
-				return value
-			}
-		}
+	return func(part string, _ bool) string {
 		if strings.Contains(part, "headers.") {
 			return banner.Headers[part[8:]]
 		}
