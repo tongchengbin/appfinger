@@ -1,0 +1,76 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'  # 当推送 v 开头的 tag 时触发,如 v1.0.0
+
+permissions:
+  contents: write  # 需要写权限来创建 release
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # 获取完整历史,用于生成 changelog
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.23'
+
+    - name: Get version from tag
+      id: get_version
+      run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+    - name: Build binaries
+      run: |
+        # 创建输出目录
+        mkdir -p dist
+        
+        # 构建多平台二进制文件
+        # Linux AMD64
+        GOOS=linux GOARCH=amd64 go build -ldflags "-s -w -X main.Version=${{ steps.get_version.outputs.VERSION }}" -o dist/appfinger-linux-amd64 .
+        
+        # Linux ARM64
+        GOOS=linux GOARCH=arm64 go build -ldflags "-s -w -X main.Version=${{ steps.get_version.outputs.VERSION }}" -o dist/appfinger-linux-arm64 .
+        
+        # macOS AMD64
+        GOOS=darwin GOARCH=amd64 go build -ldflags "-s -w -X main.Version=${{ steps.get_version.outputs.VERSION }}" -o dist/appfinger-darwin-amd64 .
+        
+        # macOS ARM64 (Apple Silicon)
+        GOOS=darwin GOARCH=arm64 go build -ldflags "-s -w -X main.Version=${{ steps.get_version.outputs.VERSION }}" -o dist/appfinger-darwin-arm64 .
+        
+        # Windows AMD64
+        GOOS=windows GOARCH=amd64 go build -ldflags "-s -w -X main.Version=${{ steps.get_version.outputs.VERSION }}" -o dist/appfinger-windows-amd64.exe .
+        
+        # Windows ARM64
+        GOOS=windows GOARCH=arm64 go build -ldflags "-s -w -X main.Version=${{ steps.get_version.outputs.VERSION }}" -o dist/appfinger-windows-arm64.exe .
+
+    - name: Create checksums
+      run: |
+        cd dist
+        sha256sum * > checksums.txt
+        cat checksums.txt
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          dist/appfinger-linux-amd64
+          dist/appfinger-linux-arm64
+          dist/appfinger-darwin-amd64
+          dist/appfinger-darwin-arm64
+          dist/appfinger-windows-amd64.exe
+          dist/appfinger-windows-arm64.exe
+          dist/checksums.txt
+        generate_release_notes: true
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
