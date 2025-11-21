@@ -28,6 +28,9 @@ jobs:
       id: get_version
       run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
 
+    - name: Download dependencies
+      run: go mod download
+
     - name: Build binaries
       run: |
         # 创建输出目录
