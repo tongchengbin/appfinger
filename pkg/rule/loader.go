@@ -30,6 +30,10 @@ func ScanRuleDirectory(directory string) (*Finger, error) {
 			if err != nil {
 				return err
 			}
+			// 隐藏目录（.git、.github 等）直接跳过
+			if info.IsDir() && strings.HasPrefix(info.Name(), ".") {
+				return filepath.SkipDir
+			}
 			// 如果是文件，并且扩展名是 .yaml 或 .yml，处理文件
 			if !info.IsDir() && checkIsRuleFile(info.Name()) {
 				rules, err := LoadRule(path)
@@ -136,6 +140,10 @@ func ValidateRuleDirectory(directory string) (errs []error, fatalErr error) {
 		walkErr := filepath.Walk(directory, func(path string, info os.FileInfo, err error) error {
 			if err != nil {
 				return err
+			}
+			// 隐藏目录（.git、.github 等）在严格校验时同样跳过
+			if info.IsDir() && strings.HasPrefix(info.Name(), ".") {
+				return filepath.SkipDir
 			}
 			if !info.IsDir() && checkIsRuleFile(info.Name()) {
 				_, fileErrs := LoadRuleStrict(path)
