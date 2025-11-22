@@ -26,24 +26,14 @@ func ScanRuleDirectory(directory string) (*Finger, error) {
 	}
 	if file.IsDir() {
 		//	scan (runtime loader: 遇到单个文件错误时仅记录日志并继续)
-		_ = filepath.Walk(directory, func(path string, info os.FileInfo, err error) error {
+		_ = walkRuleFiles(directory, func(path string, info os.FileInfo) error {
+			rules, err := LoadRule(path)
 			if err != nil {
-				return err
+				gologger.Warning().Msgf("LoadRule Error: %s -> %v", info.Name(), err.Error())
+				// 运行模式下，单个规则文件有问题时跳过该文件，继续处理其他文件
+				return nil
 			}
-			// 隐藏目录（.git、.github 等）直接跳过
-			if info.IsDir() && strings.HasPrefix(info.Name(), ".") {
-				return filepath.SkipDir
-			}
-			// 如果是文件，并且扩展名是 .yaml 或 .yml，处理文件
-			if !info.IsDir() && checkIsRuleFile(info.Name()) {
-				rules, err := LoadRule(path)
-				if err != nil {
-					gologger.Warning().Msgf("LoadRule Error: %s -> %v", info.Name(), err.Error())
-					// 运行模式下，单个规则文件有问题时跳过该文件，继续处理其他文件
-					return nil
-				}
-				group.AddRules(rules)
-			}
+			group.AddRules(rules)
 			return nil
 		})
 	} else {
@@ -55,6 +45,43 @@ func ScanRuleDirectory(directory string) (*Finger, error) {
 		group.AddRules(rules)
 	}
 	return group, nil
+}
+
+// walkRuleFiles 遍历指定目录下所有规则文件（*.yaml / *.yml），
+// 会跳过隐藏目录（.git、.github 等），对每个规则文件调用 visit 回调。
+func walkRuleFiles(root string, visit func(path string, info os.FileInfo) error) error {
+	return filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		// 隐藏目录（.git、.github 等）直接跳过
+		if info.IsDir() && isHiddenDir(info) {
+			return filepath.SkipDir
+		}
+		// 只对规则文件调用回调
+		if !info.IsDir() && checkIsRuleFile(info.Name()) {
+			return visit(path, info)
+		}
+		return nil
+	})
+}
+
+// shouldSkipDir 判断在遍历规则目录时是否应跳过某个子目录。
+// 规则：
+// - 只处理目录
+// - 不跳过根目录本身
+// - 对于子目录，如果名称以 '.' 开头且不是 '.' 或 '..'，则视为隐藏目录并跳过
+func isHiddenDir(info os.FileInfo) bool {
+	name := info.Name()
+	// 排除特殊目录项
+	if name == "." || name == ".." {
+		return false
+	}
+	// 所有以 '.' 开头的子目录视为隐藏目录（例如 .git、.github、.idea 等）
+	if strings.HasPrefix(name, ".") {
+		return true
+	}
+	return false
 }
 
 // isValidMatcherPart checks whether the specified matcher part is supported by
@@ -137,20 +164,11 @@ func ValidateRuleDirectory(directory string) (errs []error, fatalErr error) {
 		return nil, fmt.Errorf("stat directory failed: %w", err)
 	}
 	if file.IsDir() {
-		walkErr := filepath.Walk(directory, func(path string, info os.FileInfo, err error) error {
-			if err != nil {
-				return err
-			}
-			// 隐藏目录（.git、.github 等）在严格校验时同样跳过
-			if info.IsDir() && strings.HasPrefix(info.Name(), ".") {
-				return filepath.SkipDir
-			}
-			if !info.IsDir() && checkIsRuleFile(info.Name()) {
-				_, fileErrs := LoadRuleStrict(path)
-				for _, e := range fileErrs {
-					// 包装上文件名信息
-					errs = append(errs, fmt.Errorf("%s: %w", path, e))
-				}
+		walkErr := walkRuleFiles(directory, func(path string, info os.FileInfo) error {
+			_, fileErrs := LoadRuleStrict(path)
+			for _, e := range fileErrs {
+				// 包装上文件名信息
+				errs = append(errs, fmt.Errorf("%s: %w", path, e))
 			}
 			return nil
 		})
