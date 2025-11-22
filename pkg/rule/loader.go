@@ -1,12 +1,14 @@
 package rule
 
 import (
-	"gopkg.in/yaml.v3"
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/projectdiscovery/gologger"
+	"gopkg.in/yaml.v3"
 )
-import "github.com/projectdiscovery/gologger"
 
 func checkIsRuleFile(filename string) bool {
 	if len(filename) > 0 && filename[0] == '.' {
@@ -23,7 +25,7 @@ func ScanRuleDirectory(directory string) (*Finger, error) {
 		return nil, err
 	}
 	if file.IsDir() {
-		//	scan
+		//	scan (runtime loader: 遇到单个文件错误时仅记录日志并继续)
 		_ = filepath.Walk(directory, func(path string, info os.FileInfo, err error) error {
 			if err != nil {
 				return err
@@ -33,7 +35,8 @@ func ScanRuleDirectory(directory string) (*Finger, error) {
 				rules, err := LoadRule(path)
 				if err != nil {
 					gologger.Warning().Msgf("LoadRule Error: %s -> %v", info.Name(), err.Error())
-					return err
+					// 运行模式下，单个规则文件有问题时跳过该文件，继续处理其他文件
+					return nil
 				}
 				group.AddRules(rules)
 			}
@@ -48,6 +51,112 @@ func ScanRuleDirectory(directory string) (*Finger, error) {
 		group.AddRules(rules)
 	}
 	return group, nil
+}
+
+// isValidMatcherPart checks whether the specified matcher part is supported by
+// the runtime banner adapter (runner.BannerAdapter.GetMatchPart).
+//
+// Supported values:
+//   - "" (will be normalized to body)
+//   - "body"
+//   - "url"
+//   - "header"
+//   - "cert"
+//   - "title"
+//   - "response"
+//   - "icon_hash"
+//   - "body_hash"
+//   - "server"
+//   - "headers.<header-name>" (e.g. headers.server, headers.content-type)
+func isValidMatcherPart(part string) bool {
+	if part == "" || part == "body" {
+		return true
+	}
+	if strings.HasPrefix(part, "headers.") {
+		return true
+	}
+	switch part {
+	case "url", "header", "cert", "title", "response", "icon_hash", "body_hash", "server":
+		return true
+	}
+	return false
+}
+
+// LoadRuleStrict 与 LoadRule 类似，但用于严格校验：
+// - 收集 YAML 解析错误
+// - 收集 matcher 编译错误
+// 返回规则和累积错误（如果有）。
+func LoadRuleStrict(filename string) ([]*Rule, []error) {
+	var allErrs []error
+	content, err := os.ReadFile(filename)
+	if err != nil {
+		allErrs = append(allErrs, fmt.Errorf("read file failed: %w", err))
+		return nil, allErrs
+	}
+	var rules []*Rule
+	err = yaml.Unmarshal(content, &rules)
+	if err != nil {
+		allErrs = append(allErrs, fmt.Errorf("yaml unmarshal failed: %w", err))
+		return nil, allErrs
+	}
+	for _, rule := range rules {
+		for _, matcher := range rule.Matchers {
+			if matcher == nil {
+				allErrs = append(allErrs, fmt.Errorf("rule %s has nil matcher", rule.Name))
+				continue
+			}
+			if err := matcher.CompileMatchers(); err != nil {
+				allErrs = append(allErrs, fmt.Errorf("compile matcher failed for rule %s: %w", rule.Name, err))
+				continue
+			}
+			// 业务规范校验：part 必须在支持的枚举范围内
+			if !isValidMatcherPart(matcher.Part) {
+				allErrs = append(allErrs, fmt.Errorf("invalid matcher part '%s' for rule %s", matcher.Part, rule.Name))
+			}
+		}
+	}
+	return rules, allErrs
+}
+
+// ValidateRuleDirectory 严格验证规则目录下的所有规则文件。
+//
+// 行为：
+// - 遍历目录中的所有 YAML 规则文件
+// - 对每个文件调用 LoadRuleStrict 收集 YAML/Matcher 的所有错误
+// - 不会中断整个遍历，所有问题都会被返回
+//
+// fatalErr 仅在目录本身不可访问等致命场景下返回；
+// errs 列出所有规则文件级别的问题，用于 validate 模式报告。
+func ValidateRuleDirectory(directory string) (errs []error, fatalErr error) {
+	file, err := os.Stat(directory)
+	if err != nil {
+		return nil, fmt.Errorf("stat directory failed: %w", err)
+	}
+	if file.IsDir() {
+		walkErr := filepath.Walk(directory, func(path string, info os.FileInfo, err error) error {
+			if err != nil {
+				return err
+			}
+			if !info.IsDir() && checkIsRuleFile(info.Name()) {
+				_, fileErrs := LoadRuleStrict(path)
+				for _, e := range fileErrs {
+					// 包装上文件名信息
+					errs = append(errs, fmt.Errorf("%s: %w", path, e))
+				}
+			}
+			return nil
+		})
+		if walkErr != nil {
+			return errs, walkErr
+		}
+		return errs, nil
+	}
+	// 单文件场景
+	_, fileErrs := LoadRuleStrict(directory)
+	for _, e := range fileErrs {
+		errs = append(errs, fmt.Errorf("%s: %w", directory, e))
+	}
+	return errs, nil
 }
 func LoadRule(filename string) ([]*Rule, error) {
 	content, err := os.ReadFile(filename)
