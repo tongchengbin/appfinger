@@ -2,11 +2,12 @@ package internal
 
 import (
 	"fmt"
+	"io"
+	"os"
+
 	"github.com/projectdiscovery/goflags"
 	"github.com/projectdiscovery/gologger"
 	"github.com/tongchengbin/appfinger/pkg/external/customrules"
-	"io"
-	"os"
 )
 
 type Options struct {
@@ -27,6 +28,7 @@ type Options struct {
 	Version           bool
 	DebugResp         bool
 	DebugReq          bool
+	Validate          bool
 }
 
 func ParseOptions() *Options {
@@ -47,6 +49,7 @@ func ParseOptions() *Options {
 		flagSet.BoolVar(&options.DebugResp, "debug-resp", false, "debug response"),
 		flagSet.BoolVar(&options.DebugReq, "debug-req", false, "debug request"),
 		flagSet.BoolVarP(&options.Version, "version", "v", false, "show version"),
+		flagSet.BoolVar(&options.Validate, "validate", false, "validate rules and exit"),
 	)
 	flagSet.CreateGroup("Help", "Help",
 		flagSet.BoolVar(&options.Debug, "debug", false, "debug"),
@@ -59,8 +62,10 @@ func ParseOptions() *Options {
 		fmt.Println(err.Error())
 		os.Exit(1)
 	}
-	if len(options.URL) == 0 && options.UrlFile == "" && !options.Stdin {
-		gologger.Error().Msgf("Not Set Target")
+	if !options.UpdateRule && !options.Version && !options.Validate {
+		if len(options.URL) == 0 && options.UrlFile == "" && !options.Stdin {
+			gologger.Error().Msgf("Not Set Target")
+		}
 	}
 	return options
 }

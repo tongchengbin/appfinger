@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
-	_ "net/http/pprof"
+	"os"
 	"time"
 
 	"github.com/projectdiscovery/gologger"
@@ -44,6 +44,32 @@ func main() {
 	}
 	if options.UpdateRule {
 		customrules.DefaultProvider.Update(context.Background(), options.FingerHome)
+		return
+	}
+	if options.Validate {
+		// 严格校验：收集所有规则文件中的 YAML/Matcher 错误
+		if errs, fatalErr := rule.ValidateRuleDirectory(options.FingerHome); fatalErr != nil {
+			gologger.Error().Msgf("validate rules failed: %s", fatalErr.Error())
+			os.Exit(1)
+		} else if len(errs) > 0 {
+			for _, e := range errs {
+				gologger.Error().Msgf("validate error: %s", e.Error())
+			}
+			os.Exit(1)
+		}
+
+		// 如果严格校验通过，再按运行时逻辑加载一次规则，确保整体 Finger 可以正常建立
+		manager := rule.GetRuleManager()
+		if err := manager.LoadRules(options.FingerHome); err != nil {
+			gologger.Error().Msgf("validate rules failed on load: %s", err.Error())
+			os.Exit(1)
+		}
+		// 计算规则总数
+		totalRules := 0
+		for _, rules := range manager.GetFinger().Rules {
+			totalRules += len(rules)
+		}
+		gologger.Info().Msgf("Validate success: loaded %d rule categories with %d total rules", len(manager.GetFinger().Rules), totalRules)
 		return
 	}
 	crawlOptions := crawl.DefaultOption()
