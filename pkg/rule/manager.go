@@ -58,8 +58,13 @@ func (m *Manager) ReloadRules() error {
 	}
 	m.ruleSet.Store(ruleSet)
 	m.lastLoadTime.Store(time.Now().UnixNano())
-	gologger.Info().Msgf("Loaded rules from: %s rules: %d", m.rulePath, ruleSet.CategoryCount())
+	gologger.Info().Msgf(ruleLoadSummary(m.rulePath, ruleSet))
 	return nil
+}
+
+func ruleLoadSummary(path string, ruleSet *RuleSet) string {
+	return fmt.Sprintf("已加载指纹规则: %d 条（%d 个协议分类），路径: %s",
+		ruleSet.RuleCount(), ruleSet.CategoryCount(), path)
 }
 
 // Snapshot returns the latest immutable rules snapshot.
