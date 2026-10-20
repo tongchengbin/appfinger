@@ -26,24 +26,41 @@ import (
 )
 
 func parseIconFile(body string) string {
-	// 解析HTML
 	reader := strings.NewReader(body)
 	doc, err := goquery.NewDocumentFromReader(reader)
 	if err != nil {
 		return ""
 	}
-	iconURL := ""
-	doc.Find("link[rel*='icon']").Each(func(i int, s *goquery.Selection) {
-		href, exists := s.Attr("href")
-		if exists {
-			iconURL = href
+
+	// 与 GoFOFA 保持一致：只接受 rel 中独立的 icon token，并选择文档中
+	// 第一个有效项。这样不会把 apple-touch-icon 当成普通 favicon，也不会
+	// 因后续的 16x16 声明覆盖前面的 32x32 声明。
+	iconURL := "/favicon.ico"
+	doc.Find("link[rel]").EachWithBreak(func(_ int, s *goquery.Selection) bool {
+		rel, _ := s.Attr("rel")
+		if !hasRelToken(rel, "icon") {
+			return true
 		}
+
+		href, exists := s.Attr("href")
+		if !exists || strings.TrimSpace(href) == "" {
+			return true
+		}
+
+		iconURL = href
+		return false
 	})
-	// 如果找不到图标标签，使用默认路径
-	if iconURL == "" {
-		iconURL = "/favicon.ico"
-	}
 	return strings.Replace(iconURL, "./", "/", 1)
+
+}
+
+func hasRelToken(rel, token string) bool {
+	for _, field := range strings.Fields(rel) {
+		if strings.EqualFold(field, token) {
+			return true
+		}
+	}
+	return false
 
 }
 func isAbsoluteURL(url string) bool {
