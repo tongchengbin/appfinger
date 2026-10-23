@@ -4,6 +4,7 @@ import (
 	"github.com/hexbay/appfinger/pkg/matchers"
 	"github.com/projectdiscovery/gologger"
 	"strconv"
+	"strings"
 )
 
 // MatchResult 表示匹配结果
@@ -65,10 +66,21 @@ func (f RuleSet) Match(service string, getMatchPart MatchPartGetter) []*MatchRes
 		gologger.Debug().Msgf("No rules found for %s", service)
 		return results
 	}
+	// Keep normalized word corpora local to this response. Matchers and rule
+	// sets remain immutable and safe to share across concurrent scans.
+	lowerWords := make(map[string]string)
+	getLowerWords := func(part string) string {
+		if corpus, ok := lowerWords[part]; ok {
+			return corpus
+		}
+		corpus := strings.ToLower(getMatchPart(part, false))
+		lowerWords[part] = corpus
+		return corpus
+	}
 	// 对每个规则进行匹配
 	for _, compiled := range rules {
 		rule := compiled.Runtime
-		ok, extract := rule.Match(getMatchPart)
+		ok, extract := rule.match(getMatchPart, getLowerWords)
 		if ok {
 			results = append(results, &MatchResult{
 				Rule:      rule,
@@ -136,6 +148,10 @@ func (f RuleSet) FirstRule(name string) *Rule {
 }
 
 func (r *Rule) Match(getMatchPart MatchPartGetter) (bool, map[string]string) {
+	return r.match(getMatchPart, nil)
+}
+
+func (r *Rule) match(getMatchPart MatchPartGetter, getLowerWords func(string) string) (bool, map[string]string) {
 	var matchedString []string
 	matchedMapString := make(map[string]string)
 	// 为了保证数据都被提取到 所以需要匹配所有的规则
@@ -154,7 +170,11 @@ func (r *Rule) Match(getMatchPart MatchPartGetter) (bool, map[string]string) {
 		case matchers.SizeMatcher:
 			matched = false
 		case matchers.WordsMatcher:
-			matched, matchedString = matcher.MatchWords(getMatchPart(matcher.Part, caseSensitive))
+			if !caseSensitive && getLowerWords != nil {
+				matched, matchedString = matcher.MatchWordsNormalized(getLowerWords(matcher.Part))
+			} else {
+				matched, matchedString = matcher.MatchWords(getMatchPart(matcher.Part, caseSensitive))
+			}
 		case matchers.RegexMatcher:
 			matched, matchedString = matcher.MatchRegex(getMatchPart(matcher.Part, caseSensitive))
 		default:
