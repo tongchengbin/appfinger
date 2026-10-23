@@ -5,9 +5,14 @@ on:
   workflow_dispatch:
     inputs:
       base_ref:
-        description: Baseline branch, tag or commit (must support current scanner API)
+        description: Baseline branch, tag or FULL 40-character commit SHA
         required: true
         default: main
+      suite:
+        description: Quick PR checks or full scaling, real rules and concurrent load
+        type: choice
+        options: [quick, full]
+        default: full
 
 permissions:
   contents: read
@@ -19,12 +24,14 @@ concurrency:
 jobs:
   compare:
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 60
     env:
       GOMAXPROCS: '1'
       GOTOOLCHAIN: local
       BASE_REF: ${{ github.event.pull_request.base.sha || inputs.base_ref }}
       HEAD_REF: ${{ github.event.pull_request.head.sha || github.sha }}
+      SUITE: ${{ inputs.suite || 'quick' }}
+      APPFINGER_RULES_DIR: ${{ github.workspace }}/finger-rules
     steps:
       - uses: actions/checkout@v4
         with:
@@ -42,6 +49,12 @@ jobs:
           cache-dependency-path: |
             candidate/go.sum
             baseline/go.sum
+      - uses: actions/checkout@v4
+        with:
+          repository: hexbay/finger-rules
+          ref: b245e9d7cf02b533b1948b19cc369e7fd734366d
+          path: finger-rules
+          persist-credentials: false
       - name: Prepare identical harness and record environment
         shell: bash
         run: |
@@ -59,7 +72,9 @@ jobs:
             lscpu
             echo "base=$(git -C baseline rev-parse HEAD)"
             echo "head=$(git -C candidate rev-parse HEAD)"
-            echo 'dataset=synthetic-v1; GOMAXPROCS=1; cpu=1; benchtime=1s; samples=10'
+            echo "suite=$SUITE; dataset=synthetic-v2; samples=6; match cpu=1 200ms; load cpu=4 128x"
+            echo "rules=$(git -C finger-rules rev-parse HEAD)"
+            find finger-rules -type f -name '*.yaml' -print0 | sort -z | xargs -0 sha256sum
             find candidate/benchmarks -type f -print0 | sort -z | xargs -0 sha256sum
           } > results/environment.txt
       - name: Compile both versions before measuring
@@ -69,17 +84,36 @@ jobs:
           (cd baseline && go test -c -o "$GITHUB_WORKSPACE/results/base.test" ./benchmarks)
           (cd candidate && go test -c -o "$GITHUB_WORKSPACE/results/head.test" ./benchmarks)
           go install golang.org/x/perf/cmd/benchstat@v0.0.0-20261009192801-be2c69fb417e
-      - name: Warm up and collect alternating samples
+      - name: Compare complete real-rule recognition results
         shell: bash
         run: |
           set -euo pipefail
           for version in base head; do
-            "./results/$version.test" -test.run='^$' -test.bench=. -test.benchmem -test.cpu=1 -test.benchtime=1x > "results/$version-warmup.txt"
+            APPFINGER_RESULTS_PATH="$GITHUB_WORKSPACE/results/$version-corpus.json" "./results/$version.test" -test.run='^TestCorpusResults$' -test.v
           done
-          for sample in $(seq 1 10); do
+          diff -u results/base-corpus.json results/head-corpus.json > results/corpus-diff.txt
+      - name: Warm up and collect alternating samples
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$SUITE" == full ]]; then
+            filter='Benchmark(RuleSetMatch|Scan$|MatchMatrix|MatcherLogic|RealRules|LoadRealRules)'
+          else
+            filter='Benchmark(RuleSetMatch|Scan$|MatcherLogic)'
+          fi
+          for version in base head; do
+            "./results/$version.test" -test.run='^$' -test.bench="$filter" -test.benchmem -test.cpu=1 -test.benchtime=1x > "results/$version-warmup.txt"
+            if [[ "$SUITE" == full ]]; then
+              "./results/$version.test" -test.run='^$' -test.bench=BenchmarkScanLoad -test.cpu=4 -test.benchtime=1x >> "results/$version-warmup.txt"
+            fi
+          done
+          for sample in $(seq 1 6); do
             if (( sample % 2 )); then order='base head'; else order='head base'; fi
             for version in $order; do
-              "./results/$version.test" -test.run='^$' -test.bench=. -test.benchmem -test.cpu=1 -test.benchtime=1s >> "results/$version.txt"
+              "./results/$version.test" -test.run='^$' -test.bench="$filter" -test.benchmem -test.cpu=1 -test.benchtime=200ms >> "results/$version.txt"
+              if [[ "$SUITE" == full ]]; then
+                "./results/$version.test" -test.run='^$' -test.bench=BenchmarkScanLoad -test.benchmem -test.cpu=4 -test.benchtime=128x >> "results/$version.txt"
+              fi
             done
           done
       - name: Publish comparison
@@ -89,7 +123,9 @@ jobs:
           "$(go env GOPATH)/bin/benchstat" results/base.txt results/head.txt > results/comparison.txt
           {
             echo '## AppFinger performance comparison'
-            echo 'Same runner, identical synthetic-v1 harness, 10 alternating samples per version.'
+            echo "Same runner, identical synthetic-v2 harness, suite=$SUITE, 6 alternating samples per version."
+            echo 'Full suite: pinned 2603-rule library, 128/1024/4096-rule scaling, word/regex/mixed, 0/1/64 hits, 1/8/32 scan workers.'
+            echo 'Load percentiles use 128 targets per sample and exclude queue wait; P99 is coarse. Both client and server share this runner.'
             echo 'Timing changes are informational; benchmark correctness failures fail the job.'
             echo '```text'
             cat results/comparison.txt
@@ -105,4 +141,5 @@ jobs:
           name: benchmark-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
             results/*.txt
+            results/*.json
           retention-days: 30

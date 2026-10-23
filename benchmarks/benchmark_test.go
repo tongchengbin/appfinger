@@ -86,9 +86,12 @@ type provider struct{ set *rule.RuleSet }
 func (p provider) Snapshot() *rule.RuleSet { return p.set }
 
 func BenchmarkScan(b *testing.B) {
-	for _, mode := range []string{"plain", "redirect", "favicon", "tls"} {
+	for _, mode := range []string{"plain", "redirect", "favicon", "tls", "large1MiB"} {
 		b.Run(mode, func(b *testing.B) {
 			payload := body(32768, true)
+			if mode == "large1MiB" {
+				payload = body(1024*1024, true)
+			}
 			var requests atomic.Int64
 			handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 				requests.Add(1)
