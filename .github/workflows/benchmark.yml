@@ -102,17 +102,20 @@ jobs:
             filter='Benchmark(RuleSetMatch|Scan$|MatcherLogic)'
           fi
           for version in base head; do
-            "./results/$version.test" -test.run='^$' -test.bench="$filter" -test.benchmem -test.cpu=1 -test.benchtime=1x > "results/$version-warmup.txt"
+            echo "Warmup: $version $(date -u +%FT%TZ)"
+            "./results/$version.test" -test.run='^$' -test.bench="$filter" -test.benchmem -test.cpu=1 -test.benchtime=1x | tee "results/$version-warmup.txt"
             if [[ "$SUITE" == full ]]; then
-              "./results/$version.test" -test.run='^$' -test.bench=BenchmarkScanLoad -test.cpu=4 -test.benchtime=1x >> "results/$version-warmup.txt"
+              "./results/$version.test" -test.run='^$' -test.bench=BenchmarkScanLoad -test.cpu=4 -test.benchtime=1x | tee -a "results/$version-warmup.txt"
             fi
           done
           for sample in $(seq 1 6); do
             if (( sample % 2 )); then order='base head'; else order='head base'; fi
             for version in $order; do
-              "./results/$version.test" -test.run='^$' -test.bench="$filter" -test.benchmem -test.cpu=1 -test.benchtime=200ms >> "results/$version.txt"
+              echo "Sample $sample/6: $version match/sequential $(date -u +%FT%TZ)"
+              "./results/$version.test" -test.run='^$' -test.bench="$filter" -test.benchmem -test.cpu=1 -test.benchtime=200ms | tee -a "results/$version.txt"
               if [[ "$SUITE" == full ]]; then
-                "./results/$version.test" -test.run='^$' -test.bench=BenchmarkScanLoad -test.benchmem -test.cpu=4 -test.benchtime=128x >> "results/$version.txt"
+                echo "Sample $sample/6: $version concurrent $(date -u +%FT%TZ)"
+                "./results/$version.test" -test.run='^$' -test.bench=BenchmarkScanLoad -test.benchmem -test.cpu=4 -test.benchtime=128x | tee -a "results/$version.txt"
               fi
             done
           done
