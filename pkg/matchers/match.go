@@ -9,6 +9,13 @@ func (matcher *Matcher) MatchWords(corpus string) (bool, []string) {
 	if !matcher.CaseSensitive {
 		corpus = strings.ToLower(corpus)
 	}
+	return matcher.MatchWordsNormalized(corpus)
+}
+
+// MatchWordsNormalized matches a prepared corpus without normalizing it again.
+// For case-insensitive matchers, corpus must already be strings.ToLower-normalized.
+// Case-sensitive matchers require the original corpus.
+func (matcher *Matcher) MatchWordsNormalized(corpus string) (bool, []string) {
 	var matchedWords []string
 	// Iterate over all the words accepted as valid
 	for i, word := range matcher.Words {
